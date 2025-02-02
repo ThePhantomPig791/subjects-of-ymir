@@ -73,5 +73,5 @@
             "max": 2
         }
     },
-    "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skin_#PROGRESS_#HARDENING_#ARMOR_ARMS"
+    "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skin_#PROGRESS_#HARDENING_#ARMOR_ARMS_#ARMOR_CHEST_#ARMOR_HEAD_#ARMOR_LEGS"
 }
