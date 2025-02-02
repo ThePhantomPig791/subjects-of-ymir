@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:fossil",
+    "config": {
+        "fossil_processors": "minecraft:fossil_rot",
+        "fossil_structures": [
+            "phantom_sy:titan_fossil/arm",
+            "phantom_sy:titan_fossil/hip",
+            "phantom_sy:titan_fossil/ribcage",
+            "phantom_sy:titan_fossil/skull",
+            "phantom_sy:titan_fossil/spine_horizontal",
+            "phantom_sy:titan_fossil/spine_vertical"
+        ],
+        "max_empty_corners_allowed": 4,
+        "overlay_processors": "minecraft:fossil_diamonds",
+        "overlay_structures": [
+            "phantom_sy:titan_fossil/arm_coal",
+            "phantom_sy:titan_fossil/hip_coal",
+            "phantom_sy:titan_fossil/ribcage_coal",
+            "phantom_sy:titan_fossil/skull_coal",
+            "phantom_sy:titan_fossil/spine_horizontal_coal",
+            "phantom_sy:titan_fossil/spine_vertical_coal"
+        ]
+    }
+}

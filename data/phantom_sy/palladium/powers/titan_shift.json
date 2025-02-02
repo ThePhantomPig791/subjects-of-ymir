@@ -1,0 +1,1070 @@
+{
+    "name": "Power of the Titans",
+    "background": "minecraft:textures/block/bone_block_side.png",
+    "icon": "phantom_sy:textures/icon/power_of_the_titans.png",
+    "gui_display_type": "tree",
+    "abilities": {
+        "main": {
+            "type": "palladium:dummy",
+            "title": "Power of the Titans",
+            "icon": "phantom_sy:textures/icon/power_of_the_titans.png",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "gui_position": [0, 0]
+        },
+        "shift": {
+            "type": "phantom_sy:titan_shift",
+            "title": "Titan Shift",
+            "description": "After drawing blood, you can turn into a Titan at will.",
+            "icon": {
+                "type": "palladium:compound",
+                "icons": [
+                    "#phantom_sy:titan_head",
+                    "phantom_sy:textures/icon/shift.png"
+                ]
+            },
+            "bar_color": "yellow",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "gui_position": [0, -1],
+            "list_index": 0,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                },
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_unlocked",
+                        "ability": "main"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:is_shifted"
+                        }
+                    },
+                    {
+                        "type": "phantom_sy:can_shift"
+                    }
+                ]
+            }
+        },
+        "titan_render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:titan"
+        },
+        "unshift": {
+            "type": "phantom_sy:unshift",
+            "title": "Unshift",
+            "description": "You can eject from your Titan form, leaving a spent, decaying body behind.",
+            "icon": "minecraft:player_head",
+            "gui_position": [0, 1],
+            "list_index": 0,
+            "create_skeleton": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action"
+                },
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_unlocked",
+                        "ability": "main"
+                    },
+                    {
+                        "type": "phantom_sy:is_shifted"
+                    }
+                ]
+            }
+        },
+
+        "force_unshift": {
+            "type": "phantom_sy:unshift",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "create_skeleton": true,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:hunger_level",
+                    "min": 0,
+                    "max": 6
+                },
+                "unlocking": {
+                    "type": "phantom_sy:is_shifted"
+                }
+            }
+        },
+
+        "bite": {
+            "type": "phantom_sy:bite",
+            "title": "Bite     ",
+            "description": "You can bite your hand to allow yourself to transform.",
+            "icon": "phantom_sy:textures/icon/bite.png",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": 0,
+            "gui_position": [-0.5, 0.5],
+            "time": 10,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                },
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_unlocked",
+                        "ability": "main"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:item_in_slot",
+                            "item": {
+                                "tag": "c:swords"
+                            },
+                            "slot": "mainhand"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:is_shifted"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:is_shifting"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:can_shift"
+                        }
+                    }
+                ]
+            }
+        },
+        "bite_anim": {
+            "type": "palladium:animation_timer",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "start_value": 0,
+            "max_value": 10,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "bite"
+                }
+            }
+        },
+        "bite_show_arms": {
+            "type": "palladium:show_both_arms",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_integer_property",
+                    "ability": "bite",
+                    "property": "timer",
+                    "min": 1,
+                    "max": 9999999
+                }
+            }
+        },
+        "cut": {
+            "type": "phantom_sy:damage",
+            "title": "Cut      ",
+            "description": "When holding a sword, you can cut yourself to transform - this takes less time, but it deals more damage.",
+            "icon": {
+                "type": "palladium:item_in_slot",
+                "slot": "mainhand"
+            },
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": 0,
+            "gui_position": [0.5, 0.5],
+            "amount": -1,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action",
+                    "cooldown": 20
+                },
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_unlocked",
+                        "ability": "main"
+                    },
+                    {
+                        "type": "palladium:item_in_slot",
+                        "item": {
+                            "tag": "c:swords"
+                        },
+                        "slot": "mainhand"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:is_shifted"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:is_shifting"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:can_shift"
+                        }
+                    }
+                ]
+            }
+        },
+        "cut_swing": {
+            "type": "phantom_sy:swing_hand",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "hand": "MAIN_HAND",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "cut"
+                }
+            }
+        },
+
+        "damage_detection": {
+            "type": "phantom_sy:damage_detection",
+            "hidden": true,
+            "hidden_in_bar": true
+        },
+
+        "light_lightning_render_layer": {
+            "type": "palladium:render_layer",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "render_layer": "phantom_sy:shift_lightning_light",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "palladium:and",
+                            "conditions": [
+                                {
+                                    "type": "phantom_sy:can_shift"
+                                },
+                                {
+                                    "type": "palladium:not",
+                                    "conditions": {
+                                        "type": "palladium:crouching"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "phantom_sy:is_charging_shift"
+                        },
+                        {
+                            "type": "phantom_sy:is_shifting"
+                        }
+                    ]
+                }
+            }
+        },
+        "lightning_render_layer": {
+            "type": "palladium:render_layer",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "render_layer": "phantom_sy:shift_lightning",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "phantom_sy:is_charging_shift"
+                        },
+                        {
+                            "type": "phantom_sy:is_shifting"
+                        }
+                    ]
+                }
+            }
+        },
+        "light_electricity_sound": {
+            "type": "palladium:play_sound",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "sound": "phantom_sy:electricity",
+            "looping": true,
+            "pitch": 1.1,
+            "volume": 0.1,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:and",
+                    "conditions": [
+                        {
+                            "type": "phantom_sy:can_shift"
+                        },
+                        {
+                            "type": "palladium:not",
+                            "conditions": {
+                                "type": "palladium:crouching"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "electricity_sound": {
+            "type": "palladium:play_sound",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "sound": "phantom_sy:electricity",
+            "looping": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "phantom_sy:is_charging_shift"
+                        },
+                        {
+                            "type": "phantom_sy:is_shifting"
+                        }
+                    ]
+                }
+            }
+        },
+        "final_electricity_sound": {
+            "type": "palladium:play_sound",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "sound": "phantom_sy:electricity_final",
+            "looping": true,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "phantom_sy:is_charging_shift"
+                    },
+                    {
+                        "type": "palladium:ability_last_tick",
+                        "ability": "shift"
+                    }
+                ]
+            }
+        },
+
+        "marks_logic": {
+            "type": "phantom_sy:marks",
+            "hidden": true,
+            "hidden_in_bar": true
+        },
+
+        "restrict_slots": {
+            "type": "palladium:restrict_slots",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "slots": [
+                "head",
+                "chest",
+                "legs",
+                "feet"
+            ],
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "phantom_sy:is_shifted"
+                        },
+                        {
+                            "type": "phantom_sy:is_shifting"
+                        }
+                    ]
+                }
+            }
+        },
+        "nullify_armor": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": -1,
+            "uuid": "4ba358e5-3142-1984-1202-339d81ef8503",
+            "operation": 2,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:is_shifted"
+                }
+            }
+        },
+
+        "titan_jump": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "attribute": "palladium:jump_power",
+            "amount": 0.6,
+            "uuid": "4ba358e5-3142-1984-9f49-339d81ef8503",
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "phantom_sy:is_shifted"
+                    },
+                    {
+                        "type": "palladium:sprinting"
+                    }
+                ]
+            }
+        },
+
+        "titan_attack_damage": {
+            "type": "phantom_sy:attribute_from_property",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "attribute": "palladium:punch_damage",
+            "property": "phantom_sy:titan_attack_damage",
+            "uuid": "6fce4422-5357-4493-9987-cea31192807b",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:is_shifted"
+                }
+            }
+        },
+
+
+        "steam_healing": {
+            "type": "phantom_sy:steam_healing",
+            "title": "Steam Healing",
+            "description": "You naturally regenerate health (1 hp per 2 seconds) while emitting steam.",
+            "icon": "phantom_sy:textures/icon/steam_healing.png",
+            "hidden": false,
+            "hidden_in_bar": true,
+            "gui_position": [-0.5, -0.5],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:ability_enabled",
+                            "ability": "steam_healing_disable"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:is_shifted"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:full_health"
+                        }
+                    },
+                    {
+                        "type": "phantom_sy:hunger_level",
+                        "min": 4,
+                        "max": 20
+                    }
+                ],
+                "unlocking": {
+                    "type": "palladium:ability_unlocked",
+                    "ability": "main"
+                }
+            }
+        },
+        "steam_healing_titan": {
+            "type": "phantom_sy:steam_healing",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "amount": 1,
+            "interval": 30,
+            "hunger_cost": 1,
+            "particle": "minecraft:cloud",
+            "particle_amount": 5,
+            "volume": 0.6,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:ability_enabled",
+                            "ability": "steam_healing_disable"
+                        }
+                    },
+                    {
+                        "type": "phantom_sy:is_shifted"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:full_health"
+                        }
+                    },
+                    {
+                        "type": "phantom_sy:hunger_level",
+                        "min": 4,
+                        "max": 20
+                    }
+                ],
+                "unlocking": {
+                    "type": "palladium:ability_unlocked",
+                    "ability": "main"
+                }
+            }
+        },
+        "steam_healing_disable": {
+            "type": "palladium:dummy",
+            "title": "Steam Concealment",
+            "icon": "phantom_sy:textures/icon/steam_healing_disable.png",
+            "bar_color": "red",
+            "list_index": 2,
+            "hidden": true,
+            "hidden_in_bar": false,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:toggle"
+                },
+                "unlocking": [
+                    {
+                        "type": "phantom_sy:has_strand",
+                        "id": "steam_healing_disable"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:ability_enabled",
+                            "ability": "steam_healing_boost"
+                        }
+                    },
+                    {
+                        "type": "palladium:or",
+                        "conditions": [
+                            {
+                                "type": "palladium:ability_enabled",
+                                "ability": "steam_healing_disable"
+                            },
+                            {
+                                "type": "palladium:and",
+                                "conditions": [
+                                    {
+                                        "type": "palladium:crouching"
+                                    },
+                                    {
+                                        "type": "palladium:ability_unlocked",
+                                        "ability": "steam_healing_boost"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "palladium:not",
+                                "conditions": {
+                                    "type": "palladium:ability_unlocked",
+                                    "ability": "steam_healing_boost"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "steam_healing_boost": {
+            "type": "phantom_sy:steam_healing",
+            "title": "Steam Overdrive",
+            "icon": "phantom_sy:textures/icon/steam_healing.png",
+            "hidden": true,
+            "hidden_in_bar": false,
+            "list_index": 2,
+            "amount": 1,
+            "interval": 10,
+            "hunger_cost": 5,
+            "particle": "minecraft:cloud",
+            "particle_amount": 0.01,
+            "volume": 0.4,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:held"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:full_health"
+                        }
+                    }
+                ],
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_unlocked",
+                        "ability": "main"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:is_shifted"
+                        }
+                    },
+                    {
+                        "type": "phantom_sy:has_strand",
+                        "id": "steam_healing_boost"
+                    },
+                    {
+                        "type": "phantom_sy:hunger_level",
+                        "min": 7,
+                        "max": 20
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:ability_enabled",
+                            "ability": "steam_healing_disable"
+                        }
+                    },
+                    {
+                        "type": "palladium:or",
+                        "conditions": [
+                            {
+                                "type": "palladium:ability_enabled",
+                                "ability": "steam_healing_boost"
+                            },
+                            {
+                                "type": "palladium:and",
+                                "conditions": [
+                                    {
+                                        "type": "palladium:not",
+                                        "conditions": {
+                                            "type": "palladium:crouching"
+                                        }
+                                    },
+                                    {
+                                        "type": "palladium:ability_unlocked",
+                                        "ability": "steam_healing_disable"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "palladium:not",
+                                "conditions": {
+                                    "type": "palladium:ability_unlocked",
+                                    "ability": "steam_healing_disable"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "steam_healing_boost_titan": {
+            "type": "phantom_sy:steam_healing",
+            "title": "Steam Overdrive",
+            "icon": "phantom_sy:textures/icon/steam_healing.png",
+            "hidden": true,
+            "hidden_in_bar": false,
+            "list_index": 2,
+            "amount": 2,
+            "interval": 15,
+            "hunger_cost": 3,
+            "particle": "minecraft:cloud",
+            "particle_amount": 20,
+            "volume": 0.8,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:held"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:full_health"
+                        }
+                    }
+                ],
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_unlocked",
+                        "ability": "main"
+                    },
+                    {
+                        "type": "phantom_sy:is_shifted"
+                    },
+                    {
+                        "type": "phantom_sy:has_strand",
+                        "id": "steam_healing_boost"
+                    },
+                    {
+                        "type": "phantom_sy:hunger_level",
+                        "min": 7,
+                        "max": 20
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:ability_enabled",
+                            "ability": "steam_healing_disable"
+                        }
+                    },
+                    {
+                        "type": "palladium:or",
+                        "conditions": [
+                            {
+                                "type": "palladium:ability_enabled",
+                                "ability": "steam_healing_boost"
+                            },
+                            {
+                                "type": "palladium:and",
+                                "conditions": [
+                                    {
+                                        "type": "palladium:not",
+                                        "conditions": {
+                                            "type": "palladium:crouching"
+                                        }
+                                    },
+                                    {
+                                        "type": "palladium:ability_unlocked",
+                                        "ability": "steam_healing_disable"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "palladium:not",
+                                "conditions": {
+                                    "type": "palladium:ability_unlocked",
+                                    "ability": "steam_healing_disable"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+
+
+        "steam_unshift": {
+            "type": "phantom_sy:unshift",
+            "title": "Steam Dissipate",
+            "icon": "phantom_sy:textures/icon/steam_unshift.png",
+            "hidden": true,
+            "hidden_in_bar": false,
+            "create_skeleton": false,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action"
+                },
+                "unlocking": [
+                    {
+                        "type": "phantom_sy:has_strand",
+                        "id": "steam_unshift"
+                    },
+                    {
+                        "type": "phantom_sy:is_shifted"
+                    }
+                ]
+            }
+        },
+        "steam_unshift_fx": {
+            "type": "phantom_sy:steam_unshift_fx",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "steam_unshift"
+                }
+            }
+        },
+
+        "hardening": {
+            "type": "phantom_sy:harden",
+            "title": "Titan Hardening",
+            "icon": "phantom_sy:textures/icon/hardening.png",
+            "hidden": true,
+            "hidden_in_bar": false,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:held"
+                    },
+                    {
+                        "type": "phantom_sy:hunger_level",
+                        "min": 7,
+                        "max": 20
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:max_hardening"
+                        }
+                    }
+                ],
+                "unlocking": [
+                    {
+                        "type": "phantom_sy:has_strand",
+                        "id": "hardening"
+                    },
+                    {
+                        "type": "phantom_sy:is_shifted"
+                    }
+                ]
+            }
+        },
+
+
+        "charge_max_increase_1": {
+            "type": "phantom_sy:increase_max_charge",
+            "hidden": true,
+            "amount": 20,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "charge_max_increase_1"
+                }
+            }
+        },
+        "charge_max_increase_3": {
+            "type": "phantom_sy:increase_max_charge",
+            "hidden": true,
+            "amount": 60,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "charge_max_increase_3"
+                }
+            }
+        },
+        "charge_max_increase_5": {
+            "type": "phantom_sy:increase_max_charge",
+            "hidden": true,
+            "amount": 100,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "charge_max_increase_5"
+                }
+            }
+        },
+
+        "increase_recharge_1": {
+            "type": "phantom_sy:increase_recharge",
+            "hidden": true,
+            "amount": 1,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "increase_recharge_1"
+                }
+            }
+        },
+        "increase_recharge_2": {
+            "type": "phantom_sy:increase_recharge",
+            "hidden": true,
+            "amount": 2,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "increase_recharge_2"
+                }
+            }
+        },
+
+        "increase_max_hardening_1": {
+            "type": "phantom_sy:increase_max_hardening",
+            "hidden": true,
+            "amount": 1,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "increase_max_hardening_1"
+                }
+            }
+        },
+        "increase_max_hardening_2": {
+            "type": "phantom_sy:increase_max_hardening",
+            "hidden": true,
+            "amount": 2,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "increase_max_hardening_2"
+                }
+            }
+        },
+
+        "multiply_shift_explosion_1.5": {
+            "type": "phantom_sy:multiply_shift_explosion",
+            "hidden": true,
+            "amount": 1.5,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "multiply_shift_explosion_1.5"
+                }
+            }
+        },
+        "multiply_shift_explosion_2": {
+            "type": "phantom_sy:multiply_shift_explosion",
+            "hidden": true,
+            "amount": 2,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "multiply_shift_explosion_2"
+                }
+            }
+        },
+
+        "increase_armor": {
+            "type": "phantom_sy:increase_armor",
+            "hidden": true,
+            "amount": 60,
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:has_strand",
+                    "id": "extra_armor"
+                }
+            }
+        },
+        "armor_arms_attribute_attack": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "palladium:punch_damage",
+            "amount": 4,
+            "operation": 0,
+            "uuid": "d9282bd3-4510-4c7b-1202-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "arms",
+                    "min": 2
+                }
+            }
+        },
+        "armor_arms_attribute_attack_1": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "palladium:punch_damage",
+            "amount": 2,
+            "operation": 0,
+            "uuid": "b9282bd3-4510-4c7b-1234-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "arms",
+                    "min": 1,
+                    "max": 1
+                }
+            }
+        },
+        "armor_arms_attribute_defense": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.2,
+            "operation": 2,
+            "uuid": "a3282cd2-4510-4c7b-1103-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "arms",
+                    "min": 1
+                }
+            }
+        },
+        "armor_legs_attribute_defense": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.25,
+            "operation": 2,
+            "uuid": "b3382cd2-1234-4c7c-1984-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "legs",
+                    "min": 2
+                }
+            }
+        },
+        "armor_legs_attribute_defense_1": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.1,
+            "operation": 2,
+            "uuid": "b3382cd2-1234-4c7c-1984-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "legs",
+                    "min": 1,
+                    "max": 1
+                }
+            }
+        },
+        "armor_chest_attribute_defense": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.5,
+            "operation": 2,
+            "uuid": "e2282c12-1234-4c7c-1202-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "chest",
+                    "min": 2
+                }
+            }
+        },
+        "armor_chest_attribute_defense_1": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.3,
+            "operation": 2,
+            "uuid": "e2282c12-1234-4c7c-1202-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "chest",
+                    "min": 1,
+                    "max": 1
+                }
+            }
+        },
+        "armor_head_attribute_defense": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.4,
+            "operation": 2,
+            "uuid": "d2382c12-abcd-4c7c-1202-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "head",
+                    "min": 2
+                }
+            }
+        },
+        "armor_head_attribute_defense_1": {
+            "type": "palladium:attribute_modifier",
+            "hidden": true,
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.1,
+            "operation": 2,
+            "uuid": "d2382c12-abcd-4c7c-1202-ef73922a8e51",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:armor_durability",
+                    "part": "head",
+                    "min": 1,
+                    "max": 1
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "side": "phantom_sy:block/titan_bone_side",
+        "end": "phantom_sy:block/titan_bone_top"
+    }
+}

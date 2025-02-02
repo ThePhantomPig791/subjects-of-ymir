@@ -1,0 +1,14 @@
+{
+    "name": "Titan Skeleton",
+    "background": "minecraft:textures/block/bone_block_side.png",
+    "icon": "minecraft:bone",
+    "abilities": {
+        "render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:titan_skeleton"
+        },
+        "skeleton_logic": {
+            "type": "phantom_sy:titan_skeleton"
+        }
+    }
+}

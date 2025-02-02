@@ -1,0 +1,13 @@
+{
+    "base": "phantom_sy:textures/icon/titan_head/#TITAN/#SKIN.png",
+    "variables": {
+        "TITAN": {
+            "type": "palladium:string_property",
+            "property": "phantom_sy:titan"
+        },
+        "SKIN": {
+            "type": "palladium:string_property",
+            "property": "phantom_sy:titan_skin"
+        }
+    }
+}

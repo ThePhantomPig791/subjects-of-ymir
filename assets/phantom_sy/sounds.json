@@ -1,0 +1,67 @@
+{
+    "shift": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.shift",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:shift",
+                "attenuation_distance": 96
+            }
+        ]
+    },
+    "shift_local": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.shift",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:shift_local"
+            }
+        ]
+    },
+    "electricity": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.electricity",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:electricity"
+            }
+        ]
+    },
+    "electricity_final": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.electricity",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:electricity_final"
+            }
+        ]
+    },
+    "harden": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.harden",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:harden",
+                "attenuation_distance": 64
+            }
+        ]
+    },
+    "gas_burst": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.gas_burst",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:gas_burst_1"
+            },
+            {
+                "name": "phantom_sy:gas_burst_2"
+            },
+            {
+                "name": "phantom_sy:gas_burst_3"
+            },
+            {
+                "name": "phantom_sy:gas_burst_0"
+            }
+        ]
+    }
+}

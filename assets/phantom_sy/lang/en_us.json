@@ -1,0 +1,39 @@
+{
+    "itemGroup.phantom_sy.subjects_of_ymir": "Subjects of Ymir",
+
+
+    "item.phantom_sy.emblem_smithing_template": "Emblem Smithing Template",
+
+    "item.phantom_sy.survey_corps_cloak": "Cloak",
+    "item.phantom_sy.survey_corps_jacket": "Uniform Jacket",
+    "item.phantom_sy.garrison_cloak": "Cloak",
+    "item.phantom_sy.garrison_jacket": "Uniform Jacket",
+    "item.phantom_sy.military_police_cloak": "Cloak",
+    "item.phantom_sy.military_police_jacket": "Uniform Jacket",
+
+    "item.phantom_sy.hand": "Hand",
+    
+    "item.phantom_sy.cloak": "Cloak",
+    "item.phantom_sy.uniform_jacket": "Uniform Jacket",
+    "item.phantom_sy.uniform_leggings": "Uniform Leggings",
+    "item.phantom_sy.uniform_boots": "Uniform Boots",
+
+    "item.phantom_sy.decayed_titan_spine": "Decayed Titan Spine",
+    "item.phantom_sy.titan_spine": "Titan Spine",
+    "item.phantom_sy.odm_gear": "ODM Gear",
+
+
+    "block.phantom_sy.titan_bone": "Titan Bone Block",
+
+
+
+    "death.attack.self_bite": "%s bit themselves to death",
+    "death.attack.self_cut": "%s cut themselves to death",
+
+
+
+    "subtitle.phantom_sy.shift": "Titan Shifts",
+    "subtitle.phantom_sy.electricity": "Electricity Crackles",
+    "subtitle.phantom_sy.harden": "Titan Hardens",
+    "subtitle.phantom_sy.gas_burst": "Gas Bursts"
+}

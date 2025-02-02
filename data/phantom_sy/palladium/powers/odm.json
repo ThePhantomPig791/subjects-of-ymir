@@ -1,0 +1,304 @@
+{
+    "name": "Omni-Directional Movement Gear",
+    "background": "minecraft:textures/block/oak_planks.png",
+    "icon": "phantom_sy:odm_gear",
+    "energy_bars": {
+        "gas": {
+            "color": "#c1d3e5",
+            "synced_value": {
+                "type": "palladium_property",
+                "property": "phantom_sy:odm.gas",
+                "fallback": 0
+            },
+            "max": 200
+        }
+    },
+    "abilities": {
+        "odm": {
+            "type": "phantom_sy:odm/circuits"
+        },
+        "render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:odm"
+        },
+        "air_burst": {
+            "type": "phantom_sy:odm/gas_burst",
+            "title": "Gas Burst",
+            "strength": 1,
+            "gas_cost": 3,
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": 3,
+            "bar_color": "white",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action",
+                    "key_type": "scroll_up"
+                },
+                "unlocking": [
+                    {
+                        "type": "phantom_sy:odm/gas",
+                        "min": 3
+                    },
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "handles"
+                    }
+                ]
+            }
+        },
+        "air_burst_particles": {
+            "type": "palladium:particles",
+            "emitter": "phantom_sy:odm/back_out",
+            "particle_type": "minecraft:cloud",
+            "hidden": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "air_burst"
+                }
+            }
+        },
+        "slow_fall": {
+            "type": "phantom_sy:odm/gas_slow_fall",
+            "title": "Gas Descent",
+            "gas_cost": 1,
+            "gas_chance": 0.3,
+            "hidden": false,
+            "hidden_in_bar": false,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:crouching"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:on_ground"
+                        }
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:is_in_water_or_bubble"
+                        }
+                    }
+                ],
+                "unlocking": {
+                    "type": "phantom_sy:odm/gas",
+                    "min": 1
+                }
+            }
+        },
+        "slow_fall_particles": {
+            "type": "palladium:particles",
+            "emitter": "phantom_sy:odm/down",
+            "particle_type": "minecraft:cloud",
+            "hidden": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "slow_fall"
+                }
+            }
+        },
+        "grab_sheath_animation": {
+            "type": "palladium:animation_timer",
+            "hidden": true,
+            "max_value": 6,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "palladium:animation_timer_ability",
+                            "ability": "handles",
+                            "min": 1,
+                            "max": 6
+                        },
+                        {
+                            "type": "palladium:ability_ticks",
+                            "ability": "reload_blades",
+                            "min": 1,
+                            "max": 7
+                        }
+                    ]
+                }
+            }
+        },
+        "handles": {
+            "type": "palladium:animation_timer",
+            "title": "Grab Handles",
+            "max_value": 7,
+            "list_index": 0,
+            "hidden": false,
+            "hidden_in_bar": false,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:toggle"
+                }
+            }
+        },
+        "handles_logic": {
+            "type": "phantom_sy:odm/handles",
+            "hidden": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "palladium:and",
+                            "conditions": [
+                                {
+                                    "type": "palladium:animation_timer_ability",
+                                    "ability": "handles",
+                                    "min": 1,
+                                    "max": 7
+                                },
+                                {
+                                    "type": "palladium:not",
+                                    "conditions": {
+                                        "type": "palladium:ability_enabled",
+                                        "ability": "handles"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "palladium:animation_timer_ability",
+                            "ability": "handles",
+                            "min": 7,
+                            "max": 7
+                        }
+                    ]
+                }
+            }
+        },
+        "reload_blades": {
+            "type": "palladium:dummy",
+            "title": "Reload Blades",
+            "list_index": 1,
+            "hidden": false,
+            "hidden_in_bar": false,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:activation",
+                    "ticks": 7,
+                    "cooldown": 4
+                },
+                "unlocking": [
+                    {
+                        "type": "phantom_sy:odm/handles"
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:odm/handle_blades"
+                        }
+                    },
+                    {
+                        "type": "phantom_sy:odm/sheath_blades",
+                        "min": 1
+                    }
+                ]
+            }
+        },
+        "reload_logic": {
+            "type": "phantom_sy:odm/reload_blades",
+            "hidden": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_ticks",
+                    "ability": "reload_blades",
+                    "min": 7,
+                    "max": 7
+                }
+            }
+        },
+        "drop_blades": {
+            "type": "phantom_sy:odm/drop_blades",
+            "title": "Drop Blades",
+            "list_index": 1,
+            "bar_color": "black",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action"
+                },
+                "unlocking": [
+                    {
+                        "type": "phantom_sy:odm/handles"
+                    },
+                    {
+                        "type": "phantom_sy:odm/handle_blades"
+                    }
+                ]
+            }
+        },
+        "both_arms": {
+            "type": "palladium:show_both_arms",
+            "hidden": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "handles"
+                }
+            }
+        },
+
+        "hooks": {
+            "type": "palladium:dummy",
+            "title": "Hooks",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": 2,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:toggle"
+                },
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "handles"
+                }
+            }
+        },
+        "right_hook": {
+            "type": "phantom_sy:projectile_with_offset",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "entity_type": "palladium:custom_projectile",
+            "entity_data": {
+                "Lifetime": 1200,
+                "Size": 0.5,
+                "Gravity": 0.02,
+                "CommandOnBlockHit": "odm_hook block",
+                "DieOnEntityHit": false,
+                "DieOnBlockHit": true,
+                "Appearances": [
+                    {
+                        "Type": "renderLayer",
+                        "RenderLayer": "phantom_sy:odm_hook"
+                    }
+                ],
+                "Tags": [
+                    "phantom_sy.odm.right_hook"
+                ]
+            },
+            "pitch_offset": 60,
+            "yaw_offset": 20,
+            "speed": 4,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action",
+                    "cooldown": 5,
+                    "key_type": "right_click"
+                },
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "hooks"
+                }
+            }
+        }
+    }
+}

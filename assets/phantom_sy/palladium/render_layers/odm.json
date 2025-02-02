@@ -1,0 +1,63 @@
+{
+    "type": "palladium:compound",
+    "layers": [
+        {
+            "model_layer": "phantom_sy:odm/sheaths.geo",
+            "texture": "phantom_sy:textures/models/odm/sheaths.png",
+            "conditions": {
+                "type": "phantom_sy:shift_progress",
+                "min": 0,
+                "max": 3
+            }
+        },
+        {
+            "model_layer": "phantom_sy:odm/blade_holes.geo",
+            "texture": {
+                "base": "phantom_sy:textures/models/odm/blade_holes/#COUNT.png",
+                "variables": {
+                    "COUNT": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:odm.sheath_blades",
+                        "min": 0,
+                        "max": 8
+                    }
+                }
+            },
+            "conditions": {
+                "type": "phantom_sy:shift_progress",
+                "min": 0,
+                "max": 3
+            }
+        },
+
+        {
+            "model_layer": "phantom_sy:odm/handles.geo",
+            "texture": {
+                "base": "phantom_sy:textures/models/odm/handles#SHEATHED#BLADE.png",
+                "variables": {
+                    "SHEATHED": {
+                        "type": "palladium:condition",
+                        "conditions": {
+                            "type": "phantom_sy:odm/handles"
+                        },
+                        "true_value": "",
+                        "false_value": "_sheathed"
+                    },
+                    "BLADE": {
+                        "type": "palladium:condition",
+                        "conditions": {
+                            "type": "phantom_sy:odm/handle_blades"
+                        },
+                        "true_value": "_blade",
+                        "false_value": ""
+                    }
+                }
+            },
+            "conditions": {
+                "type": "phantom_sy:shift_progress",
+                "min": 0,
+                "max": 3
+            }
+        }
+    ]
+}

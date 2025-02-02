@@ -1,0 +1,16 @@
+{
+	"structures": [
+		{
+			"structure": "phantom_sy:ruined_tower",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"spacing": 60,
+		"separation": 40,
+		"spread_type": "triangular",
+		"salt": 2374356,
+		"frequency": 0.6
+	}
+}

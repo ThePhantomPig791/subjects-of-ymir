@@ -1,0 +1,6 @@
+{
+    "type": "biome_modifier:add_features",
+    "biomes": "#minecraft:is_overworld",
+    "features": "#phantom_sy:titan_fossil",
+    "step": "underground_structures"
+  }

@@ -1,0 +1,77 @@
+{
+    "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skin.png",
+    "transformers": [
+        {
+            "type": "palladium:overlay",
+            "overlay": "phantom_sy:textures/models/titan/#TITAN/hardening/#HARDENING.png"
+        },
+        {
+            "type": "palladium:overlay",
+            "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/arms/#ARMOR_ARMS.png"
+        },
+        {
+            "type": "palladium:overlay",
+            "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/legs/#ARMOR_LEGS.png"
+        },
+        {
+            "type": "palladium:overlay",
+            "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/chest/#ARMOR_CHEST.png"
+        },
+        {
+            "type": "palladium:overlay",
+            "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/head/#ARMOR_HEAD.png"
+        },
+        {
+            "type": "palladium:alpha_mask",
+            "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+        }
+    ],
+    "variables": {
+        "PROGRESS": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:shift_progress",
+            "subtract": 3,
+            "min": 0,
+            "max": 9
+        },
+        "HARDENING": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:hardening",
+            "min": 0,
+            "max": 6
+        },
+        "TITAN": {
+            "type": "palladium:string_property",
+            "property": "phantom_sy:titan"
+        },
+        "SKIN": {
+            "type": "palladium:string_property",
+            "property": "phantom_sy:titan_skin"
+        },
+        "ARMOR_ARMS": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:armor.arms",
+            "min": 0,
+            "max": 2
+        },
+        "ARMOR_LEGS": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:armor.legs",
+            "min": 0,
+            "max": 2
+        },
+        "ARMOR_CHEST": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:armor.chest",
+            "min": 0,
+            "max": 2
+        },
+        "ARMOR_HEAD": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:armor.head",
+            "min": 0,
+            "max": 2
+        }
+    },
+    "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skin_#PROGRESS_#HARDENING_#ARMOR_ARMS"
+}

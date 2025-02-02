@@ -1,0 +1,15 @@
+{
+	"type": "minecraft:smithing_transform",
+	"template": {
+        "item": "phantom_sy:emblem_smithing_template"
+    },
+	"base": {
+		"item": "phantom_sy:uniform_jacket"
+	},
+	"addition": {
+		"tag": "c:green_dyes"
+	},
+	"result": {
+		"item": "phantom_sy:military_police_jacket"
+	}
+}

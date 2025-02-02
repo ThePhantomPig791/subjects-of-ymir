@@ -1,0 +1,5 @@
+{
+    "model_type": "palladium:basic",
+    "model_layer": "phantom_sy:odm/hook.geo",
+    "texture": "phantom_sy:textures/models/odm/hook.png"
+}

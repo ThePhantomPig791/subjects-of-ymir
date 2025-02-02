@@ -1,0 +1,392 @@
+{
+    "type": "palladium:compound",
+    "layers": [
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_skin",
+            "first_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:shift_progress",
+                        "subtract": 5,
+                        "min": 0,
+                        "max": 9
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair_#PROGRESS"
+            },
+            "first_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair.png",
+                "transformers": [
+                    {
+                        "type": "palladium:color",
+                        "color": "##HAIR",
+                        "ignore_blank": true
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:shift_progress",
+                        "subtract": 5,
+                        "min": 0,
+                        "max": 9
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    },
+                    "HAIR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_hair_color"
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair_#PROGRESS_#HAIR"
+            },
+            "first_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:shift_progress",
+                        "subtract": 6,
+                        "min": 0,
+                        "max": 9
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes_#PROGRESS"
+            },
+            "render_type": "glow",
+            "first_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes.png",
+                "transformers": [
+                    {
+                        "type": "palladium:color",
+                        "color": "##EYES",
+                        "ignore_blank": true
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:shift_progress",
+                        "subtract": 6,
+                        "min": 0,
+                        "max": 9
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    },
+                    "EYES": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_eye_color"
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes_#PROGRESS_#EYES"
+            },
+            "render_type": "glow",
+            "first_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+
+
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/skeleton.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    }
+                }
+            },
+            "texture": {
+                "base": "minecraft:textures/entity/skeleton/skeleton.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/skeleton_shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:shift_progress",
+                        "min": 0,
+                        "max": 9
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/skeleton_#PROGRESS"
+            },
+            "first_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/muscle.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/muscle.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:shift_progress",
+                        "subtract": 2,
+                        "min": 0,
+                        "max": 9
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/muscle_#TITAN_#SKIN_#PROGRESS"
+            },
+            "first_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/hands.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_skin",
+            "third_person_conditions": false,
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+
+        {
+            "type": "palladium:skin_overlay",
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/marks.png",
+                "variables": {
+                    "MARKS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:marks",
+                        "min": 0,
+                        "max": 255
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    }
+                },
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/normal/#MARKS.png"
+                    }
+                ],
+                "output": "phantom_sy:textures/models/titan/#TITAN/marks_#MARKS"
+            },
+            "conditions": {
+                "type": "phantom_sy:has_titan_skin"
+            }
+        },
+
+        {
+            "type": "palladium:skin_overlay",
+            "texture": {
+                "base": "phantom_sy:textures/models/shift_glow.png",
+                "variables": {
+                    "GLOW": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:charge_glow",
+                        "subtract": 20,
+                        "min": 0,
+                        "max": 255
+                    }
+                },
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/normal/#GLOW.png"
+                    }
+                ],
+                "output": "phantom_sy:textures/models/shift_glow_#GLOW"
+            },
+            "render_type": "glow"
+        }
+    ]
+}

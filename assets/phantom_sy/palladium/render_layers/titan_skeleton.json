@@ -1,0 +1,472 @@
+{
+    "type": "palladium:compound",
+    "layers": [
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/skeleton.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    }
+                }
+            },
+            "texture": {
+                "base": "minecraft:textures/entity/skeleton/skeleton.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/small/#DECAY.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/skeleton_shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "DECAY": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.decay",
+                        "min": 0,
+                        "max": 255
+                    },
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.shift_progress",
+                        "min": 0,
+                        "max": 9
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/skeleton_decay_#DECAY_#PROGRESS"
+            },
+            "hidden_body_parts": [
+                "head",
+                "chest",
+                "left_arm",
+                "right_arm",
+                "left_leg",
+                "right_leg"
+            ],
+            "conditions": {
+                "type": "phantom_sy:has_skeleton_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/muscle.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/muscle.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/big/#DECAY.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "DECAY": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.decay",
+                        "subtract": 100,
+                        "min": 0,
+                        "max": 255
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    },
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.shift_progress",
+                        "subtract": 2,
+                        "min": 0,
+                        "max": 9
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/muscle_decay_#TITAN_#SKIN_#DECAY_#PROGRESS.png"
+            },
+            "conditions": {
+                "type": "phantom_sy:has_skeleton_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skin.png",
+                "transformers": [
+                    {
+                        "type": "palladium:overlay",
+                        "overlay": "phantom_sy:textures/models/titan/#TITAN/hardening/#HARDENING.png"
+                    },
+                    {
+                        "type": "palladium:overlay",
+                        "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/arms/#ARMOR_ARMS.png"
+                    },
+                    {
+                        "type": "palladium:overlay",
+                        "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/legs/#ARMOR_LEGS.png"
+                    },
+                    {
+                        "type": "palladium:overlay",
+                        "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/chest/#ARMOR_CHEST.png"
+                    },
+                    {
+                        "type": "palladium:overlay",
+                        "overlay": "phantom_sy:textures/models/titan/#TITAN/armor/head/#ARMOR_HEAD.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/big/#DECAY.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "DECAY": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.decay",
+                        "subtract": 140,
+                        "min": 0,
+                        "max": 255
+                    },
+                    "HARDENING": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.hardening",
+                        "min": 0,
+                        "max": 6
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    },
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.shift_progress",
+                        "subtract": 3,
+                        "min": 0,
+                        "max": 9
+                    },
+                    "ARMOR_ARMS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.armor.arms",
+                        "min": 0,
+                        "max": 2
+                    },
+                    "ARMOR_LEGS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.armor.legs",
+                        "min": 0,
+                        "max": 2
+                    },
+                    "ARMOR_CHEST": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.armor.chest",
+                        "min": 0,
+                        "max": 2
+                    },
+                    "ARMOR_HEAD": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.armor.head",
+                        "min": 0,
+                        "max": 2
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skin_decay_#DECAY_#HARDENING_#PROGRESS.png"
+            },
+            "conditions": {
+                "type": "phantom_sy:has_skeleton_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/big/#DECAY.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "DECAY": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.decay",
+                        "subtract": 150,
+                        "min": 0,
+                        "max": 255
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    },
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.shift_progress",
+                        "subtract": 5,
+                        "min": 0,
+                        "max": 9
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair_decay_#DECAY_#PROGRESS.png"
+            },
+            "conditions": {
+                "type": "phantom_sy:has_skeleton_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair.png",
+                "transformers": [
+                    {
+                        "type": "palladium:color",
+                        "color": "##HAIR",
+                        "ignore_blank": true
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/big/#DECAY.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "DECAY": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.decay",
+                        "subtract": 150,
+                        "min": 0,
+                        "max": 255
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    },
+                    "HAIR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_hair_color"
+                    },
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.shift_progress",
+                        "subtract": 5,
+                        "min": 0,
+                        "max": 9
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/hair_decay_#DECAY_#HAIR_#PROGRESS.png"
+            },
+            "conditions": {
+                "type": "phantom_sy:has_skeleton_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes.png",
+                "transformers": [
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/big/#DECAY.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "DECAY": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.decay",
+                        "subtract": 350,
+                        "min": 0,
+                        "max": 255
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    },
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.shift_progress",
+                        "subtract": 6,
+                        "min": 0,
+                        "max": 9
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes_decay_#DECAY.png"
+            },
+            "render_type": "glow",
+            "conditions": {
+                "type": "phantom_sy:has_skeleton_titan_skin"
+            }
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/#TITAN/#SKIN/titan.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes.png",
+                "transformers": [
+                    {
+                        "type": "palladium:color",
+                        "color": "##EYES",
+                        "ignore_blank": true
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/decay/big/#DECAY.png"
+                    },
+                    {
+                        "type": "palladium:alpha_mask",
+                        "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+                    }
+                ],
+                "variables": {
+                    "DECAY": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.decay",
+                        "subtract": 350,
+                        "min": 0,
+                        "max": 255
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_skin"
+                    },
+                    "EYES": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:skeleton.titan_eye_color"
+                    },
+                    "PROGRESS": {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:skeleton.shift_progress",
+                        "subtract": 6,
+                        "min": 0,
+                        "max": 9
+                    }
+                },
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/eyes_decay_#DECAY_#EYES.png"
+            },
+            "render_type": "glow",
+            "conditions": {
+                "type": "phantom_sy:has_skeleton_titan_skin"
+            }
+        }
+    ]
+}

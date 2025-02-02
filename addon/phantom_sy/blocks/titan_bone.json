@@ -1,0 +1,9 @@
+{
+    "map_color": "minecraft:color_gray",
+    "sound_type": "minecraft:bone_block",
+    "destroy_time": 2,
+    "explosion_resistance": 5,
+    "requires_correct_tool_for_drops": true,
+    "register_item": true,
+    "creative_mode_tab": "phantom_sy:subjects_of_ymir"
+}

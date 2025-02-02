@@ -1,0 +1,26 @@
+{
+    "textures": {
+        "default": "phantom_sy:textures/models/armor/uniform/cowl/0.png",
+        "open": {
+            "base": "phantom_sy:textures/models/armor/uniform/cowl/#OPEN.png",
+            "variables": {
+                "OPEN": {
+                  "type": "palladium:openable_equipment_progress"
+                }
+            }
+        }
+    },
+    "model_layers": "phantom_sy:jacket/humanoid",
+    "render_layers": [
+        {
+            "model_layer": {
+                "normal": "phantom_sy:jacket/humanoid",
+                "slim": "phantom_sy:jacket_slim/humanoid"
+            },
+            "texture": {
+                "normal": "phantom_sy:textures/models/armor/uniform/cloak.png",
+                "slim": "phantom_sy:textures/models/armor/uniform/cloak_slim.png"
+            }
+        }
+    ]
+}

@@ -1,0 +1,60 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.minecraft:skeleton#main",
+				"texture_width": 512,
+				"texture_height": 256,
+				"visible_bounds_width": 7,
+				"visible_bounds_height": 18,
+				"visible_bounds_offset": [0, -1, 0]
+			},
+			"bones": [
+				{
+					"name": "armorHead",
+					"pivot": [0, 37, -4],
+					"cubes": [
+						{"origin": [-32, 37, -36], "size": [64, 64, 64], "inflate": -2, "uv": [0, 0]},
+						{"origin": [-32, 37, -36], "size": [64, 64, 64], "inflate": -1.5, "uv": [256, 0]}
+					]
+				},
+				{
+					"name": "armorRightArm",
+					"pivot": [-40, 21, -4],
+					"cubes": [
+						{"origin": [-48, -59, -12], "size": [16, 96, 16], "inflate": -1, "uv": [0, 128]}
+					]
+				},
+				{
+					"name": "armorLeftLeg",
+					"pivot": [16, -59, -4],
+					"cubes": [
+						{"origin": [8, -155, -12], "size": [16, 96, 16], "inflate": -1, "uv": [320, 128], "mirror": true}
+					]
+				},
+				{
+					"name": "armorLeftArm",
+					"pivot": [40, 21, -4],
+					"cubes": [
+						{"origin": [32, -59, -12], "size": [16, 96, 16], "inflate": -1, "uv": [0, 128], "mirror": true}
+					]
+				},
+				{
+					"name": "armorRightLeg",
+					"pivot": [-16, -59, -4],
+					"cubes": [
+						{"origin": [-24, -155, -12], "size": [16, 96, 16], "inflate": -1, "uv": [320, 128]}
+					]
+				},
+				{
+					"name": "armorBody",
+					"pivot": [0, 37, -4],
+					"cubes": [
+						{"origin": [-32, -59, -20], "size": [64, 96, 32], "inflate": -2, "uv": [128, 128]}
+					]
+				}
+			]
+		}
+	]
+}
