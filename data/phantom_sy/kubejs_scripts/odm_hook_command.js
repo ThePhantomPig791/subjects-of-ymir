@@ -1,3 +1,5 @@
+let NbtUtils = Java.loadClass("net.minecraft.nbt.NbtUtils");
+
 ServerEvents.commandRegistry(event => {
     const { commands: Commands, arguments: Arguments } = event;
 
@@ -14,17 +16,22 @@ ServerEvents.commandRegistry(event => {
                 const entity = ctx.source.entity;
                 if (entity.type != 'palladium:custom_projectile') {
                     entity.tell('This command is meant for internal use by the ODM hooks. Please don\'t execute it yourself!');
+                    console.log('fail')
                     return 0;
                 }
 
-                let hookStationary = entity.level.createEntity('minecraft:armor_stand');
-                hookStationary.mergeNbt({ NoGravity: 1 });
-                hookStationary.teleportTo(entity.x, entity.y, entity.z);
-                palladium.setProperty(hookStationary, 'phantom_sy:odm_hook.owner', entity.nbt.Owner);
-                // superpowerUtil.addSuperpower(hookStationary, 'phantom_sy:odm_hook');
-                hookStationary.spawn();
+                let owner = entity.server.playerList.getPlayer(NbtUtils.loadUUID(entity.nbt.Owner));
+                palladium.setProperty(owner, 'phantom_sy:odm.hook.right.x', entity.x);
+                palladium.setProperty(owner, 'phantom_sy:odm.hook.right.y', entity.y);
+                palladium.setProperty(owner, 'phantom_sy:odm.hook.right.z', entity.z);
+                owner.tell('jhio')
+                console.log(owner)
+                console.log(entity.x)
+                console.log(palladium.getProperty(owner, 'phantom_sy:odm.hook.right.x'));
 
-                entity.remove("discarded");
+                entity.discard();
+
+                console.log('hit')
 
                 return 1;
             })

@@ -38,6 +38,8 @@ StartupEvents.registry('palladium:abilities', event => {
                     if (entity.isPlayer() && charge % 30 == 0) {
                         entity.sendData('phantom_sy:vfx_explosion', {type: 'shockwaveRing', x: entity.x, y: entity.y + 1, z: entity.z, particleType: 'minecraft:cloud'});
                     }
+
+                    entity.potionEffects.add('phantom_sy:glowing', 10, 0, true, false);
                 } else {
                     entry.setUniquePropertyByName('progress', 1);
                     palladium.setProperty(entity, 'phantom_sy:is_charging_shift', false);

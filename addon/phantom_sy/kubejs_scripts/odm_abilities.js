@@ -21,6 +21,17 @@ StartupEvents.registry('palladium:abilities', event => {
                 if (odmItem.nbt.sheath_blades == null) odmItem.nbt.sheath_blades = 0;
                 palladium.setProperty(entity, 'phantom_sy:odm.sheath_blades', odmItem.nbt.sheath_blades);
             }
+
+            // hooks
+            let rightHookX = palladium.getProperty(entity, 'phantom_sy:odm.hook.right.x');
+            let rightHookY = palladium.getProperty(entity, 'phantom_sy:odm.hook.right.y');
+            let rightHookZ = palladium.getProperty(entity, 'phantom_sy:odm.hook.right.z');
+            // console.log(rightHookX + ', ' + rightHookY + ', ' + rightHookZ)
+            if (rightHookX != null && rightHookY != null && rightHookZ != null) {
+                applyHookVelocity(entity, rightHookX, rightHookY, rightHookZ, 0.02, 0.01, 0.02);
+
+                global.drawParticleLine(entity, rightHookX, rightHookY, rightHookZ);
+            }
         })
         .lastTick((entity, entry, holder, enabled) => {
             palladium.setProperty(entity, 'phantom_sy:odm.gas', 0);
@@ -39,7 +50,7 @@ StartupEvents.registry('palladium:abilities', event => {
 
         .tick((entity, entry, holder, enabled) => {
             if (enabled) {
-                if (Math.random() <= entry.getPropertyByName('gas_chance')) depleteGas(entity, entry.getPropertyByName('gas_cost'));
+                depleteGasChance(entity, entry.getPropertyByName('gas_cost'), entry.getPropertyByName('gas_chance'));
                 global.playSoundToAll(entity, 16, 'phantom_sy:gas_burst', 'PLAYERS', 1, 0.7 + Math.random() * 0.2);
 
                 let strength = entry.getPropertyByName('strength');
@@ -59,7 +70,7 @@ StartupEvents.registry('palladium:abilities', event => {
 
         .tick((entity, entry, holder, enabled) => {
             if (enabled) {
-                if (Math.random() <= entry.getPropertyByName('gas_chance')) depleteGas(entity, entry.getPropertyByName('gas_cost'));
+                depleteGasChance(entity, entry.getPropertyByName('gas_cost'), entry.getPropertyByName('gas_chance'));
                 global.playSoundToAll(entity, 16, 'phantom_sy:gas_burst', 'PLAYERS', 0.3, 1.4 + Math.random() * 0.2);
 
                 entity.addDeltaMovement(new Vec3(0, 0.05, 0));
@@ -113,6 +124,25 @@ StartupEvents.registry('palladium:abilities', event => {
                 global.playSoundToAll(entity, 16, 'minecraft:block.iron_trapdoor.open', 'PLAYERS', 0.3, 1.8);
             }
         });
+
+    event.create('phantom_sy:odm/hook')
+        .addProperty('hook', 'string', 'right', '\'right\' or \'left\'')
+        .addProperty('play_sound', 'boolean', true, 'If this plays the ODM shoot hook sound (set to false when this should just remove the hook)')
+        .addProperty('gas_cost', 'integer', 1, 'How much gas to remove (set to 0 when this should just remove the hook)')
+        .firstTick((entity, entry, holder, enabled) => {
+            if (enabled) {
+                let hook = entry.getPropertyByName('hook');
+                palladium.setProperty(entity, `phantom_sy:odm.hook.${hook}.x`, null);
+                palladium.setProperty(entity, `phantom_sy:odm.hook.${hook}.y`, null);
+                palladium.setProperty(entity, `phantom_sy:odm.hook.${hook}.z`, null);
+
+                depleteGas(entity, entry.getPropertyByName('gas_cost'));
+
+                if (entry.getPropertyByName('play_sound') == true) {
+                    global.playSoundToAll(entity, 16, 'minecraft:block.iron_trapdoor.close', 'PLAYERS', 0.1, 0.6);
+                }
+            }
+        });
 });
 
 function getOdm(entity) {
@@ -124,6 +154,39 @@ function getOdm(entity) {
     }
 }
 
+function depleteGasChance(entity, amount, chance) {
+    if (Math.random() <= chance) depleteGas(entity, amount);
+}
 function depleteGas(entity, amount) {
     getOdm(entity).nbt.gas -= amount;
+}
+
+function applyHookVelocity(entity, targetX, targetY, targetZ, xStrength, yStrength, zStrength) {
+    // took this from my old bad spiderman addonpack. i have no idea what it's doing
+    var v = [(targetX - entity.x) * xStrength, (targetY - entity.y) * yStrength, (targetZ - entity.z) * zStrength];
+    v.forEach(element => {
+        element = element - (Math.floor(entity.motionX + entity.motionY + entity.motionZ) / 2)
+        if (Math.abs(element) > 1.5) {
+            element = element * 0.1;
+        }
+    });
+
+    entity.addMotion(v[0], v[1], v[2]);
+    if (entity.isPlayer()) entity.connection.send(new ClientboundSetEntityMotionPacket(entity));
+    //if (v[1] >= 0) e.fallDistance = 0;
+}
+
+global.drawParticleLine = function(entity, xf, yf, zf) {
+    let x = entity.x, y = entity.y, z = entity.z;
+    let dist = (xf - x) * (xf - x) + (yf - y) * (yf - y) + (zf - z) * (zf - z);
+    let numParticles = dist / 1;
+    let dx = xf - x, dy = yf - y, dz = zf - z;
+    let incx = dx / numParticles, incy = dy / numParticles, incz = dz / numParticles;
+
+    for (let i = 0; i < numParticles; i++) {
+        entity.level.sendParticles('minecraft:dust 0 0 0 0.1', x, y, z, /*count*/ 1, 0, 0, 0, /*speed*/ 0);
+        x += incx;
+        y += incy;
+        z += incz;
+    }
 }

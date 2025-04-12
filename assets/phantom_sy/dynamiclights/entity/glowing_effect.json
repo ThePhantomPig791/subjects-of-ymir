@@ -1,0 +1,8 @@
+{
+    "match": {
+        "effects": {
+            "phantom_sy:glowing": {}
+        }
+    },
+	"luminance": 10
+}

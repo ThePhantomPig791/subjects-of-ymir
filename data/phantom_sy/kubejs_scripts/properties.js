@@ -49,6 +49,10 @@ PalladiumEvents.registerProperties((event) => {
         event.registerProperty('phantom_sy:odm.handles', 'boolean', false); //
         event.registerProperty('phantom_sy:odm.sheath_blades', 'integer', 0); //
         event.registerProperty('phantom_sy:odm.handle_blades', 'boolean', false); //
+
+        event.registerProperty('phantom_sy:odm.hook.right.x', 'double', null);
+        event.registerProperty('phantom_sy:odm.hook.right.y', 'double', null);
+        event.registerProperty('phantom_sy:odm.hook.right.z', 'double', null);
     }
 
     if (event.getEntityType() === 'minecraft:skeleton') {        
@@ -65,9 +69,5 @@ PalladiumEvents.registerProperties((event) => {
         event.registerProperty('phantom_sy:skeleton.armor.legs', 'integer', 0); //
         event.registerProperty('phantom_sy:skeleton.armor.chest', 'integer', 0); //
         event.registerProperty('phantom_sy:skeleton.armor.head', 'integer', 0); //
-    }
-
-    if (event.getEntityType() === 'minecraft:armor_stand') {
-        event.registerProperty('phantom_sy:odm_hook.owner', 'uuid', null);
     }
 });

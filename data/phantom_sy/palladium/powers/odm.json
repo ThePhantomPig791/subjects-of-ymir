@@ -299,6 +299,48 @@
                     "ability": "hooks"
                 }
             }
+        },
+        "right_hook_activate": {
+            "type": "phantom_sy:odm/hook",
+            "hidden": true,
+            "hook": "right",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "right_hook"
+                }
+            }
+        },
+
+        "remove_hooks": {
+            "type": "palladium:dummy",
+            "title": "Remove Hooks",
+            "icon": "minecraft:redstone",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": 4,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action"
+                },
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "handles"
+                }
+            }
+        },
+        "right_hook_remove": {
+            "type": "phantom_sy:odm/hook",
+            "hidden": true,
+            "hook": "right",
+            "play_sound": false,
+            "gas_cost": 0,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "remove_hooks"
+                }
+            }
         }
     }
 }
