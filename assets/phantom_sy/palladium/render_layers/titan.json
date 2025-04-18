@@ -252,7 +252,7 @@
                 }
             },
             "texture": {
-                "base": "minecraft:textures/entity/skeleton/skeleton.png",
+                "base": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skeleton.png",
                 "transformers": [
                     {
                         "type": "palladium:alpha_mask",
@@ -265,9 +265,17 @@
                         "property": "phantom_sy:shift_progress",
                         "min": 0,
                         "max": 9
+                    },
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "SKIN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_skin"
                     }
                 },
-                "output": "phantom_sy:textures/models/titan/skeleton_#PROGRESS"
+                "output": "phantom_sy:textures/models/titan/#TITAN/#SKIN/skeleton_#PROGRESS"
             },
             "first_person_conditions": false,
             "conditions": {
