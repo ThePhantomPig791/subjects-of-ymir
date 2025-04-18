@@ -39,7 +39,7 @@ StartupEvents.registry('palladium:abilities', event => {
             palladium.setProperty(entity, 'phantom_sy:odm.handles', false);
             if (palladium.getProperty(entity, 'phantom_sy:odm.handle_blades')) {
                 palladium.setProperty(entity, 'phantom_sy:odm.handle_blades', false);
-                entity.block.popItem('minecraft:iron_nugget'); // replace with blade item later
+                entity.block.popItem('phantom_sy:odm_blade'); // do i need two of these? figure it out later
             }
         });
 
@@ -118,7 +118,7 @@ StartupEvents.registry('palladium:abilities', event => {
         .firstTick((entity, entry, holder, enabled) => {
             if (enabled) {
                 palladium.setProperty(entity, 'phantom_sy:odm.handle_blades', false);
-                entity.block.popItem('minecraft:iron_nugget'); // replace with blade item later
+                entity.block.popItem('phantom_sy:odm_blade'); // do i need two of these? figure it out later
 
                 global.playSoundToAll(entity, 16, 'minecraft:block.iron_trapdoor.close', 'PLAYERS', 0.1, 1.9);
                 global.playSoundToAll(entity, 16, 'minecraft:block.iron_trapdoor.open', 'PLAYERS', 0.3, 1.8);
