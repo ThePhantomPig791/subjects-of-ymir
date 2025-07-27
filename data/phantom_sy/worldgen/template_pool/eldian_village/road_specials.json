@@ -1,0 +1,33 @@
+{
+    "name": "phantom_sy:eldian_village/roads",
+    "fallback": "phantom_sy:eldian_village/terminators",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/road_specials/fountain",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/road_specials/stalls",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/road_specials/flowers",
+                "projection": "terrain_matching",
+                "processors": "phantom_sy:eldian_village/path"
+            }
+        }
+    ]
+}

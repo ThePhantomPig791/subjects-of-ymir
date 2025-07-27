@@ -1,0 +1,7 @@
+{
+    "icon": "phantom_sy:textures/gui/accessory_slots/eyes.png",
+    "menu_visibility": {
+        "type": "palladium:has_power",
+        "power": "phantom_sy:shifter"
+    }
+}

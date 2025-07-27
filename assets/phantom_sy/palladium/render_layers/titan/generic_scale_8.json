@@ -1,0 +1,138 @@
+{
+    "type": "palladium:compound",
+    "layers": [
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/titan/#TITAN/#VAR/skeleton.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "VAR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_variant"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_skeleton",
+            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_controller": [
+                {
+                    "name": "scale",
+                    "transition_tick_time": 0,
+                    "animation": "scale"
+                }
+            ],
+            "first_person_conditions": false
+        },
+
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/titan/#TITAN/#VAR/muscle.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "VAR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_variant"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_muscle",
+            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_controller": [
+                {
+                    "name": "scale",
+                    "transition_tick_time": 0,
+                    "animation": "scale"
+                }
+            ],
+            "first_person_conditions": false
+        },
+
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/titan/#TITAN/#VAR/skin.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "VAR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_variant"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_skin",
+            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_controller": [
+                {
+                    "name": "scale",
+                    "transition_tick_time": 0,
+                    "animation": "scale"
+                }
+            ],
+            "first_person_conditions": false
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/titan/#TITAN/#VAR/skin.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "VAR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_variant"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_eyes",
+            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_controller": [
+                {
+                    "name": "scale",
+                    "transition_tick_time": 0,
+                    "animation": "scale"
+                }
+            ],
+            "first_person_conditions": false,
+            "render_type": "glow"
+        },
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/titan/#TITAN/#VAR/skin.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "VAR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_variant"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_hair",
+            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_controller": [
+                {
+                    "name": "scale",
+                    "transition_tick_time": 0,
+                    "animation": "scale"
+                }
+            ],
+            "first_person_conditions": false
+        }
+    ]
+}

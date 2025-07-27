@@ -1,0 +1,18 @@
+{
+    "model_layer": "palladium:humanoid#tight_suit",
+    "texture": {
+        "base": "phantom_sy:textures/models/eyes/#EYES.png",
+        "variables": {
+            "EYES": {
+                "type": "palladium:accessory",
+                "accessory_slot": "phantom_sy:eyes",
+                "fallback_value": "normal"
+            }
+        }
+    },
+    "render_type": "glow",
+    "conditions": {
+        "type": "palladium:in_accessory_slot_menu",
+        "accessory_slot": "phantom_sy:eyes"
+    }
+}

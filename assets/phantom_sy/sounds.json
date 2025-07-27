@@ -1,0 +1,21 @@
+{
+    "shift": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.shift",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:shift",
+                "attenuation_distance": 96
+            }
+        ]
+    },
+    "shift_local": { 
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.shift",
+        "sounds": [ 
+            {
+                "name": "phantom_sy:shift_local"
+            }
+        ]
+    }
+}

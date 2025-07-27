@@ -1,0 +1,19 @@
+{
+    "replace": false,
+    "values": [
+        "#minecraft:has_structure/village_plains",
+        "minecraft:forest",
+        "minecraft:flower_forest",
+        "minecraft:sunflower_plains",
+        "minecraft:meadow",
+        "minecraft:snowy_plains",
+        {
+            "id": "#c:plains",
+            "required": false
+        },
+        {
+            "id": "#c:forest",
+            "required": false
+        }
+    ]
+}

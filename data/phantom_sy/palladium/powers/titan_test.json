@@ -1,0 +1,30 @@
+{
+    "name": "Test Titan",
+    "background": "minecraft:textures/block/bone_block_side.png",
+    "icon": "flint_and_steel",
+    "ability_bar_texture": "phantom_sy:textures/gui/ability_bars/titan.png",
+    "persistent_data": true,
+    "abilities": {
+        "unshift": {
+            "type": "phantom_sy:unshift",
+            "title": "Eject",
+            "icon": "phantom_sy:textures/icons/unshift.png",
+            "list_index": 4,
+            "bar_color": "red",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action"
+                },
+                "unlocking": {
+                    "type": "phantom_sy:progress",
+                    "min": 15,
+                    "max": 15
+                }
+            }
+        },
+        "render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:titan/generic_scale_8"
+        }
+    }
+}

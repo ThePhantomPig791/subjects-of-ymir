@@ -1,0 +1,38 @@
+{
+    "base": "phantom_sy:textures/models/titans/#TITAN/#VAR/hair.png",
+    "variables": {
+        "TITAN": {
+            "type": "palladium:string_property",
+            "property": "phantom_sy:titan"
+        },
+        "VAR": {
+            "type": "palladium:string_property",
+            "property": "phantom_sy:titan_variant"
+        },
+        "PROGRESS": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:progress",
+            "subtract": 5,
+            "min": 0,
+            "max": 9
+        },
+        "DECAY": {
+            "type": "palladium:integer_property",
+            "property": "phantom_sy:decay",
+            "subtract": 150,
+            "min": 0,
+            "max": 255
+        }
+    },
+    "transformers": [
+        {
+            "type": "palladium:alpha_mask",
+            "mask": "phantom_sy:textures/models/alpha_masks/shift/#PROGRESS.png"
+        },
+        {
+            "type": "palladium:alpha_mask",
+            "mask": "phantom_sy:textures/models/alpha_masks/decay/big/#DECAY.png"
+        }
+    ],
+    "output": "phantom_sy:textures/models/titans/#TITAN/hair_#PROGRESS_#DECAY"
+}

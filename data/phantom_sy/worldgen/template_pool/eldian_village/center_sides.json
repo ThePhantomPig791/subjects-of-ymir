@@ -1,0 +1,69 @@
+{
+    "name": "phantom_sy:eldian_village/center_sides",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/center_sides/center_side_1",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/center_sides/center_side_2",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/center_sides/center_side_3",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/center_sides/center_side_4",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/center_sides/center_side_5",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/center_sides/center_side_6",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/center_sides/center_side_7",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        }
+    ]
+}

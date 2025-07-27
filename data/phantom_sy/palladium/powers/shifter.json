@@ -1,0 +1,241 @@
+{
+    "name": "Titan Shifter",
+    "background": "minecraft:textures/block/bone_block_top.png",
+    "icon": "bone",
+    "ability_bar_texture": "phantom_sy:textures/gui/ability_bars/shifter.png",
+    "persistent_data": true,
+    "abilities": {
+        "titan_shifter": {
+            "type": "phantom_sy:shift",
+            "title": "Shift",
+            "list_index": 0,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                },
+                "unlocking": [
+                    {
+                        "type": "palladium:or",
+                        "conditions": [
+                            {
+                                "type": "palladium:integer_property",
+                                "property": "phantom_sy:can_shift",
+                                "min": 1,
+                                "max": 999
+                            },
+                            {
+                                "type": "phantom_sy:creative_mode"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "min": 0,
+                        "max": 0
+                    },
+                    {
+                        "type": "palladium:ability_integer_property",
+                        "ability": "titan_shifter",
+                        "property": "healing_phase_ticks",
+                        "min": 0,
+                        "max": 0
+                    }
+                ]
+            }
+        },
+
+        "bite": {
+            "type": "phantom_sy:bite",
+            "title": "Bite",
+            "icon": "redstone",
+            "list_index": 0,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                },
+                "unlocking": [
+                    {
+                        "type": "palladium:integer_property",
+                        "property": "phantom_sy:can_shift",
+                        "min": 0,
+                        "max": 0
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "min": 0,
+                        "max": 0
+                    },
+                    {
+                        "type": "palladium:ability_integer_property",
+                        "ability": "titan_shifter",
+                        "property": "healing_phase_ticks",
+                        "min": 0,
+                        "max": 0
+                    },
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "palladium:ability_enabled",
+                            "ability": "titan_shifter"
+                        }
+                    }
+                ]
+            }
+        },
+        "bite_anim": {
+            "type": "palladium:animation_timer",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "start_value": 0,
+            "max_value": 10,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "bite"
+                }
+            }
+        },
+        "bite_show_arms": {
+            "type": "palladium:show_both_arms",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_integer_property",
+                    "ability": "bite",
+                    "property": "timer",
+                    "min": 1,
+                    "max": 9999999
+                }
+            }
+        },
+
+        "charge_render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:charge",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_integer_property",
+                    "ability": "titan_shifter",
+                    "property": "charge",
+                    "min": 1,
+                    "max": 999
+                }
+            }
+        },
+        "charge_eyes_render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:charge_eyes"
+        },
+        "shift_lightning_render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:shift_lightning",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:progress",
+                    "min": 1,
+                    "max": 14
+                }
+            }
+        },
+        "charge_throw_embers": {
+            "type": "phantom_sy:throw_lightning_embers",
+            "hidden": true,
+            "amount": 2,
+            "chance": 0.25,
+            "list_index": 4,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_integer_property",
+                        "ability": "titan_shifter",
+                        "property": "charge",
+                        "min": 1,
+                        "max": 999
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "min": 0,
+                        "max": 0
+                    }
+                ]
+            }
+        },
+        "charge_throw_more_embers": {
+            "type": "phantom_sy:throw_lightning_embers",
+            "hidden": true,
+            "amount": 2,
+            "chance": 1,
+            "list_index": 4,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_integer_property",
+                        "ability": "titan_shifter",
+                        "property": "charge",
+                        "min": 20,
+                        "max": 999
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "min": 0,
+                        "max": 0
+                    }
+                ]
+            }
+        },
+
+        "healing_phase": {
+            "type": "palladium:render_layer",
+            "hidden": true,
+            "render_layer": "phantom_sy:healing_phase",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:in_healing_phase"
+                }
+            }
+        },
+        "healing_phase_damage": {
+            "type": "phantom_sy:damage_in_radius",
+            "hidden": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "healing_phase"
+                }
+            }
+        },
+        "healing_phase_throw_embers": {
+            "type": "phantom_sy:throw_lightning_embers",
+            "hidden": true,
+            "amount": 3,
+            "entity_chance": 0.75,
+            "list_index": 4,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "healing_phase"
+                }
+            }
+        },
+
+        "marks": {
+            "type": "palladium:render_layer",
+            "hidden": true,
+            "render_layer": "phantom_sy:marks"
+        },
+
+        
+        "throw_embers_test": {
+            "type": "phantom_sy:throw_lightning_embers",
+            "amount": 3,
+            "entity_chance": 0.75,
+            "list_index": 4,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "type": "palladium:skin_overlay",
+    "texture": {
+        "base": "phantom_sy:textures/models/titans/#TITAN/#VAR/marks.png",
+        "variables": {
+            "MARKS": {
+                "type": "palladium:integer_property",
+                "property": "phantom_sy:marks",
+                "min": 0,
+                "max": 255
+            },
+            "TITAN": {
+                "type": "palladium:string_property",
+                "property": "phantom_sy:titan"
+            },
+            "VAR": {
+                "type": "palladium:string_property",
+                "property": "phantom_sy:titan_variant"
+            }
+        },
+        "transformers": [
+            {
+                "type": "palladium:alpha_mask",
+                "mask": "phantom_sy:textures/models/alpha_masks/decay/normal/#MARKS.png"
+            }
+        ],
+        "output": "phantom_sy:textures/models/titans/#TITAN/marks_#MARKS"
+    }
+}

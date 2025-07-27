@@ -1,0 +1,51 @@
+{
+    "name": "phantom_sy:eldian_village/houses",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 4,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/houses/barn",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 4,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/houses/house_1",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/houses/house_2",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/houses/house_2a",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/houses/farm",
+                "projection": "rigid",
+                "processors": "phantom_sy:eldian_village/farm"
+            }
+        }
+    ]
+}
