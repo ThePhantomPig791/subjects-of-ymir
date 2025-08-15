@@ -17,8 +17,4 @@ StartupEvents.registry('palladium:condition_serializer', (event) => {
         .test((entity, properties) => {
             return palladium.getProperty(entity, 'phantom_sy:in_healing_phase') == true;
         })
-    event.create('phantom_sy:creative_mode')
-        .test((entity, properties) => {
-            return entity.isCreative() == true;
-        })
 })

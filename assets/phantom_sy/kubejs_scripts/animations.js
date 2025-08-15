@@ -1,4 +1,4 @@
-const Mth = Java.loadClass('net.minecraft.util.Mth');
+let Mth = Java.loadClass('net.minecraft.util.Mth');
 
 PalladiumEvents.registerAnimations((event) => {
     event.register('phantom_sy/titan_y_displacement', 10, (builder) => {
@@ -17,18 +17,17 @@ PalladiumEvents.registerAnimations((event) => {
     });
 
     event.register('phantom_sy/bite', 10, (builder) => {
-        const armType = builder.getPlayer().getMainArm().toString().toLowerCase();
-
         const progress = animationUtil.getAnimationTimerAbilityValue(builder.getPlayer(), 'phantom_sy:shifter', 'bite_anim', builder.getPartialTicks());
 
         if (progress > 0) {
+            const armType = builder.getPlayer().getMainArm().toString().toLowerCase();
             if (armType === 'left') {
                 builder.get('right_arm')
                     .setXRotDegrees(-94.3289)
                     .setYRotDegrees(-58.0287)
                     .setZRotDegrees(-2.104)
                     .animate('InOutBack', progress);
-                
+
                 if (builder.isFirstPerson()) {
                     builder.get('right_arm')
                         .setZ(25)
@@ -47,7 +46,7 @@ PalladiumEvents.registerAnimations((event) => {
                     .setYRotDegrees(54.0353)
                     .setZRotDegrees(23.7164)
                     .animate('InOutBack', progress);
-                
+
                 if (builder.isFirstPerson()) {
                     builder.get('left_arm')
                         .setZ(25)
@@ -59,6 +58,37 @@ PalladiumEvents.registerAnimations((event) => {
                     builder.get('right_arm')
                         .setZRotDegrees(-180)
                         .animate('InOutBack', progress);
+                }
+            }
+        }
+    });
+
+    event.register('phantom_sy/self_stab', 10, (builder) => {
+        const progress = animationUtil.getAnimationTimerAbilityValue(builder.getPlayer(), 'phantom_sy:dagger', 'self_stab_anim', builder.getPartialTicks());
+
+        if (progress > 0) {
+            const armType = builder.getPlayer().getHeldItem('MAIN_HAND').id == 'phantom_sy:dagger' ? builder.getPlayer().getMainArm().toString().toLowerCase() : builder.getPlayer().getMainArm().getOpposite().toString().toLowerCase();
+            if (armType === 'left') {
+                if (!builder.isFirstPerson()) {
+                    builder.get('left_arm')
+                        .setXRotDegrees(-85)
+                        .setYRotDegrees(65)
+                        .setZRotDegrees(-60)
+                        .animate('InSine', progress);
+                    builder.get('right_arm')
+                        .setXRotDegrees(-30)
+                        .animate('InSine', progress);
+                }
+            } else {
+                if (!builder.isFirstPerson()) {
+                    builder.get('right_arm')
+                        .setXRotDegrees(-85)
+                        .setYRotDegrees(-65)
+                        .setZRotDegrees(60)
+                        .animate('InSine', progress);
+                    builder.get('left_arm')
+                        .setXRotDegrees(-30)
+                        .animate('InSine', progress);
                 }
             }
         }

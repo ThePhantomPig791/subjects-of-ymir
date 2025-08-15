@@ -30,5 +30,8 @@
     "accessory.phantom_sy.tall_wide_low_1": "Tall Wide Low 1",
     "accessory.phantom_sy.wide": "Wide",
     "accessory.phantom_sy.wide_high_1": "Wide High 1",
-    "accessory.phantom_sy.wide_low_1": "Wide Low 1"
+    "accessory.phantom_sy.wide_low_1": "Wide Low 1",
+
+
+    "item.phantom_sy.dagger": "Dagger"
 }

@@ -1,0 +1,8 @@
+{
+    "item": "phantom_sy:dagger",
+    "slot": "offhand",
+    "power": [
+        "phantom_sy:dagger_offhand",
+        "phantom_sy:dagger"
+    ]
+}

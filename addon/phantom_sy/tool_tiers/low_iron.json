@@ -1,0 +1,10 @@
+{
+    "level": 2,
+    "uses": 125,
+    "speed": 4.5,
+    "attack_damage_bonus": 0.5,
+    "enchantment_value": 3,
+    "repair_ingredient": {
+        "item": "minecraft:iron_ingot"
+    }
+}

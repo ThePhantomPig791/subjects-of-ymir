@@ -279,11 +279,11 @@ StartupEvents.registry('palladium:abilities', event => {
         
         .tick((entity, entry, holder, enabled) => {
             if (enabled) {
-                if (Math.random() < entry.getPropertyByName('chance')) {
+                /*if (Math.random() < entry.getPropertyByName('chance')) {
                     for (let i = 0; i < entry.getPropertyByName('amount'); i++) {
                         global.throwLightningEmbers(entity, entry.getPropertyByName('range'), 0.1, entry.getPropertyByName('entity_chance'));
                     }
-                }
+                }*/
             }
         })
 })

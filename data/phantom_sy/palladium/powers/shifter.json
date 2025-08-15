@@ -223,19 +223,6 @@
             "type": "palladium:render_layer",
             "hidden": true,
             "render_layer": "phantom_sy:marks"
-        },
-
-        
-        "throw_embers_test": {
-            "type": "phantom_sy:throw_lightning_embers",
-            "amount": 3,
-            "entity_chance": 0.75,
-            "list_index": 4,
-            "conditions": {
-                "enabling": {
-                    "type": "palladium:held"
-                }
-            }
         }
     }
 }
