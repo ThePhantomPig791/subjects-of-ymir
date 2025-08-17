@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/cube_all",
+    "textures": {
+        "all": "phantom_sy:block/ultrahard_steel_ore"
+    }
+}

@@ -83,8 +83,7 @@ StartupEvents.registry('palladium:abilities', event => {
                                 .strength(strength)
                                 .explode();
             
-                            var lightningBolt = entity.block.offset('down', 5).createEntity('minecraft:lightning_bolt');
-                            lightningBolt.spawn();
+                            entity.block.offset(0, -5, 0).spawnLightning(true);
 
                             entity.heal(1);
                             entity.resetFallDistance();
