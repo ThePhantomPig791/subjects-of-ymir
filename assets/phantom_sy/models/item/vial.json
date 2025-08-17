@@ -1,0 +1,26 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "phantom_sy:item/vial"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "custom_model_data": 1
+            },
+            "model": "phantom_sy:item/vial_1"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 2
+            },
+            "model": "phantom_sy:item/vial_2"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 3
+            },
+            "model": "phantom_sy:item/vial_3"
+        }
+    ]
+}

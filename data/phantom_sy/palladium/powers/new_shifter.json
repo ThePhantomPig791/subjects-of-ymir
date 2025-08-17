@@ -1,0 +1,24 @@
+{
+    "name": "...",
+    "icon": "minecraft:bone",
+    "abilities": {
+        "force_first_transformation": {
+            "type": "phantom_sy:shift",
+            "hidden": true,
+            "bonus_charge": 49,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:health",
+                        "min_health": 0,
+                        "max_health": 2
+                    }
+                ]
+            }
+        },
+        "plot_armor": {
+            "type": "palladium:immortality",
+            "hidden": true
+        }
+    }
+}

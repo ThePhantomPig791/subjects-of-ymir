@@ -30,10 +30,28 @@
             }
         },
         {
-            "weight": 3,
+            "weight": 5,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "location": "phantom_sy:eldian_village/roads/road_4",
+                "projection": "terrain_matching",
+                "processors": "phantom_sy:eldian_village/path"
+            }
+        },
+        {
+            "weight": 8,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/roads/road_5",
+                "projection": "terrain_matching",
+                "processors": "phantom_sy:eldian_village/path"
+            }
+        },
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/roads/road_6",
                 "projection": "terrain_matching",
                 "processors": "phantom_sy:eldian_village/path"
             }
@@ -49,7 +67,7 @@
         },
 
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "location": "phantom_sy:eldian_village/roads/turn",
@@ -58,7 +76,7 @@
             }
         },
         {
-            "weight": 2,
+            "weight": 3,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "location": "phantom_sy:eldian_village/roads/turn_wide",

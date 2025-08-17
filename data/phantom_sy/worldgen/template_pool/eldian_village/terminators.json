@@ -3,7 +3,7 @@
     "fallback": "minecraft:empty",
     "elements": [
         {
-            "weight": 2,
+            "weight": 3,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "location": "phantom_sy:eldian_village/terminators/terminator_1",
@@ -30,7 +30,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "location": "phantom_sy:eldian_village/terminators/terminator_4",
@@ -45,6 +45,15 @@
                 "location": "phantom_sy:eldian_village/terminators/terminator_5",
                 "projection": "terrain_matching",
                 "processors": "phantom_sy:eldian_village/path"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:eldian_village/terminators/terminator_6",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
             }
         }
     ]

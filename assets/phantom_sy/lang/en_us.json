@@ -33,5 +33,10 @@
     "accessory.phantom_sy.wide_low_1": "Wide Low 1",
 
 
-    "item.phantom_sy.dagger": "Dagger"
+    "itemGroup.phantom_sy.subjects_of_ymir": "Subjects of Ymir",
+
+    "item.phantom_sy.dagger": "Dagger",
+    "item.phantom_sy.vial": "Vial",
+    "item.phantom_sy.injection": "Injection",
+    "item.phantom_sy.injection_filled": "Injection"
 }

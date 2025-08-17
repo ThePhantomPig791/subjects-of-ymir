@@ -14,6 +14,7 @@ StartupEvents.registry('palladium:abilities', event => {
         .documentationDescription('Shifts into a titan; charges while enabled then shifts once disabled or once the charge reaches its max')
 
         .addProperty('max_charge', 'integer', 50, 'The maximum charging ticks')
+        .addProperty('bonus_charge', 'integer', 0, 'Free charge; affects explosions')
         
         .addUniqueProperty('charge', 'integer', 0)
         .addUniqueProperty('healing_phase_ticks', 'integer', 0)
@@ -74,7 +75,7 @@ StartupEvents.registry('palladium:abilities', event => {
                             palladium.setProperty(entity, 'phantom_sy:progress', ++progress);
             
                             var explosion = entity.block.offset('up', progress).createExplosion();
-                            var strength = Math.floor(CHARGE / 10);
+                            var strength = Math.floor((CHARGE + entry.getPropertyByName('bonus_charge')) / 10);
                             strength = Math.max(strength, 0);
                             explosion.causesFire(false)
                                 .exploder(entity)
@@ -92,7 +93,7 @@ StartupEvents.registry('palladium:abilities', event => {
                             // on completed shift
 
                             var explosion = entity.block.offset('up', SCALE * 1.5).createExplosion();
-                            var strength = Math.floor(CHARGE / 5);
+                            var strength = Math.floor((CHARGE + entry.getPropertyByName('bonus_charge')) / 5);
                             strength = Math.max(strength, 0);
                             explosion.causesFire(false)
                                 .exploder(entity)
@@ -106,6 +107,11 @@ StartupEvents.registry('palladium:abilities', event => {
                             entity.potionEffects.add('minecraft:regeneration', 40, 5, true, false);
                             entity.potionEffects.add('minecraft:saturation', 40, 5, true, false);
                             entity.setFoodLevel(20);
+
+                            if (palladium.superpowers.hasSuperpower(entity, 'phantom_sy:new_shifter')) {
+                                palladium.superpowers.removeSuperpower(entity, 'phantom_sy:new_shifter');
+                                palladium.superpowers.addSuperpower(entity, 'phantom_sy:shifter');
+                            }
                         }
                     }
                 }
