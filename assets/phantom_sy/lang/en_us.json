@@ -39,9 +39,9 @@
     "item.phantom_sy.vial": "Vial",
     "item.phantom_sy.injection": "Injection",
     "item.phantom_sy.injection_filled": "Injection",
-    "item.phantom_sy.ultrahard_steel_ore": "Ultrahard Steel Ore",
+    "item.phantom_sy.iron_bamboo": "Iron-Weave Bamboo",
     "item.phantom_sy.raw_ultrahard_steel": "Raw Ultrahard Steel",
     "item.phantom_sy.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
 
-    "block.phantom_sy.ultrahard_steel_ore": "Ultrahard Steel Ore"
+    "block.phantom_sy.iron_bamboo": "Iron-Weave Bamboo"
 }

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "C": {
+            "tag": "minecraft:coals"
+        },
+        "I": {
+            "item": "minecraft:iron_ingot"
+        },
+        "B": {
+            "item": "phantom_sy:iron_bamboo"
+        }
+    },
+    "pattern": [
+        "CBC",
+        "BIB",
+        "CBC"
+    ],
+    "result": {
+        "item": "phantom_sy:raw_ultrahard_steel"
+    }
+}

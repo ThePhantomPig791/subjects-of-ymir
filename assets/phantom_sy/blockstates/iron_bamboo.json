@@ -1,0 +1,20 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model": "phantom_sy:block/iron_bamboo_stalk_small"
+            },
+            "when": {
+                "age": "0"
+            }
+        },
+        {
+            "apply": {
+                "model": "phantom_sy:block/iron_bamboo_stalk"
+            },
+            "when": {
+                "age": "1"
+            }
+        }
+    ]
+}

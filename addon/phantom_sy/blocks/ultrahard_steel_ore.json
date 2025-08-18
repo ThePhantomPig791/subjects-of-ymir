@@ -1,8 +1,0 @@
-{
-    "sound_type": "minecraft:stone",
-    "map_color": "minecraft:color_light_gray",
-    "destroy_time": 10,
-    "explosion_resistance": 16,
-    "requires_correct_tool_for_drops": true,
-    "creative_mode_tab": "phantom_sy:subjects_of_ymir"
-}

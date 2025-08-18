@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
+        "#minecraft:bamboo_plantable_on",
         "minecraft:grass_block",
         "minecraft:dirt",
         "minecraft:rooted_dirt",
@@ -9,6 +10,9 @@
         "minecraft:sand",
         "minecraft:red_sand",
         "minecraft:stone",
-        "minecraft:deepslate"
+        "minecraft:deepslate",
+        "minecraft:iron_ore",
+        "minecraft:deepslate_iron_ore",
+        "phantom_sy:iron_bamboo"
     ]
 }
