@@ -1,0 +1,19 @@
+{
+    "textures": {
+        "default": "phantom_sy:textures/models/armor/uniform/cowl.png",
+        "open": "phantom_sy:textures/models/armor/uniform/cowl_open.png"
+    },
+    "model_layers": "phantom_sy:jacket/humanoid",
+    "render_layers": [
+        {
+            "model_layer": {
+                "normal": "phantom_sy:jacket/humanoid",
+                "slim": "phantom_sy:jacket_slim/humanoid"
+            },
+            "texture": {
+                "normal": "phantom_sy:textures/models/armor/uniform/cloak.png",
+                "slim": "phantom_sy:textures/models/armor/uniform/cloak_slim.png"
+            }
+        }
+    ]
+}

@@ -3,6 +3,7 @@
     "subtitle.phantom_sy.steam": "Steam emanates",
     "subtitle.phantom_sy.electricity": "Electricity crackles",
 
+
     "accessory_slot.phantom_sy.eyes": "Eyes (titan shifting)",
 
     "accessory.phantom_sy.big": "Big",
@@ -46,5 +47,17 @@
     "item.phantom_sy.raw_ultrahard_steel": "Raw Ultrahard Steel",
     "item.phantom_sy.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
 
+    "item.phantom_sy.cloak": "Cloak",
+    "item.phantom_sy.uniform_jacket": "Uniform Jacket",
+    "item.phantom_sy.uniform_leggings": "Uniform Leggings",
+    "item.phantom_sy.uniform_boots": "Uniform Boots",
+    "item.phantom_sy.survey_corps_cloak": "Cloak",
+    "item.phantom_sy.survey_corps_jacket": "Uniform Jacket",
+    "item.phantom_sy.garrison_cloak": "Cloak",
+    "item.phantom_sy.garrison_jacket": "Uniform Jacket",
+    "item.phantom_sy.military_police_cloak": "Cloak",
+    "item.phantom_sy.military_police_jacket": "Uniform Jacket",
+
+    
     "block.phantom_sy.iron_bamboo": "Iron-Weave Bamboo"
 }

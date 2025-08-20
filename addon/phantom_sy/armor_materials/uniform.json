@@ -1,0 +1,14 @@
+{
+    "durability_multiplier": 8,
+    "slot_protections": {
+        "helmet": 1,
+        "chestplate": 2,
+        "leggings": 2,
+        "boots": 1
+    },
+    "enchantment_value": 0,
+    "equip_sound": "minecraft:item.armor.equip_leather",
+    "repair_ingredient": {
+        "item": "minecraft:leather"
+    }
+}

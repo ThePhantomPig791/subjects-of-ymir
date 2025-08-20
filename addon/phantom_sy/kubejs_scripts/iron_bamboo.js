@@ -18,17 +18,17 @@ StartupEvents.registry('block', event => {
 BlockEvents.modification(e => {
     e.modify('minecraft:iron_ore', block => {
         block.setRandomTickCallback(callback => {
-            global.bam(e, block, callback);
+            ironTick(e, block, callback);
         });
     })
     e.modify('minecraft:deepslate_iron_ore', block => {
         block.setRandomTickCallback(callback => {
-            global.bam(e, block, callback);
+            ironTick(e, block, callback);
         });
     })
 })
 
-global.bam = function (e, b, callback) {
+function ironTick(event, b, callback) {
     let block = callback.block;
     let bamboo = null;
     for (let i = 1; i < 25; i++) {

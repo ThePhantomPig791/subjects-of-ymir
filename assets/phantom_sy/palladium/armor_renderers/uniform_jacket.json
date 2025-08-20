@@ -1,0 +1,11 @@
+{
+    "textures": {
+        "normal": "phantom_sy:textures/models/armor/uniform/layer_1.png",
+        "slim": "phantom_sy:textures/models/armor/uniform/layer_1_slim.png"
+    },
+    "model_layers": {
+        "normal": "palladium:suit/humanoid",
+        "slim": "palladium:suit_slim/humanoid"
+    },
+    "hide_second_layer": true
+}

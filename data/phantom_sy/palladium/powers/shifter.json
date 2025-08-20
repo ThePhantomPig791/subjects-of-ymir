@@ -210,26 +210,33 @@
             "sound": "phantom_sy:electricity",
             "looping": true,
             "conditions": {
-                "enabling": {
-                    "type": "palladium:or",
-                    "conditions": [
-                        {
-                            "type": "palladium:ability_integer_property",
-                            "ability": "titan_shifter",
-                            "property": "charge",
-                            "min": 1,
-                            "max": 999
-                        },
-                        {
+                "enabling": [
+                    {
+                        "type": "palladium:or",
+                        "conditions": [
+                            {
+                                "type": "palladium:ability_integer_property",
+                                "ability": "titan_shifter",
+                                "property": "charge",
+                                "min": 1,
+                                "max": 999
+                            },
+                            {
 
-                            "type": "phantom_sy:in_healing_phase"
-                        },
-                        {
-                            "type": "phantom_sy:progress",
-                            "min": 1
-                        }
-                    ]
-                }
+                                "type": "phantom_sy:in_healing_phase"
+                            },
+                            {
+                                "type": "phantom_sy:progress",
+                                "min": 1
+                            }
+                        ]
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "min": 0,
+                        "max": 0
+                    }
+                ]
             }
         },
         "final_electricity_sound": {
@@ -241,7 +248,7 @@
             "conditions": {
                 "enabling": [
                     {
-                         "type": "palladium:ability_integer_property",
+                        "type": "palladium:ability_integer_property",
                         "ability": "titan_shifter",
                         "property": "charge",
                         "min": 1,

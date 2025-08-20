@@ -13,4 +13,8 @@ StartupEvents.registry('palladium:condition_serializer', (event) => {
             if (item == null) return false;
             return entity.getCooldowns().isOnCooldown(item);
         })
+    event.create('phantom_sy:at_full_health')
+        .test((entity, properties) => {
+            return entity.health / entity.maxHealth == 1;
+        })
 })

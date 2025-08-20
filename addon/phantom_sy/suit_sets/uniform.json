@@ -1,0 +1,37 @@
+{
+    "armor_material": "phantom_sy:uniform",
+    "creative_mode_tab": {
+        "tab": "phantom_sy:subjects_of_ymir"
+    },
+    "head": {
+        "type": "palladium:armor",
+        "item_name": "cloak",
+        "slot": "head",
+        "armor_material": "phantom_sy:uniform",
+        "armor_renderer": "phantom_sy:cloak",
+        "openable": true,
+        "opening_time": 0,
+        "opened_sound": "minecraft:item.armor.equip_leather",
+        "closed_sound": "minecraft:item.armor.equip_leather",
+        "opening_toggle_sound": "minecraft:item.armor.equip_leather"
+    },
+    "chest": {
+        "item_name": "uniform_jacket"
+    },
+    "legs": {
+        "item_name": "uniform_leggings"
+    },
+    "feet": {
+        "item_name": "uniform_boots",
+        "attribute_modifiers": {
+            "feet": [
+                {
+                    "attribute": "palladium:fall_resistance",
+                    "amount": 2,
+                    "operation": 0,
+                    "uuid": "a4a2e396-160a-2a25-8f49-1302b16473da"
+                }
+            ]
+        }
+    }
+}

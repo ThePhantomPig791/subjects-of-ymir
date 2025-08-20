@@ -1,0 +1,5 @@
+{
+    "textures": "phantom_sy:textures/models/armor/uniform/layer_2.png",
+    "model_layers": "palladium:tight_suit/humanoid",
+    "hide_second_layer": true
+}
