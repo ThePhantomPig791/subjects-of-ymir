@@ -17,5 +17,34 @@
                 "name": "phantom_sy:shift_local"
             }
         ]
+    },
+
+    "steam": {
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.steam",
+        "sounds": [
+            {
+                "name": "phantom_sy:steam"
+            }
+        ]
+    },
+
+    "electricity": {
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.electricity",
+        "sounds": [
+            {
+                "name": "phantom_sy:electricity"
+            }
+        ]
+    },
+    "electricity_final": {
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.electricity",
+        "sounds": [
+            {
+                "name": "phantom_sy:electricity_final"
+            }
+        ]
     }
 }

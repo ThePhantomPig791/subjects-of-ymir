@@ -8,6 +8,7 @@
         "titan_shifter": {
             "type": "phantom_sy:shift",
             "title": "Shift",
+            "icon": "phantom_sy:textures/icons/shift.png",
             "list_index": 0,
             "conditions": {
                 "enabling": {
@@ -41,6 +42,23 @@
                         "max": 0
                     }
                 ]
+            }
+        },
+        "unshift": {
+            "type": "phantom_sy:unshift",
+            "title": "Eject",
+            "icon": "phantom_sy:textures/icons/unshift.png",
+            "list_index": 0,
+            "bar_color": "red",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action"
+                },
+                "unlocking": {
+                    "type": "phantom_sy:progress",
+                    "min": 15,
+                    "max": 15
+                }
             }
         },
 
@@ -185,6 +203,58 @@
             }
         },
 
+        "electricity_sound": {
+            "type": "palladium:play_sound",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "sound": "phantom_sy:electricity",
+            "looping": true,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "palladium:ability_integer_property",
+                            "ability": "titan_shifter",
+                            "property": "charge",
+                            "min": 1,
+                            "max": 999
+                        },
+                        {
+
+                            "type": "phantom_sy:in_healing_phase"
+                        },
+                        {
+                            "type": "phantom_sy:progress",
+                            "min": 1
+                        }
+                    ]
+                }
+            }
+        },
+        "final_electricity_sound": {
+            "type": "palladium:play_sound",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "sound": "phantom_sy:electricity_final",
+            "looping": false,
+            "conditions": {
+                "enabling": [
+                    {
+                         "type": "palladium:ability_integer_property",
+                        "ability": "titan_shifter",
+                        "property": "charge",
+                        "min": 1,
+                        "max": 999
+                    },
+                    {
+                        "type": "palladium:ability_last_tick",
+                        "ability": "shift"
+                    }
+                ]
+            }
+        },
+
         "healing_phase": {
             "type": "palladium:render_layer",
             "hidden": true,
@@ -223,6 +293,22 @@
             "type": "palladium:render_layer",
             "hidden": true,
             "render_layer": "phantom_sy:marks"
+        },
+
+        "steam_healing_human": {
+            "type": "phantom_sy:steam_healing",
+            "amount": 1,
+            "frequency": 30,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:at_full_health"
+                        }
+                    }
+                ]
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ StartupEvents.registry('palladium:abilities', event => {
 
         .addProperty('max_charge', 'integer', 50, 'The maximum charging ticks')
         .addProperty('bonus_charge', 'integer', 0, 'Free charge; affects explosions')
-        
+
         .addUniqueProperty('charge', 'integer', 0)
         .addUniqueProperty('healing_phase_ticks', 'integer', 0)
 
@@ -73,7 +73,7 @@ StartupEvents.registry('palladium:abilities', event => {
                             // each shifting tick
 
                             palladium.setProperty(entity, 'phantom_sy:progress', ++progress);
-            
+
                             var explosion = entity.block.offset('up', progress).createExplosion();
                             var strength = Math.floor((CHARGE + entry.getPropertyByName('bonus_charge')) / 10);
                             strength = Math.max(strength, 0);
@@ -82,7 +82,7 @@ StartupEvents.registry('palladium:abilities', event => {
                                 .explosionMode('mob')
                                 .strength(strength)
                                 .explode();
-            
+
                             entity.block.offset(0, -5, 0).spawnLightning(true);
 
                             entity.heal(1);
@@ -152,7 +152,7 @@ StartupEvents.registry('palladium:abilities', event => {
                     palladium.setProperty(skeleton, 'phantom_sy:titan_variant', palladium.getProperty(entity, 'phantom_sy:titan_variant'));
                     palladium.setProperty(skeleton, 'phantom_sy:progress', palladium.getProperty(entity, 'phantom_sy:progress'));
                     palladium.setProperty(skeleton, 'phantom_sy:decay', 700);
-                    
+
                     superpowerUtil.addSuperpower(skeleton, `phantom_sy:titan_${palladium.getProperty(entity, 'phantom_sy:titan')}`);
 
                     skeleton.spawn();
@@ -179,6 +179,7 @@ StartupEvents.registry('palladium:abilities', event => {
 
             if (entity.type == 'minecraft:skeleton') {
                 const SCALE = global.titans.list[palladium.getProperty(entity, 'phantom_sy:titan')].scale;
+                entity.setRemainingFireTicks(0);
                 let decay = palladium.getProperty(entity, 'phantom_sy:decay');
                 if (decay > 20 && entity.health > 0) {
                     if (entity.age % 3 == 0) {
@@ -253,10 +254,10 @@ StartupEvents.registry('palladium:abilities', event => {
 
         .addProperty('amount', 'integer', 3, 'The amount of damage to deal')
         .addProperty('time', 'integer', 10, 'The max time this ability needs to be enabled in order to deal damage')
-        
+
         .addUniqueProperty('timer', 'integer', 0)
         .addUniqueProperty('prev_timer', 'integer', 0)
-        
+
         .tick((entity, entry, holder, enabled) => {
             const timer = entry.getPropertyByName('timer');
             entry.setUniquePropertyByName('prev_timer', timer);
@@ -281,7 +282,7 @@ StartupEvents.registry('palladium:abilities', event => {
         .addProperty('entity_chance', 'float', 0.25, 'If there are blocks and entities available to target, the entity will be targeted this percent (decimal) of the time')
         .addProperty('chance', 'float', 1, 'Lightning trails spawn this percent (decimal) of the time')
         .addProperty('amount', 'integer', 1, 'This many lightning trails are spawned each time')
-        
+
         .tick((entity, entry, holder, enabled) => {
             if (enabled) {
                 /*if (Math.random() < entry.getPropertyByName('chance')) {
@@ -291,7 +292,45 @@ StartupEvents.registry('palladium:abilities', event => {
                 }*/
             }
         })
+
+    event.create('phantom_sy:steam_healing')
+        .documentationDescription('Heals, spawns steam particles, and plays the steam sound')
+
+        .addProperty('amount', 'float', 2.0, 'The HP to regain each heal')
+        .addProperty('frequency', 'integer', 20, 'The delay between each heal')
+
+        .addUniqueProperty('timer', 'integer', 0)
+
+        .tick((entity, entry, holder, enabled) => {
+            if (enabled) {
+                global.part(entity);
+                global.playSoundToAll(entity, 32, 'phantom_sy:steam', 'PLAYERS', 1, 1);
+
+                let timer = entry.getPropertyByName('timer');
+                if (timer == entry.getPropertyByName('frequency')) {
+                    entity.heal(entry.getPropertyByName('amount'));
+
+                    timer = 0;
+                } else timer++;
+                entry.setUniquePropertyByName('timer', timer);
+            }
+        })
 })
+
+global.part = function (entity) {
+                let box = entity.boundingBox;
+    entity.level.sendParticles(
+        'phantom_sy:steam',
+        entity.x,
+        entity.y + box.ysize / 2,
+        entity.z,
+                    /*count*/ 1,
+        box.xsize / 4,
+        box.ysize / 4,
+        box.zsize / 4,
+                    /*speed*/ 0.1
+    );
+}
 
 
 function scaleFromSourceEntity(entity, sourceDataEntity) {
@@ -327,7 +366,7 @@ function setScaleTime(entity, value) {
 }
 
 
-global.throwLightningEmbers = function(entity, range, raycastStep, entityChancePercentage) {
+global.throwLightningEmbers = function (entity, range, raycastStep, entityChancePercentage) {
     if (raycastStep <= 0) raycastStep = 0.1;
     if (range < 1) range = 1;
 
@@ -361,7 +400,7 @@ global.throwLightningEmbers = function(entity, range, raycastStep, entityChanceP
     }
 
     if (target == undefined) return;
-    
+
     let particlePos = source;
     while (particlePos.distanceToSqr(target) > (raycastStep * raycastStep)) {
         particlePos = particlePos.add(particlePos.vectorTo(target.add(
@@ -385,7 +424,7 @@ global.throwLightningEmbers = function(entity, range, raycastStep, entityChanceP
     }
 }
 
-global.checkLineOfSight = function(level, from, to, step) { // both positions are a Vec3
+global.checkLineOfSight = function (level, from, to, step) { // both positions are a Vec3
     let stepVec = from.vectorTo(to).normalize().scale(step);
     let stepPosition = from;
     while (stepPosition.distanceToSqr(to) > (step * step)) {
