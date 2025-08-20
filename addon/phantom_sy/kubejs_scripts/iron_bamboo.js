@@ -1,13 +1,15 @@
-let BlockStateProperties = Java.loadClass('net.minecraft.world.level.block.state.properties.BlockStateProperties');
-let Properties = Java.loadClass('net.minecraft.world.level.block.state.BlockBehaviour$Properties');
-let Blocks = Java.loadClass('net.minecraft.world.level.block.Blocks');
-let BambooStalkBlock = Java.loadClass('net.minecraft.world.level.block.BambooStalkBlock');
-let BambooLeaves = Java.loadClass('net.minecraft.world.level.block.state.properties.BambooLeaves');
+let $BlockStateProperties = Java.loadClass('net.minecraft.world.level.block.state.properties.BlockStateProperties');
+let $Properties = Java.loadClass('net.minecraft.world.level.block.state.BlockBehaviour$Properties');
+let $Blocks = Java.loadClass('net.minecraft.world.level.block.Blocks');
+let $BambooStalkBlock = Java.loadClass('net.minecraft.world.level.block.BambooStalkBlock');
+let $BambooLeaves = Java.loadClass('net.minecraft.world.level.block.state.properties.BambooLeaves');
+let $ItemStack = Java.loadClass("net.minecraft.world.item.ItemStack")
 
 StartupEvents.registry('block', event => {
     event.createCustom('phantom_sy:iron_bamboo',
-        () => new BambooStalkBlock(Properties.copy(Blocks.BAMBOO)
+        () => new $BambooStalkBlock($Properties.copy($Blocks.BAMBOO)
             .strength(1.5, 0.5)
+            .sound('minecraft:metal')
         )
     )
 
@@ -38,8 +40,14 @@ global.bam = function (e, b, callback) {
         return;
     }
     if (bamboo == null) return;
+    if (bamboo.properties.leaves == 'small') {
+        bamboo.popItem(new $ItemStack('phantom_sy:iron_bamboo_leaf', 1 + 2 * Math.random()));
+    }
+    if (bamboo.properties.leaves == 'large') {
+        bamboo.popItem(new $ItemStack('phantom_sy:iron_bamboo_leaf', 1 + 4 * Math.random()));
+    }
     bamboo.set('phantom_sy:iron_bamboo', { age: bamboo.properties.age })
-    block.level.setBlock(bamboo.pos, bamboo.blockState.cycle(BlockStateProperties.STAGE), 2);
+    block.level.setBlock(bamboo.pos, bamboo.blockState.cycle($BlockStateProperties.STAGE), 2);
     callback.level.sendParticles(
         'dust 0.95 0.9 1 1.5',
         block.x + 0.5,

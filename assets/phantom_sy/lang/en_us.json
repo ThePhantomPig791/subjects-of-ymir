@@ -1,5 +1,7 @@
 {
-    "subtitle.phantom_sy.shift": "Titan Shifts",
+    "subtitle.phantom_sy.shift": "Titan shifts",
+    "subtitle.phantom_sy.steam": "Steam emanates",
+    "subtitle.phantom_sy.electricity": "Electricity crackles",
 
     "accessory_slot.phantom_sy.eyes": "Eyes (titan shifting)",
 
@@ -40,6 +42,7 @@
     "item.phantom_sy.injection": "Injection",
     "item.phantom_sy.injection_filled": "Injection",
     "item.phantom_sy.iron_bamboo": "Iron-Weave Bamboo",
+    "item.phantom_sy.iron_bamboo_leaf": "Iron-Weave Bamboo leaf",
     "item.phantom_sy.raw_ultrahard_steel": "Raw Ultrahard Steel",
     "item.phantom_sy.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
 
