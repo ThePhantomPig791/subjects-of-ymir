@@ -2,6 +2,7 @@
     "subtitle.phantom_sy.shift": "Titan shifts",
     "subtitle.phantom_sy.steam": "Steam emanates",
     "subtitle.phantom_sy.electricity": "Electricity crackles",
+    "subtitle.phantom_sy.iceburst": "Iceburst ice-bursts",
 
 
     "accessory_slot.phantom_sy.eyes": "Eyes (titan shifting)",
@@ -46,6 +47,8 @@
     "item.phantom_sy.iron_bamboo_leaf": "Iron-Weave Bamboo leaf",
     "item.phantom_sy.raw_ultrahard_steel": "Raw Ultrahard Steel",
     "item.phantom_sy.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
+    "item.phantom_sy.iceburst_ore": "Iceburst Ore",
+    "item.phantom_sy.raw_iceburst": "Raw Iceburst",
 
     "item.phantom_sy.cloak": "Cloak",
     "item.phantom_sy.uniform_jacket": "Uniform Jacket",
@@ -59,5 +62,6 @@
     "item.phantom_sy.military_police_jacket": "Uniform Jacket",
 
     
-    "block.phantom_sy.iron_bamboo": "Iron-Weave Bamboo"
+    "block.phantom_sy.iron_bamboo": "Iron-Weave Bamboo",
+    "block.phantom_sy.iceburst_ore": "Iceburst Ore"
 }
