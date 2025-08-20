@@ -4,5 +4,8 @@
     "destroy_time": 2.8,
     "explosion_resistance": 4,
     "requires_correct_tool_for_drops": true,
-    "creative_mode_tab": "phantom_sy:subjects_of_ymir"
+    "creative_mode_tab": {
+        "tab": "phantom_sy:subjects_of_ymir",
+        "before": "phantom_sy:raw_iceburst"
+    }
 }

@@ -3,7 +3,7 @@ let $Properties = Java.loadClass('net.minecraft.world.level.block.state.BlockBeh
 let $Blocks = Java.loadClass('net.minecraft.world.level.block.Blocks');
 let $BambooStalkBlock = Java.loadClass('net.minecraft.world.level.block.BambooStalkBlock');
 let $BambooLeaves = Java.loadClass('net.minecraft.world.level.block.state.properties.BambooLeaves');
-let $ItemStack = Java.loadClass("net.minecraft.world.item.ItemStack")
+let $ItemStack = Java.loadClass("net.minecraft.world.item.ItemStack");
 
 StartupEvents.registry('block', event => {
     event.createCustom('phantom_sy:iron_bamboo',

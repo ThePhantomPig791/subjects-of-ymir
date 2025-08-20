@@ -39,16 +39,19 @@
 
     "itemGroup.phantom_sy.subjects_of_ymir": "Subjects of Ymir",
 
-    "item.phantom_sy.dagger": "Dagger",
-    "item.phantom_sy.vial": "Vial",
-    "item.phantom_sy.injection": "Injection",
-    "item.phantom_sy.injection_filled": "Injection",
     "item.phantom_sy.iron_bamboo": "Iron-Weave Bamboo",
-    "item.phantom_sy.iron_bamboo_leaf": "Iron-Weave Bamboo leaf",
+    "item.phantom_sy.iron_bamboo_leaf": "Iron-Weave Bamboo Leaf",
     "item.phantom_sy.raw_ultrahard_steel": "Raw Ultrahard Steel",
     "item.phantom_sy.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
     "item.phantom_sy.iceburst_ore": "Iceburst Ore",
     "item.phantom_sy.raw_iceburst": "Raw Iceburst",
+    
+    "item.phantom_sy.vial": "Vial",
+    "item.phantom_sy.injection": "Injection",
+    "item.phantom_sy.injection_filled": "Injection",
+
+    "item.phantom_sy.dagger": "Dagger",
+    "item.phantom_sy.blade": "Ultrahard Steel Blade",
 
     "item.phantom_sy.cloak": "Cloak",
     "item.phantom_sy.uniform_jacket": "Uniform Jacket",

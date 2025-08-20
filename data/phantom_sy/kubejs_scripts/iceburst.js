@@ -18,7 +18,6 @@ LevelEvents.afterExplosion(event => {
 ItemEvents.rightClicked('phantom_sy:raw_iceburst', event => {
     if (event.hand == 'OFF_HAND') return;
     const { player, item } = event;
-    if (player.isCreative()) return;
     let pos = player.rayTrace().hit ?? player.getEyePosition().add(player.getLookAngle().scale(3.5));
     explode(
         pos,
@@ -26,11 +25,7 @@ ItemEvents.rightClicked('phantom_sy:raw_iceburst', event => {
         3,
         AABB.ofSize(pos, 6, 6, 6)
     );
-    item.count--;
-})
-
-ItemEvents.smelted(event => {
-    console.log(event.player)
+    if (!player.isCreative()) item.count--;
 })
 
 function explode(pos, level, strength, box) {

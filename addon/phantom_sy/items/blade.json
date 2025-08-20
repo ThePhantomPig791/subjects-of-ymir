@@ -1,0 +1,14 @@
+{
+    "creative_mode_tab": "phantom_sy:subjects_of_ymir",
+    "max_stack_size": 16,
+    "attribute_modifiers": {
+        "mainhand": [
+            {
+                "attribute": "minecraft:generic.attack_damage",
+                "amount": 3,
+                "operation": 0,
+                "uuid": "8c764a28-b1cf-44cf-b950-b62be571021e"
+            }
+        ]
+    }
+}

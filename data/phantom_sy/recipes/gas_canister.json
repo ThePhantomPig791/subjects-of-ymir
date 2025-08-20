@@ -2,18 +2,19 @@
     "type": "minecraft:crafting_shaped",
     "category": "equipment",
     "key": {
-        "#": {
-            "item": "minecraft:stick"
-        },
-        "X": {
+        "B": {
             "item": "phantom_sy:iron_bamboo"
+        },
+        "N": {
+            "tag": "c:iron_nuggets"
         }
     },
     "pattern": [
-        "X",
-        "#"
+        " BB",
+        "B B",
+        "NB "
     ],
     "result": {
-        "item": "phantom_sy:dagger"
+        "item": "phantom_sy:gas_canister"
     }
 }

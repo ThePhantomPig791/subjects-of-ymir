@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "S": {
+            "item": "phantom_sy:ultrahard_steel_ingot"
+        },
+        "N": {
+            "tag": "c:iron_nuggets"
+        }
+    },
+    "pattern": [
+        "S",
+        "S",
+        "N"
+    ],
+    "result": {
+        "item": "phantom_sy:blade",
+        "count": 2
+    }
+}

@@ -1,4 +1,7 @@
 {
-    "creative_mode_tab": "phantom_sy:subjects_of_ymir",
+    "creative_mode_tab": {
+        "tab": "phantom_sy:subjects_of_ymir",
+        "after": "phantom_sy:injection_filled"
+    },
     "max_stack_size": 1
 }
