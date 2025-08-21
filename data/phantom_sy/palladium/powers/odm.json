@@ -1,0 +1,43 @@
+{
+    "name": "Omni-Directional Movement Gear",
+    "background": "minecraft:textures/block/oak_planks.png",
+    "icon": "phantom_sy:odm",
+    "energy_bars": {
+        "gas": {
+            "color": "#c1d3e5",
+            "synced_value": {
+                "type": "palladium_property",
+                "property": "phantom_sy:odm.gas",
+                "fallback": 0
+            },
+            "max": {
+                "type": "palladium_property",
+                "property": "phantom_sy:odm.max_gas",
+                "fallback": 1
+            }
+        }
+    },
+    "abilities": {
+        "odm_circuits": {
+            "type": "phantom_sy:odm_circuits"
+        },
+        "refresh_gas_bar": {
+            "type": "palladium:dummy",
+            "hidden": true,
+            "energy_bar_usage": {
+                "energy_bar": "gas",
+                "amount": 1
+            }
+        },
+
+        "dummy": {
+            "type": "palladium:dummy",
+            "hidden_in_bar": false,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                }
+            }
+        }
+    }
+}

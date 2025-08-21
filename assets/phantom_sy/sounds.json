@@ -56,5 +56,27 @@
                 "name": "phantom_sy:iceburst"
             }
         ]
+    },
+
+    "gas": {
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.gas_burst",
+        "sounds": [
+            {
+                "name": "phantom_sy:gas_burst_0"
+            },
+            {
+                "name": "phantom_sy:gas_burst_1"
+            },
+            {
+                "name": "phantom_sy:gas_burst_2"
+            },
+            {
+                "name": "phantom_sy:gas_burst_3"
+            },
+            {
+                "name": "phantom_sy:gas_burst_4"
+            }
+        ]
     }
 }

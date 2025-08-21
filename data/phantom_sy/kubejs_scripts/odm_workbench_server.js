@@ -42,7 +42,6 @@ function createUI(blockUIEvent) {
 }
 
 LDLibUI.block('phantom_sy:odm_workbench', e => {
-    console.log(e.block.entity.inventory)
     var ui = createUI(e);
     e.success(ui);
 })

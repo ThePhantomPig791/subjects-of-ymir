@@ -49,5 +49,5 @@ function explode(pos, level, strength, box) {
         0.5, 0.5, 0.5,
         strength / 12
     )
-    global.playSoundFromPos(level, pos.x(), pos.y(), pos.z(), 16, 'phantom_sy:iceburst', 'BLOCKS', strength / 14, 1.1);
+    global.playSoundFromPos(level, pos.x(), pos.y(), pos.z(), 16, 'phantom_sy:iceburst', 'BLOCKS', strength / 6, 1 - (0.1 * strength / 8));
 }

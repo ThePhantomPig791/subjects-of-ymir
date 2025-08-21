@@ -15,4 +15,5 @@ StartupEvents.registry('sound_event', event =>{
     event.create('phantom_sy:shift_local');
     event.create('phantom_sy:steam');
     event.create('phantom_sy:iceburst');
+    event.create('phantom_sy:gas');
 })

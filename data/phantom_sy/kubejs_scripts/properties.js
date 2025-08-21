@@ -14,6 +14,10 @@ PalladiumEvents.registerProperties((event) => {
         event.registerProperty('phantom_sy:marks', 'integer', 0); //
 
         event.registerProperty('phantom_sy:can_shift', 'integer', 0);
+
+        
+        event.registerProperty('phantom_sy:odm.gas', 'integer', 0);
+        event.registerProperty('phantom_sy:odm.max_gas', 'integer', 0);
     }
 
     if (event.getEntityType() === 'minecraft:skeleton') {
