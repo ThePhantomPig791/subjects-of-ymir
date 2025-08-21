@@ -100,6 +100,44 @@
 					]
 				}
 			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "phantom_sy:raw_ultrahard_steel",
+					"functions": [
+						{
+							"function": "minecraft:set_count",
+							"count": {
+								"type": "minecraft:uniform",
+								"min": -4,
+								"max": 1
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"rolls": 2,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "phantom_sy:raw_iceburst",
+					"functions": [
+                        {
+							"function": "minecraft:set_count",
+							"count": {
+								"type": "minecraft:uniform",
+								"min": -5,
+								"max": 1
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }

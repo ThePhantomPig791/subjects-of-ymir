@@ -1,0 +1,66 @@
+{
+    "type": "palladium:compound",
+    "layers": [
+        {
+            "model_layer": {
+                "base": "phantom_sy:odm/turbine/#TURBINE",
+                "variables": {
+                    "TURBINE": {
+                        "type": "palladium:item_model_property",
+                        "model_property": "phantom_sy:turbine"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/odm/turbines/#TURBINE.png",
+                "variables": {
+                    "TURBINE": {
+                        "type": "palladium:item_model_property",
+                        "model_property": "phantom_sy:turbine"
+                    }
+                }
+            }
+        },
+
+        {
+            "model_layer": {
+                "base": "phantom_sy:odm/sheath_left/#SHEATH",
+                "variables": {
+                    "SHEATH": {
+                        "type": "palladium:item_model_property",
+                        "model_property": "phantom_sy:sheath_left"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/odm/sheaths/#SHEATH.png",
+                "variables": {
+                    "SHEATH": {
+                        "type": "palladium:item_model_property",
+                        "model_property": "phantom_sy:sheath_left"
+                    }
+                }
+            }
+        },
+        {
+            "model_layer": {
+                "base": "phantom_sy:odm/sheath_right/#SHEATH",
+                "variables": {
+                    "SHEATH": {
+                        "type": "palladium:item_model_property",
+                        "model_property": "phantom_sy:sheath_right"
+                    }
+                }
+            },
+            "texture": {
+                "base": "phantom_sy:textures/models/odm/sheaths/#SHEATH.png",
+                "variables": {
+                    "SHEATH": {
+                        "type": "palladium:item_model_property",
+                        "model_property": "phantom_sy:sheath_right"
+                    }
+                }
+            }
+        }
+    ]
+}

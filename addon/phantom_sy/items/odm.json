@@ -1,0 +1,9 @@
+{
+    "creative_mode_tab": "phantom_sy:subjects_of_ymir",
+    "max_stack_size": 1,
+    "rarity": "rare",
+    "render_layers": {
+        "curios:belt": "phantom_sy:odm",
+        "trinkets:legs/belt": "phantom_sy:odm"
+    }
+}

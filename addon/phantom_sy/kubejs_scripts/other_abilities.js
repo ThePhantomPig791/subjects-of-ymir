@@ -17,7 +17,7 @@ StartupEvents.registry('palladium:abilities', event => {
                 entityHit.attack(entity.damageSources().mobAttack(entity), entry.getPropertyByName('damage'));
                 entity.getOffhandItem().hurtEnemy(entityHit, entity);
                 entity.addItemCooldown(entity.getOffhandItem(), 6);
-                if (entity.isPlayer()) entity.swing('OFF_HAND');
+                if (entity.isPlayer()) entity.swing('off_hand', true);
             }
         })
 })

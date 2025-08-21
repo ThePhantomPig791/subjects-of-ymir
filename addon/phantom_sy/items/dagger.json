@@ -1,7 +1,7 @@
 {
     "type": "palladium:sword",
     "creative_mode_tab": "phantom_sy:subjects_of_ymir",
-    "tier": "phantom_sy:low_iron",
+    "tier": "phantom_sy:iron_bamboo",
     "base_damage": 1,
     "attack_speed": -0.5
 }

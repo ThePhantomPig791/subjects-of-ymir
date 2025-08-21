@@ -117,6 +117,52 @@
 					]
 				}
 			]
+		},
+		{
+			"rolls": 2,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "phantom_sy:raw_iceburst",
+					"functions": [
+                        {
+							"function": "minecraft:set_count",
+							"count": {
+								"type": "minecraft:uniform",
+								"min": -2,
+								"max": 3
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "phantom_sy:dagger",
+					"functions": [
+						{
+							"function": "minecraft:set_count",
+							"count": {
+								"type": "minecraft:uniform",
+								"min": 0,
+								"max": 1
+							}
+						},
+                        {
+							"function": "minecraft:set_damage",
+							"damage": {
+								"type": "minecraft:uniform",
+								"min": 0.3,
+								"max": 0.7
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }

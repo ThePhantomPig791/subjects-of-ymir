@@ -74,10 +74,10 @@ PalladiumEvents.registerAnimations((event) => {
                         .setXRotDegrees(-85)
                         .setYRotDegrees(65)
                         .setZRotDegrees(-60)
-                        .animate('InSine', progress);
+                        .animate('InCubic', progress);
                     builder.get('right_arm')
                         .setXRotDegrees(-30)
-                        .animate('InSine', progress);
+                        .animate('InCubic', progress);
                 }
             } else {
                 if (!builder.isFirstPerson()) {
@@ -85,10 +85,10 @@ PalladiumEvents.registerAnimations((event) => {
                         .setXRotDegrees(-85)
                         .setYRotDegrees(-65)
                         .setZRotDegrees(60)
-                        .animate('InSine', progress);
+                        .animate('InCubic', progress);
                     builder.get('left_arm')
                         .setXRotDegrees(-30)
-                        .animate('InSine', progress);
+                        .animate('InCubic', progress);
                 }
             }
         }
