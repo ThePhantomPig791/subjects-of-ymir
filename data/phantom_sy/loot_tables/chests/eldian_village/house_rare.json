@@ -63,7 +63,7 @@
 			]
 		},
 		{
-			"rolls": 1,
+			"rolls": 3,
 			"entries": [
 				{
 					"type": "minecraft:item",
@@ -74,30 +74,33 @@
 							"function": "minecraft:set_count",
 							"count": {
 								"type": "minecraft:uniform",
-								"min": -2,
-								"max": 5
+								"min": 1,
+								"max": 4
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.75
+                        }
+                    ]
 				}
 			]
 		},
 		{
-			"rolls": 1,
+			"rolls": 2,
 			"entries": [
 				{
 					"type": "minecraft:item",
 					"name": "minecraft:diamond",
-					"functions": [
-						{
-							"function": "minecraft:set_count",
-							"count": {
-								"type": "minecraft:uniform",
-								"min": -1,
-								"max": 2
-							}
-						}
-					]
+					"functions": [],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.2
+                        }
+                    ]
 				}
 			]
 		},
@@ -112,11 +115,17 @@
 							"function": "minecraft:set_count",
 							"count": {
 								"type": "minecraft:uniform",
-								"min": -4,
+								"min": 0,
 								"max": 1
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.2
+                        }
+                    ]
 				}
 			]
 		},
@@ -131,11 +140,17 @@
 							"function": "minecraft:set_count",
 							"count": {
 								"type": "minecraft:uniform",
-								"min": -5,
-								"max": 1
+								"min": 1,
+								"max": 3
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.2
+                        }
+                    ]
 				}
 			]
 		}

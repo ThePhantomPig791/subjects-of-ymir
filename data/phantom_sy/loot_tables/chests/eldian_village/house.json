@@ -74,11 +74,17 @@
 							"function": "minecraft:set_count",
 							"count": {
 								"type": "minecraft:uniform",
-								"min": -1,
+								"min": 1,
 								"max": 3
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.65
+                        }
+                    ]
 				}
 			]
 		},
@@ -90,14 +96,6 @@
 					"name": "phantom_sy:dagger",
 					"weight": 1,
 					"functions": [
-						{
-							"function": "minecraft:set_count",
-							"count": {
-								"type": "minecraft:uniform",
-								"min": -5,
-								"max": 1
-							}
-						},
                         {
 							"function": "minecraft:set_damage",
 							"damage": {
@@ -106,7 +104,13 @@
 								"max": 0.25
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.15
+                        }
+                    ]
 				}
 			]
 		},
@@ -122,11 +126,17 @@
 							"function": "minecraft:set_count",
 							"count": {
 								"type": "minecraft:uniform",
-								"min": -2,
+								"min": 1,
 								"max": 2
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.5
+                        }
+                    ]
 				}
 			]
 		},
@@ -137,16 +147,13 @@
 					"type": "minecraft:item",
 					"name": "phantom_sy:iron_bamboo",
 					"weight": 1,
-					"functions": [
-						{
-							"function": "minecraft:set_count",
-							"count": {
-								"type": "minecraft:uniform",
-								"min": -3,
-								"max": 1
-							}
-						}
-					]
+					"functions": [],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.25
+                        }
+                    ]
 				}
 			]
 		}

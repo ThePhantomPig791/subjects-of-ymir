@@ -93,4 +93,43 @@ PalladiumEvents.registerAnimations((event) => {
             }
         }
     });
+
+    event.register('phantom_sy/blocking', 10, (builder) => {
+        const progress = animationUtil.getAnimationTimerAbilityValue(builder.getPlayer(), 'phantom_sy:shifter', 'blocking', builder.getPartialTicks());
+        if (progress > 0) {
+
+            if (builder.isFirstPerson()) {
+                builder.get('right_arm')
+                    .setZ(10)
+                    .scaleX(2)
+                    .scaleY(2)
+                    .scaleZ(2)
+                    .rotateXDegrees(50)
+                    .rotateYDegrees(180)
+                    .rotateZDegrees(70)
+                    .animate('InOutBack', progress);
+                builder.get('left_arm')
+                    .setZ(10)
+                    .scaleX(2)
+                    .scaleY(2)
+                    .scaleZ(2)
+                    .rotateXDegrees(45)
+                    .rotateYDegrees(-180)
+                    .rotateZDegrees(-70)
+                    .animate('InOutBack', progress);
+            } else {
+                builder.get('right_arm')
+                    .setXRotDegrees(-92.02)
+                    .setYRotDegrees(-46.5681)
+                    .setZRotDegrees(-43.7364)
+                    .animate('InOutBack', progress);
+
+                builder.get('left_arm')
+                    .setXRotDegrees(-73.761)
+                    .setYRotDegrees(33.5555)
+                    .setZRotDegrees(61.3242)
+                    .animate('InOutBack', progress);
+            }
+        }
+    });
 })

@@ -25,6 +25,11 @@
         "sounds": [
             {
                 "name": "phantom_sy:steam"
+            },
+            {
+                "name": "random/fizz",
+                "pitch": 2,
+                "volume": 0.1
             }
         ]
     },

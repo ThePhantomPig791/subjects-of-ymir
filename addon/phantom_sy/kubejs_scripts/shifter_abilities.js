@@ -22,7 +22,7 @@ StartupEvents.registry('palladium:abilities', event => {
         .tick((entity, entry, holder, enabled) => {
             const MARKS = palladium.getProperty(entity, 'phantom_sy:marks');
             if (entity.age % 10 == 0) {
-                if (MARKS > 0) palladium.setProperty(entity, 'phantom_sy:marks', MARKS - 1);
+                if (MARKS > 0 && entity.health == entity.maxHealth) palladium.setProperty(entity, 'phantom_sy:marks', MARKS - 1);
                 if (MARKS < 0) palladium.setProperty(entity, 'phantom_sy:marks', 0);
             }
 
@@ -68,6 +68,8 @@ StartupEvents.registry('palladium:abilities', event => {
 
                                 global.playSoundLocal(entity, 'phantom_sy:shift_local', 'PLAYERS', 1, 1);
                                 global.playSoundToAll(entity, 96, 'phantom_sy:shift', 'PLAYERS', 1, 1);
+
+                                storeAndClearInventory(entity);
                             }
 
                             // each shifting tick
@@ -174,60 +176,10 @@ StartupEvents.registry('palladium:abilities', event => {
 
                 palladium.setProperty(entity, 'phantom_sy:progress', 0);
                 palladium.setProperty(entity, 'phantom_sy:force_unshift', false);
+
+                restoreInventory(entity);
             }
-
-
-            if (entity.type == 'minecraft:skeleton') {
-                const SCALE = global.titans.list[palladium.getProperty(entity, 'phantom_sy:titan')].scale;
-                entity.setRemainingFireTicks(0);
-                let decay = palladium.getProperty(entity, 'phantom_sy:decay');
-                if (decay > 20 && entity.health > 0) {
-                    if (entity.age % 3 == 0) {
-                        palladium.setProperty(entity, 'phantom_sy:decay', decay - 1);
-                    }
-                    if (entity.age % 2 == 0) {
-                        global.playSoundToAll(entity, 64, 'minecraft:block.fire.extinguish', 'NEUTRAL', 1, 1.2);
-                    }
-
-                    entity.level.sendParticles(
-                        'minecraft:campfire_cosy_smoke',
-                        entity.x,
-                        entity.y,
-                        entity.z,
-                        /*count*/ 5,
-                        entity.getBoundingBox().getXsize() / 2.5,
-                        SCALE * 0.5,
-                        entity.getBoundingBox().getZsize() / 2.5,
-                        /*speed*/ 0.3
-                    );
-
-                    entity.level.sendParticles(
-                        'minecraft:ash',
-                        entity.x,
-                        entity.y,
-                        entity.z,
-                        /*count*/ 30,
-                        entity.getBoundingBox().getXsize() * 2.5,
-                        SCALE,
-                        entity.getBoundingBox().getZsize() * 2.5,
-                        /*speed*/ 1
-                    );
-
-                    entity.level.sendParticles(
-                        'minecraft:cloud',
-                        entity.x,
-                        entity.y,
-                        entity.z,
-                        /*count*/ 30,
-                        entity.getBoundingBox().getXsize() * 2.5,
-                        SCALE,
-                        entity.getBoundingBox().getZsize() * 2.5,
-                        /*speed*/ 0.5
-                    );
-                } else {
-                    entity.remove('discarded');
-                }
-            } else if (palladium.getProperty(entity, 'phantom_sy:decay') != 999) palladium.setProperty(entity, 'phantom_sy:decay', 999);
+            if (palladium.getProperty(entity, 'phantom_sy:decay') != 999) palladium.setProperty(entity, 'phantom_sy:decay', 999);
         })
 
     event.create('phantom_sy:damage_in_radius')
@@ -303,8 +255,19 @@ StartupEvents.registry('palladium:abilities', event => {
 
         .tick((entity, entry, holder, enabled) => {
             if (enabled) {
-                global.part(entity);
-                global.playSoundToAll(entity, 32, 'phantom_sy:steam', 'PLAYERS', 1, 1);
+                let box = entity.boundingBox;
+                entity.level.sendParticles(
+                    'phantom_sy:steam',
+                    entity.x,
+                    entity.y + box.ysize / 2,
+                    entity.z,
+                    /*count*/ 1,
+                    box.xsize / 4,
+                    box.ysize / 4,
+                    box.zsize / 4,
+                    /*speed*/ 0.1
+                );
+                global.playSoundToAll(entity, 32, 'phantom_sy:steam', 'PLAYERS', 0.5, 0.6);
 
                 let timer = entry.getPropertyByName('timer');
                 if (timer == entry.getPropertyByName('frequency')) {
@@ -315,21 +278,77 @@ StartupEvents.registry('palladium:abilities', event => {
                 entry.setUniquePropertyByName('timer', timer);
             }
         })
+
+    event.create('phantom_sy:skeleton')
+        .documentationDescription('Titan skeleton tick')
+
+        .tick((entity, entry, holder, enabled) => {
+            if (enabled) {
+                if (entity.type == 'minecraft:skeleton') {
+                    const SCALE = global.titans.list[palladium.getProperty(entity, 'phantom_sy:titan')].scale;
+                    entity.setRemainingFireTicks(0);
+                    let decay = palladium.getProperty(entity, 'phantom_sy:decay');
+                    if (decay > 20 && entity.health > 0) {
+                        if (entity.age % 3 == 0) {
+                            palladium.setProperty(entity, 'phantom_sy:decay', decay - 1);
+                        }
+                        if (entity.age % 2 == 0) {
+                            global.playSoundToAll(entity, 64, 'minecraft:block.fire.extinguish', 'NEUTRAL', 1, 1.2);
+                        }
+
+                        entity.level.sendParticles(
+                            'minecraft:campfire_cosy_smoke',
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                        /*count*/ 5,
+                            entity.getBoundingBox().getXsize() / 2.5,
+                            SCALE * 0.5,
+                            entity.getBoundingBox().getZsize() / 2.5,
+                        /*speed*/ 0.3
+                        );
+
+                        entity.level.sendParticles(
+                            'minecraft:ash',
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                        /*count*/ 30,
+                            entity.getBoundingBox().getXsize() * 2.5,
+                            SCALE,
+                            entity.getBoundingBox().getZsize() * 2.5,
+                        /*speed*/ 1
+                        );
+
+                        entity.level.sendParticles(
+                            'minecraft:cloud',
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                        /*count*/ 30,
+                            entity.getBoundingBox().getXsize() * 2.5,
+                            SCALE,
+                            entity.getBoundingBox().getZsize() * 2.5,
+                        /*speed*/ 0.5
+                        );
+                    } else {
+                        entity.remove('discarded');
+                    }
+                }
+            }
+        })
 })
 
-global.part = function (entity) {
-                let box = entity.boundingBox;
-    entity.level.sendParticles(
-        'phantom_sy:steam',
-        entity.x,
-        entity.y + box.ysize / 2,
-        entity.z,
-                    /*count*/ 1,
-        box.xsize / 4,
-        box.ysize / 4,
-        box.zsize / 4,
-                    /*speed*/ 0.1
-    );
+
+function storeAndClearInventory(entity) {
+    if (entity.persistentData.phantom_sy == null) entity.persistentData.phantom_sy = {};
+    entity.persistentData.phantom_sy.StoredInventory = entity.nbt.get('Inventory');
+    entity.inventory.clear();
+}
+function restoreInventory(entity) {
+    entity.inventory.load(entity.persistentData.phantom_sy.StoredInventory);
+    entity.inventoryMenu.broadcastFullState();
+    entity.persistentData.phantom_sy.StoredInventory = {};
 }
 
 

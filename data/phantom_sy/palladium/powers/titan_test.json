@@ -8,6 +8,10 @@
         "render_layer": {
             "type": "palladium:render_layer",
             "render_layer": "phantom_sy:titan/generic_scale_8"
+        },
+        "skeleton": {
+            "type": "phantom_sy:skeleton",
+            "hidden": true
         }
     }
 }

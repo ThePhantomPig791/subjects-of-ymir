@@ -78,16 +78,13 @@
 					"type": "minecraft:item",
 					"name": "minecraft:iron_ingot",
 					"weight": 1,
-					"functions": [
-						{
-							"function": "minecraft:set_count",
-							"count": {
-								"type": "minecraft:uniform",
-								"min": -2,
-								"max": 1
-							}
-						}
-					]
+					"functions": [],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.4
+                        }
+                    ]
 				}
 			]
 		},
@@ -98,14 +95,6 @@
 					"type": "minecraft:item",
 					"name": "minecraft:bow",
 					"functions": [
-						{
-							"function": "minecraft:set_count",
-							"count": {
-								"type": "minecraft:uniform",
-								"min": 0,
-								"max": 1
-							}
-						},
                         {
 							"function": "minecraft:set_damage",
 							"damage": {
@@ -114,12 +103,18 @@
 								"max": 0.5
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.5
+                        }
+                    ]
 				}
 			]
 		},
 		{
-			"rolls": 2,
+			"rolls": 3,
 			"entries": [
 				{
 					"type": "minecraft:item",
@@ -129,11 +124,17 @@
 							"function": "minecraft:set_count",
 							"count": {
 								"type": "minecraft:uniform",
-								"min": -2,
+								"min": 1,
 								"max": 3
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.4
+                        }
+                    ]
 				}
 			]
 		},
@@ -144,14 +145,6 @@
 					"type": "minecraft:item",
 					"name": "phantom_sy:dagger",
 					"functions": [
-						{
-							"function": "minecraft:set_count",
-							"count": {
-								"type": "minecraft:uniform",
-								"min": 0,
-								"max": 1
-							}
-						},
                         {
 							"function": "minecraft:set_damage",
 							"damage": {
@@ -160,7 +153,13 @@
 								"max": 0.7
 							}
 						}
-					]
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.5
+                        }
+                    ]
 				}
 			]
 		}
