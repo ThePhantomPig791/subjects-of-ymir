@@ -2,6 +2,7 @@
     "name": "Omni-Directional Movement Gear",
     "background": "minecraft:textures/block/oak_planks.png",
     "icon": "phantom_sy:odm",
+    "ability_bar_texture": "phantom_sy:textures/gui/ability_bars/odm.png",
     "energy_bars": {
         "gas": {
             "color": "#c1d3e5",
@@ -33,9 +34,83 @@
         "dummy": {
             "type": "palladium:dummy",
             "hidden_in_bar": false,
+            "list_index": 0,
             "conditions": {
                 "enabling": {
                     "type": "palladium:held"
+                }
+            }
+        },
+
+        "left_hook_shoot": {
+            "type": "phantom_sy:shoot_hook",
+            "icon": "minecraft:flint",
+            "hidden": false,
+            "list_index": 1,
+            "side": "left",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action",
+                    "key_type": "left_click"
+                },
+                "unlocking": {
+                    "type": "palladium:not",
+                    "conditions": {
+                        "type": "phantom_sy:odm_hook_out",
+                        "side": "left"
+                    }
+                }
+            }
+        },
+        "left_hook_reel": {
+            "type": "phantom_sy:hook",
+            "hidden": false,
+            "list_index": 1,
+            "side": "left",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held",
+                    "key_type": "left_click"
+                },
+                "unlocking": {
+                    "type": "phantom_sy:odm_hook_out",
+                    "side": "left"
+                }
+            }
+        },
+        "right_hook_shoot": {
+            "type": "phantom_sy:shoot_hook",
+            "icon": "minecraft:flint",
+            "hidden": false,
+            "list_index": 2,
+            "side": "right",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:action",
+                    "key_type": "right_click"
+                },
+                "unlocking": {
+                    "type": "palladium:not",
+                    "conditions": {
+                        "type": "phantom_sy:odm_hook_out",
+                        "side": "right"
+                    }
+                }
+            }
+        },
+        "right_hook_reel": {
+            "type": "phantom_sy:hook",
+            "hidden": false,
+            "list_index": 2,
+            "side": "right",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held",
+                    "key_type": "right_click"
+                },
+                "unlocking": {
+                    "type": "phantom_sy:odm_hook_out",
+                    "side": "right"
                 }
             }
         }
