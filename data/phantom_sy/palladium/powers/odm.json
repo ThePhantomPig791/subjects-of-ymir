@@ -113,6 +113,39 @@
                     "side": "right"
                 }
             }
+        },
+
+        "air_strafe": {
+            "type": "phantom_sy:gas_strafe",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:or",
+                    "conditions": [
+                        {
+                            "type": "palladium:ability_enabled",
+                            "ability": "manual_gas_strafe"
+                        },
+                        {
+                            "type": "phantom_sy:odm_hook_out",
+                            "side": "right"
+                        },
+                        {
+                            "type": "phantom_sy:odm_hook_out",
+                            "side": "left"
+                        }
+                    ]
+                }
+            }
+        },
+        "manual_gas_strafe": {
+            "type": "palladium:dummy",
+            "title": "Gas Strafe",
+            "list_index": 3,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                }
+            }
         }
     }
 }

@@ -1,15 +1,16 @@
 let $CuriosTrinketsUtil = Java.loadClass('net.threetag.palladium.compat.curiostinkets.CuriosTrinketsUtil');
 let $ClientboundSetEntityMotionPacket = Java.loadClass('net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket');
+let $Vec3 = Java.loadClass('net.minecraft.world.phys.Vec3');
 
 global.odm = {};
 
 global.odm.turbines = {
-    // accepts_sheath: true
-    // max_gas: 0
+    // all properties and their defaults below
     empty: {},
     prototype_1: {
         accepts_sheath: false,
-        max_gas: 500
+        max_gas: 500,
+        strafe_directions: ['forward']
     },
     prototype_2: {
 
@@ -24,13 +25,17 @@ global.odm.turbines = {
 
     }
 }
-for (let turb in global.odm.turbines) {
+for (let id in global.odm.turbines) {
+    let turb = global.odm.turbines[id];
+    console.log('----')
+    console.log(turb)
     if (turb.accepts_sheath == null) turb.accepts_sheath = true;
     if (turb.max_gas == null) turb.max_gas = 0;
+    if (turb.strafe_directions == null) turb.strafe_directions = ['forward', 'left', 'right']
+    console.log(turb)
 }
 
 global.odm.sheaths = { // these properties are per sheath, not per pair of sheaths
-    // max_gas: 1000
     empty: {},
     blade: {
         max_gas: 1000
@@ -39,7 +44,8 @@ global.odm.sheaths = { // these properties are per sheath, not per pair of sheat
         max_gas: 2000
     }
 }
-for (let sheath in global.odm.sheaths) {
+for (let id in global.odm.sheaths) {
+    let sheath = global.odm.sheaths[id];
     if (sheath.max_gas == null) sheath.max_gas = 1000;
 }
 
@@ -100,6 +106,29 @@ global.odm.getTotalMaxGas = (odmItem) => {
     return global.odm.getMaxTurbineGas(odmItem) + global.odm.getMaxSheathLeftGas(odmItem) + global.odm.getMaxSheathRightGas(odmItem);
 }
 
+global.odm.consumeGas = (odmItem, amount) => {
+    if (amount > 0 && global.odm.getSheathLeftGas(odmItem) > 1) {
+        amount = consumeGas(odmItem, amount, 'SheathLeftGas');
+    }
+    if (amount > 0 && global.odm.getSheathRightGas(odmItem) > 1) {
+        amount = consumeGas(odmItem, amount, 'SheathRightGas');
+    }
+    if (amount > 0 && global.odm.getTurbineGas(odmItem) > 1) {
+        amount = consumeGas(odmItem, amount, 'TurbineGas');
+    }
+    return amount == 0;
+}
+function consumeGas(odmItem, amount, odmGasProperty) {
+    let available = odmItem.nbt.Odm[odmGasProperty] ?? 0;
+    let leftover = available - amount;
+    if (leftover < 0) { // this means we subtracted too much gas, and should return how much should be taken away from somewhere else
+        odmItem.nbt.Odm[odmGasProperty] = 0;
+        return -leftover;
+    }
+    odmItem.nbt.Odm[odmGasProperty] = leftover;
+    return 0;
+}
+
 global.odm.getOdm = (entity) => {
     const items = $CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, Platform.isForge() ? 'belt' : 'legs/belt');
     for (let e of items) {
@@ -139,6 +168,8 @@ StartupEvents.registry('palladium:abilities', event => {
                             let strength = -10 * Math.pow(1.1, -0.01 * (realDistance - hookDistance)) + 10;
                             // let strength = 0.01 * (realDistance - hookDistance);
                             global.odm.pull(entity, hook, strength);
+                        } else {
+                            palladium.setProperty(entity, `phantom_sy:odm.hook_${side}.distance`, realDistance);
                         }
                     } else {
                         palladium.setProperty(entity, `phantom_sy:odm.hook_${side}`, false);
@@ -161,7 +192,13 @@ StartupEvents.registry('palladium:abilities', event => {
 
                 if (hook.type == 'minecraft:marker') {
                     let realDistance = entity.position().distanceTo(hook.position());
-                    palladium.setProperty(entity, `phantom_sy:odm.hook_${side}.distance`, Math.max(1, Math.min(realDistance - 1, palladium.getProperty(entity, `phantom_sy:odm.hook_${side}.distance`) - 2)));
+                    let hookDistance = palladium.getProperty(entity, `phantom_sy:odm.hook_${side}.distance`);
+                    if (hookDistance > 1.5 * realDistance) {
+                        hookDistance *= 0.8;
+                    } else {
+                        hookDistance -= 2;
+                    }
+                    palladium.setProperty(entity, `phantom_sy:odm.hook_${side}.distance`, Math.max(1, hookDistance));
                 }
                 if (entity.crouching) {
                     hook.discard();
@@ -184,7 +221,82 @@ StartupEvents.registry('palladium:abilities', event => {
                 }
             }
         })
+
+
+    event.create('phantom_sy:gas_strafe')
+        .documentationDescription('Allows the player to strafe when in the air using WASD, consuming ODM gas')
+
+        .tick((entity, entry, holder, enabled) => {
+            global.asdasdgfg(entity, entry, holder, enabled);
+        })
 })
+
+global.asdasdgfg = (entity, entry, holder, enabled) => {
+    if (enabled && !entity.onGround()) {
+        let directions = global.odm.getOdmPiece(global.odm.turbines, global.odm.getOdm(entity).nbt?.Odm?.Turbine).strafe_directions;
+        if (palladium.getProperty(entity, 'left_key_down') && directions.includes('left')) {
+            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                strafe(entity, 0, entity.yaw - 90, 0.1);
+            }
+        }
+        if (palladium.getProperty(entity, 'right_key_down') && directions.includes('right')) {
+            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                strafe(entity, 0, entity.yaw + 90, 0.1);
+            }
+        }
+        if (palladium.getProperty(entity, 'forward_key_down') && directions.includes('forward')) {
+            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw, 0.1);
+            }
+        }
+        if (palladium.getProperty(entity, 'backwards_key_down') && directions.includes('backward')) {
+            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw + 180, 0.1);
+            }
+        }
+
+        if (palladium.getProperty(entity, 'jump_key_down')) {
+            if (global.odm.consumeGas(global.odm.getOdm(entity), 3)) {
+                let hooks = [global.odm.getHook(entity, 'right'), global.odm.getHook(entity, 'left')];
+                for (let i = 0; i < hooks.length; i++) {
+                    let hook = hooks[i];
+                    if (hook != null) {
+                        let side = i == 0 ? 'right' : 'left';
+                        let hookDistance = palladium.getProperty(entity, `phantom_sy:odm.hook_${side}.distance`);
+                        let realDistance = entity.position().distanceTo(hook.position());
+                        let strength = -10 * Math.pow(1.1, -0.01 * (realDistance - hookDistance)) + 10;
+                        global.odm.pull(entity, hook, strength * 2);
+                    }
+                }
+            }
+        }
+    }
+}
+
+function strafe(entity, pitch, yaw, strength) {
+    let direction = $Vec3.directionFromRotation(pitch, yaw).scale(strength);
+    entity.addDeltaMovement(direction);
+    if (entity.isPlayer()) {
+        entity.connection.send(new $ClientboundSetEntityMotionPacket(entity));
+    }
+    entity.level.spawnParticles(
+        'minecraft:cloud',
+        true,
+        entity.x,
+        entity.y + 1,
+        entity.z,
+        0,
+        0.2,
+        0,
+        /*count*/ 1,
+        /*speed*/ 0.1
+    );
+}
+
+function deIntensifyPitch(x) { // https://www.desmos.com/calculator/btea69orrh
+    return -0.0000439557 * x ** 3 + 0.0000847253 * x ** 2 + 1.00316 * x - 0.868569;
+}
+
 
 StartupEvents.registry('palladium:condition_serializer', (event) => {
     event.create('phantom_sy:odm_hook_out')

@@ -16,10 +16,12 @@ PalladiumEvents.registerPropertiesClientSided((event) => {
         event.registerProperty('phantom_sy:odm.hook_left.x', 'float', 0);
         event.registerProperty('phantom_sy:odm.hook_left.y', 'float', 0);
         event.registerProperty('phantom_sy:odm.hook_left.z', 'float', 0);
+        event.registerProperty('phantom_sy:odm.hook_left.distance', 'float', 0);
         event.registerProperty('phantom_sy:odm.hook_right', 'boolean', false);
         event.registerProperty('phantom_sy:odm.hook_right.x', 'float', 0);
         event.registerProperty('phantom_sy:odm.hook_right.y', 'float', 0);
         event.registerProperty('phantom_sy:odm.hook_right.z', 'float', 0);
+        event.registerProperty('phantom_sy:odm.hook_right.distance', 'float', 0);
     }
 
     if (event.getEntityType() === 'minecraft:skeleton') {
