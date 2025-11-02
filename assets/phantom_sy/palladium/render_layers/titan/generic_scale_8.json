@@ -17,12 +17,43 @@
                 }
             },
             "texture": "#phantom_sy:titan_skeleton",
-            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_file": "phantom_sy:animations/titan.animation.json",
             "animation_controller": [
                 {
                     "name": "scale",
                     "transition_tick_time": 0,
-                    "animation": "scale"
+                    "animation": "scale_8"
+                },
+                {
+                    "name": "attacks",
+                    "transition_tick_time": 3,
+                    "triggers": {
+                        "punch_right": "attack_2",
+                        "punch_left": "attack_1",
+                        "punch_strong": "attack_strong",
+                        "pure_1": "attack_pure_1",
+                        "pure_2": "attack_pure_2",
+                        "kick_right": "kick_R",
+                        "kick_left": "kick_L",
+                        "roar_1": "roar_1",
+                        "punch_slow_right": "attack_colossal_2",
+                        "punch_slow_left": "attack_colossal_1",
+                        "punch_slow_strong": "attack_colossal_strong",
+                        "kick_slow_right": "kick_colossal_R",
+                        "kick_slow_left": "kick_colossal_L"
+                    }
+                },
+                {
+                    "name": "pose",
+                    "transition_tick_time": 0,
+                    "triggers": {
+                        "kneel_left": "pose_1",
+                        "kneel_right": "pose_2",
+                        "hanging_head": "pose_3",
+                        "pushup": "pose_4",
+                        "relax": "pose_5",
+                        "lay": "pose_6"
+                    }
                 }
             ],
             "first_person_conditions": false
@@ -44,12 +75,43 @@
                 }
             },
             "texture": "#phantom_sy:titan_muscle",
-            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_file": "phantom_sy:animations/titan.animation.json",
             "animation_controller": [
                 {
                     "name": "scale",
                     "transition_tick_time": 0,
-                    "animation": "scale"
+                    "animation": "scale_8"
+                },
+                {
+                    "name": "attacks",
+                    "transition_tick_time": 3,
+                    "triggers": {
+                        "punch_right": "attack_2",
+                        "punch_left": "attack_1",
+                        "punch_strong": "attack_strong",
+                        "pure_1": "attack_pure_1",
+                        "pure_2": "attack_pure_2",
+                        "kick_right": "kick_R",
+                        "kick_left": "kick_L",
+                        "roar_1": "roar_1",
+                        "punch_slow_right": "attack_colossal_2",
+                        "punch_slow_left": "attack_colossal_1",
+                        "punch_slow_strong": "attack_colossal_strong",
+                        "kick_slow_right": "kick_colossal_R",
+                        "kick_slow_left": "kick_colossal_L"
+                    }
+                },
+                {
+                    "name": "pose",
+                    "transition_tick_time": 0,
+                    "triggers": {
+                        "kneel_left": "pose_1",
+                        "kneel_right": "pose_2",
+                        "hanging_head": "pose_3",
+                        "pushup": "pose_4",
+                        "relax": "pose_5",
+                        "lay": "pose_6"
+                    }
                 }
             ],
             "first_person_conditions": false
@@ -71,12 +133,43 @@
                 }
             },
             "texture": "#phantom_sy:titan_skin",
-            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_file": "phantom_sy:animations/titan.animation.json",
             "animation_controller": [
                 {
                     "name": "scale",
                     "transition_tick_time": 0,
-                    "animation": "scale"
+                    "animation": "scale_8"
+                },
+                {
+                    "name": "attacks",
+                    "transition_tick_time": 3,
+                    "triggers": {
+                        "punch_right": "attack_2",
+                        "punch_left": "attack_1",
+                        "punch_strong": "attack_strong",
+                        "pure_1": "attack_pure_1",
+                        "pure_2": "attack_pure_2",
+                        "kick_right": "kick_R",
+                        "kick_left": "kick_L",
+                        "roar_1": "roar_1",
+                        "punch_slow_right": "attack_colossal_2",
+                        "punch_slow_left": "attack_colossal_1",
+                        "punch_slow_strong": "attack_colossal_strong",
+                        "kick_slow_right": "kick_colossal_R",
+                        "kick_slow_left": "kick_colossal_L"
+                    }
+                },
+                {
+                    "name": "pose",
+                    "transition_tick_time": 0,
+                    "triggers": {
+                        "kneel_left": "pose_1",
+                        "kneel_right": "pose_2",
+                        "hanging_head": "pose_3",
+                        "pushup": "pose_4",
+                        "relax": "pose_5",
+                        "lay": "pose_6"
+                    }
                 }
             ],
             "first_person_conditions": false
@@ -97,12 +190,43 @@
                 }
             },
             "texture": "#phantom_sy:titan_eyes",
-            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_file": "phantom_sy:animations/titan.animation.json",
             "animation_controller": [
                 {
                     "name": "scale",
                     "transition_tick_time": 0,
-                    "animation": "scale"
+                    "animation": "scale_8"
+                },
+                {
+                    "name": "attacks",
+                    "transition_tick_time": 3,
+                    "triggers": {
+                        "punch_right": "attack_2",
+                        "punch_left": "attack_1",
+                        "punch_strong": "attack_strong",
+                        "pure_1": "attack_pure_1",
+                        "pure_2": "attack_pure_2",
+                        "kick_right": "kick_R",
+                        "kick_left": "kick_L",
+                        "roar_1": "roar_1",
+                        "punch_slow_right": "attack_colossal_2",
+                        "punch_slow_left": "attack_colossal_1",
+                        "punch_slow_strong": "attack_colossal_strong",
+                        "kick_slow_right": "kick_colossal_R",
+                        "kick_slow_left": "kick_colossal_L"
+                    }
+                },
+                {
+                    "name": "pose",
+                    "transition_tick_time": 0,
+                    "triggers": {
+                        "kneel_left": "pose_1",
+                        "kneel_right": "pose_2",
+                        "hanging_head": "pose_3",
+                        "pushup": "pose_4",
+                        "relax": "pose_5",
+                        "lay": "pose_6"
+                    }
                 }
             ],
             "first_person_conditions": false,
@@ -124,12 +248,43 @@
                 }
             },
             "texture": "#phantom_sy:titan_hair",
-            "animation_file": "phantom_sy:animations/titan_scale_8.animation.json",
+            "animation_file": "phantom_sy:animations/titan.animation.json",
             "animation_controller": [
                 {
                     "name": "scale",
                     "transition_tick_time": 0,
-                    "animation": "scale"
+                    "animation": "scale_8"
+                },
+                {
+                    "name": "attacks",
+                    "transition_tick_time": 3,
+                    "triggers": {
+                        "punch_right": "attack_2",
+                        "punch_left": "attack_1",
+                        "punch_strong": "attack_strong",
+                        "pure_1": "attack_pure_1",
+                        "pure_2": "attack_pure_2",
+                        "kick_right": "kick_R",
+                        "kick_left": "kick_L",
+                        "roar_1": "roar_1",
+                        "punch_slow_right": "attack_colossal_2",
+                        "punch_slow_left": "attack_colossal_1",
+                        "punch_slow_strong": "attack_colossal_strong",
+                        "kick_slow_right": "kick_colossal_R",
+                        "kick_slow_left": "kick_colossal_L"
+                    }
+                },
+                {
+                    "name": "pose",
+                    "transition_tick_time": 0,
+                    "triggers": {
+                        "kneel_left": "pose_1",
+                        "kneel_right": "pose_2",
+                        "hanging_head": "pose_3",
+                        "pushup": "pose_4",
+                        "relax": "pose_5",
+                        "lay": "pose_6"
+                    }
                 }
             ],
             "first_person_conditions": false

@@ -12,6 +12,15 @@
         "skeleton": {
             "type": "phantom_sy:skeleton",
             "hidden": true
+        },
+
+        "pose": {
+            "type": "geckolib:render_layer_animation",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "render_layer": "phantom_sy:titan/generic_scale_8",
+            "controller": "pose",
+            "animation_trigger": "hanging_head"
         }
     }
 }

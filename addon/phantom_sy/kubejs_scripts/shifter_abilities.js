@@ -334,6 +334,10 @@ StartupEvents.registry('palladium:abilities', event => {
                     } else {
                         entity.remove('discarded');
                     }
+
+                    if (entity.level.isClientSide) {
+                        
+                    }
                 }
             }
         })

@@ -16,10 +16,10 @@ ItemEvents.rightClicked('phantom_sy:injection', event => {
     if (getVialLevel(offhandItem) == 0) offhandItem.nbt.SerumData = {};
 })
 
-ItemEvents.rightClicked('phantom_sy:filled_injection', event => {
+ItemEvents.rightClicked('phantom_sy:injection_filled', event => {
     if (event.hand == 'OFF_HAND') return;
     const { player, item } = event;
-    if (player.getMainHandItem().id != 'phantom_sy:filled_injection') return;
+    if (player.getMainHandItem().id != 'phantom_sy:injection_filled') return;
     let rayTrace = player.rayTrace();
 
     if (rayTrace.entity) {
@@ -76,7 +76,7 @@ function getDefaultSerumData() {
 function mergeSerumData(serum, otherSerum) {
     if (serum == null) return otherSerum;
     if (otherSerum == null) return serum;
-    return Object.assign(serum, otherSerum);
+    return Object.assign(serum, otherSerum); // this may need to change for eye colors and stuff idk
 }
 
 

@@ -16,6 +16,94 @@
                 ]
             }
         },
+        "charge_render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:charge",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:ability_integer_property",
+                    "ability": "force_first_transformation",
+                    "property": "charge",
+                    "min": 1,
+                    "max": 999
+                }
+            }
+        },
+        "charge_eyes_render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:charge_eyes"
+        },
+        "shift_lightning_render_layer": {
+            "type": "palladium:render_layer",
+            "render_layer": "phantom_sy:shift_lightning",
+            "conditions": {
+                "enabling": {
+                    "type": "phantom_sy:progress",
+                    "min": 1,
+                    "max": 14
+                }
+            }
+        },
+
+        "electricity_sound": {
+            "type": "palladium:play_sound",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "sound": "phantom_sy:electricity",
+            "looping": true,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:or",
+                        "conditions": [
+                            {
+                                "type": "palladium:ability_integer_property",
+                                "ability": "force_first_transformation",
+                                "property": "charge",
+                                "min": 1,
+                                "max": 999
+                            },
+                            {
+
+                                "type": "phantom_sy:in_healing_phase"
+                            },
+                            {
+                                "type": "phantom_sy:progress",
+                                "min": 1
+                            }
+                        ]
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "min": 0,
+                        "max": 0
+                    }
+                ]
+            }
+        },
+        "final_electricity_sound": {
+            "type": "palladium:play_sound",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "sound": "phantom_sy:electricity_final",
+            "looping": false,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_integer_property",
+                        "ability": "force_first_transformation",
+                        "property": "charge",
+                        "min": 1,
+                        "max": 999
+                    },
+                    {
+                        "type": "palladium:ability_last_tick",
+                        "ability": "shift"
+                    }
+                ]
+            }
+        },
+
         "plot_armor": {
             "type": "palladium:immortality",
             "hidden": true
