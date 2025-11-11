@@ -5,33 +5,9 @@
     "hidden": true,
     "abilities": {
         "attack": {
-            "type": "phantom_sy:offhand_attack",
+            "type": "palladium:dual_wielding",
             "hidden": true,
-            "hidden_in_bar": true,
-            "damage": 2.5,
-            "conditions": {
-                "enabling": {
-                    "type": "palladium:action",
-                    "key_type": "right_click"
-                },
-                "unlocking": {
-                    "type": "palladium:not",
-                    "conditions": [
-                        {
-                            "type": "phantom_sy:item_on_cooldown",
-                            "hand": "offhand"
-                        },
-                        {
-                            "type": "palladium:crouching"
-                        },
-                        {
-                            "type": "palladium:ability_enabled",
-                            "power": "phantom_sy:dagger",
-                            "ability": "self_stab"
-                        }
-                    ]
-                }
-            }
+            "hidden_in_bar": true
         }
     }
 }
