@@ -1,0 +1,33 @@
+{
+  "type": "palladium:item_tailoring",
+  "results": {
+    "head": "phantom_sy:cloak",
+    "chest": "phantom_sy:uniform_jacket",
+    "legs": "phantom_sy:uniform_leggings",
+    "feet": "phantom_sy:uniform_boots"
+  },
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:iron_ingot"
+      },
+      "count": 16
+    },
+    {
+      "ingredient": {
+        "tag": "palladium:brown_fabrics"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "tag": "palladium:green_fabrics"
+      },
+      "count": 2
+    }
+  ],
+  "tool": {
+    "item": "minecraft:shears"
+  },
+  "title": "Scout Uniform"
+}

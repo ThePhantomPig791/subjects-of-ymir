@@ -1,0 +1,39 @@
+{
+  "type": "palladium:item_tailoring",
+  "results": {
+    "head": "phantom_sy:garrison_cloak",
+    "chest": "phantom_sy:garrison_jacket",
+    "legs": "phantom_sy:uniform_leggings",
+    "feet": "phantom_sy:uniform_boots"
+  },
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:iron_ingot"
+      },
+      "count": 16
+    },
+    {
+      "ingredient": {
+        "tag": "palladium:brown_fabrics"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "tag": "palladium:green_fabrics"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "tag": "palladium:red_fabrics"
+      },
+      "count": 1
+    }
+  ],
+  "tool": {
+    "item": "minecraft:shears"
+  },
+  "title": "Scout Uniform (Garrison)"
+}

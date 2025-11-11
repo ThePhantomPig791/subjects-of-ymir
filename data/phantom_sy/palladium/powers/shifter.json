@@ -71,7 +71,7 @@
         "bite": {
             "type": "phantom_sy:bite",
             "title": "Bite",
-            "icon": "redstone",
+            "icon": "phantom_sy:textures/icons/bite.png",
             "list_index": 0,
             "conditions": {
                 "enabling": {
@@ -335,7 +335,8 @@
             "hidden_in_bar": false,
             "conditions": {
                 "enabling": {
-                    "type": "palladium:held"
+                    "type": "palladium:held",
+                    "key_type": "right_click"
                 },
                 "unlocking": [
                     {
