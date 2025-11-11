@@ -132,4 +132,28 @@ PalladiumEvents.registerAnimations((event) => {
             }
         }
     });
+
+
+    event.register('phantom_sy/titan_crouch', 10, (builder) => {
+        if (palladium.getProperty(builder.getPlayer(), 'phantom_sy:progress') > 0 && builder.getPlayer().isCrouching()) {
+            builder.get('head')
+                .rotateX(0.5);
+
+            builder.get('body')
+                .rotateX(0.5)
+                .moveY(-3.2);
+
+            builder.get('right_arm')
+                .rotateX(0.1);
+            builder.get('left_arm')
+                .rotateX(0.1);
+
+            builder.get('right_leg')
+                .rotateX(0.5)
+                .moveZ(-4);
+            builder.get('left_leg')
+                .rotateX(0.5)
+                .moveZ(-4);
+        }
+    });
 })

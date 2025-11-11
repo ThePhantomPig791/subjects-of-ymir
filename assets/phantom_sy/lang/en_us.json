@@ -65,6 +65,11 @@
     "item.phantom_sy.military_police_cloak": "Cloak",
     "item.phantom_sy.military_police_jacket": "Uniform Jacket",
 
+
+    "item.phantom_sy.ribcage": "Ribcage",
+    "item.phantom_sy.rib": "Rib",
+    "item.phantom_sy.broken_rib": "Broken Rib",
+
     
     "block.phantom_sy.iron_bamboo": "Iron-Weave Bamboo",
     "block.phantom_sy.iceburst_ore": "Iceburst Ore"

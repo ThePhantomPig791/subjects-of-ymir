@@ -6,9 +6,24 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "minecraft:string",
+					"name": "phantom_sy:iron_bamboo",
 					"weight": 1,
-					"functions": []
+					"functions": [
+                        {
+							"function": "minecraft:set_count",
+							"count": {
+								"type": "minecraft:uniform",
+								"min": 1,
+								"max": 2
+							}
+						}
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.6
+                        }
+                    ]
 				}
 			],
 			"functions": [
@@ -105,6 +120,47 @@
 			]
 		},
 		{
+			"rolls": 2,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "minecraft:gold_ingot",
+					"functions": [],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.6
+                        }
+                    ]
+				}
+			]
+		},
+		{
+			"rolls": 3,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "minecraft:gold_nugget",
+					"functions": [
+                        {
+							"function": "minecraft:set_count",
+							"count": {
+								"type": "minecraft:uniform",
+								"min": 1,
+								"max": 3
+							}
+						}
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.6
+                        }
+                    ]
+				}
+			]
+		},
+		{
 			"rolls": 1,
 			"entries": [
 				{
@@ -149,6 +205,22 @@
                         {
                             "condition": "minecraft:random_chance",
                             "chance": 0.2
+                        }
+                    ]
+				}
+			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "minecraft:cake",
+					"functions": [],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.1
                         }
                     ]
 				}

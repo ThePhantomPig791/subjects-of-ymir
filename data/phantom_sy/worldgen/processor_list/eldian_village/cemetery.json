@@ -1,0 +1,39 @@
+{
+	"processors": [
+		{
+			"processor_type": "minecraft:rule",
+			"rules": [
+                {
+					"location_predicate": {
+						"predicate_type": "minecraft:always_true"
+					},
+					"input_predicate": {
+						"predicate_type": "minecraft:random_block_match",
+						"block": "minecraft:suspicious_gravel",
+						"probability": 0.4
+					},
+					"output_state": {
+						"Name": "minecraft:gravel"
+					}
+				},
+				{
+					"location_predicate": {
+						"predicate_type": "minecraft:always_true"
+					},
+					"input_predicate": {
+						"predicate_type": "minecraft:random_block_match",
+						"block": "minecraft:gravel",
+						"probability": 0.4
+					},
+					"output_state": {
+						"Name": "minecraft:suspicious_gravel"
+					},
+					"block_entity_modifier": {
+						"type": "minecraft:append_loot",
+						"loot_table": "phantom_sy:archaeology/cemetery_path"
+					}
+				}
+			]
+		}
+	]
+}
