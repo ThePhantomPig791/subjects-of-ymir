@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
-        "phantom_sy:iceburst_ore"
+        "phantom_sy:iceburst_ore",
+        "phantom_sy:deepslate_iceburst_ore"
     ]
 }

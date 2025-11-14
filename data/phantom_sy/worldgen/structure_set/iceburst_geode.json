@@ -1,0 +1,19 @@
+{
+    "structures": [
+        {
+            "structure": "phantom_sy:iceburst_geode",
+            "weight": 1
+        },
+        {
+            "structure": "phantom_sy:iceburst_geode_ocean",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "type": "minecraft:random_spread",
+        "salt": 729,
+        "spacing": 4,
+        "separation": 1,
+        "spread_type": "triangular"
+    }
+}

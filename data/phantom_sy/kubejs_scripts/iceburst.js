@@ -1,12 +1,20 @@
 let $ClientboundSetEntityMotionPacket = Java.loadClass('net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket');
 
 BlockEvents.broken('phantom_sy:iceburst_ore', event => {
+    iceburstBroken(event, 1);
+})
+BlockEvents.broken('phantom_sy:deepslate_iceburst_ore', event => {
+    iceburstBroken(event, 0.75);
+})
+
+function iceburstBroken(event, strengthMult) {
     if (event.player.mainHandItem.hasEnchantment('minecraft:silk_touch', 1)) return;
     const { block, level } = event;
     if (event.player.isCreative()) return;
     let center = block.pos.center;
-    explode(center, level, 10, AABB.ofSize(center, 1, 1, 1).inflate(10));
-})
+    explode(center, level, 10 * strengthMult, AABB.ofSize(center, 1, 1, 1).inflate(10));
+}
+
 LevelEvents.afterExplosion(event => {
     event.getAffectedBlocks().forEach(block => {
         if (block.id != 'phantom_sy:iceburst_ore') return;

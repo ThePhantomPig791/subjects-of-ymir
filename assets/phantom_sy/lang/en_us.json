@@ -45,6 +45,7 @@
     "item.phantom_sy.raw_ultrahard_steel": "Raw Ultrahard Steel",
     "item.phantom_sy.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
     "item.phantom_sy.iceburst_ore": "Iceburst Ore",
+    "item.phantom_sy.deepslate_iceburst_ore": "Deepslate Iceburst Ore",
     "item.phantom_sy.raw_iceburst": "Raw Iceburst",
     
     "item.phantom_sy.vial": "Vial",
@@ -72,5 +73,6 @@
 
     
     "block.phantom_sy.iron_bamboo": "Iron-Weave Bamboo",
-    "block.phantom_sy.iceburst_ore": "Iceburst Ore"
+    "block.phantom_sy.iceburst_ore": "Iceburst Ore",
+    "block.phantom_sy.deepslate_iceburst_ore": "Deepslate Iceburst Ore"
 }

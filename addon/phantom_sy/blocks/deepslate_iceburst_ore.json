@@ -1,0 +1,11 @@
+{
+    "sound_type": "minecraft:deepslate",
+    "map_color": "minecraft:ice",
+    "destroy_time": 4.3,
+    "explosion_resistance": 6,
+    "requires_correct_tool_for_drops": true,
+    "creative_mode_tab": {
+        "tab": "phantom_sy:subjects_of_ymir",
+        "after": "phantom_sy:iceburst_ore"
+    }
+}
