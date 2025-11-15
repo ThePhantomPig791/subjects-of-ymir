@@ -1,7 +1,7 @@
 let Mth = Java.loadClass('net.minecraft.util.Mth');
 
 PalladiumEvents.registerAnimations((event) => {
-    event.register('phantom_sy/titan_y_displacement', 10, (builder) => {
+    event.registerForPower('phantom_sy/titan_y_displacement', 'phantom_sy:shifter', 10, (builder) => {
         const pro = palladium.getProperty(builder.getPlayer(), 'phantom_sy:progress')
         let progress = Mth.lerp(builder.getPartialTicks(), pro - 1, pro) / global.titans.MAX_SHIFT_PROGRESS;
 
@@ -16,7 +16,7 @@ PalladiumEvents.registerAnimations((event) => {
         }
     });
 
-    event.register('phantom_sy/bite', 10, (builder) => {
+    event.registerForPower('phantom_sy/bite', 'phantom_sy:shifter', 10, (builder) => {
         const progress = animationUtil.getAnimationTimerAbilityValue(builder.getPlayer(), 'phantom_sy:shifter', 'bite_anim', builder.getPartialTicks());
 
         if (progress > 0) {
@@ -63,7 +63,7 @@ PalladiumEvents.registerAnimations((event) => {
         }
     });
 
-    event.register('phantom_sy/self_stab', 10, (builder) => {
+    event.registerForPower('phantom_sy/self_stab', 'phantom_sy:dagger', 10, (builder) => {
         const progress = animationUtil.getAnimationTimerAbilityValue(builder.getPlayer(), 'phantom_sy:dagger', 'self_stab_anim', builder.getPartialTicks());
 
         if (progress > 0) {
@@ -94,7 +94,7 @@ PalladiumEvents.registerAnimations((event) => {
         }
     });
 
-    event.register('phantom_sy/blocking', 10, (builder) => {
+    event.registerForPower('phantom_sy/blocking', 'phantom_sy:shifter', 10, (builder) => {
         const progress = animationUtil.getAnimationTimerAbilityValue(builder.getPlayer(), 'phantom_sy:shifter', 'blocking', builder.getPartialTicks());
         if (progress > 0) {
 
