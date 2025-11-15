@@ -53,6 +53,7 @@
     "item.phantom_sy.injection_filled": "Injection",
 
     "item.phantom_sy.dagger": "Iron-Weave Bamboo Dagger",
+    "item.phantom_sy.iron_bamboo_sword": "Iron-Weave Bamboo Sword",
     "item.phantom_sy.blade": "Ultrahard Steel Blade",
 
     "item.phantom_sy.cloak": "Cloak",
@@ -66,7 +67,6 @@
     "item.phantom_sy.military_police_cloak": "Cloak",
     "item.phantom_sy.military_police_jacket": "Uniform Jacket",
 
-
     "item.phantom_sy.ribcage": "Ribcage",
     "item.phantom_sy.rib": "Rib",
     "item.phantom_sy.broken_rib": "Broken Rib",
@@ -74,5 +74,8 @@
     
     "block.phantom_sy.iron_bamboo": "Iron-Weave Bamboo",
     "block.phantom_sy.iceburst_ore": "Iceburst Ore",
-    "block.phantom_sy.deepslate_iceburst_ore": "Deepslate Iceburst Ore"
+    "block.phantom_sy.deepslate_iceburst_ore": "Deepslate Iceburst Ore",
+
+
+    "palladium.tailoring_recipe.category.phantom_sy.uniforms": "Scout Uniforms"
 }

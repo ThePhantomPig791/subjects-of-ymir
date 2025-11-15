@@ -198,6 +198,31 @@
                     ]
                 }
             ]
-        }
+        },
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "phantom_sy:iron_bamboo_sword",
+					"functions": [
+                        {
+							"function": "minecraft:set_damage",
+							"damage": {
+								"type": "minecraft:uniform",
+								"min": 0.6,
+								"max": 0.9
+							}
+						}
+					],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.4
+                        }
+                    ]
+				}
+			]
+		}
     ]
 }
