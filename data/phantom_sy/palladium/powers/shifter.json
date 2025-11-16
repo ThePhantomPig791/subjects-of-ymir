@@ -328,6 +328,7 @@
         "blocking": {
             "type": "palladium:animation_timer",
             "title": "Block",
+            "icon": "phantom_sy:textures/icons/block.png",
             "list_index": 1,
             "start_value": 0,
             "max_value": 8,

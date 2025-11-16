@@ -20,14 +20,43 @@
     },
     "abilities": {
         "odm_circuits": {
-            "type": "phantom_sy:odm_circuits"
+            "type": "phantom_sy:odm_circuits",
+            "conditions": {
+                "unlocking": {
+                    "type": "palladium:integer_property",
+                    "property": "phantom_sy:progress",
+                    "min": 0,
+                    "max": 0
+                }
+            }
         },
+        
         "refresh_gas_bar": {
             "type": "palladium:dummy",
             "hidden": true,
             "energy_bar_usage": {
                 "energy_bar": "gas",
                 "amount": 1
+            },
+            "conditions": {
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "odm_circuits"
+                }
+            }
+        },
+        "refresh_gas_bar_compensation": {
+            "type": "palladium:dummy",
+            "hidden": true,
+            "energy_bar_usage": {
+                "energy_bar": "gas",
+                "amount": -1
+            },
+            "conditions": {
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "odm_circuits"
+                }
             }
         },
 
@@ -40,6 +69,10 @@
                 "enabling": {
                     "type": "palladium:held",
                     "key_type": "left_click"
+                },
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "odm_circuits"
                 }
             }
         },
@@ -104,6 +137,10 @@
                 "enabling": {
                     "type": "palladium:held",
                     "key_type": "right_click"
+                },
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "odm_circuits"
                 }
             }
         },
@@ -168,6 +205,10 @@
             "conditions": {
                 "enabling": {
                     "type": "palladium:held"
+                },
+                "unlocking": {
+                    "type": "palladium:ability_enabled",
+                    "ability": "odm_circuits"
                 }
             }
         }

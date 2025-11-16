@@ -26,7 +26,7 @@ ItemEvents.rightClicked('phantom_sy:injection_filled', event => {
         // inject other
         inject(rayTrace.entity, player, getSerumData(item));
     } else {
-        if (player.crouching) {
+        if (player.crouching && canInject(player)) {
             // inject self
             inject(player, player, getSerumData(item));
         } else {
@@ -74,6 +74,7 @@ function getDefaultSerumData() {
 }
 
 function mergeSerumData(serum, otherSerum) {
+    if (serum == null && otherSerum == null) return getDefaultSerumData();
     if (serum == null) return otherSerum;
     if (otherSerum == null) return serum;
     return Object.assign(serum, otherSerum); // this may need to change for eye colors and stuff idk
@@ -81,6 +82,8 @@ function mergeSerumData(serum, otherSerum) {
 
 
 function inject(target, player, serumData) {
+    if (!canInject(target)) return;
+
     if (serumData?.Titan == null) serumData = getDefaultSerumData();
 
     palladium.setProperty(target, 'phantom_sy:titan', serumData.Titan);
@@ -92,4 +95,5 @@ function inject(target, player, serumData) {
 
 function canInject(target) {
     if (palladium.superpowers.hasSuperpower(target, 'phantom_sy:shifter')) return false;
+    return true;
 }

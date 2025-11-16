@@ -106,7 +106,7 @@ global.odm.getTotalMaxGas = (odmItem) => {
     return global.odm.getMaxTurbineGas(odmItem) + global.odm.getMaxSheathLeftGas(odmItem) + global.odm.getMaxSheathRightGas(odmItem);
 }
 
-global.odm.consumeGas = (odmItem, amount) => {
+global.odm.consumeGas = (odmItem, amount) => { // returns false if the odm doesn't have enough gas (the gas is still subtracted though. L)
     if (amount > 0 && global.odm.getSheathLeftGas(odmItem) > 1) {
         amount = consumeGas(odmItem, amount, 'SheathLeftGas');
     }
@@ -190,9 +190,12 @@ StartupEvents.registry('palladium:abilities', event => {
                 let hook = global.odm.getHook(entity, side);
                 if (hook == null) return;
 
-                if (hook.type == 'minecraft:marker') {
+                if (hook.type == 'minecraft:marker' && global.odm.consumeGas(global.odm.getOdm(entity), 1)) {
                     let realDistance = entity.position().distanceTo(hook.position());
                     let hookDistance = palladium.getProperty(entity, `phantom_sy:odm.hook_${side}.distance`);
+                    if (hookDistance > 3 * realDistance) {
+                        hookDistance = realDistance;
+                    }
                     if (hookDistance > 1.5 * realDistance) {
                         hookDistance *= 0.8;
                     } else {
@@ -215,6 +218,7 @@ StartupEvents.registry('palladium:abilities', event => {
                 let hook = global.odm.getHook(entity, side);
                 if (hook == null) {
                     shootHook(entity, 4, side);
+                    global.odm.consumeGas(global.odm.getOdm(entity), 3);
                 }
             }
         })
@@ -233,6 +237,7 @@ StartupEvents.registry('palladium:abilities', event => {
                 let hook = global.odm.getHook(entity, side);
                 if (hook == null) return;
                 hook.discard();
+                global.odm.consumeGas(global.odm.getOdm(entity), 1);
             }
         })
 
@@ -241,44 +246,41 @@ StartupEvents.registry('palladium:abilities', event => {
         .documentationDescription('Allows the player to strafe when in the air using WASD and Space, consuming ODM gas')
 
         .tick((entity, entry, holder, enabled) => {
-            global.asdasdgfg(entity, entry, holder, enabled);
+            if (enabled && !entity.onGround()) {
+            let directions = global.odm.getOdmPiece(global.odm.turbines, global.odm.getOdm(entity).nbt?.Odm?.Turbine).strafe_directions;
+            if (palladium.getProperty(entity, 'left_key_down') && directions.includes('left')) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                    strafe(entity, 0, entity.yaw - 90, 1);
+                }
+            }
+            if (palladium.getProperty(entity, 'right_key_down') && directions.includes('right')) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                    strafe(entity, 0, entity.yaw + 90, 1);
+                }
+            }
+            if (palladium.getProperty(entity, 'forward_key_down') && directions.includes('forward')) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                    strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw, 1);
+                }
+            }
+            if (palladium.getProperty(entity, 'backwards_key_down') && directions.includes('backward')) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                    strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw + 180, 1);
+                }
+            }
+            if (palladium.getProperty(entity, 'jump_key_down') && directions.includes('up')) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 4)) {
+                    strafe(entity, -90, 0, 1);
+                }
+            }
+        }
         })
 })
 
-const baseStrafeStrength = 0.04
-global.asdasdgfg = (entity, entry, holder, enabled) => {
-    if (enabled && !entity.onGround()) {
-        let directions = global.odm.getOdmPiece(global.odm.turbines, global.odm.getOdm(entity).nbt?.Odm?.Turbine).strafe_directions;
-        if (palladium.getProperty(entity, 'left_key_down') && directions.includes('left')) {
-            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, 0, entity.yaw - 90, baseStrafeStrength);
-            }
-        }
-        if (palladium.getProperty(entity, 'right_key_down') && directions.includes('right')) {
-            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, 0, entity.yaw + 90, baseStrafeStrength);
-            }
-        }
-        if (palladium.getProperty(entity, 'forward_key_down') && directions.includes('forward')) {
-            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw, baseStrafeStrength);
-            }
-        }
-        if (palladium.getProperty(entity, 'backwards_key_down') && directions.includes('backward')) {
-            if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw + 180, baseStrafeStrength);
-            }
-        }
-        if (palladium.getProperty(entity, 'jump_key_down') && directions.includes('up')) {
-            if (global.odm.consumeGas(global.odm.getOdm(entity), 4)) {
-                strafe(entity, -90, 0, baseStrafeStrength);
-            }
-        }
-    }
-}
+const baseStrafeStrength = 0.04;
 
 function strafe(entity, pitch, yaw, strength) {
-    let direction = $Vec3.directionFromRotation(pitch, yaw).scale(strength);
+    let direction = $Vec3.directionFromRotation(pitch, yaw).scale(baseStrafeStrength * strength);
     entity.addDeltaMovement(direction);
     if (entity.isPlayer()) {
         entity.connection.send(new $ClientboundSetEntityMotionPacket(entity));
