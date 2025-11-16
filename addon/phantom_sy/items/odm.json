@@ -4,6 +4,7 @@
     "rarity": "rare",
     "render_layers": {
         "curios:belt": "phantom_sy:odm",
-        "trinkets:legs/belt": "phantom_sy:odm"
+        "trinkets:legs/belt": "phantom_sy:odm",
+        "legs": "phantom_sy:odm"
     }
 }

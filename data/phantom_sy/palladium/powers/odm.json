@@ -31,27 +31,26 @@
             }
         },
 
-        "dummy": {
+        "left_hook": {
             "type": "palladium:dummy",
+            "title": "Left Hook",
             "hidden_in_bar": false,
-            "list_index": 0,
+            "list_index": 1,
             "conditions": {
                 "enabling": {
-                    "type": "palladium:held"
+                    "type": "palladium:held",
+                    "key_type": "left_click"
                 }
             }
         },
-
         "left_hook_shoot": {
             "type": "phantom_sy:shoot_hook",
-            "icon": "minecraft:flint",
-            "hidden": false,
-            "list_index": 1,
+            "hidden": true,
             "side": "left",
             "conditions": {
                 "enabling": {
-                    "type": "palladium:action",
-                    "key_type": "left_click"
+                    "type": "palladium:ability_enabled",
+                    "ability": "left_hook"
                 },
                 "unlocking": {
                     "type": "palladium:not",
@@ -63,14 +62,13 @@
             }
         },
         "left_hook_reel": {
-            "type": "phantom_sy:hook",
-            "hidden": false,
-            "list_index": 1,
+            "type": "phantom_sy:reel_hook",
+            "hidden": true,
             "side": "left",
             "conditions": {
                 "enabling": {
                     "type": "palladium:held",
-                    "key_type": "left_click"
+                    "key_type": "space_bar"
                 },
                 "unlocking": {
                     "type": "phantom_sy:odm_hook_out",
@@ -78,16 +76,45 @@
                 }
             }
         },
+        "left_hook_recall": {
+            "type": "phantom_sy:recall_hook",
+            "hidden": true,
+            "side": "left",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:not",
+                    "conditions": {
+                        "type": "palladium:ability_enabled",
+                        "ability": "left_hook"
+                    }
+                },
+                "unlocking": {
+                    "type": "phantom_sy:odm_hook_out",
+                    "side": "left"
+                }
+            }
+        },
+
+        "right_hook": {
+            "type": "palladium:dummy",
+            "title": "Right Hook",
+            "hidden_in_bar": false,
+            "list_index": 2,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held",
+                    "key_type": "right_click"
+                }
+            }
+        },
         "right_hook_shoot": {
             "type": "phantom_sy:shoot_hook",
-            "icon": "minecraft:flint",
-            "hidden": false,
-            "list_index": 2,
+            "hidden": true,
             "side": "right",
             "conditions": {
                 "enabling": {
-                    "type": "palladium:action",
-                    "key_type": "right_click"
+                    "type": "palladium:ability_enabled",
+                    "ability": "right_hook"
                 },
                 "unlocking": {
                     "type": "palladium:not",
@@ -99,14 +126,31 @@
             }
         },
         "right_hook_reel": {
-            "type": "phantom_sy:hook",
-            "hidden": false,
-            "list_index": 2,
+            "type": "phantom_sy:reel_hook",
+            "hidden": true,
             "side": "right",
             "conditions": {
                 "enabling": {
                     "type": "palladium:held",
-                    "key_type": "right_click"
+                    "key_type": "space_bar"
+                },
+                "unlocking": {
+                    "type": "phantom_sy:odm_hook_out",
+                    "side": "right"
+                }
+            }
+        },
+        "right_hook_recall": {
+            "type": "phantom_sy:recall_hook",
+            "hidden": true,
+            "side": "right",
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:not",
+                    "conditions": {
+                        "type": "palladium:ability_enabled",
+                        "ability": "right_hook"
+                    }
                 },
                 "unlocking": {
                     "type": "phantom_sy:odm_hook_out",
@@ -115,32 +159,12 @@
             }
         },
 
-        "air_strafe": {
+        "gas_strafe": {
             "type": "phantom_sy:gas_strafe",
-            "conditions": {
-                "enabling": {
-                    "type": "palladium:or",
-                    "conditions": [
-                        {
-                            "type": "palladium:ability_enabled",
-                            "ability": "manual_gas_strafe"
-                        },
-                        {
-                            "type": "phantom_sy:odm_hook_out",
-                            "side": "right"
-                        },
-                        {
-                            "type": "phantom_sy:odm_hook_out",
-                            "side": "left"
-                        }
-                    ]
-                }
-            }
-        },
-        "manual_gas_strafe": {
-            "type": "palladium:dummy",
             "title": "Gas Strafe",
-            "list_index": 3,
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": 0,
             "conditions": {
                 "enabling": {
                     "type": "palladium:held"

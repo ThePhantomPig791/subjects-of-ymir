@@ -10,7 +10,7 @@ global.odm.turbines = {
     prototype_1: {
         accepts_sheath: false,
         max_gas: 500,
-        strafe_directions: ['forward']
+        strafe_directions: ['forward', 'up']
     },
     prototype_2: {
 
@@ -31,7 +31,7 @@ for (let id in global.odm.turbines) {
     console.log(turb)
     if (turb.accepts_sheath == null) turb.accepts_sheath = true;
     if (turb.max_gas == null) turb.max_gas = 0;
-    if (turb.strafe_directions == null) turb.strafe_directions = ['forward', 'left', 'right']
+    if (turb.strafe_directions == null) turb.strafe_directions = ['forward', 'left', 'right', 'up']
     console.log(turb)
 }
 
@@ -178,8 +178,8 @@ StartupEvents.registry('palladium:abilities', event => {
             }
         })
 
-    event.create('phantom_sy:hook')
-        .documentationDescription('Reels and recalls right/left hooks')
+    event.create('phantom_sy:reel_hook')
+        .documentationDescription('Reels right/left hooks')
 
         .addProperty('side', 'string', 'right', 'The hook side (right or left) to reel or recall')
 
@@ -200,9 +200,6 @@ StartupEvents.registry('palladium:abilities', event => {
                     }
                     palladium.setProperty(entity, `phantom_sy:odm.hook_${side}.distance`, Math.max(1, hookDistance));
                 }
-                if (entity.crouching) {
-                    hook.discard();
-                }
             }
         })
 
@@ -222,52 +219,59 @@ StartupEvents.registry('palladium:abilities', event => {
             }
         })
 
+    
+    
+    event.create('phantom_sy:recall_hook')
+        .documentationDescription('Recalls right/left hooks')
+
+        .addProperty('side', 'string', 'right', 'The hook side (right or left) to reel or recall')
+
+        .tick((entity, entry, holder, enabled) => {
+            if (enabled) {
+                let side = entry.getPropertyByName('side').toLowerCase();
+
+                let hook = global.odm.getHook(entity, side);
+                if (hook == null) return;
+                hook.discard();
+            }
+        })
+
 
     event.create('phantom_sy:gas_strafe')
-        .documentationDescription('Allows the player to strafe when in the air using WASD, consuming ODM gas')
+        .documentationDescription('Allows the player to strafe when in the air using WASD and Space, consuming ODM gas')
 
         .tick((entity, entry, holder, enabled) => {
             global.asdasdgfg(entity, entry, holder, enabled);
         })
 })
 
+const baseStrafeStrength = 0.04
 global.asdasdgfg = (entity, entry, holder, enabled) => {
     if (enabled && !entity.onGround()) {
         let directions = global.odm.getOdmPiece(global.odm.turbines, global.odm.getOdm(entity).nbt?.Odm?.Turbine).strafe_directions;
         if (palladium.getProperty(entity, 'left_key_down') && directions.includes('left')) {
             if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, 0, entity.yaw - 90, 0.1);
+                strafe(entity, 0, entity.yaw - 90, baseStrafeStrength);
             }
         }
         if (palladium.getProperty(entity, 'right_key_down') && directions.includes('right')) {
             if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, 0, entity.yaw + 90, 0.1);
+                strafe(entity, 0, entity.yaw + 90, baseStrafeStrength);
             }
         }
         if (palladium.getProperty(entity, 'forward_key_down') && directions.includes('forward')) {
             if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw, 0.1);
+                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw, baseStrafeStrength);
             }
         }
         if (palladium.getProperty(entity, 'backwards_key_down') && directions.includes('backward')) {
             if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
-                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw + 180, 0.1);
+                strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw + 180, baseStrafeStrength);
             }
         }
-
-        if (palladium.getProperty(entity, 'jump_key_down')) {
-            if (global.odm.consumeGas(global.odm.getOdm(entity), 3)) {
-                let hooks = [global.odm.getHook(entity, 'right'), global.odm.getHook(entity, 'left')];
-                for (let i = 0; i < hooks.length; i++) {
-                    let hook = hooks[i];
-                    if (hook != null) {
-                        let side = i == 0 ? 'right' : 'left';
-                        let hookDistance = palladium.getProperty(entity, `phantom_sy:odm.hook_${side}.distance`);
-                        let realDistance = entity.position().distanceTo(hook.position());
-                        let strength = -10 * Math.pow(1.1, -0.01 * (realDistance - hookDistance)) + 10;
-                        global.odm.pull(entity, hook, strength * 2);
-                    }
-                }
+        if (palladium.getProperty(entity, 'jump_key_down') && directions.includes('up')) {
+            if (global.odm.consumeGas(global.odm.getOdm(entity), 4)) {
+                strafe(entity, -90, 0, baseStrafeStrength);
             }
         }
     }
@@ -294,7 +298,7 @@ function strafe(entity, pitch, yaw, strength) {
 }
 
 function deIntensifyPitch(x) { // https://www.desmos.com/calculator/btea69orrh
-    return -0.0000439557 * x ** 3 + 0.0000847253 * x ** 2 + 1.00316 * x - 0.868569;
+    return -0.0000439557 * Math.pow(x, 3) + 0.0000847253 * Math.pow(x, 2) + 1.00316 * x - 0.868569;
 }
 
 

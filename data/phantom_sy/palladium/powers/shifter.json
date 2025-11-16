@@ -332,16 +332,17 @@
             "start_value": 0,
             "max_value": 8,
             "hidden": false,
-            "hidden_in_bar": false,
+            "hidden_in_bar": true,
             "conditions": {
                 "enabling": {
                     "type": "palladium:held",
-                    "key_type": "right_click"
+                    "key_type": "right_click",
+                    "needs_empty_hand": true
                 },
                 "unlocking": [
                     {
                         "type": "phantom_sy:progress",
-                        "min": 0
+                        "min": 1
                     }
                 ]
             }
