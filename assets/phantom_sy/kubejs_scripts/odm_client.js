@@ -2,9 +2,13 @@ let $BodyPart = Java.loadClass('net.threetag.palladium.entity.BodyPart');
 let Vector3f = Java.loadClass('org.joml.Vector3f');
 
 ClientEvents.paintScreen(event => {
-    const { player, level } = event.mc;
+    const { player, level, particleEngine } = event.mc;
+    
+    /*if (player.crouching) {
+        console.log(particleEngine.particles.values()[0])
+    }*/
 
-    let nearbyEntities = level.getEntities(null, player.getBoundingBox().inflate(100)).forEach(entity => {
+    level.getEntities(null, player.getBoundingBox().inflate(100)).forEach(entity => {
         if (!entity.player) return;
 
         if (palladium.getProperty(entity, 'phantom_sy:odm.hook_left')) {
@@ -54,7 +58,8 @@ function renderLine(entity, level, side, event) {
             }
         }*/
 
-        level.spawnParticles(
+        event.mc.particleEngine.createParticle('phantom_sy:line', pos.x(), pos.y() - droop, pos.z(), entity.deltaMovement.x(), entity.deltaMovement.y(), entity.deltaMovement.z());
+        /*level.spawnParticles(
             'phantom_sy:line',
             true,
             pos.x(),
@@ -63,9 +68,9 @@ function renderLine(entity, level, side, event) {
             0,
             0,
             0,
-            /*count*/ 1,
-            /*speed*/ 0
-        );
+            /*count*/ //1,
+            /*speed*/ //0
+        //);
         pos = pos.add(add);
     }
 }

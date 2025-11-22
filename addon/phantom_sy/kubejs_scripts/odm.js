@@ -202,6 +202,7 @@ StartupEvents.registry('palladium:abilities', event => {
                         hookDistance -= 2;
                     }
                     palladium.setProperty(entity, `phantom_sy:odm.hook_${side}.distance`, Math.max(1, hookDistance));
+                    if (entity.age % 2 == 0) global.playSoundToAll(entity, 32, 'phantom_sy:reel', 'PLAYERS', 0.5, 0.2 * Math.random() + 1);
                 }
             }
         })
@@ -219,6 +220,7 @@ StartupEvents.registry('palladium:abilities', event => {
                 if (hook == null) {
                     shootHook(entity, 4, side);
                     global.odm.consumeGas(global.odm.getOdm(entity), 3);
+                    global.playSoundToAll(entity, 32, 'phantom_sy:shoot_hook', 'PLAYERS', 0.75, 0.1 * (entity.age % 2) + 0.95);
                 }
             }
         })
@@ -248,28 +250,37 @@ StartupEvents.registry('palladium:abilities', event => {
         .tick((entity, entry, holder, enabled) => {
             if (enabled && !entity.onGround()) {
             let directions = global.odm.getOdmPiece(global.odm.turbines, global.odm.getOdm(entity).nbt?.Odm?.Turbine).strafe_directions;
+
             if (palladium.getProperty(entity, 'left_key_down') && directions.includes('left')) {
-                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                if (global.odm.getHook(entity, 'right')?.type == 'minecraft:marker') {
+                    if (global.odm.consumeGas(global.odm.getOdm(entity), 3)) { // orbit leftwards around right hook
+                        strafe(entity, 0, entity.yaw - 90, oribtStrength);
+                    }
+                } else if (global.odm.consumeGas(global.odm.getOdm(entity), 1)) {
                     strafe(entity, 0, entity.yaw - 90, 1);
                 }
             }
             if (palladium.getProperty(entity, 'right_key_down') && directions.includes('right')) {
-                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                if (global.odm.getHook(entity, 'left')?.type == 'minecraft:marker') {
+                    if (global.odm.consumeGas(global.odm.getOdm(entity), 3)) { // orbit rightwards around left hook
+                        strafe(entity, 0, entity.yaw + 90, oribtStrength);
+                    }
+                } else if (global.odm.consumeGas(global.odm.getOdm(entity), 1)) {
                     strafe(entity, 0, entity.yaw + 90, 1);
                 }
             }
             if (palladium.getProperty(entity, 'forward_key_down') && directions.includes('forward')) {
-                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 1)) {
                     strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw, 1);
                 }
             }
             if (palladium.getProperty(entity, 'backwards_key_down') && directions.includes('backward')) {
-                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 1)) {
                     strafe(entity, deIntensifyPitch(entity.pitch), entity.yaw + 180, 1);
                 }
             }
             if (palladium.getProperty(entity, 'jump_key_down') && directions.includes('up')) {
-                if (global.odm.consumeGas(global.odm.getOdm(entity), 4)) {
+                if (global.odm.consumeGas(global.odm.getOdm(entity), 2)) {
                     strafe(entity, -90, 0, 1);
                 }
             }
@@ -278,6 +289,7 @@ StartupEvents.registry('palladium:abilities', event => {
 })
 
 const baseStrafeStrength = 0.04;
+const oribtStrength = 3;
 
 function strafe(entity, pitch, yaw, strength) {
     let direction = $Vec3.directionFromRotation(pitch, yaw).scale(baseStrafeStrength * strength);
@@ -297,6 +309,7 @@ function strafe(entity, pitch, yaw, strength) {
         /*count*/ 1,
         /*speed*/ 0.1
     );
+    global.playSoundToAll(entity, 16, 'phantom_sy:gas', 'PLAYERS', 0.4, Math.random() * 0.2 + 1.4 / (0.2 * strength));
 }
 
 function deIntensifyPitch(x) { // https://www.desmos.com/calculator/btea69orrh
@@ -309,6 +322,17 @@ StartupEvents.registry('palladium:condition_serializer', (event) => {
         .addProperty('side', 'string', 'right', 'The hook side (right or left) to check')
         .test((entity, properties) => {
             return global.odm.getHook(entity, properties.get('side')) != null;
+        })
+
+    event.create('phantom_sy:odm_handle_held')
+        .addProperty('side', 'string', 'right', 'The hand (right, left, or either) to check')
+        .test((entity, properties) => {
+            let side = properties.get('side');
+            let mainArm = entity.getMainArm().toString().toLowerCase();
+
+            if (side == 'either') return entity.mainHandItem.id == 'phantom_sy:odm_handle' || entity.offHandItem.id == 'phantom_sy:odm_handle';
+            if (side == mainArm) return entity.mainHandItem.id == 'phantom_sy:odm_handle';
+            else return entity.offHandItem.id == 'phantom_sy:odm_handle';
         })
 })
 

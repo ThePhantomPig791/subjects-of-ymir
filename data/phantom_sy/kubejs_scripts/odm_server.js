@@ -27,6 +27,7 @@ ServerEvents.commandRegistry(event => {
                 let side = entity.tags.contains('phantom_sy.odm_hook_right') ? 'right' : 'left';
                 let owner = entity.owner;
                 palladium.setProperty(owner, `phantom_sy:odm.hook_${side}.distance`, entity.position().distanceTo(owner.position()));
+                global.playSoundToAll(entity, 32, 'phantom_sy:hook_land', 'PLAYERS', 1, Math.random() * 0.2 + 0.9);
                 convertToMarker(entity);
                 return 1;
             })

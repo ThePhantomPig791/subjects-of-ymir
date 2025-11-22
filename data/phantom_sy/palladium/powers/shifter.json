@@ -1,7 +1,7 @@
 {
-    "name": "Titan Shifter",
+    "name": "Power of the Titans",
     "background": "minecraft:textures/block/bone_block_top.png",
-    "icon": "bone",
+    "icon": "phantom_sy:textures/icons/shift.png",
     "ability_bar_texture": "phantom_sy:textures/gui/ability_bars/shifter.png",
     "persistent_data": true,
     "abilities": {

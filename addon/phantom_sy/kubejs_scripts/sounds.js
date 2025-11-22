@@ -16,4 +16,7 @@ StartupEvents.registry('sound_event', event =>{
     event.create('phantom_sy:steam');
     event.create('phantom_sy:iceburst');
     event.create('phantom_sy:gas');
+    event.create('phantom_sy:reel');
+    event.create('phantom_sy:shoot_hook');
+    event.create('phantom_sy:hook_land');
 })

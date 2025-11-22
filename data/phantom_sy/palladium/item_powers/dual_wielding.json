@@ -1,0 +1,10 @@
+{
+    "item": [
+        "phantom_sy:iron_bamboo_sword",
+        "phantom_sy:odm_handle"
+    ],
+    "slot": "offhand",
+    "power": [
+        "phantom_sy:dual_wielding"
+    ]
+}

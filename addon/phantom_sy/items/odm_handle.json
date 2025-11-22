@@ -1,0 +1,19 @@
+{
+    "creative_mode_tab": "phantom_sy:subjects_of_ymir",
+    "max_stack_size": 1,
+    "attribute_modifiers": {
+        "mainhand": [
+            {
+                "attribute": "reach-entity-attributes:reach",
+                "amount": -4,
+                "operation": 0,
+                "uuid": "f5b16c2d-b03d-4d51-9ded-fbd07c0dc8a2"
+            }
+        ]
+    },
+    "should_render_model": false,
+    "render_layers": {
+        "mainhand": "phantom_sy:odm_handle_mainhand",
+        "offhand": "phantom_sy:odm_handle_offhand"
+    }
+}

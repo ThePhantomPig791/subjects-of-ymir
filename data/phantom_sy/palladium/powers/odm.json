@@ -30,7 +30,7 @@
                 }
             }
         },
-        
+
         "refresh_gas_bar": {
             "type": "palladium:dummy",
             "hidden": true,
@@ -70,10 +70,16 @@
                     "type": "palladium:held",
                     "key_type": "left_click"
                 },
-                "unlocking": {
-                    "type": "palladium:ability_enabled",
-                    "ability": "odm_circuits"
-                }
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "odm_circuits"
+                    },
+                    {
+                        "type": "phantom_sy:odm_handle_held",
+                        "side": "left"
+                    }
+                ]
             }
         },
         "left_hook_shoot": {
@@ -138,10 +144,16 @@
                     "type": "palladium:held",
                     "key_type": "right_click"
                 },
-                "unlocking": {
-                    "type": "palladium:ability_enabled",
-                    "ability": "odm_circuits"
-                }
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "odm_circuits"
+                    },
+                    {
+                        "type": "phantom_sy:odm_handle_held",
+                        "side": "right"
+                    }
+                ]
             }
         },
         "right_hook_shoot": {
@@ -206,10 +218,16 @@
                 "enabling": {
                     "type": "palladium:held"
                 },
-                "unlocking": {
-                    "type": "palladium:ability_enabled",
-                    "ability": "odm_circuits"
-                }
+                "unlocking": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "odm_circuits"
+                    },
+                    {
+                        "type": "phantom_sy:odm_handle_held",
+                        "side": "either"
+                    }
+                ]
             }
         }
     }

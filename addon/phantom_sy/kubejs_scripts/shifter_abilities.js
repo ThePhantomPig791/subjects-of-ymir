@@ -256,6 +256,8 @@ StartupEvents.registry('palladium:abilities', event => {
         .tick((entity, entry, holder, enabled) => {
             if (enabled) {
                 let box = entity.boundingBox;
+                let amount = entry.getPropertyByName('amount');
+                let frequency = entry.getPropertyByName('frequency');
                 entity.level.sendParticles(
                     'phantom_sy:steam',
                     entity.x,
@@ -267,11 +269,11 @@ StartupEvents.registry('palladium:abilities', event => {
                     box.zsize / 4,
                     /*speed*/ 0.1
                 );
-                global.playSoundToAll(entity, 32, 'phantom_sy:steam', 'PLAYERS', 0.5, 0.6);
+                global.playSoundToAll(entity, 32, 'phantom_sy:steam', 'PLAYERS', 0.2 * amount, 0.6 * 20 / frequency);
 
                 let timer = entry.getPropertyByName('timer');
-                if (timer == entry.getPropertyByName('frequency')) {
-                    entity.heal(entry.getPropertyByName('amount'));
+                if (timer == frequency) {
+                    entity.heal(amount);
 
                     timer = 0;
                 } else timer++;

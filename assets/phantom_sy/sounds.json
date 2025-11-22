@@ -25,11 +25,6 @@
         "sounds": [
             {
                 "name": "phantom_sy:steam"
-            },
-            {
-                "name": "random/fizz",
-                "pitch": 2,
-                "volume": 0.1
             }
         ]
     },
@@ -81,6 +76,38 @@
             },
             {
                 "name": "phantom_sy:gas_burst_4"
+            }
+        ]
+    },
+
+    "reel": {
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.reel",
+        "sounds": [
+            {
+                "name": "phantom_sy:reel"
+            }
+        ]
+    },
+
+    "shoot_hook": {
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.shoot_hook",
+        "sounds": [
+            {
+                "name": "phantom_sy:shoot_hook",
+                "attenuation_distance": 32
+            }
+        ]
+    },
+
+    "hook_land": {
+        "category": "player",
+        "subtitle": "subtitle.phantom_sy.hook_land",
+        "sounds": [
+            {
+                "name": "phantom_sy:hook_land",
+                "attenuation_distance": 32
             }
         ]
     }
