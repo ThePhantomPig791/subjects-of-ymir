@@ -1,0 +1,23 @@
+{
+    "structures": [
+        {
+            "structure": "phantom_sy:castle",
+            "weight": 1
+        },
+        {
+            "structure": "phantom_sy:small_castle",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "type": "minecraft:random_spread",
+        "salt": 3157091,
+        "spacing": 40,
+        "separation": 30,
+        "spread_type": "triangular",
+        "exclusion_zone": {
+            "chunk_count": 6,
+            "other_set": "phantom_sy:eldian_village"
+        }
+    }
+}

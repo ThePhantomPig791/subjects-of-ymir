@@ -1,0 +1,33 @@
+{
+    "name": "phantom_sy:small_castle/main",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 5,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:small_castle/main",
+                "projection": "rigid",
+                "processors": "phantom_sy:castle"
+            }
+        },
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:small_castle/fallen",
+                "projection": "rigid",
+                "processors": "phantom_sy:castle"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:small_castle/spot",
+                "projection": "terrain_matching",
+                "processors": "phantom_sy:castle"
+            }
+        }
+    ]
+}

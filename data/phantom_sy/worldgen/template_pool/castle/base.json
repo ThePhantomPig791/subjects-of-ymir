@@ -1,0 +1,15 @@
+{
+    "name": "phantom_sy:castle/base",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "phantom_sy:castle/base",
+                "projection": "rigid",
+                "processors": "phantom_sy:castle"
+            }
+        }
+    ]
+}
