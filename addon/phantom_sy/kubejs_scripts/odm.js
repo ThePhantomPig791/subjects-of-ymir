@@ -7,7 +7,7 @@ global.odm = {};
 global.odm.turbines = {
     // all properties and their defaults below
     empty: {},
-    prototype_1: {
+    prototype_1: { // modelled and textured
         accepts_sheath: false,
         max_gas: 500,
         strafe_directions: ['forward', 'up']
@@ -15,13 +15,13 @@ global.odm.turbines = {
     prototype_2: {
 
     },
-    prototype_3: {
+    prototype_3: { // modelled and textured
 
     },
     version_1: {
 
     },
-    version_2: {
+    version_2: { // modelled and textured
 
     }
 }

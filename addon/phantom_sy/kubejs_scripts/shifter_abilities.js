@@ -227,24 +227,6 @@ StartupEvents.registry('palladium:abilities', event => {
             }
         })
 
-    event.create('phantom_sy:throw_lightning_embers')
-        .documentationDescription('Spawns lightning trails between the player and nearby blocks and entities')
-
-        .addProperty('range', 'float', 4.5, 'The range for the target position')
-        .addProperty('entity_chance', 'float', 0.25, 'If there are blocks and entities available to target, the entity will be targeted this percent (decimal) of the time')
-        .addProperty('chance', 'float', 1, 'Lightning trails spawn this percent (decimal) of the time')
-        .addProperty('amount', 'integer', 1, 'This many lightning trails are spawned each time')
-
-        .tick((entity, entry, holder, enabled) => {
-            if (enabled) {
-                /*if (Math.random() < entry.getPropertyByName('chance')) {
-                    for (let i = 0; i < entry.getPropertyByName('amount'); i++) {
-                        global.throwLightningEmbers(entity, entry.getPropertyByName('range'), 0.1, entry.getPropertyByName('entity_chance'));
-                    }
-                }*/
-            }
-        })
-
     event.create('phantom_sy:steam_healing')
         .documentationDescription('Heals, spawns steam particles, and plays the steam sound')
 
@@ -388,75 +370,4 @@ function setScaleTime(entity, value) {
     ScaleTypes.EYE_HEIGHT.getScaleData(entity).setScaleTickDelay(value);
     ScaleTypes.THIRD_PERSON.getScaleData(entity).setScaleTickDelay(value);
     ScaleTypes.REACH.getScaleData(entity).setScaleTickDelay(value);
-}
-
-
-global.throwLightningEmbers = function (entity, range, raycastStep, entityChancePercentage) {
-    if (raycastStep <= 0) raycastStep = 0.1;
-    if (range < 1) range = 1;
-
-    let source = entity.position().add(0, entity.getEyeHeight() * Math.random(), 0);
-
-    let nearbyEntities = entity.level.getEntities(entity, entity.boundingBox.inflate(range));
-    let nearbyBlocks = [];
-    for (let x = -range; x <= range; x++) {
-        for (let y = -range; y <= range; y++) {
-            for (let z = -range; z <= range; z++) {
-                let block = entity.block.offset(x, y, z);
-                if (block.getBlockState().blocksMotion() && global.checkLineOfSight(entity.level, source, block.getPos().getCenter(), raycastStep)) nearbyBlocks.push(block.getPos().getCenter());
-
-            }
-        }
-    }
-
-    let target;
-
-    if ((Math.random() < entityChancePercentage || nearbyBlocks.length == 0) && nearbyEntities.length > 0) {
-        // entity target
-        if (nearbyEntities.length == 0) return;
-        do {
-            target = nearbyEntities.get(Math.random() * nearbyEntities.length); // it's probably bad practice to not have consistency in the type of a single variable but oh well
-            target = target.position().add(0, target.getEyeHeight() * Math.random(), 0);
-        } while (!global.checkLineOfSight(entity.level, source, target, raycastStep));
-    } else {
-        // block target
-        if (nearbyBlocks.length == 0) return;
-        target = nearbyBlocks[Math.floor(Math.random() * nearbyBlocks.length)];
-    }
-
-    if (target == undefined) return;
-
-    let particlePos = source;
-    while (particlePos.distanceToSqr(target) > (raycastStep * raycastStep)) {
-        particlePos = particlePos.add(particlePos.vectorTo(target.add(
-            Math.random() * 1 - 0.5,
-            particlePos.distanceTo(target) * 0.5 * (0.25 * Math.random() + 0.5),
-            Math.random() * 1 - 0.5
-        )).normalize().scale(raycastStep));
-        entity.level.sendParticles(
-            'phantom_sy:lightning_ember',
-            particlePos.x(),
-            particlePos.y(),
-            particlePos.z(),
-            /*count*/ 1,
-            0,
-            0,
-            0,
-            /*speed*/ 0
-        );
-        if (particlePos.distanceToSqr(target) <= (raycastStep * raycastStep + 0.25)) break;
-        // console.log(`${source} -> ${particlePos} -> ${target} | ${particlePos.distanceTo(target)}`)
-    }
-}
-
-global.checkLineOfSight = function (level, from, to, step) { // both positions are a Vec3
-    let stepVec = from.vectorTo(to).normalize().scale(step);
-    let stepPosition = from;
-    while (stepPosition.distanceToSqr(to) > (step * step)) {
-        stepPosition = stepPosition.add(stepVec);
-        if (level.getBlock(stepPosition.x(), stepPosition.y(), stepPosition.z()).getBlockState().blocksMotion()) return false;
-        if (stepPosition.distanceToSqr(to) <= (step * step)) break;
-        console.log('stepping los')
-    }
-    return true;
 }

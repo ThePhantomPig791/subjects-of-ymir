@@ -288,6 +288,25 @@
                 }
             ],
             "first_person_conditions": false
+        },
+
+        {
+            "type": "geckolib:default",
+            "model": {
+                "base": "phantom_sy:geo/titan/#TITAN/#VAR/skin.geo.json",
+                "variables": {
+                    "TITAN": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan"
+                    },
+                    "VAR": {
+                        "type": "palladium:string_property",
+                        "property": "phantom_sy:titan_variant"
+                    }
+                }
+            },
+            "texture": "#phantom_sy:titan_skin",
+            "third_person_conditions": false
         }
     ]
 }

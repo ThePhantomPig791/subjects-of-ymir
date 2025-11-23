@@ -14,6 +14,12 @@
             "hidden": true
         },
 
+        "second_layer": {
+            "type": "palladium:shrink_body_overlay",
+            "hidden": true,
+            "max_value": 0
+        },
+
         "pose": {
             "type": "geckolib:render_layer_animation",
             "hidden": true,
@@ -21,6 +27,34 @@
             "render_layer": "phantom_sy:titan/generic_scale_8",
             "controller": "pose",
             "animation_trigger": "hanging_head"
+        },
+
+        
+        "rainbow_healing_particles": {
+            "type": "palladium:particles",
+            "hidden": true,
+            "emitter": "phantom_sy:rainbow_healing_titan",
+            "particle_type": "minecraft:entity_effect",
+            "options": "",
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:at_full_health"
+                        }
+                    },
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "phantom_sy:shifter",
+                        "ability": "rainbow_healing"
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "min": 1
+                    }
+                ]
+            }
         }
     }
 }

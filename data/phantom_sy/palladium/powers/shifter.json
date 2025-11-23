@@ -162,52 +162,6 @@
                 }
             }
         },
-        "charge_throw_embers": {
-            "type": "phantom_sy:throw_lightning_embers",
-            "hidden": true,
-            "amount": 2,
-            "chance": 0.25,
-            "list_index": 4,
-            "conditions": {
-                "enabling": [
-                    {
-                        "type": "palladium:ability_integer_property",
-                        "ability": "titan_shifter",
-                        "property": "charge",
-                        "min": 1,
-                        "max": 999
-                    },
-                    {
-                        "type": "phantom_sy:progress",
-                        "min": 0,
-                        "max": 0
-                    }
-                ]
-            }
-        },
-        "charge_throw_more_embers": {
-            "type": "phantom_sy:throw_lightning_embers",
-            "hidden": true,
-            "amount": 2,
-            "chance": 1,
-            "list_index": 4,
-            "conditions": {
-                "enabling": [
-                    {
-                        "type": "palladium:ability_integer_property",
-                        "ability": "titan_shifter",
-                        "property": "charge",
-                        "min": 20,
-                        "max": 999
-                    },
-                    {
-                        "type": "phantom_sy:progress",
-                        "min": 0,
-                        "max": 0
-                    }
-                ]
-            }
-        },
 
         "electricity_sound": {
             "type": "palladium:play_sound",
@@ -288,19 +242,6 @@
                 }
             }
         },
-        "healing_phase_throw_embers": {
-            "type": "phantom_sy:throw_lightning_embers",
-            "hidden": true,
-            "amount": 3,
-            "entity_chance": 0.75,
-            "list_index": 4,
-            "conditions": {
-                "enabling": {
-                    "type": "palladium:ability_enabled",
-                    "ability": "healing_phase"
-                }
-            }
-        },
 
         "marks": {
             "type": "palladium:render_layer",
@@ -323,13 +264,66 @@
                 ]
             }
         },
+        "rainbow_healing": {
+            "type": "palladium:dummy",
+            "title": "Rainbow Healing",
+            "icon": "phantom_sy:textures/icons/rainbow_healing.png",
+            "list_index": 1,
+            "conditions": {
+                "enabling": {
+                    "type": "palladium:held"
+                }
+            }
+        },
+        "rainbow_healing_heal": {
+            "type": "phantom_sy:steam_healing",
+            "hidden": true,
+            "amount": 1,
+            "frequency": 5,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:at_full_health"
+                        }
+                    },
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "rainbow_healing"
+                    }
+                ]
+            }
+        },
+        "rainbow_healing_particles": {
+            "type": "palladium:particles",
+            "hidden": true,
+            "emitter": "phantom_sy:rainbow_healing",
+            "particle_type": "minecraft:entity_effect",
+            "options": "",
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:not",
+                        "conditions": {
+                            "type": "phantom_sy:at_full_health"
+                        }
+                    },
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "rainbow_healing"
+                    },
+                    {
+                        "type": "phantom_sy:progress",
+                        "max": 0
+                    }
+                ]
+            }
+        },
 
 
         "blocking": {
             "type": "palladium:animation_timer",
-            "title": "Block",
-            "icon": "phantom_sy:textures/icons/block.png",
-            "list_index": 1,
             "start_value": 0,
             "max_value": 8,
             "hidden": false,
