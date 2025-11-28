@@ -1,0 +1,37 @@
+package net.phantompig.soy.mixin;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.player.Player;
+import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
+import net.phantompig.soy.titan.TitanInstance;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(Player.class)
+public class PlayerMixin implements SubjectsOfYmirPlayerExtension {
+
+    @Unique
+    @NotNull
+    private TitanInstance soy$titanInstance = new TitanInstance();
+
+    @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
+    public void soy$readAdditionalSaveData(CompoundTag compound, CallbackInfo ci) {
+        CompoundTag soyTag = compound.contains("Titan", Tag.TAG_COMPOUND) ? compound.getCompound("Titan") : new CompoundTag();
+        soy$titanInstance = TitanInstance.fromTag(soyTag);
+    }
+
+    @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
+    public void soy$addAdditionalSaveData(CompoundTag compound, CallbackInfo ci) {
+        compound.put("Titan", this.soy$titanInstance.toTag());
+    }
+
+    @Override
+    public TitanInstance getTitanInstance() {
+        return soy$titanInstance;
+    }
+}
