@@ -1,0 +1,16 @@
+{
+  "name": "Power of the Titans",
+  "background": "minecraft:textures/block/bone_block_top.png",
+  "icon": "apple",
+  "abilities": {
+    "shift": {
+      "type": "subjects_of_ymir:titan_shift",
+      "hidden": false,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        }
+      }
+    }
+  }
+}

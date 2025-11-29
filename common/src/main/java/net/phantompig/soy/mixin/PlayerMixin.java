@@ -5,6 +5,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
 import net.phantompig.soy.titan.TitanInstance;
+import net.phantompig.soy.titan.TitanRegistry;
+import net.threetag.palladium.addonpack.log.AddonPackLog;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -31,7 +33,13 @@ public class PlayerMixin implements SubjectsOfYmirPlayerExtension {
     }
 
     @Override
+    @NotNull
     public TitanInstance getTitanInstance() {
         return soy$titanInstance;
+    }
+
+    @Override
+    public void setTitanInstance(TitanInstance instance) {
+        soy$titanInstance = instance;
     }
 }

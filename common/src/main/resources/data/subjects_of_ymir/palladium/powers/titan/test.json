@@ -1,0 +1,24 @@
+{
+  "name": {
+    "translate": "titan.subjects_of_ymir.test"
+  },
+  "background": "minecraft:textures/block/bone_block_side.png",
+  "icon": "flint_and_steel",
+  "abilities": {
+    "renderer": {
+      "type": "palladium:render_layer",
+      "hidden": true,
+      "render_layer": "subjects_of_ymir:titan"
+    },
+
+    "unshift": {
+      "type": "subjects_of_ymir:titan_unshift",
+      "hidden": false,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:action"
+        }
+      }
+    }
+  }
+}

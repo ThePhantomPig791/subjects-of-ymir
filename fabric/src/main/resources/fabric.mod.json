@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "net.phantompig.soy.fabric.SubjectsOfYmirFabric"
+    ],
+    "client": [
+      "net.phantompig.soy.fabric.client.SubjectsOfYmirFabricClient"
     ]
   },
   "mixins": [

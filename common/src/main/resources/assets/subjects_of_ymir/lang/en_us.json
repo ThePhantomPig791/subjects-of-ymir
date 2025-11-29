@@ -1,0 +1,5 @@
+{
+  "commands.titan.success.set": "Set %s's titan to %s",
+  "commands.titan.success.remove": "Removed %s's titan",
+  "commands.titan.error.notPlayer": "Targeted entity must be a player"
+}

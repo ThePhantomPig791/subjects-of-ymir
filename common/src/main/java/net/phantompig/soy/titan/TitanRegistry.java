@@ -1,5 +1,6 @@
 package net.phantompig.soy.titan;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -33,17 +34,26 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
+        titans.clear();
         object.forEach((id, json) -> {
             try {
-                titans.put(id, Titan.fromJson(id, GsonHelper.convertToJsonObject(json, "$")));
+                register(id, Titan.fromJson(id, json.getAsJsonObject()));
             } catch (Exception exception) {
                 AddonPackLog.error("Parsing error loading titan {}", id, exception);
             }
         });
     }
 
+    public void register(ResourceLocation id, Titan titan) {
+        titans.put(id, titan);
+    }
+
     @Nullable
     public static Titan getTitan(ResourceLocation id) {
         return INSTANCE.titans.get(id);
+    }
+
+    public static ImmutableMap<ResourceLocation, Titan> getTitans() {
+        return ImmutableMap.copyOf(INSTANCE.titans);
     }
 }
