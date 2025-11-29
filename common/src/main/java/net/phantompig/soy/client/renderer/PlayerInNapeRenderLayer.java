@@ -13,7 +13,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
+import net.phantompig.soy.property.SubjectsOfYmirProperties;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.context.DataContext;
@@ -33,7 +35,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
         LivingEntity entity = context.getLivingEntity();
 
         if (entity instanceof Player player && parentModel instanceof PlayerModel playerModel) {
-            float scale = ((SubjectsOfYmirPlayerExtension) entity).getTitanInstance().getScale();
+            float scale = SubjectsOfYmirProperties.SCALE.get(player);
 
             if (model == null) {
                 setModel(player, playerModel);
@@ -43,7 +45,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
 
             poseStack.pushPose();
             poseStack.scale(1 / scale, 1 / scale, 1 / scale);
-            poseStack.translate(body.x, body.y, body.z + (scale - 1) / scale);
+            poseStack.translate(body.x, body.y, body.z + 0.5 * (scale - 1) / scale);
             poseStack.mulPose(Axis.XP.rotation(body.xRot));
             poseStack.mulPose(Axis.YP.rotation(body.yRot));
             poseStack.mulPose(Axis.ZP.rotation(body.zRot));

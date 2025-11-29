@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.power.TitanPowerProvider;
 import net.phantompig.soy.power.ability.SubjectsOfYmirAbilities;
+import net.phantompig.soy.property.SubjectsOfYmirProperties;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.CommandEvents;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ public class SubjectsOfYmir {
         TitanRegistry.init();
         TitanPowerProvider.init();
         SubjectsOfYmirAbilities.init();
+        SubjectsOfYmirProperties.init();
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
             TitanCommand.register(dispatcher);

@@ -19,12 +19,12 @@ public class PlayerMixin implements SubjectsOfYmirPlayerExtension {
 
     @Unique
     @NotNull
-    private TitanInstance soy$titanInstance = new TitanInstance();
+    private TitanInstance soy$titanInstance = new TitanInstance((Player) (Object) this);
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
     public void soy$readAdditionalSaveData(CompoundTag compound, CallbackInfo ci) {
         CompoundTag soyTag = compound.contains("Titan", Tag.TAG_COMPOUND) ? compound.getCompound("Titan") : new CompoundTag();
-        soy$titanInstance = TitanInstance.fromTag(soyTag);
+        soy$titanInstance = TitanInstance.fromTag((Player) (Object) this, soyTag);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))

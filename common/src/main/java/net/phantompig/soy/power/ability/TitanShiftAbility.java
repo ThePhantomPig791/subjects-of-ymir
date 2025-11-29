@@ -33,7 +33,7 @@ public class TitanShiftAbility extends Ability {
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
         var titanInstance = ((SubjectsOfYmirPlayerExtension) entity).getTitanInstance();
         if (titanInstance.titan == null) return;
-        int progress = titanInstance.progress;
+        int progress = titanInstance.getProgress();
         int charge = entry.getProperty(CHARGE);
         final int maxCharge = entry.getProperty(MAX_CHARGE);
 
@@ -42,16 +42,16 @@ public class TitanShiftAbility extends Ability {
             SubjectsOfYmir.LOGGER.info(String.valueOf(charge));
         } else {
             if (charge >= 1) {
-                SubjectsOfYmir.LOGGER.info("pr {}" , titanInstance.progress);
+                SubjectsOfYmir.LOGGER.info("pr {}" , titanInstance.getProgress());
                 if (progress < titanInstance.titan.maxProgress) {
-                    if (progress < 0) titanInstance.progress = 0;
-                    if (titanInstance.progress == 0) {
+                    if (progress < 0) titanInstance.setProgress(0);
+                    if (titanInstance.getProgress() == 0) {
                         // first shifting tick
                         titanInstance.titan.startShift(entity, charge);
                     }
 
                     // each shifting tick
-                    titanInstance.progress++; // it's not synced duh
+                    titanInstance.setProgress(++progress);
                 } else {
                     // completed shift
                     titanInstance.titan.completedShift(entity, charge);

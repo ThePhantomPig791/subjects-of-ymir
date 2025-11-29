@@ -25,10 +25,8 @@ public class TitanUnshiftAbility extends Ability {
         var titanInstance = ((SubjectsOfYmirPlayerExtension) entity).getTitanInstance();
         if (titanInstance.titan == null) return;
 
-        boolean forced = titanInstance.forceUnshift;
-
-        if (enabled || forced) {
-            titanInstance.progress = 0;
+        if (enabled || titanInstance.forceUnshift) {
+            titanInstance.setProgress(0);
             titanInstance.forceUnshift = false;
         }
     }

@@ -4,6 +4,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.phantompig.soy.property.SubjectsOfYmirProperties;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -14,43 +16,48 @@ public class TitanInstance {
     public final Titan titan;
     public final ArrayList<Titan> stacks = new ArrayList<>();
 
-    public int progress = 0;
+    public final LivingEntity entity;
 
     public boolean forceUnshift = false;
 
-    public TitanInstance() {
-        titan = null;
+    public TitanInstance(LivingEntity entity) {
+        this(entity, null);
     }
 
-    public TitanInstance(@Nullable Titan titan) {
+    public TitanInstance(LivingEntity entity, @Nullable Titan titan) {
+        this.entity = entity;
         this.titan = titan;
     }
 
-    public TitanInstance(@Nullable Titan titan, List<Titan> stacks) {
-        this.titan = titan;
+    public TitanInstance(LivingEntity entity, @Nullable Titan titan, List<Titan> stacks) {
+        this(entity, titan);
         this.stacks.addAll(stacks);
     }
 
 
-    public float getScale() {
-        if (titan == null) return 1;
-        return titan.scale * progress / titan.maxProgress;
+    public int getProgress() {
+        return SubjectsOfYmirProperties.PROGRESS.get(this.entity);
     }
+
+    public void setProgress(int progress) {
+        SubjectsOfYmirProperties.PROGRESS.set(this.entity, progress);
+    }
+
 
     public boolean is(ResourceLocation id) {
         return this.titan != null && this.titan.id.equals(id);
     }
 
 
-    public static TitanInstance fromTag(CompoundTag tag) {
-        if (tag.isEmpty()) return new TitanInstance();
+
+    public static TitanInstance fromTag(LivingEntity entity, CompoundTag tag) {
+        if (tag.isEmpty()) return new TitanInstance(entity);
         ResourceLocation id = new ResourceLocation(tag.getString("Titan"));
-        TitanInstance inst = new TitanInstance(
+        return new TitanInstance(
+                entity,
                 TitanRegistry.getTitan(id),
                 tag.getList("Stacks", 5).stream().map(t -> TitanRegistry.getTitan(new ResourceLocation(t.getAsString()))).toList()
         );
-        inst.progress = tag.getInt("Progress");
-        return inst;
     }
 
     public CompoundTag toTag() {
@@ -60,7 +67,6 @@ public class TitanInstance {
         ListTag stacks = new ListTag();
         stacks.addAll(this.stacks.stream().map(ti -> StringTag.valueOf(ti.id.toString())).toList());
         tag.put("Stacks", stacks);
-        tag.putInt("Progress", this.progress);
         return tag;
     }
 }
