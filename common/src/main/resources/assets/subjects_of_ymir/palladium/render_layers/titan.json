@@ -2,7 +2,14 @@
   "type": "palladium:compound",
   "layers": [
     {
-      "type": "subjects_of_ymir:player_in_nape"
+      "type": "subjects_of_ymir:player_in_nape",
+      "conditions": [
+        {
+          "type": "subjects_of_ymir:shift_progress",
+          "min": 1,
+          "max": 15
+        }
+      ]
     }
   ]
 }

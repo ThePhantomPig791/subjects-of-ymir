@@ -3,7 +3,7 @@ package net.phantompig.soy.power;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.SubjectsOfYmir;
-import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.threetag.palladium.power.*;
 import net.threetag.palladium.power.provider.PowerProvider;
 import net.threetag.palladium.power.provider.PowerProviders;
@@ -14,7 +14,7 @@ public class TitanPowerProvider extends PowerProvider {
 
     @Override
     public void providePowers(LivingEntity entity, IPowerHandler handler, PowerCollector collector) {
-        if (entity instanceof SubjectsOfYmirPlayerExtension playerExt) {
+        if (entity instanceof SoyPlayerExtension playerExt) {
             if (playerExt.getTitanInstance().titan == null) return;
             ResourceLocation id = playerExt.getTitanInstance().titan.id;
             PowerManager inst = PowerManager.getInstance(null);
@@ -33,7 +33,7 @@ public class TitanPowerProvider extends PowerProvider {
     public record Validator(ResourceLocation id) implements IPowerValidator {
         @Override
         public boolean stillValid(LivingEntity entity, Power power) {
-            if (entity instanceof SubjectsOfYmirPlayerExtension playerExt) {
+            if (entity instanceof SoyPlayerExtension playerExt) {
                 return playerExt.getTitanInstance().is(this.id);
             }
             return false;

@@ -3,8 +3,8 @@ package net.phantompig.soy;
 import net.minecraft.resources.ResourceLocation;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.power.TitanPowerProvider;
-import net.phantompig.soy.power.ability.SubjectsOfYmirAbilities;
-import net.phantompig.soy.property.SubjectsOfYmirProperties;
+import net.phantompig.soy.power.ability.SoyAbilities;
+import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.CommandEvents;
 import org.slf4j.Logger;
@@ -16,12 +16,12 @@ public class SubjectsOfYmir {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public static void init() {
-        SubjectsOfYmirAbilities.ABILITIES.register();
+        SoyAbilities.ABILITIES.register();
 
         TitanRegistry.init();
         TitanPowerProvider.init();
-        SubjectsOfYmirAbilities.init();
-        SubjectsOfYmirProperties.init();
+        SoyAbilities.init();
+        SoyProperties.init();
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
             TitanCommand.register(dispatcher);

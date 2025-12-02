@@ -10,7 +10,7 @@ import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
 
@@ -25,7 +25,7 @@ public class TitanCommand {
                                             var entity = EntityArgument.getEntity(context, "entity");
                                             var id = ResourceLocationArgument.getId(context, "titan");
 
-                                            if (entity instanceof SubjectsOfYmirPlayerExtension playerExt) {
+                                            if (entity instanceof SoyPlayerExtension playerExt) {
                                                 TitanInstance inst = new TitanInstance((LivingEntity) entity, TitanRegistry.getTitan(id));
                                                 playerExt.setTitanInstance(inst);
                                                 source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), id), true);
@@ -45,7 +45,7 @@ public class TitanCommand {
                                     var source = context.getSource();
                                     var entity = EntityArgument.getEntity(context, "entity");
 
-                                    if (entity instanceof SubjectsOfYmirPlayerExtension playerExt) {
+                                    if (entity instanceof SoyPlayerExtension playerExt) {
                                         playerExt.setTitanInstance(new TitanInstance((LivingEntity) entity));
                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.remove", entity.getDisplayName()), true);
                                     } else {

@@ -2,7 +2,7 @@ package net.phantompig.soy.power.ability;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Items;
-import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.threetag.palladium.power.IPowerHolder;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
@@ -22,7 +22,7 @@ public class TitanUnshiftAbility extends Ability {
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        var titanInstance = ((SubjectsOfYmirPlayerExtension) entity).getTitanInstance();
+        var titanInstance = ((SoyPlayerExtension) entity).getTitanInstance();
         if (titanInstance.titan == null) return;
 
         if (enabled || titanInstance.forceUnshift) {

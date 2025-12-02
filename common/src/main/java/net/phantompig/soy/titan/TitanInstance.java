@@ -5,7 +5,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.phantompig.soy.property.SubjectsOfYmirProperties;
+import net.phantompig.soy.property.SoyProperties;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -36,11 +36,11 @@ public class TitanInstance {
 
 
     public int getProgress() {
-        return SubjectsOfYmirProperties.PROGRESS.get(this.entity);
+        return SoyProperties.PROGRESS.get(this.entity);
     }
 
     public void setProgress(int progress) {
-        SubjectsOfYmirProperties.PROGRESS.set(this.entity, progress);
+        SoyProperties.PROGRESS.set(this.entity, progress);
     }
 
 

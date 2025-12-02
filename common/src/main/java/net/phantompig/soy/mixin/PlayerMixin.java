@@ -3,10 +3,8 @@ package net.phantompig.soy.mixin;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
-import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.TitanInstance;
-import net.phantompig.soy.titan.TitanRegistry;
-import net.threetag.palladium.addonpack.log.AddonPackLog;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -15,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
-public class PlayerMixin implements SubjectsOfYmirPlayerExtension {
+public class PlayerMixin implements SoyPlayerExtension {
 
     @Unique
     @NotNull

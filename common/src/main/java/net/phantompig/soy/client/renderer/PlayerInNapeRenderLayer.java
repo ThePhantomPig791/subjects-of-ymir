@@ -13,9 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.phantompig.soy.SubjectsOfYmir;
-import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
-import net.phantompig.soy.property.SubjectsOfYmirProperties;
+import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.context.DataContext;
@@ -35,7 +33,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
         LivingEntity entity = context.getLivingEntity();
 
         if (entity instanceof Player player && parentModel instanceof PlayerModel playerModel) {
-            float scale = SubjectsOfYmirProperties.SCALE.get(player);
+            float scale = SoyProperties.SCALE.get(player);
 
             if (model == null) {
                 setModel(player, playerModel);

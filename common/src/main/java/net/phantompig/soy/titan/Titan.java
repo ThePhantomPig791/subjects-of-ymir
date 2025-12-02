@@ -6,8 +6,8 @@ import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
-import net.phantompig.soy.player.SubjectsOfYmirPlayerExtension;
-import net.phantompig.soy.property.SubjectsOfYmirProperties;
+import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.property.SoyProperties;
 import oshi.annotation.concurrent.Immutable;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class Titan {
     }
 
     public void tick(LivingEntity entity) {
-        SubjectsOfYmirProperties.SCALE.set(entity, this.scale * ((SubjectsOfYmirPlayerExtension) entity).getTitanInstance().getProgress() / this.maxProgress);
+        SoyProperties.SCALE.set(entity, this.scale * ((SoyPlayerExtension) entity).getTitanInstance().getProgress() / this.maxProgress);
     }
 
 
