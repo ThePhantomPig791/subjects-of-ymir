@@ -8,6 +8,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.threetag.palladium.power.SuperpowerUtil;
 import oshi.annotation.concurrent.Immutable;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Immutable
 public class Titan {
     public final ResourceLocation id;
+    public final ResourceLocation powerPath;
     public final List<String> variants;
     public final int health;
     public final float scale;
@@ -26,19 +28,25 @@ public class Titan {
         this.health = health;
         this.scale = scale;
         this.maxProgress = maxProgress;
+
+        this.powerPath = id.withPath("titan/" + id.getPath());
     }
 
 
     public void startShift(LivingEntity entity, int charge) {
-
+        SuperpowerUtil.addSuperpower(entity, this.powerPath);
     }
 
     public void completedShift(LivingEntity entity, int charge) {
 
     }
 
+    public void unshift(LivingEntity entity) {
+        SuperpowerUtil.removeSuperpower(entity, this.powerPath);
+    }
+
     public void tick(LivingEntity entity) {
-        SoyProperties.SCALE.set(entity, this.scale * ((SoyPlayerExtension) entity).getTitanInstance().getProgress() / this.maxProgress);
+
     }
 
 
@@ -48,7 +56,7 @@ public class Titan {
         builder.variants = GsonHelper.isArrayNode(json, "variants") ? GsonHelper.getAsJsonArray(json, "variants", new JsonArray()).asList().stream().map(JsonElement::getAsString).toList() : List.of("default");
         builder.health = GsonHelper.getAsInt(json, "health", 20);
         builder.scale = GsonHelper.getAsFloat(json, "scale", 1);
-        builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 50);
+        builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 15);
         return builder.create();
     }
 

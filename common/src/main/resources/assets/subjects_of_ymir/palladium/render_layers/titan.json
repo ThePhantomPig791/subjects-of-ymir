@@ -3,13 +3,98 @@
   "layers": [
     {
       "type": "subjects_of_ymir:player_in_nape",
-      "conditions": [
-        {
-          "type": "subjects_of_ymir:shift_progress",
-          "min": 1,
-          "max": 15
+      "hidden_body_parts": "all"
+    },
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "#NAMESPACE:geo/titan/#TITAN/#VAR/skeleton.geo.json",
+        "variables": {
+          "NAMESPACE": {
+            "type": "subjects_of_ymir:titan_namespace"
+          },
+          "TITAN": {
+            "type": "subjects_of_ymir:titan_id"
+          },
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
         }
-      ]
+      },
+      "texture": "#subjects_of_ymir:titan_skeleton"
+    },
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "#NAMESPACE:geo/titan/#TITAN/#VAR/muscle.geo.json",
+        "variables": {
+          "NAMESPACE": {
+            "type": "subjects_of_ymir:titan_namespace"
+          },
+          "TITAN": {
+            "type": "subjects_of_ymir:titan_id"
+          },
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
+      },
+      "texture": "#subjects_of_ymir:titan_muscle"
+    },
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "#NAMESPACE:geo/titan/#TITAN/#VAR/skin.geo.json",
+        "variables": {
+          "NAMESPACE": {
+            "type": "subjects_of_ymir:titan_namespace"
+          },
+          "TITAN": {
+            "type": "subjects_of_ymir:titan_id"
+          },
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
+      },
+      "texture": "#subjects_of_ymir:titan_skin"
+    },
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "#NAMESPACE:geo/titan/#TITAN/#VAR/skin.geo.json",
+        "variables": {
+          "NAMESPACE": {
+            "type": "subjects_of_ymir:titan_namespace"
+          },
+          "TITAN": {
+            "type": "subjects_of_ymir:titan_id"
+          },
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
+      },
+      "texture": "#subjects_of_ymir:titan_hair"
+    },
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "#NAMESPACE:geo/titan/#TITAN/#VAR/skin.geo.json",
+        "variables": {
+          "NAMESPACE": {
+            "type": "subjects_of_ymir:titan_namespace"
+          },
+          "TITAN": {
+            "type": "subjects_of_ymir:titan_id"
+          },
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
+      },
+      "texture": "#subjects_of_ymir:titan_eyes",
+      "render_type": "glow"
     }
   ]
 }

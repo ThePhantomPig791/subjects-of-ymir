@@ -9,8 +9,19 @@
       "conditions": {
         "enabling": {
           "type": "palladium:held"
+        },
+        "unlocking": {
+          "type": "subjects_of_ymir:shift_progress",
+          "min": 0,
+          "max": 0
         }
       }
+    },
+
+    "renderer": {
+      "type": "palladium:render_layer",
+      "hidden": false,
+      "render_layer": "subjects_of_ymir:testing"
     }
   }
 }

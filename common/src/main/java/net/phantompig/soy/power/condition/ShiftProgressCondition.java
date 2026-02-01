@@ -37,7 +37,7 @@ public class ShiftProgressCondition extends Condition {
 
         public Serializer() {
             this.withProperty(MIN, 0);
-            this.withProperty(MAX, 15);
+            this.withProperty(MAX, 9999);
         }
 
         @Override

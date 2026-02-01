@@ -18,12 +18,12 @@ public class TitanPowerProvider extends PowerProvider {
             if (playerExt.getTitanInstance().titan == null) return;
             ResourceLocation id = playerExt.getTitanInstance().titan.id;
             PowerManager inst = PowerManager.getInstance(null);
-            Power power = inst.getPower(new ResourceLocation(id.getNamespace() + ":titan/" + id.getPath()));
+            Power power = inst.getPower(playerExt.getTitanInstance().titan.powerPath);
             if (power == null) {
                 SubjectsOfYmir.LOGGER.error("Unable to find power for titan {}", id);
                 return;
             }
-            collector.addPower(power, () -> new Validator(id));
+            // collector.addPower(power, () -> new Validator(id));
             collector.addPower(inst.getPower(SubjectsOfYmir.rsrc("shifter")), () -> new Validator(id));
         }
     }

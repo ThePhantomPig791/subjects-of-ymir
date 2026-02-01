@@ -28,6 +28,9 @@ public class TitanUnshiftAbility extends Ability {
         if (enabled || titanInstance.forceUnshift) {
             titanInstance.setProgress(0);
             titanInstance.forceUnshift = false;
+
+            titanInstance.resetScale();
+            titanInstance.titan.unshift(entity);
         }
     }
 }

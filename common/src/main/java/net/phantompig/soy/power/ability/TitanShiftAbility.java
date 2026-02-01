@@ -39,15 +39,16 @@ public class TitanShiftAbility extends Ability {
 
         if (enabled && charge < maxCharge) {
             entry.setUniqueProperty(CHARGE, ++charge);
-            SubjectsOfYmir.LOGGER.info(String.valueOf(charge));
+            // SubjectsOfYmir.LOGGER.info("charge {}", charge);
         } else {
             if (charge >= 1) {
-                SubjectsOfYmir.LOGGER.info("pr {}" , titanInstance.getProgress());
+                // SubjectsOfYmir.LOGGER.info("pr {}" , titanInstance.getProgress());
                 if (progress < titanInstance.titan.maxProgress) {
                     if (progress < 0) titanInstance.setProgress(0);
                     if (titanInstance.getProgress() == 0) {
                         // first shifting tick
                         titanInstance.titan.startShift(entity, charge);
+                        titanInstance.startScaleChange();
                     }
 
                     // each shifting tick

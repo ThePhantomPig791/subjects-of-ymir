@@ -17,6 +17,7 @@ import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.context.DataContext;
+import virtuoel.pehkui.api.ScaleTypes;
 
 public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
     public PlayerModel<Player> model;
@@ -33,7 +34,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
         LivingEntity entity = context.getLivingEntity();
 
         if (entity instanceof Player player && parentModel instanceof PlayerModel playerModel) {
-            float scale = SoyProperties.SCALE.get(player);
+            float scale = ScaleTypes.HEIGHT.getScaleData(player).getScale(partialTicks);
 
             if (model == null) {
                 setModel(player, playerModel);
@@ -43,7 +44,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
 
             poseStack.pushPose();
             poseStack.scale(1 / scale, 1 / scale, 1 / scale);
-            poseStack.translate(body.x, body.y, body.z + 0.5 * (scale - 1) / scale);
+            poseStack.translate(body.x, body.y + 1, body.z + 0.5 * (scale - 1) / scale);
             poseStack.mulPose(Axis.XP.rotation(body.xRot));
             poseStack.mulPose(Axis.YP.rotation(body.yRot));
             poseStack.mulPose(Axis.ZP.rotation(body.zRot));

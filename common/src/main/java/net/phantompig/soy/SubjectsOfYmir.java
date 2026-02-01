@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.power.TitanPowerProvider;
 import net.phantompig.soy.power.ability.SoyAbilities;
+import net.phantompig.soy.power.condition.SoyConditionSerializers;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.CommandEvents;
@@ -17,10 +18,10 @@ public class SubjectsOfYmir {
 
     public static void init() {
         SoyAbilities.ABILITIES.register();
+        SoyConditionSerializers.CONDITION_SERIALIZERS.register();
 
         TitanRegistry.init();
         TitanPowerProvider.init();
-        SoyAbilities.init();
         SoyProperties.init();
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
