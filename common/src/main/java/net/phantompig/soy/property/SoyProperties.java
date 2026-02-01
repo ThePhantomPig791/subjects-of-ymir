@@ -8,6 +8,7 @@ import net.threetag.palladium.util.property.*;
 
 public class SoyProperties {
     public static final PalladiumProperty<Integer> PROGRESS = new IntegerProperty("subjects_of_ymir/progress").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Integer> CHARGE = new IntegerProperty("subjects_of_ymir/charge").sync(SyncType.EVERYONE);
 
     public static final PalladiumProperty<ResourceLocation> TITAN = new ResourceLocationProperty("subjects_of_ymir/titan").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<String> VARIANT = new StringProperty("subjects_of_ymir/variant").sync(SyncType.EVERYONE);
@@ -16,6 +17,7 @@ public class SoyProperties {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
             if (handler.getEntity() instanceof LivingEntity) {
                 handler.register(PROGRESS, 0);
+                handler.register(CHARGE, 0);
                 handler.register(TITAN, SubjectsOfYmir.rsrc("null"));
                 handler.register(VARIANT, "default");
             }

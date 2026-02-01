@@ -52,15 +52,17 @@ public class TitanInstance {
     public int getProgress() {
         return SoyProperties.PROGRESS.get(this.entity);
     }
-
     public void setProgress(int progress) {
         if (this.titan == null) return;
         SoyProperties.PROGRESS.set(this.entity, progress);
     }
 
     public int getCharge() {
-        if (this.titan == null) return 0;
-        return AbilityUtil.getEnabledInstances(entity, SoyAbilities.TITAN_SHIFT.get()).stream().map(ability -> ability.getProperty(TitanShiftAbility.CHARGE)).reduce(0, (a, b) -> (a > b ? a : b));
+        return SoyProperties.CHARGE.get(this.entity);
+    }
+    public void setCharge(int charge) {
+        if (this.titan == null) return;
+        SoyProperties.CHARGE.set(this.entity, charge);
     }
 
     public void startScaleChange() {

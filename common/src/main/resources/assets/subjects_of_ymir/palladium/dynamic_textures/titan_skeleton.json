@@ -1,0 +1,26 @@
+{
+  "base": "#NAMESPACE:textures/models/titan/#TITAN/#VAR/skeleton.png",
+  "variables": {
+    "NAMESPACE": {
+      "type": "subjects_of_ymir:titan_namespace"
+    },
+    "TITAN": {
+      "type": "subjects_of_ymir:titan_id"
+    },
+    "VAR": {
+      "type": "subjects_of_ymir:titan_variant"
+    },
+    "PROGRESS": {
+      "type": "subjects_of_ymir:titan_progress",
+      "min": 0,
+      "max": 9
+    }
+  },
+  "transformers": [
+    {
+      "type": "palladium:alpha_mask",
+      "mask": "subjects_of_ymir:textures/models/alpha_masks/skeleton_shift/#PROGRESS.png"
+    }
+  ],
+  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/skeleton_#PROGRESS"
+}

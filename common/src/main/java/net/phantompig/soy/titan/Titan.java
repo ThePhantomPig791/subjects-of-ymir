@@ -6,8 +6,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
-import net.phantompig.soy.player.SoyPlayerExtension;
-import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.power.SuperpowerUtil;
 import oshi.annotation.concurrent.Immutable;
 
@@ -21,13 +19,15 @@ public class Titan {
     public final int health;
     public final float scale;
     public final int maxProgress;
+    public final int maxCharge;
 
-    private Titan(ResourceLocation id, List<String> variants, int health, float scale, int maxProgress) {
+    private Titan(ResourceLocation id, List<String> variants, int health, float scale, int maxProgress, int maxCharge) {
         this.id = id;
         this.variants = variants;
         this.health = health;
         this.scale = scale;
         this.maxProgress = maxProgress;
+        this.maxCharge = maxCharge;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
     }
@@ -57,6 +57,7 @@ public class Titan {
         builder.health = GsonHelper.getAsInt(json, "health", 20);
         builder.scale = GsonHelper.getAsFloat(json, "scale", 1);
         builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 15);
+        builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 50);
         return builder.create();
     }
 
@@ -67,11 +68,12 @@ public class Titan {
         public int health;
         public float scale;
         public int maxProgress;
+        public int maxCharge;
 
         public TitanBuilder() {}
 
         public Titan create() {
-            return new Titan(id, variants, health, scale, maxProgress);
+            return new Titan(id, variants, health, scale, maxProgress, maxCharge);
         }
     }
 }
