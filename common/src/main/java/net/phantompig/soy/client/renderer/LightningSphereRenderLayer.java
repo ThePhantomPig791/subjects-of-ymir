@@ -16,6 +16,7 @@ import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.context.DataContext;
 import net.threetag.palladium.util.json.GsonUtil;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import java.awt.*;
 
@@ -45,22 +46,46 @@ public class LightningSphereRenderLayer extends AbstractPackRenderLayer {
             float radius = this.radius * Easing.inOutCubic(percentCharge);
 
             poseStack.pushPose();
+            poseStack.translate(0, 0.5, 0);
 
             var vertexConsumer = bufferSource.getBuffer(PalladiumRenderTypes.LASER);
             Matrix4f matrix = poseStack.last().pose();
 
             // https://stackoverflow.com/questions/4081898/procedurally-generate-a-sphere-mesh
             final int M = 50, N = 50;
-            for (int m = 0; m <= M; m ++) {
-                for (int n = 0; n < N; n ++) {
+            for (int m = 0; m <= M; m++) {
+                for (int n = 0; n < N; n++) {
                     float intermediate = (float) Math.sin(Math.PI * m / M);
                     float x = (float) (intermediate * Math.cos(2 * Math.PI * n/N));
                     float y = (float) (intermediate * Math.sin(2 * Math.PI * n/N));
                     float z = (float) Math.cos(Math.PI * m/M);
 
-                    vertexConsumer.vertex(matrix, radius * x, radius * y + 0.5f, radius * z).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha).uv2(15728640).endVertex();
-                    vertexConsumer.vertex(matrix, radius * y, radius * z + 0.5f, radius * x).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha).uv2(15728640).endVertex();
-                    vertexConsumer.vertex(matrix, radius * z, radius * x + 0.5f, radius * y).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha).uv2(15728640).endVertex();
+                    vertexConsumer.vertex(matrix, radius * x, radius * y, radius * z).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha).uv2(15728640).endVertex();
+
+                    m++;
+                    intermediate = (float) Math.sin(Math.PI * m / M);
+                    x = (float) (intermediate * Math.cos(2 * Math.PI * n/N));
+                    y = (float) (intermediate * Math.sin(2 * Math.PI * n/N));
+                    z = (float) Math.cos(Math.PI * m/M);
+
+                    vertexConsumer.vertex(matrix, radius * x, radius * y, radius * z).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha).uv2(15728640).endVertex();
+
+                    n++;
+                    intermediate = (float) Math.sin(Math.PI * m / M);
+                    x = (float) (intermediate * Math.cos(2 * Math.PI * n/N));
+                    y = (float) (intermediate * Math.sin(2 * Math.PI * n/N));
+                    z = (float) Math.cos(Math.PI * m/M);
+
+                    vertexConsumer.vertex(matrix, radius * x, radius * y, radius * z).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha).uv2(15728640).endVertex();
+
+                    m--;
+                    intermediate = (float) Math.sin(Math.PI * m / M);
+                    x = (float) (intermediate * Math.cos(2 * Math.PI * n/N));
+                    y = (float) (intermediate * Math.sin(2 * Math.PI * n/N));
+                    z = (float) Math.cos(Math.PI * m/M);
+                    vertexConsumer.vertex(matrix, radius * x, radius * y, radius * z).color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha).uv2(15728640).endVertex();
+
+                    n--;
                 }
             }
 
