@@ -13,8 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
-public class PlayerMixin implements SoyPlayerExtension {
-
+public abstract class PlayerMixin implements SoyPlayerExtension {
     @Unique
     @NotNull
     private TitanInstance soy$titanInstance = new TitanInstance((Player) (Object) this);
