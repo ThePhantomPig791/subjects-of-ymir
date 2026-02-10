@@ -19,6 +19,32 @@
           "type": "palladium:action"
         }
       }
+    },
+
+    "block": {
+      "type": "subjects_of_ymir:block",
+      "hidden": false,
+      "hidden_in_bar": true,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held",
+          "key_type": "right_click",
+          "needs_empty_hand": true
+        }
+      }
+    },
+    "block_both_hands": {
+      "type": "palladium:show_both_arms",
+      "hidden": true,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_integer_property",
+          "ability": "block",
+          "property": "timer",
+          "min": 1,
+          "max": 10
+        }
+      }
     }
   }
 }

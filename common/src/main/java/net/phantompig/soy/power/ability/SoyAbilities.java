@@ -10,5 +10,5 @@ public class SoyAbilities {
 
     public static final RegistrySupplier<Ability> TITAN_SHIFT = ABILITIES.register("titan_shift", TitanShiftAbility::new);
     public static final RegistrySupplier<Ability> TITAN_UNSHIFT = ABILITIES.register("titan_unshift", TitanUnshiftAbility::new);
-    public static final RegistrySupplier<Ability> BLOCK = ABILITIES.register("block", () -> new Ability().setDocumentationDescription("Blocks a percentage (depending on titan stats) of front-facing damage"));
+    public static final RegistrySupplier<Ability> BLOCK = ABILITIES.register("block", BlockAbility::new);
 }
