@@ -5,11 +5,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.phantompig.soy.SubjectsOfYmir;
-import net.phantompig.soy.power.ability.SoyAbilities;
-import net.phantompig.soy.power.ability.TitanShiftAbility;
 import net.phantompig.soy.property.SoyProperties;
-import net.threetag.palladium.power.ability.AbilityUtil;
 import org.jetbrains.annotations.Nullable;
 import virtuoel.pehkui.api.ScaleTypes;
 
@@ -18,14 +14,16 @@ import java.util.List;
 
 public class TitanInstance {
     @Nullable
-    public final Titan titan;
-    public final ArrayList<Titan> stacks = new ArrayList<>();
+    public Titan titan;
+    public ArrayList<Titan> stacks = new ArrayList<>();
 
-    public final String variant;
+    public String variant;
 
     public final LivingEntity entity;
 
     public boolean forceUnshift = false;
+
+    public boolean isCorpse = false;
 
     public TitanInstance(LivingEntity entity) {
         this(entity, null);
@@ -71,6 +69,12 @@ public class TitanInstance {
         scale(this.titan.scale);
     }
 
+    public void setScaleImmediate() {
+        if (this.titan == null) return;
+        setScaleTime(0);
+        scale(this.titan.scale);
+    }
+
     public void resetScale() {
         if (this.titan == null) return;
         setScaleTime(0);
@@ -101,6 +105,20 @@ public class TitanInstance {
         SoyProperties.VARIANT.set(this.entity, this.variant);
     }
 
+    public static void copyPropertiesToEntity(LivingEntity from, LivingEntity to) {
+        SoyProperties.TITAN.set(to, SoyProperties.TITAN.get(from));
+        SoyProperties.VARIANT.set(to, SoyProperties.VARIANT.get(from));
+        SoyProperties.PROGRESS.set(to, SoyProperties.PROGRESS.get(from));
+        SoyProperties.CHARGE.set(to, SoyProperties.CHARGE.get(from));
+    }
+
+    public static void copyPropertiesTo(TitanInstance from, TitanInstance to) {
+        copyPropertiesToEntity(from.entity, to.entity);
+        to.titan = from.titan;
+        to.variant = from.variant;
+        to.stacks = new ArrayList<>(from.stacks);
+    }
+
     public static TitanInstance fromTag(LivingEntity entity, CompoundTag tag) {
         if (tag.isEmpty()) return new TitanInstance(entity);
         ResourceLocation id = new ResourceLocation(tag.getString("Titan"));
@@ -111,6 +129,7 @@ public class TitanInstance {
                 tag.getString("Variant"),
                 tag.getList("Stacks", 5).stream().map(t -> TitanRegistry.getTitan(new ResourceLocation(t.getAsString()))).toList()
         );
+        inst.isCorpse = tag.getBoolean("IsCorpse");
         inst.updateProperties();
         return inst;
     }
@@ -123,6 +142,7 @@ public class TitanInstance {
         ListTag stacks = new ListTag();
         stacks.addAll(this.stacks.stream().map(ti -> StringTag.valueOf(ti.id.toString())).toList());
         tag.put("Stacks", stacks);
+        tag.putBoolean("IsCorpse", isCorpse);
         return tag;
     }
 }
