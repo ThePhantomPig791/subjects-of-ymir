@@ -45,7 +45,7 @@ public class LightningSphereRenderLayer extends AbstractPackRenderLayer {
             int progress = SoyProperties.PROGRESS.get(player);
             float percentCharge = Math.max((charge - (chargeThreshold * chargeMax) + partialTicks) / chargeMax, 0);
 
-            float alpha = color.getAlpha() * Easing.inExpo(percentCharge) - progress * 0.3f;
+            float alpha = color.getAlpha() * Easing.inExpo(percentCharge) - progress * 0.5f;
             float radius = this.radius * Easing.inQuad(percentCharge) + progress * 0.5f;
 
             float r = color.getRed() / 255f, g = color.getGreen() / 255f, b = color.getBlue() / 255f;

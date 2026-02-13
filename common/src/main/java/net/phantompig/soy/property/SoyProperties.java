@@ -13,6 +13,8 @@ public class SoyProperties {
     public static final PalladiumProperty<ResourceLocation> TITAN = new ResourceLocationProperty("subjects_of_ymir/titan").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<String> VARIANT = new StringProperty("subjects_of_ymir/variant").sync(SyncType.EVERYONE);
 
+    public static final PalladiumProperty<Integer> DECAY = new IntegerProperty("subjects_of_ymir/decay").sync(SyncType.EVERYONE);
+
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
             if (handler.getEntity() instanceof LivingEntity) {
@@ -20,6 +22,7 @@ public class SoyProperties {
                 handler.register(CHARGE, 0);
                 handler.register(TITAN, SubjectsOfYmir.rsrc("null"));
                 handler.register(VARIANT, "default");
+                handler.register(DECAY, 0);
             }
         });
     }

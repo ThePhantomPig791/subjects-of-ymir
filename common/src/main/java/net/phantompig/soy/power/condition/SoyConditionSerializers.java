@@ -9,4 +9,5 @@ public class SoyConditionSerializers {
     public static final DeferredRegister<ConditionSerializer> CONDITION_SERIALIZERS = DeferredRegister.create(SubjectsOfYmir.MOD_ID, ConditionSerializer.REGISTRY);
 
     public static final RegistrySupplier<ConditionSerializer> SHIFT_PROGRESS = CONDITION_SERIALIZERS.register("shift_progress", ShiftProgressCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> IS_SHIFTING = CONDITION_SERIALIZERS.register("is_shifting", IsShiftingCondition.Serializer::new);
 }

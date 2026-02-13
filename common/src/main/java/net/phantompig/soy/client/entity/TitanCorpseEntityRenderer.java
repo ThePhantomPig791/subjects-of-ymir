@@ -17,7 +17,7 @@ public class TitanCorpseEntityRenderer extends LivingEntityRenderer<TitanCorpseE
     @NotNull
     @Override
     public ResourceLocation getTextureLocation(TitanCorpseEntity entity) {
-        return SubjectsOfYmir.rsrc("textures/models/titan/null/default/skin.png");
+        return SubjectsOfYmir.rsrc("textures/blank.png");
     }
 
     @Override

@@ -63,6 +63,13 @@ public class TitanInstance {
         SoyProperties.CHARGE.set(this.entity, charge);
     }
 
+    public int getDecay() {
+        return SoyProperties.DECAY.get(this.entity);
+    }
+    public void setDecay(int decay) {
+        SoyProperties.DECAY.set(this.entity, decay);
+    }
+
     public void startScaleChange() {
         if (this.titan == null) return;
         setScaleTime(15);
@@ -78,20 +85,35 @@ public class TitanInstance {
     public void resetScale() {
         if (this.titan == null) return;
         setScaleTime(0);
-        scale(1);
+
+        ScaleTypes.WIDTH.getScaleData(entity).setTargetScale(1);
+        ScaleTypes.HEIGHT.getScaleData(entity).setTargetScale(1);
+        ScaleTypes.THIRD_PERSON.getScaleData(entity).setTargetScale(1);
+        ScaleTypes.REACH.getScaleData(entity).setTargetScale(1);
+        ScaleTypes.HELD_ITEM.getScaleData(entity).setTargetScale(1);
+
+        ScaleTypes.MOTION.getScaleData(entity).setTargetScale(1);
+        ScaleTypes.JUMP_HEIGHT.getScaleData(entity).setTargetScale(1);
     }
 
     private void scale(float value) {
+        if (this.titan == null) return;
+
         ScaleTypes.WIDTH.getScaleData(entity).setTargetScale(value);
         ScaleTypes.HEIGHT.getScaleData(entity).setTargetScale(value);
-        ScaleTypes.THIRD_PERSON.getScaleData(entity).setTargetScale(value == 1 ? 1 : 0.5f);
-        ScaleTypes.REACH.getScaleData(entity).setTargetScale(value == 1 ? 1 : value * 0.7f);
+        ScaleTypes.THIRD_PERSON.getScaleData(entity).setTargetScale((float) (1 - 0.25 * Math.log(value)));
+        ScaleTypes.REACH.getScaleData(entity).setTargetScale((float) Math.sqrt(Math.pow(value, 1.5)));
+        ScaleTypes.HELD_ITEM.getScaleData(entity).setTargetScale(1 / value);
+
+        ScaleTypes.MOTION.getScaleData(entity).setTargetScale(this.titan.speed);
+        ScaleTypes.JUMP_HEIGHT.getScaleData(entity).setTargetScale(this.titan.jump);
     }
     private void setScaleTime(int value) {
         ScaleTypes.WIDTH.getScaleData(entity).setScaleTickDelay(value);
         ScaleTypes.HEIGHT.getScaleData(entity).setScaleTickDelay(value);
         ScaleTypes.THIRD_PERSON.getScaleData(entity).setScaleTickDelay(value);
         ScaleTypes.REACH.getScaleData(entity).setScaleTickDelay(value);
+        ScaleTypes.HELD_ITEM.getScaleData(entity).setScaleTickDelay(value);
     }
 
 

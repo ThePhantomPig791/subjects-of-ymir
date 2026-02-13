@@ -3,5 +3,6 @@
     "default"
   ],
   "health": 40,
-  "scale": 7.5
+  "scale": 7.5,
+  "speed": 3
 }

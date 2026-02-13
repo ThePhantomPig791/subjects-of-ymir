@@ -1,4 +1,4 @@
-package net.phantompig.soy.client.variable;
+package net.phantompig.soy.client.texture.variable;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
@@ -9,32 +9,32 @@ import net.threetag.palladium.client.dynamictexture.variable.ITextureVariableSer
 import net.threetag.palladium.documentation.JsonDocumentationBuilder;
 import net.threetag.palladium.util.context.DataContext;
 
-public class TitanNamespaceTextureVariable implements ITextureVariable {
+public class TitanVariantTextureVariable implements ITextureVariable {
     @Override
     public Object get(DataContext context) {
-        return SoyProperties.TITAN.get(context.getEntity()).getNamespace();
+        return SoyProperties.VARIANT.get(context.getEntity());
     }
 
     public static class Serializer implements ITextureVariableSerializer {
 
         @Override
         public ITextureVariable parse(JsonObject json) {
-            return new TitanNamespaceTextureVariable();
+            return new TitanVariantTextureVariable();
         }
 
         @Override
         public void addDocumentationFields(JsonDocumentationBuilder builder) {
-            builder.setTitle("Titan Namespace");
+            builder.setTitle("Titan Variant");
         }
 
         @Override
         public String getDocumentationDescription() {
-            return "Returns the namespace of the entity's titan (the bit before the semicolon)";
+            return "Returns the entity's titan variant";
         }
 
         @Override
         public ResourceLocation getId() {
-            return SubjectsOfYmir.rsrc("titan_namespace");
+            return SubjectsOfYmir.rsrc("titan_variant");
         }
     }
 }

@@ -1,16 +1,12 @@
 package net.phantompig.soy.client;
 
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.client.animation.BlockAnimation;
 import net.phantompig.soy.client.entity.TitanCorpseEntityRenderer;
 import net.phantompig.soy.client.model.TitanCorpseModelLayer;
 import net.phantompig.soy.client.renderer.PlayerInNapeRenderLayer;
 import net.phantompig.soy.client.renderer.LightningSphereRenderLayer;
-import net.phantompig.soy.client.variable.TitanIdTextureVariable;
-import net.phantompig.soy.client.variable.TitanNamespaceTextureVariable;
-import net.phantompig.soy.client.variable.TitanProgressTextureVariable;
-import net.phantompig.soy.client.variable.TitanVariantTextureVariable;
+import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
@@ -26,6 +22,7 @@ public class SubjectsOfYmirClient {
         DynamicTextureManager.registerVariable(new TitanNamespaceTextureVariable.Serializer());
         DynamicTextureManager.registerVariable(new TitanVariantTextureVariable.Serializer());
         DynamicTextureManager.registerVariable(new TitanProgressTextureVariable.Serializer());
+        DynamicTextureManager.registerVariable(new TitanDecayTextureVariable.Serializer());
 
         PalladiumClientEvents.REGISTER_ANIMATIONS.register(registry -> {
             registry.accept(SubjectsOfYmir.rsrc("block"), BlockAnimation.INSTANCE);

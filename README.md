@@ -1,5 +1,9 @@
-# Palladium Addon Template
+# Subjects of Ymir
 
-This repository showcases an example mod that uses Palladium as its dependency.
+### Credits:
+Textures and Models: Mostly sugar04k (discord) (the good-looking ones are his)
 
-Any usual [addon pack features](https://docs.threetag.net/docs/intro/) can be used by putting them into `common/src/main/resources`.
+
+Transformation Sound: https://www.youtube.com/watch?v=LOEVrye7QDA
+\
+That Electricity Sound That Comes Before The Transformation: https://www.youtube.com/watch?v=9X45Wu3ccMg

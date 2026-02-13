@@ -3,12 +3,14 @@ package net.phantompig.soy.power.ability;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.power.IPowerHolder;
+import net.threetag.palladium.power.SuperpowerUtil;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladium.util.icon.ItemIcon;
@@ -27,24 +29,11 @@ public class TitanUnshiftAbility extends Ability {
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        var titanInstance = ((SoyPlayerExtension) entity).getTitanInstance();
-        if (titanInstance.titan == null) return;
-
-        if (enabled || titanInstance.forceUnshift) {
-            titanInstance.setProgress(0);
-            titanInstance.forceUnshift = false;
-
-            titanInstance.resetScale();
-            titanInstance.titan.unshift(entity);
-
-            TitanCorpseEntity corpse = new TitanCorpseEntity(SoyEntities.TITAN_CORPSE.get(), entity.level());
-            corpse.setPos(entity.getPosition(0));
-            corpse.setXRot(entity.getXRot());
-            corpse.setYRot(entity.getYRot());
-            TitanInstance.copyPropertiesTo(titanInstance, corpse.titanInstance);
-            corpse.titanInstance.isCorpse = true;
-            corpse.titanInstance.setScaleImmediate();
-            entity.level().addFreshEntity(corpse);
+        if (!(entity instanceof Player)) return;
+        if (enabled) {
+            var titanInstance = ((SoyPlayerExtension) entity).getTitanInstance();
+            if (titanInstance.titan == null) return;
+            titanInstance.forceUnshift = true;
         }
     }
 }

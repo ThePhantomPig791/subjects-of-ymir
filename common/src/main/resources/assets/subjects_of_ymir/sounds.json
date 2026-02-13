@@ -1,0 +1,40 @@
+{
+  "shift": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.shift",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:shift",
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "shift_local": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.shift",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:shift_local"
+      }
+    ]
+  },
+
+  "electricity": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.electricity",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:electricity"
+      }
+    ]
+  },
+  "electricity_final": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.electricity",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:electricity_final"
+      }
+    ]
+  }
+}

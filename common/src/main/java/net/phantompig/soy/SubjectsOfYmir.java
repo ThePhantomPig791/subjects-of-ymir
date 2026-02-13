@@ -8,6 +8,7 @@ import net.phantompig.soy.power.TitanPowerProvider;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.power.condition.SoyConditionSerializers;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.CommandEvents;
 import net.threetag.palladiumcore.event.EventResult;
@@ -41,6 +42,7 @@ public class SubjectsOfYmir {
         });
 
         SoyEntities.init();
+        SoySounds.SOUNDS.register();
     }
 
     public static ResourceLocation rsrc(String path) {
