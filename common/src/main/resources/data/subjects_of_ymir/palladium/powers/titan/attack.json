@@ -1,5 +1,7 @@
 {
-  "name": "Test Titan",
+  "name": {
+    "translate": "titan.subjects_of_ymir.attack"
+  },
   "background": "minecraft:textures/block/bone_block_side.png",
   "icon": "flint_and_steel",
   "abilities": {

@@ -3,7 +3,7 @@
   "layers": [
     {
       "type": "palladium:lightning_sparks",
-      "frequency": 5,
+      "frequency": 1,
       "amount": 10,
       "core_color": "#ffffff",
       "glow_color": "#Fffff00",

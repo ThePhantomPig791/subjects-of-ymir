@@ -10,4 +10,5 @@ public class SoyConditionSerializers {
 
     public static final RegistrySupplier<ConditionSerializer> SHIFT_PROGRESS = CONDITION_SERIALIZERS.register("shift_progress", ShiftProgressCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_SHIFTING = CONDITION_SERIALIZERS.register("is_shifting", IsShiftingCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> IS_CORPSE = CONDITION_SERIALIZERS.register("is_corpse", IsCorpseCondition.Serializer::new);
 }

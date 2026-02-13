@@ -15,13 +15,25 @@
       "subtract": 3,
       "min": 0,
       "max": 9
+    },
+    "CORPSE": {
+      "type": "palladium:condition",
+      "conditions": {
+        "type": "subjects_of_ymir:is_corpse"
+      },
+      "true_value": "corpse_hole",
+      "false_value": "no_hole"
     }
   },
   "transformers": [
     {
       "type": "palladium:alpha_mask",
       "mask": "subjects_of_ymir:textures/models/alpha_masks/shift/#PROGRESS.png"
+    },
+    {
+      "type": "palladium:alpha_mask",
+      "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/#CORPSE.png"
     }
   ],
-  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/skin_#PROGRESS"
+  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/skin_#PROGRESS_#CORPSE"
 }
