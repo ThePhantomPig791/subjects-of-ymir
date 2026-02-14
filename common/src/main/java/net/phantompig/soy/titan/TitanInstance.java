@@ -9,6 +9,7 @@ import net.phantompig.soy.property.SoyProperties;
 import org.jetbrains.annotations.Nullable;
 import virtuoel.pehkui.api.ScaleTypes;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +70,14 @@ public class TitanInstance {
     public void setDecay(int decay) {
         SoyProperties.DECAY.set(this.entity, decay);
     }
+
+    public Color getEyeColor() {
+        return SoyProperties.EYE_COLOR.get(this.entity);
+    }
+    public void setEyeColor(Color color) {
+        SoyProperties.EYE_COLOR.set(entity, color);
+    }
+
 
     public void startScaleChange() {
         if (this.titan == null) return;
@@ -132,6 +141,7 @@ public class TitanInstance {
         SoyProperties.VARIANT.set(to, SoyProperties.VARIANT.get(from));
         SoyProperties.PROGRESS.set(to, SoyProperties.PROGRESS.get(from));
         SoyProperties.CHARGE.set(to, SoyProperties.CHARGE.get(from));
+        SoyProperties.EYE_COLOR.set(to, SoyProperties.EYE_COLOR.get(from));
     }
 
     public static void copyPropertiesTo(TitanInstance from, TitanInstance to) {
@@ -164,7 +174,7 @@ public class TitanInstance {
         ListTag stacks = new ListTag();
         stacks.addAll(this.stacks.stream().map(ti -> StringTag.valueOf(ti.id.toString())).toList());
         tag.put("Stacks", stacks);
-        tag.putBoolean("IsCorpse", isCorpse);
+        tag.putBoolean("IsCorpse", this.isCorpse);
         return tag;
     }
 }

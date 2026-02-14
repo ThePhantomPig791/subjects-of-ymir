@@ -6,16 +6,20 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.ColorArgument;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class TitanCommand {
@@ -62,6 +66,28 @@ public class TitanCommand {
 
                                     return 1;
                                 })
+                        )
+                ).then(Commands.literal("eyes")
+                        .then(Commands.argument("entity", EntityArgument.entity())
+                                .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> builder.suggest("\"#ffffff\"").buildFuture())
+                                        .executes(context -> {
+                                            var source = context.getSource();
+                                            var entity = EntityArgument.getEntity(context, "entity");
+                                            var color = StringArgumentType.getString(context, "color");
+
+                                            if (entity instanceof SoyPlayerExtension playerExt) {
+                                                var newColor = Color.decode(color);
+                                                playerExt.getTitanInstance().setEyeColor(newColor);
+                                                SubjectsOfYmir.LOGGER.info("{}", newColor);
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.color", entity.getDisplayName(), Integer.toHexString(newColor.getRGB()).substring(2)), true);
+                                            } else {
+                                                source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                                return 0;
+                                            }
+
+                                            return 1;
+                                        })
+                                )
                         )
                 )
         );

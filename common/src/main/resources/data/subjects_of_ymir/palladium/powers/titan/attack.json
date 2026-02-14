@@ -3,7 +3,7 @@
     "translate": "titan.subjects_of_ymir.attack"
   },
   "background": "minecraft:textures/block/bone_block_side.png",
-  "icon": "flint_and_steel",
+  "icon": "#subjects_of_ymir:face_icon",
   "abilities": {
     "renderer": {
       "type": "palladium:render_layer",

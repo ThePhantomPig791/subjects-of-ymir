@@ -100,6 +100,7 @@ public class TitanShiftAbility extends Ability {
             entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, true, false));
 
             titanInstance.setProgress(0);
+            titanInstance.setCharge(0);
             titanInstance.resetScale();
             titanInstance.titan.unshift(entity);
 

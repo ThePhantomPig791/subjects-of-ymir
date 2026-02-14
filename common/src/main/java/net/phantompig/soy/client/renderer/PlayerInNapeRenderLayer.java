@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.context.DataContext;
@@ -27,6 +26,14 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
         model = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(smallArms ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER), smallArms);
         model.head.xScale = model.head.yScale = model.head.zScale = 0.7f;
         playerModel.copyPropertiesTo(model);
+        model.leftLeg.setRotation(0, 0, 0);
+        model.rightLeg.setRotation(0, 0, 0);
+        model.leftPants.setRotation(0, 0, 0);
+        model.rightPants.setRotation(0, 0, 0);
+        model.leftArm.setRotation(0, 0, 0);
+        model.rightArm.setRotation(0, 0, 0);
+        model.leftSleeve.setRotation(0, 0, 0);
+        model.rightSleeve.setRotation(0, 0, 0);
     }
 
     @Override
@@ -45,6 +52,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
             poseStack.pushPose();
             poseStack.scale(1 / scale, 1 / scale, 1 / scale);
             poseStack.translate(body.x, body.y + 1, body.z + 0.5 * (scale - 1) / scale);
+            if (player.isCrouching()) poseStack.translate(0, -2, 0.5);
             poseStack.mulPose(Axis.XP.rotation(body.xRot));
             poseStack.mulPose(Axis.YP.rotation(body.yRot));
             poseStack.mulPose(Axis.ZP.rotation(body.zRot));

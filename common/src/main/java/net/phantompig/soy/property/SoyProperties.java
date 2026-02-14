@@ -6,6 +6,8 @@ import net.phantompig.soy.SubjectsOfYmir;
 import net.threetag.palladium.event.PalladiumEvents;
 import net.threetag.palladium.util.property.*;
 
+import java.awt.*;
+
 public class SoyProperties {
     public static final PalladiumProperty<Integer> PROGRESS = new IntegerProperty("subjects_of_ymir/progress").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<Integer> CHARGE = new IntegerProperty("subjects_of_ymir/charge").sync(SyncType.EVERYONE);
@@ -15,6 +17,8 @@ public class SoyProperties {
 
     public static final PalladiumProperty<Integer> DECAY = new IntegerProperty("subjects_of_ymir/decay").sync(SyncType.EVERYONE);
 
+    public static final PalladiumProperty<Color> EYE_COLOR = new ColorProperty("subjects_of_ymir/eye_color").sync(SyncType.EVERYONE);
+
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
             if (handler.getEntity() instanceof LivingEntity) {
@@ -23,6 +27,7 @@ public class SoyProperties {
                 handler.register(TITAN, SubjectsOfYmir.rsrc("null"));
                 handler.register(VARIANT, "default");
                 handler.register(DECAY, 0);
+                handler.register(EYE_COLOR, Color.WHITE);
             }
         });
     }

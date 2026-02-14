@@ -9,10 +9,12 @@ import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.power.condition.SoyConditionSerializers;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
+import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.CommandEvents;
 import net.threetag.palladiumcore.event.EventResult;
 import net.threetag.palladiumcore.event.LivingEntityEvents;
+import net.threetag.palladiumcore.event.PlayerEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +40,15 @@ public class SubjectsOfYmir {
             var titanInstance = soy.getTitanInstance();
             if (titanInstance.titan == null || titanInstance.getProgress() == 0) return EventResult.pass();
             titanInstance.forceUnshift = true;
+            titanInstance.setCharge(0);
             return EventResult.cancel();
         });
+
+        PlayerEvents.CLONE.register(((oldPlayer, newPlayer, wasDeath) -> {
+            if (oldPlayer instanceof SoyPlayerExtension oldExt && newPlayer instanceof SoyPlayerExtension newExt) {
+                newExt.setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.getTitanInstance().toTag()));
+            }
+        }));
 
         SoyEntities.init();
         SoySounds.SOUNDS.register();
