@@ -3,7 +3,16 @@
     "translate": "titan.subjects_of_ymir.attack"
   },
   "background": "minecraft:textures/block/bone_block_side.png",
-  "icon": "#subjects_of_ymir:face_icon",
+  "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/titan.png",
+  "icon": {
+    "type": "palladium:compound",
+    "icons": [
+      "subjects_of_ymir:textures/icons/titan_face/outline.png",
+      "#subjects_of_ymir:face_icon/head",
+      "#subjects_of_ymir:face_icon/eyes",
+      "#subjects_of_ymir:face_icon/hair"
+    ]
+  },
   "abilities": {
     "renderer": {
       "type": "palladium:render_layer",
@@ -45,6 +54,28 @@
           "max": 10
         }
       }
+    },
+    "block_slow": {
+      "type": "palladium:attribute_modifier",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.5,
+      "operation": 1,
+      "uuid": "09ed062a-73c1-7777-1103-3331114aa03e",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "block"
+        }
+      }
+    },
+
+    "health": {
+      "type": "palladium:attribute_modifier",
+      "hidden": true,
+      "attribute": "minecraft:generic.max_health",
+      "amount": 20,
+      "operation": 0,
+      "uuid": "09ed062b-73c1-4a2d-0803-8512514aa03e"
     }
   }
 }

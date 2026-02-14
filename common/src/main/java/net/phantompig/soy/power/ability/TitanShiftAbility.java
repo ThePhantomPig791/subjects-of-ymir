@@ -1,5 +1,6 @@
 package net.phantompig.soy.power.ability;
 
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
@@ -50,17 +52,29 @@ public class TitanShiftAbility extends Ability {
                         // first shifting tick
                         titanInstance.titan.startShift(entity, charge);
                         titanInstance.startScaleChange();
+                        titanInstance.canShiftTicks = 0;
 
-                        if (entity instanceof Player player) PlayerUtil.playSound(player, entity.getX(), entity.getY(), entity.getZ(), SoySounds.SHIFT_LOCAL.get(), SoundSource.PLAYERS);
+                        if (entity instanceof Player player) {
+                            titanInstance.playerInventory = player.getInventory().save(new ListTag());
+                            player.getInventory().clearContent();
+
+                            PlayerUtil.playSound(player, entity.getX(), entity.getY(), entity.getZ(), SoySounds.SHIFT_LOCAL.get(), SoundSource.PLAYERS);
+                        }
                         PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getY(), entity.getZ(), 64, SoySounds.SHIFT_LOCAL.get(), SoundSource.PLAYERS);
 
                         strikeLightning(entity);
                         strikeLightning(entity);
                         strikeLightning(entity);
+
+                        entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20, 10, true, false));
+                        entity.addEffect(new MobEffectInstance(MobEffects.SATURATION, 20, 10, true, false));
                     }
 
                     // each shifting tick
                     titanInstance.setProgress(++progress);
+
+                    entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, Level.ExplosionInteraction.MOB, false).explode();
+
                 } else {
                     // completed shift
                     titanInstance.titan.completedShift(entity, charge);
@@ -97,7 +111,14 @@ public class TitanShiftAbility extends Ability {
             entity.level().addFreshEntity(corpse);
 
             // shifter entity
+            if (entity instanceof Player player) {
+                player.getInventory().dropAll();
+                player.getInventory().load(titanInstance.playerInventory);
+                titanInstance.playerInventory = null;
+            }
+
             entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, true, false));
+            entity.heal(6);
 
             titanInstance.setProgress(0);
             titanInstance.setCharge(0);

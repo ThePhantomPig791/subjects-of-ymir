@@ -3,8 +3,13 @@ package net.phantompig.soy.titan;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.property.SoyProperties;
 import org.jetbrains.annotations.Nullable;
 import virtuoel.pehkui.api.ScaleTypes;
@@ -26,6 +31,11 @@ public class TitanInstance {
 
     public boolean isCorpse = false;
 
+    public int canShiftTicks = 0;
+
+    public ListTag playerInventory;
+
+
     public TitanInstance(LivingEntity entity) {
         this(entity, null);
     }
@@ -45,6 +55,10 @@ public class TitanInstance {
     public TitanInstance(LivingEntity entity, @Nullable Titan titan, String variant, List<Titan> stacks) {
         this(entity, titan, variant);
         this.stacks.addAll(stacks);
+    }
+
+    public void tick() {
+        if (this.canShiftTicks > 0) this.canShiftTicks--;
     }
 
 
@@ -76,6 +90,10 @@ public class TitanInstance {
     }
     public void setEyeColor(Color color) {
         SoyProperties.EYE_COLOR.set(entity, color);
+    }
+
+    public boolean canShift() {
+        return this.canShiftTicks > 0;
     }
 
 
@@ -162,6 +180,9 @@ public class TitanInstance {
                 tag.getList("Stacks", 5).stream().map(t -> TitanRegistry.getTitan(new ResourceLocation(t.getAsString()))).toList()
         );
         inst.isCorpse = tag.getBoolean("IsCorpse");
+        if (entity instanceof Player player) {
+            inst.playerInventory = tag.getList("PlayerInventory", Tag.TAG_COMPOUND);
+        }
         inst.updateProperties();
         return inst;
     }
@@ -175,6 +196,7 @@ public class TitanInstance {
         stacks.addAll(this.stacks.stream().map(ti -> StringTag.valueOf(ti.id.toString())).toList());
         tag.put("Stacks", stacks);
         tag.putBoolean("IsCorpse", this.isCorpse);
+        if (this.playerInventory != null) tag.put("PlayerInventory", this.playerInventory);
         return tag;
     }
 }

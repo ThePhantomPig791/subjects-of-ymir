@@ -1,6 +1,7 @@
 package net.phantompig.soy.client;
 
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.client.animation.BiteAnimation;
 import net.phantompig.soy.client.animation.BlockAnimation;
 import net.phantompig.soy.client.entity.TitanCorpseEntityRenderer;
 import net.phantompig.soy.client.model.TitanCorpseModelLayer;
@@ -27,6 +28,7 @@ public class SubjectsOfYmirClient {
 
         PalladiumClientEvents.REGISTER_ANIMATIONS.register(registry -> {
             registry.accept(SubjectsOfYmir.rsrc("block"), BlockAnimation.INSTANCE);
+            registry.accept(SubjectsOfYmir.rsrc("bite"), BiteAnimation.INSTANCE);
         });
 
         EntityRendererRegistry.register(SoyEntities.TITAN_CORPSE, TitanCorpseEntityRenderer::new);

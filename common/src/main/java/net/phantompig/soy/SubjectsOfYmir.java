@@ -2,6 +2,7 @@ package net.phantompig.soy;
 
 import net.minecraft.resources.ResourceLocation;
 import net.phantompig.soy.command.TitanCommand;
+import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.TitanPowerProvider;
@@ -31,6 +32,10 @@ public class SubjectsOfYmir {
         TitanPowerProvider.init();
         SoyProperties.init();
 
+        SoyEntities.init();
+        SoySounds.SOUNDS.register();
+
+
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
             TitanCommand.register(dispatcher);
         });
@@ -44,14 +49,24 @@ public class SubjectsOfYmir {
             return EventResult.cancel();
         });
 
+        LivingEntityEvents.HURT.register(((entity, damageSource, amount) -> {
+            if (!(entity instanceof SoyPlayerExtension soy)) return EventResult.pass();
+            var titanInstance = soy.getTitanInstance();
+            if (titanInstance.titan == null || titanInstance.getProgress() != 0) return EventResult.pass();
+            titanInstance.canShiftTicks += (int) (amount.get() * 15);
+            return EventResult.pass();
+        }));
+
+        LivingEntityEvents.TICK.register((entity -> {
+            if (!(entity instanceof SoyPlayerExtension soy) || soy.getTitanInstance().titan == null) return;
+            soy.getTitanInstance().tick();
+        }));
+
         PlayerEvents.CLONE.register(((oldPlayer, newPlayer, wasDeath) -> {
             if (oldPlayer instanceof SoyPlayerExtension oldExt && newPlayer instanceof SoyPlayerExtension newExt) {
                 newExt.setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.getTitanInstance().toTag()));
             }
         }));
-
-        SoyEntities.init();
-        SoySounds.SOUNDS.register();
     }
 
     public static ResourceLocation rsrc(String path) {

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -38,6 +39,8 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
 
     @Override
     public void render(DataContext context, PoseStack poseStack, MultiBufferSource bufferSource, EntityModel<Entity> parentModel, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (Minecraft.getInstance().screen instanceof InventoryScreen) return;
+
         LivingEntity entity = context.getLivingEntity();
 
         if (entity instanceof Player player && parentModel instanceof PlayerModel playerModel) {

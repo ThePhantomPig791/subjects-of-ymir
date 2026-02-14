@@ -11,4 +11,5 @@ public class SoyAbilities {
     public static final RegistrySupplier<Ability> TITAN_SHIFT = ABILITIES.register("titan_shift", TitanShiftAbility::new);
     public static final RegistrySupplier<Ability> TITAN_UNSHIFT = ABILITIES.register("titan_unshift", TitanUnshiftAbility::new);
     public static final RegistrySupplier<Ability> BLOCK = ABILITIES.register("block", BlockAbility::new);
+    public static final RegistrySupplier<Ability> BITE = ABILITIES.register("bite", BiteAbility::new);
 }

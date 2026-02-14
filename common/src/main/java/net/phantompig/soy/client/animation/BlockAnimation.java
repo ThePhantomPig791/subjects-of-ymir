@@ -15,7 +15,7 @@ public class BlockAnimation extends PalladiumAnimation {
     public static final BlockAnimation INSTANCE = new BlockAnimation();
 
     public BlockAnimation() {
-        super(30);
+        super(20);
     }
 
     public float getProgress(LivingEntity entity, float partialTicks) {

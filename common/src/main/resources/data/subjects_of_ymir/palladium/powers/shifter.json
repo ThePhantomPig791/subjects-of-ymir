@@ -1,6 +1,7 @@
 {
   "name": "Power of the Titans",
   "background": "minecraft:textures/block/bone_block_top.png",
+  "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/shifter.png",
   "icon": {
     "type": "palladium:compound",
     "icons": [
@@ -13,20 +14,101 @@
   "abilities": {
     "shift": {
       "type": "subjects_of_ymir:titan_shift",
+      "list_index": 0,
       "hidden": false,
       "icon": "subjects_of_ymir:textures/icons/shift.png",
       "conditions": {
         "enabling": {
           "type": "palladium:held"
         },
-        "unlocking": {
-          "type": "subjects_of_ymir:shift_progress",
-          "min": 0,
-          "max": 0
+        "unlocking": [
+          {
+            "type": "palladium:or",
+            "conditions": [
+              {
+                "type": "subjects_of_ymir:can_shift"
+              },
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "shift"
+              },
+              {
+                "type": "subjects_of_ymir:gamemode",
+                "gamemode": "creative"
+              }
+            ]
+          },
+          {
+            "type": "subjects_of_ymir:shift_progress",
+            "min": 0,
+            "max": 0
+          }
+        ]
+      }
+    },
+
+    "bite": {
+      "type": "subjects_of_ymir:bite",
+      "hidden": false,
+      "list_index": 0,
+      "icon": "subjects_of_ymir:textures/icons/bite.png",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        },
+        "unlocking": [
+          {
+            "type": "subjects_of_ymir:shift_progress",
+            "min": 0,
+            "max": 0
+          },
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_unlocked",
+              "ability": "shift"
+            }
+          }
+        ]
+      }
+    },
+    "bite_both_hands": {
+      "type": "palladium:show_both_arms",
+      "hidden": true,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_integer_property",
+          "ability": "bite",
+          "property": "timer",
+          "min": 1,
+          "max": 10
+        }
+      }
+    },
+    "bite_slow": {
+      "type": "palladium:attribute_modifier",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.1,
+      "operation": 1,
+      "uuid": "09ed062a-73c1-7777-1103-3331114aa03e",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "block"
         }
       }
     },
 
+    "small_lightning": {
+      "type": "palladium:render_layer",
+      "hidden": true,
+      "render_layer": "subjects_of_ymir:small_lightning",
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:can_shift"
+        }
+      }
+    },
     "lightning": {
       "type": "palladium:render_layer",
       "hidden": true,
@@ -51,6 +133,20 @@
       }
     },
 
+    "quiet_electricity_sound": {
+      "type": "palladium:play_sound",
+      "hidden": true,
+      "hidden_in_bar": true,
+      "sound": "subjects_of_ymir:electricity",
+      "volume": 0.5,
+      "pitch": 1.1,
+      "looping": true,
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:can_shift"
+        }
+      }
+    },
     "electricity_sound": {
       "type": "palladium:play_sound",
       "hidden": true,
