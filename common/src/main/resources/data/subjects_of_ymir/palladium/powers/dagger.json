@@ -1,0 +1,54 @@
+{
+  "name": "Dagger",
+  "background": "minecraft:textures/block/bone_block_top.png",
+  "icon": "bone",
+  "hidden": true,
+  "abilities": {
+    "self_stab": {
+      "type": "subjects_of_ymir:dagger",
+      "hidden": true,
+      "hidden_in_bar": true,
+      "amount": 3,
+      "time": 3,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held",
+          "key_type": "right_click"
+        },
+        "unlocking": [
+          {
+            "type": "palladium:or",
+            "conditions": [
+              {
+                "type": "palladium:and",
+                "conditions": [
+                  {
+                    "type": "palladium:item_in_slot",
+                    "item": {
+                      "item": "subjects_of_ymir:iron_bamboo_dagger"
+                    },
+                    "slot": "offhand"
+                  },
+                  {
+                    "type": "palladium:crouching"
+                  }
+                ]
+              },
+              {
+                "type": "palladium:item_in_slot",
+                "item": {
+                  "item": "subjects_of_ymir:iron_bamboo_dagger"
+                },
+                "slot": "mainhand"
+              },
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "self_stab"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

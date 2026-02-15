@@ -1,0 +1,19 @@
+{
+    "replace": false,
+    "values": [
+        "#minecraft:bamboo_plantable_on",
+        "minecraft:grass_block",
+        "minecraft:dirt",
+        "minecraft:rooted_dirt",
+        "minecraft:coarse_dirt",
+        "minecraft:gravel",
+        "minecraft:sand",
+        "minecraft:red_sand",
+        "minecraft:stone",
+        "minecraft:deepslate",
+        "minecraft:iron_ore",
+        "minecraft:deepslate_iron_ore",
+        "minecraft:raw_iron_block",
+        "subjects_of_ymir:iron_bamboo"
+    ]
+}

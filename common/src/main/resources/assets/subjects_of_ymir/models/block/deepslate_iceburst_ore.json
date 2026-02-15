@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/cube_all",
+    "textures": {
+        "all": "subjects_of_ymir:block/deepslate_iceburst_ore"
+    }
+}

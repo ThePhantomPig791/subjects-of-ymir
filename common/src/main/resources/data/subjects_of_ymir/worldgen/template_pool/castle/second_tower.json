@@ -1,0 +1,15 @@
+{
+    "name": "subjects_of_ymir:castle/second_tower",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:castle/second_tower_1",
+                "projection": "rigid",
+                "processors": "subjects_of_ymir:castle"
+            }
+        }
+    ]
+}

@@ -13,7 +13,7 @@ public class SoyEntities {
 
     public static RegistrySupplier<EntityType<TitanCorpseEntity>> TITAN_CORPSE = ENTITY_TYPES.register(
             "titan_corpse",
-            () -> EntityType.Builder.of(TitanCorpseEntity::new, MobCategory.MISC).sized(0.6F, 1.8F).build("titan_corpse")
+            () -> EntityType.Builder.of(TitanCorpseEntity::new, MobCategory.MISC).sized(0.6f, 1.8f).build("titan_corpse")
     );
 
     public static void init() {

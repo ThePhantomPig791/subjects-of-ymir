@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "S": {
+            "item": "subjects_of_ymir:ultrahard_steel_ingot"
+        },
+        "N": {
+            "tag": "c:iron_nuggets"
+        }
+    },
+    "pattern": [
+        "S",
+        "S",
+        "N"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:blade",
+        "count": 2
+    }
+}

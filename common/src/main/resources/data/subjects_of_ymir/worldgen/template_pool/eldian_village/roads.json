@@ -1,0 +1,97 @@
+{
+    "name": "subjects_of_ymir:eldian_village/roads",
+    "fallback": "subjects_of_ymir:eldian_village/terminators",
+    "elements": [
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/road_1",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/road_2",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/road_3",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 5,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/road_4",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 8,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/road_5",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/road_6",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/road_special",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/turn",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/turn_wide",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/roads/intersection",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        }
+    ]
+}

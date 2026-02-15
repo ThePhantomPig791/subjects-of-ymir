@@ -1,0 +1,33 @@
+{
+    "name": "subjects_of_ymir:eldian_village/roads",
+    "fallback": "subjects_of_ymir:eldian_village/terminators",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/road_specials/fountain",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/road_specials/stalls",
+                "projection": "terrain_matching",
+                "processors": "minecraft:empty"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/road_specials/flowers",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        }
+    ]
+}

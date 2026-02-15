@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "#": {
+            "item": "minecraft:stick"
+        },
+        "X": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        }
+    },
+    "pattern": [
+        "X",
+        "X",
+        "#"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:iron_bamboo_sword"
+    }
+}

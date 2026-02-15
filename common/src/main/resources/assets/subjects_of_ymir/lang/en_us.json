@@ -2,5 +2,20 @@
   "commands.titan.success.set": "Set %s's titan to %s",
   "commands.titan.success.remove": "Removed %s's titan",
   "commands.titan.success.color": "Set %s's titan eye color to #%s",
-  "commands.titan.error.notPlayer": "Targeted entity must be a player"
+  "commands.titan.error.notPlayer": "Targeted entity must be a player",
+
+  "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",
+
+  "item.subjects_of_ymir.rib": "Rib",
+  "item.subjects_of_ymir.ribcage": "Ribcage",
+  "item.subjects_of_ymir.broken_rib": "Broken Rib",
+  "item.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo",
+  "item.subjects_of_ymir.iron_bamboo_leaf": "Iron-Weave Bamboo Leaf",
+  "item.subjects_of_ymir.iron_bamboo_sword": "Iron-Weave Bamboo Sword",
+  "item.subjects_of_ymir.iron_bamboo_dagger": "Iron-Weave Bamboo Dagger",
+  "item.subjects_of_ymir.raw_iceburst": "Raw Iceburst",
+
+  "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",
+  "block.subjects_of_ymir.deepslate_iceburst_ore": "Deepslate Iceburst Ore",
+  "block.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo"
 }

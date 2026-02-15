@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.subjects_of_ymir]]
 modId = "palladium"
 mandatory = true
-versionRange = "[1.20.1-4.2.0,)"
+versionRange = "[1.20.1-4.5.1,)"
 ordering = "AFTER"
 side = "BOTH"
 

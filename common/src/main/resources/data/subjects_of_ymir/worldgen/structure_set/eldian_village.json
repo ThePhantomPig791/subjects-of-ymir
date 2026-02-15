@@ -1,0 +1,19 @@
+{
+    "structures": [
+        {
+            "structure": "subjects_of_ymir:eldian_village",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "type": "minecraft:random_spread",
+        "salt": 3157092,
+        "spacing": 70,
+        "separation": 40,
+        "spread_type": "triangular",
+        "exclusion_zone": {
+            "chunk_count": 6,
+            "other_set": "minecraft:villages"
+        }
+    }
+}

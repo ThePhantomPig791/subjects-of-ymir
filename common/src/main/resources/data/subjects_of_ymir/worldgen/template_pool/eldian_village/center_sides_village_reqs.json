@@ -1,0 +1,15 @@
+{
+    "name": "subjects_of_ymir:eldian_village/center_sides_village_reqs",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/center_sides/center_side_village_reqs",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        }
+    ]
+}

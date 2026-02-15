@@ -1,0 +1,60 @@
+{
+    "name": "subjects_of_ymir:eldian_village/terminators",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 3,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/terminators/terminator_1",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/terminators/terminator_2",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/terminators/terminator_3",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/terminators/terminator_4",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/terminators/terminator_5",
+                "projection": "terrain_matching",
+                "processors": "subjects_of_ymir:eldian_village/path"
+            }
+        },
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "subjects_of_ymir:eldian_village/terminators/terminator_6",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
+            }
+        }
+    ]
+}

@@ -5,6 +5,8 @@
   "client": [
   ],
   "mixins": [
+    "BlockBehaviourMixin",
+    "BlockMixin",
     "EntityMixin",
     "ItemEntityMixin",
     "PlayerMixin"

@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/handheld",
+    "textures": {
+        "layer0": "subjects_of_ymir:item/iron_bamboo_dagger"
+    }
+}

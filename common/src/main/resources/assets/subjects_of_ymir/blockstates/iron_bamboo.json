@@ -1,0 +1,20 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model": "subjects_of_ymir:block/iron_bamboo_stalk_small"
+            },
+            "when": {
+                "age": "0"
+            }
+        },
+        {
+            "apply": {
+                "model": "subjects_of_ymir:block/iron_bamboo_stalk"
+            },
+            "when": {
+                "age": "1"
+            }
+        }
+    ]
+}
