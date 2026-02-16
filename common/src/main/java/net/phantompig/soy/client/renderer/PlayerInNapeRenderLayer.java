@@ -39,7 +39,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
 
     @Override
     public void render(DataContext context, PoseStack poseStack, MultiBufferSource bufferSource, EntityModel<Entity> parentModel, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (Minecraft.getInstance().screen instanceof InventoryScreen) return;
+        if (Minecraft.getInstance().screen instanceof InventoryScreen) return; // TODO this fix doesn't work!! the player is still visible in the inventory and other menus
 
         LivingEntity entity = context.getLivingEntity();
 

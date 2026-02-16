@@ -1,0 +1,19 @@
+{
+    "textures": {
+        "default": "subjects_of_ymir:textures/models/armor/uniform/cowl.png",
+        "open": "subjects_of_ymir:textures/models/armor/uniform/cowl_open.png"
+    },
+    "model_layers": "subjects_of_ymir:jacket/humanoid",
+    "render_layers": [
+        {
+            "model_layer": {
+                "normal": "subjects_of_ymir:jacket/humanoid",
+                "slim": "subjects_of_ymir:jacket_slim/humanoid"
+            },
+            "texture": {
+                "normal": "subjects_of_ymir:textures/models/armor/uniform/cloak.png",
+                "slim": "subjects_of_ymir:textures/models/armor/uniform/cloak_slim.png"
+            }
+        }
+    ]
+}

@@ -76,6 +76,17 @@
       "amount": 20,
       "operation": 0,
       "uuid": "09ed062b-73c1-4a2d-0803-8512514aa03e"
+    },
+
+    "armor": {
+      "type": "palladium:restrict_slots",
+      "hidden": true,
+      "slots": [
+        "head",
+        "chest",
+        "legs",
+        "feet"
+      ]
     }
   }
 }
