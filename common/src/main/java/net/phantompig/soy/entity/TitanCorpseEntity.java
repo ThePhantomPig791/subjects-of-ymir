@@ -2,12 +2,10 @@ package net.phantompig.soy.entity;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import net.phantompig.soy.titan.TitanInstance;
 
 import java.util.List;
@@ -24,16 +22,12 @@ public class TitanCorpseEntity extends LivingEntity {
     public Iterable<ItemStack> getArmorSlots() {
         return List.of();
     }
-
     @Override
     public ItemStack getItemBySlot(EquipmentSlot slot) {
         return ItemStack.EMPTY;
     }
-
     @Override
-    public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
-
-    }
+    public void setItemSlot(EquipmentSlot slot, ItemStack stack) {}
 
     @Override
     public HumanoidArm getMainArm() {
@@ -56,9 +50,18 @@ public class TitanCorpseEntity extends LivingEntity {
     }
 
     @Override
-    protected AABB makeBoundingBox() {
-        return super.makeBoundingBox();
+    public void tick() {
+        super.tick();
+        if (titanInstance.isCorpse) {
+            int decay = titanInstance.getDecay();
+            if (decay >= TitanInstance.MAX_CORPSE_DECAY) {
+                this.discard();
+                return;
+            }
+            titanInstance.setDecay(decay + 1);
+        }
     }
+
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {

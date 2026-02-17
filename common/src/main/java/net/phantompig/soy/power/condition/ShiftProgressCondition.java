@@ -2,6 +2,7 @@ package net.phantompig.soy.power.condition;
 
 import com.google.gson.JsonObject;
 import net.minecraft.world.entity.Entity;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.condition.Condition;
 import net.threetag.palladium.condition.ConditionSerializer;
@@ -23,6 +24,9 @@ public class ShiftProgressCondition extends Condition {
         if (entity == null) return false;
 
         int pro = SoyProperties.PROGRESS.get(entity);
+        if (max == -1 && entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
+            return pro >= min && pro <= ext.getTitanInstance().titan.maxProgress;
+        }
         return pro >= min && pro <= max;
     }
 
@@ -33,11 +37,11 @@ public class ShiftProgressCondition extends Condition {
 
     public static class Serializer extends ConditionSerializer {
         public static final PalladiumProperty<Integer> MIN = new IntegerProperty("min").configurable("Minimum required shifting progress");
-        public static final PalladiumProperty<Integer> MAX = new IntegerProperty("max").configurable("Maximum required shifting progress");
+        public static final PalladiumProperty<Integer> MAX = new IntegerProperty("max").configurable("Maximum required shifting progress. Set to -1 to automatically use the entity's titan's max progress");
 
         public Serializer() {
             this.withProperty(MIN, 0);
-            this.withProperty(MAX, 9999);
+            this.withProperty(MAX, -1);
         }
 
         @Override

@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.client.dynamictexture.variable.AbstractIntegerTextureVariable;
 import net.threetag.palladium.client.dynamictexture.variable.ITextureVariable;
 import net.threetag.palladium.client.dynamictexture.variable.ITextureVariableSerializer;
@@ -20,7 +21,7 @@ public class TitanDecayTextureVariable extends AbstractIntegerTextureVariable {
 
     @Override
     public int getNumber(DataContext context) {
-        return SoyProperties.DECAY.get(context.getEntity());
+        return (int) (-255 * (SoyProperties.DECAY.get(context.getEntity()) - TitanInstance.MAX_CORPSE_DECAY) / (float) TitanInstance.MAX_CORPSE_DECAY); // https://www.desmos.com/calculator/ffcoddolmo
     }
 
     public static class Serializer implements ITextureVariableSerializer {
@@ -37,7 +38,7 @@ public class TitanDecayTextureVariable extends AbstractIntegerTextureVariable {
 
         @Override
         public String getDocumentationDescription() {
-            return "Returns the entity's titan decay, with a higher number being more decayed.";
+            return "Returns the entity's titan decay, scaled to 255 to be used for alpha masks.";
         }
 
         @Override

@@ -3,16 +3,24 @@ package net.phantompig.soy.titan;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.threetag.palladium.power.SuperpowerUtil;
 import oshi.annotation.concurrent.Immutable;
 
 import java.util.List;
+import java.util.UUID;
 
 @Immutable
 public class Titan {
+    public static final UUID TITAN_HEALTH_ATTRIBUTE_UUID = UUID.fromString("09ed062b-73c1-4a2d-0803-8512514aa03e");
+    public static final AttributeModifier HEALTH_MODIFIER = new AttributeModifier(TITAN_HEALTH_ATTRIBUTE_UUID, "titan max health", 20, AttributeModifier.Operation.ADDITION);
+
     public final ResourceLocation id;
     public final ResourceLocation powerPath;
     public final List<String> variants;
@@ -22,8 +30,9 @@ public class Titan {
     public final int maxCharge;
 
     public final float speed, jump;
+    public final double extraHealth;
 
-    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, float speed, float jump) {
+    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, float speed, float jump, double extraHealth) {
         this.id = id;
         this.variants = variants;
         this.resolution = resolution;
@@ -32,6 +41,7 @@ public class Titan {
         this.maxCharge = maxCharge;
         this.speed = speed;
         this.jump = jump;
+        this.extraHealth = extraHealth;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
     }
@@ -39,6 +49,7 @@ public class Titan {
 
     public void startShift(LivingEntity entity, int charge) {
         SuperpowerUtil.addSuperpower(entity, this.powerPath);
+        if (!entity.getAttribute(Attributes.MAX_HEALTH).hasModifier(HEALTH_MODIFIER)) entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(HEALTH_MODIFIER);
     }
 
     public void completedShift(LivingEntity entity, int charge) {
@@ -47,6 +58,12 @@ public class Titan {
 
     public void unshift(LivingEntity entity) {
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
+        entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
+        if (entity instanceof ServerPlayer player) {
+            player.heal(1);
+            player.hurt(player.damageSources().magic(), 1);
+            player.connection.send(new ClientboundUpdateAttributesPacket(player.getId(), List.of(player.getAttribute(Attributes.MAX_HEALTH))));
+        }
     }
 
     public void tick(LivingEntity entity) {
@@ -64,6 +81,7 @@ public class Titan {
         builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 50);
         builder.speed = GsonHelper.getAsFloat(json, "speed", 1);
         builder.jump = GsonHelper.getAsFloat(json, "jump", 1);
+        builder.extraHealth = GsonHelper.getAsDouble(json, "extra_health", 0);
         return builder.create();
     }
 
@@ -77,11 +95,12 @@ public class Titan {
         public int maxCharge;
         public float speed;
         public float jump;
+        public double extraHealth;
 
         public TitanBuilder() {}
 
         public Titan create() {
-            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, speed, jump);
+            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, speed, jump, extraHealth);
         }
     }
 }

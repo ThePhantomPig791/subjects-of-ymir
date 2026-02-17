@@ -5,6 +5,7 @@
 
   "scale": 7.5,
   "speed": 3,
+  "extra_health": 20,
 
   "eye_color_that_looks_good_obviously_unused_field": "#33ff33"
 }

@@ -1,16 +1,10 @@
 package net.phantompig.soy.power.ability;
 
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
-import net.phantompig.soy.entity.SoyEntities;
-import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
-import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.power.IPowerHolder;
-import net.threetag.palladium.power.SuperpowerUtil;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladium.util.icon.ItemIcon;
@@ -35,5 +29,10 @@ public class TitanUnshiftAbility extends Ability {
             if (titanInstance.titan == null) return;
             titanInstance.forceUnshift = true;
         }
+    }
+
+    @Override
+    public String getDocumentationDescription() {
+        return "Forcibly unshifts the entity from titan form.";
     }
 }

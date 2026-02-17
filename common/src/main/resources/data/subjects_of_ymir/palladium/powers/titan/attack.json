@@ -4,10 +4,11 @@
   },
   "background": "minecraft:textures/block/bone_block_side.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/titan.png",
+  "gui_display_type": "tree",
   "icon": {
     "type": "palladium:compound",
     "icons": [
-      "subjects_of_ymir:textures/icons/titan_face/outline.png",
+      "subjects_of_ymir:textures/icon/titan_face/outline.png",
       "#subjects_of_ymir:face_icon/head",
       "#subjects_of_ymir:face_icon/eyes",
       "#subjects_of_ymir:face_icon/hair"
@@ -23,6 +24,7 @@
     "unshift": {
       "type": "subjects_of_ymir:titan_unshift",
       "hidden": false,
+      "list_index": 4,
       "conditions": {
         "enabling": {
           "type": "palladium:action"
@@ -57,6 +59,7 @@
     },
     "block_slow": {
       "type": "palladium:attribute_modifier",
+      "hidden": true,
       "attribute": "minecraft:generic.movement_speed",
       "amount": -0.5,
       "operation": 1,
@@ -69,16 +72,7 @@
       }
     },
 
-    "health": {
-      "type": "palladium:attribute_modifier",
-      "hidden": true,
-      "attribute": "minecraft:generic.max_health",
-      "amount": 20,
-      "operation": 0,
-      "uuid": "09ed062b-73c1-4a2d-0803-8512514aa03e"
-    },
-
-    "armor": {
+    "restrict_armor": {
       "type": "palladium:restrict_slots",
       "hidden": true,
       "slots": [

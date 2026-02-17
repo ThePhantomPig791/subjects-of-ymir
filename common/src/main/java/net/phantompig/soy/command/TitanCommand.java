@@ -6,7 +6,6 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.arguments.ColorArgument;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
-import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
@@ -36,8 +34,15 @@ public class TitanCommand {
                                                     var variant = StringArgumentType.getString(context, "variant");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
+                                                        if (playerExt.getTitanInstance().getProgress() > 0) {
+                                                            source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
+                                                            return 0;
+                                                        }
                                                         TitanInstance inst = new TitanInstance((LivingEntity) entity, TitanRegistry.getTitan(id), variant);
                                                         playerExt.setTitanInstance(inst);
+                                                        playerExt.getTitanInstance().setProgress(0);
+                                                        playerExt.getTitanInstance().setCharge(0);
+                                                        playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
                                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), id), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -57,6 +62,10 @@ public class TitanCommand {
                                     var entity = EntityArgument.getEntity(context, "entity");
 
                                     if (entity instanceof SoyPlayerExtension playerExt) {
+                                        if (playerExt.getTitanInstance().getProgress() > 0) {
+                                            source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
+                                            return 0;
+                                        }
                                         playerExt.setTitanInstance(new TitanInstance((LivingEntity) entity));
                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.remove", entity.getDisplayName()), true);
                                     } else {
@@ -67,7 +76,8 @@ public class TitanCommand {
                                     return 1;
                                 })
                         )
-                ).then(Commands.literal("eyes")
+                )
+                .then(Commands.literal("eyes")
                         .then(Commands.argument("entity", EntityArgument.entity())
                                 .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> builder.suggest("\"#ffffff\"").buildFuture())
                                         .executes(context -> {
@@ -88,6 +98,28 @@ public class TitanCommand {
                                             return 1;
                                         })
                                 )
+                        )
+                )
+                .then(Commands.literal("unshift")
+                        .then(Commands.argument("entity", EntityArgument.entity())
+                                .executes(context -> {
+                                    var source = context.getSource();
+                                    var entity = EntityArgument.getEntity(context, "entity");
+
+                                    if (entity instanceof SoyPlayerExtension playerExt) {
+                                        if (playerExt.getTitanInstance().getProgress() == 0) {
+                                            source.sendFailure(Component.translatable("commands.titan.error.notShifted", entity.getDisplayName()));
+                                            return 0;
+                                        }
+                                        playerExt.getTitanInstance().forceUnshift = true;
+                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.unshift", entity.getDisplayName()), true);
+                                    } else {
+                                        source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                        return 0;
+                                    }
+
+                                    return 1;
+                                })
                         )
                 )
         );

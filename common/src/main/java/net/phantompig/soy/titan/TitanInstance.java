@@ -5,10 +5,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.property.SoyProperties;
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TitanInstance {
+    public static final int START_CORPSE_DECAY = -1800;
+    public static final int MAX_CORPSE_DECAY = 1800;
+
     @Nullable
     public Titan titan;
     public ArrayList<Titan> stacks = new ArrayList<>();

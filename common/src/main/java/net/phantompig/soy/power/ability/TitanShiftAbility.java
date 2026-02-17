@@ -4,7 +4,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -52,6 +51,7 @@ public class TitanShiftAbility extends Ability {
                         // first shifting tick
                         titanInstance.titan.startShift(entity, charge);
                         titanInstance.startScaleChange();
+                        titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
                         titanInstance.canShiftTicks = 0;
 
                         if (entity instanceof Player player) {
@@ -88,7 +88,7 @@ public class TitanShiftAbility extends Ability {
         }
 
         // triggered from the unshift ability. i moved it here so you can "cancel" mid-shift, the other option was to make another property for tracking cancelled shifts
-        if (titanInstance.forceUnshift) {
+        if (titanInstance.forceUnshift && titanInstance.getProgress() > 0) {
             titanInstance.forceUnshift = false;
 
             // corpse
@@ -105,6 +105,7 @@ public class TitanShiftAbility extends Ability {
                 return;
             }
             corpse.titanInstance.isCorpse = true;
+            corpse.titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
             corpse.titanInstance.setScaleImmediate();
             SuperpowerUtil.addSuperpower(corpse, corpse.titanInstance.titan.powerPath);
 
@@ -118,7 +119,6 @@ public class TitanShiftAbility extends Ability {
             }
 
             entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, true, false));
-            entity.heal(6);
 
             titanInstance.setProgress(0);
             titanInstance.setCharge(0);

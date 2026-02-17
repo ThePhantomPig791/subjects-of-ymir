@@ -14,13 +14,22 @@
       "type": "subjects_of_ymir:titan_progress",
       "min": 0,
       "max": 9
+    },
+    "DECAY": {
+      "type": "subjects_of_ymir:titan_decay",
+      "min": 0,
+      "max": 255
     }
   },
   "transformers": [
     {
       "type": "palladium:alpha_mask",
       "mask": "subjects_of_ymir:textures/models/alpha_masks/skeleton_shift/#PROGRESS.png"
+    },
+    {
+      "type": "palladium:alpha_mask",
+      "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
     }
   ],
-  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/skeleton_#PROGRESS"
+  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/skeleton_#PROGRESS_#DECAY"
 }

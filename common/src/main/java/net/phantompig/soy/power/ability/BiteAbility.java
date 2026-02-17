@@ -65,4 +65,9 @@ public class BiteAbility extends Ability implements AnimationTimer {
         }
         return instance.getProperty(TIMER);
     }
+
+    @Override
+    public String getDocumentationDescription() {
+        return "When held for the specified number of ticks and then released, the specified damage will be dealt to the entity. Linked to a corresponding animation.";
+    }
 }

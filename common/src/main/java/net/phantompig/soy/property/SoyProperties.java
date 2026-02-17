@@ -3,6 +3,7 @@ package net.phantompig.soy.property;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.event.PalladiumEvents;
 import net.threetag.palladium.util.property.*;
 
@@ -26,7 +27,7 @@ public class SoyProperties {
                 handler.register(CHARGE, 0);
                 handler.register(TITAN, SubjectsOfYmir.rsrc("null"));
                 handler.register(VARIANT, "default");
-                handler.register(DECAY, 0);
+                handler.register(DECAY, TitanInstance.START_CORPSE_DECAY);
                 handler.register(EYE_COLOR, Color.WHITE);
             }
         });

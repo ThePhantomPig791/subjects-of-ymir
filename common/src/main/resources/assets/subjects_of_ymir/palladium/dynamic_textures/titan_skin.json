@@ -23,6 +23,12 @@
       },
       "true_value": "corpse_hole",
       "false_value": "no_hole"
+    },
+    "DECAY": {
+      "type": "subjects_of_ymir:titan_decay",
+      "subtract": 140,
+      "min": 0,
+      "max": 255
     }
   },
   "transformers": [
@@ -33,7 +39,11 @@
     {
       "type": "palladium:alpha_mask",
       "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/#CORPSE.png"
+    },
+    {
+      "type": "palladium:alpha_mask",
+      "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
     }
   ],
-  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/skin_#PROGRESS_#CORPSE"
+  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/skin_#PROGRESS_#CORPSE_#DECAY"
 }

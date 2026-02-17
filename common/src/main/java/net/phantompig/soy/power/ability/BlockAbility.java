@@ -49,4 +49,9 @@ public class BlockAbility extends Ability implements AnimationTimer {
         }
         return instance.getProperty(TIMER);
     }
+
+    @Override
+    public String getDocumentationDescription() {
+        return "Blocks 20% of incoming damage. Linked to an animation.";
+    }
 }

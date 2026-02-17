@@ -83,6 +83,7 @@ public class SoyItems {
         ITEMS.register();
         CreativeModeTabs.TABS.register();
 
+        // these are only AddonArmorItems because i already had the armor renderers made and didn't feel like re-doing it with the vanilla system
         for (String emblem : UNIFORM_EMBLEMS) {
             UNIFORMS.add(ITEMS.register(emblem + "cloak", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
             UNIFORMS.add(ITEMS.register(emblem + "jacket", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
@@ -90,7 +91,7 @@ public class SoyItems {
         UNIFORMS.add(ITEMS.register("cloak", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
         UNIFORMS.add(ITEMS.register("uniform_jacket", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
         UNIFORMS.add(ITEMS.register("uniform_leggings", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.LEGGINGS, new Item.Properties())));
-        UNIFORMS.add(ITEMS.register("uniform_boots", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties())));
+        UNIFORMS.add(ITEMS.register("uniform_boots", () -> new FallDamageResistantAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties(), 2)));
 
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
             entries.add(RIB.get());

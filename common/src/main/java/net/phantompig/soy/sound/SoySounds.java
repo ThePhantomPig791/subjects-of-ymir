@@ -13,6 +13,7 @@ public class SoySounds {
     public static final RegistrySupplier<SoundEvent> SHIFT_LOCAL = make("shift_local");
     public static final RegistrySupplier<SoundEvent> ELECTRICITY = make("electricity");
     public static final RegistrySupplier<SoundEvent> ELECTRICITY_FINAL = make("electricity_final");
+    public static final RegistrySupplier<SoundEvent> STEAM = make("steam");
 
     public static RegistrySupplier<SoundEvent> make(String name) {
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(SubjectsOfYmir.rsrc(name)));

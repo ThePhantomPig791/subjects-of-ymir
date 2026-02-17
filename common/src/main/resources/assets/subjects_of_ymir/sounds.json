@@ -36,5 +36,21 @@
         "name": "subjects_of_ymir:electricity_final"
       }
     ]
+  },
+
+  "steam": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.steam",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:steam_0"
+      },
+      {
+        "name": "subjects_of_ymir:steam_1"
+      },
+      {
+        "name": "subjects_of_ymir:steam_2"
+      }
+    ]
   }
 }

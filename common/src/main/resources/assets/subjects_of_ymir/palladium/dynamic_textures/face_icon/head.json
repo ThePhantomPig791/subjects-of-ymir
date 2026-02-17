@@ -1,5 +1,5 @@
 {
-  "base": "#NAMESPACE:textures/icons/titan_face/#TITAN/#VAR.png",
+  "base": "#NAMESPACE:textures/icon/titan_face/#TITAN/#VAR.png",
   "variables": {
     "NAMESPACE": {
       "type": "subjects_of_ymir:titan_namespace"

@@ -1,22 +1,99 @@
 {
-  "name": "Power of the Titans",
+  "name": {
+    "translate": "power.subjects_of_ymir.shifter"
+  },
   "background": "minecraft:textures/block/bone_block_top.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/shifter.png",
+  "gui_display_type": "tree",
   "icon": {
     "type": "palladium:compound",
     "icons": [
-      "subjects_of_ymir:textures/icons/titan_face/outline.png",
+      "subjects_of_ymir:textures/icon/titan_face/outline.png",
       "#subjects_of_ymir:face_icon/head",
       "#subjects_of_ymir:face_icon/eyes",
       "#subjects_of_ymir:face_icon/hair"
     ]
   },
   "abilities": {
+    "root": {
+      "type": "palladium:dummy",
+      "gui_position": [0, 0],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.root.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.root.description"
+      },
+      "icon": {
+        "type": "palladium:compound",
+        "icons": [
+          "subjects_of_ymir:textures/icon/titan_face/outline.png",
+          "#subjects_of_ymir:face_icon/head",
+          "#subjects_of_ymir:face_icon/eyes",
+          "#subjects_of_ymir:face_icon/hair"
+        ]
+      }
+    },
+    "bite_unlock": {
+      "type": "palladium:dummy",
+      "gui_position": [0, 1.5],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.bite.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.bite.description"
+      },
+      "icon": "subjects_of_ymir:textures/icon/bite.png",
+      "conditions": {
+        "unlocking": {
+          "type": "palladium:ability_unlocked",
+          "ability": "root"
+        }
+      }
+    },
+    "conceal_unlock": {
+      "type": "palladium:dummy",
+      "gui_position": [1, 1],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.conceal.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.conceal.description"
+      },
+      "icon": "subjects_of_ymir:textures/icon/conceal.png",
+      "conditions": {
+        "unlocking": {
+          "type": "palladium:ability_unlocked",
+          "ability": "root"
+        }
+      }
+    },
+    "steam_healing_overdrive_unlock": {
+      "type": "palladium:dummy",
+      "gui_position": [-1, 1],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.steam_healing_overdrive.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.steam_healing_overdrive.description"
+      },
+      "icon": "subjects_of_ymir:textures/icon/steam_healing_overdrive.png",
+      "conditions": {
+        "unlocking": {
+          "type": "palladium:ability_unlocked",
+          "ability": "root"
+        }
+      }
+    },
+
+
     "shift": {
       "type": "subjects_of_ymir:titan_shift",
+      "hidden": true,
+      "hidden_in_bar": false,
       "list_index": 0,
-      "hidden": false,
-      "icon": "subjects_of_ymir:textures/icons/shift.png",
+      "icon": "subjects_of_ymir:textures/icon/shift.png",
+      "bar_color": "yellow",
       "conditions": {
         "enabling": {
           "type": "palladium:held"
@@ -49,14 +126,19 @@
 
     "bite": {
       "type": "subjects_of_ymir:bite",
-      "hidden": false,
+      "hidden": true,
+      "hidden_in_bar": false,
       "list_index": 0,
-      "icon": "subjects_of_ymir:textures/icons/bite.png",
+      "icon": "subjects_of_ymir:textures/icon/bite.png",
       "conditions": {
         "enabling": {
           "type": "palladium:held"
         },
         "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "bite_unlock"
+          },
           {
             "type": "subjects_of_ymir:shift_progress",
             "min": 0,
@@ -87,6 +169,7 @@
     },
     "bite_slow": {
       "type": "palladium:attribute_modifier",
+      "hidden": true,
       "attribute": "minecraft:generic.movement_speed",
       "amount": -0.1,
       "operation": 1,
@@ -99,6 +182,156 @@
       }
     },
 
+    "steam_healing": {
+      "type": "palladium:healing",
+      "hidden": true,
+      "amount": 1,
+      "frequency": 30,
+      "conditions": {
+        "enabling": [
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "subjects_of_ymir:at_full_health"
+            }
+          }
+        ],
+        "unlocking": [
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_enabled",
+              "ability": "conceal"
+            }
+          }
+        ]
+      }
+    },
+    "steam_healing_overdrive": {
+      "type": "palladium:dummy",
+      "hidden": true,
+      "hidden_in_bar": false,
+      "title": {
+        "translate": "ability.subjects_of_ymir.steam_healing_overdrive"
+      },
+      "icon": "subjects_of_ymir:textures/icon/steam_healing_overdrive.png",
+      "list_index": 1,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        },
+        "unlocking": {
+          "type": "palladium:ability_unlocked",
+          "ability": "steam_healing_overdrive_unlock"
+        }
+      }
+    },
+    "steam_healing_overdrive_healing": {
+      "type": "palladium:healing",
+      "hidden": true,
+      "amount": 1,
+      "frequency": 10,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "steam_healing_overdrive"
+        },
+        "unlocking": [
+          {
+            "type": "palladium:ability_enabled",
+            "ability": "steam_healing"
+          }
+        ]
+      }
+    },
+    "steam_healing_particles": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "minecraft:white_ash",
+      "emitter": "subjects_of_ymir:steam_healing",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "steam_healing"
+        }
+      }
+    },
+    "steam_healing_overdrive_particles": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "minecraft:entity_effect",
+      "emitter": "subjects_of_ymir:steam_healing",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "steam_healing_overdrive_healing"
+        }
+      }
+    },
+    "steam_healing_sound": {
+      "type": "subjects_of_ymir:repeat_sound",
+      "hidden": true,
+      "sound": "subjects_of_ymir:steam",
+      "pitch": 1.1,
+      "volume": 0.5,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "steam_healing"
+        }
+      }
+    },
+    "steam_healing_overdrive_sound": {
+      "type": "subjects_of_ymir:repeat_sound",
+      "hidden": true,
+      "sound": "subjects_of_ymir:steam",
+      "pitch": 0.9,
+      "volume": 0.5,
+      "looping": true,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "steam_healing_overdrive_healing"
+        }
+      }
+    },
+
+    "conceal": {
+      "type": "palladium:dummy",
+      "title": {
+        "translate": "ability.subjects_of_ymir.conceal"
+      },
+      "hidden": true,
+      "hidden_in_bar": false,
+      "list_index": 2,
+      "icon": "subjects_of_ymir:textures/icon/conceal.png",
+      "bar_color": "black",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:toggle"
+        },
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "conceal_unlock"
+          },
+          {
+            "type": "subjects_of_ymir:shift_progress",
+            "min": 0,
+            "max": 0
+          },
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_enabled",
+              "ability": "shift"
+            }
+          }
+        ]
+      }
+    },
+
+
     "small_lightning": {
       "type": "palladium:render_layer",
       "hidden": true,
@@ -106,6 +339,13 @@
       "conditions": {
         "enabling": {
           "type": "subjects_of_ymir:can_shift"
+        },
+        "unlocking": {
+          "type": "palladium:not",
+          "conditions": {
+            "type": "palladium:ability_enabled",
+            "ability": "conceal"
+          }
         }
       }
     },
@@ -144,6 +384,13 @@
       "conditions": {
         "enabling": {
           "type": "subjects_of_ymir:can_shift"
+        },
+        "unlocking": {
+          "type": "palladium:not",
+          "conditions": {
+            "type": "palladium:ability_enabled",
+            "ability": "conceal"
+          }
         }
       }
     },

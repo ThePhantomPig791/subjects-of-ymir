@@ -18,6 +18,12 @@
     },
     "COLOR": {
       "type": "subjects_of_ymir:titan_eye_color"
+    },
+    "DECAY": {
+      "type": "subjects_of_ymir:titan_decay",
+      "subtract": 200,
+      "min": 0,
+      "max": 255
     }
   },
   "transformers": [
@@ -29,7 +35,11 @@
       "type": "palladium:color",
       "color": "##COLOR",
       "ignore_blank": true
+    },
+    {
+      "type": "palladium:alpha_mask",
+      "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
     }
   ],
-  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/eyes_#PROGRESS_#COLOR"
+  "output": "#NAMESPACE:textures/models/titans/#TITAN/#VAR/eyes_#PROGRESS_#COLOR_#DECAY"
 }
