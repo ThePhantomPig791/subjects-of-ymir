@@ -15,6 +15,26 @@
     ]
   },
   "abilities": {
+    "root": {
+      "type": "palladium:dummy",
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.attack.root.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.attack.root.description"
+      },
+      "gui_position": [0, 0],
+      "icon": {
+        "type": "palladium:compound",
+        "icons": [
+          "subjects_of_ymir:textures/icon/titan_face/outline.png",
+          "#subjects_of_ymir:face_icon/head",
+          "#subjects_of_ymir:face_icon/eyes",
+          "#subjects_of_ymir:face_icon/hair"
+        ]
+      }
+    },
+
     "renderer": {
       "type": "palladium:render_layer",
       "hidden": true,
@@ -23,18 +43,41 @@
 
     "unshift": {
       "type": "subjects_of_ymir:titan_unshift",
+      "icon": "subjects_of_ymir:textures/icon/eject.png",
       "hidden": false,
       "list_index": 4,
+      "gui_position": [0, -0.5],
       "conditions": {
         "enabling": {
           "type": "palladium:action"
+        },
+        "unlocking": {
+          "type": "palladium:ability_unlocked",
+          "ability": "root"
         }
       }
     },
 
+    "block_dummy": {
+      "type": "palladium:dummy",
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.block.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.block.description"
+      },
+      "gui_position": [0, 1.5],
+      "icon": "subjects_of_ymir:textures/icon/block.png",
+      "conditions": {
+        "unlocking": {
+          "type": "palladium:ability_unlocked",
+          "ability": "root"
+        }
+      }
+    },
     "block": {
       "type": "subjects_of_ymir:block",
-      "hidden": false,
+      "hidden": true,
       "hidden_in_bar": true,
       "conditions": {
         "enabling": {
@@ -81,6 +124,33 @@
         "legs",
         "feet"
       ]
+    },
+
+    "steam_healing_particles": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "subjects_of_ymir:steam",
+      "emitter": "subjects_of_ymir:steam_healing_titan",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "power": "subjects_of_ymir:shifter",
+          "ability": "steam_healing"
+        }
+      }
+    },
+    "steam_healing_particles_cloud": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "minecraft:cloud",
+      "emitter": "subjects_of_ymir:steam_healing_titan",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "power": "subjects_of_ymir:shifter",
+          "ability": "steam_healing"
+        }
+      }
     }
   }
 }

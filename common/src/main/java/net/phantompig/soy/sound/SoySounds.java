@@ -18,4 +18,8 @@ public class SoySounds {
     public static RegistrySupplier<SoundEvent> make(String name) {
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(SubjectsOfYmir.rsrc(name)));
     }
+
+    public static void init() {
+        SOUNDS.register();
+    }
 }

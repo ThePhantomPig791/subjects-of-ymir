@@ -1,9 +1,33 @@
 {
   "name": "Test Titan",
   "background": "minecraft:textures/block/bone_block_side.png",
-  "icon": "flint_and_steel",
+  "icon": {
+    "type": "palladium:compound",
+    "icons": [
+      "subjects_of_ymir:textures/icon/titan_face/outline.png",
+      "#subjects_of_ymir:face_icon/head",
+      "#subjects_of_ymir:face_icon/eyes",
+      "#subjects_of_ymir:face_icon/hair"
+    ]
+  },
   "gui_display_type": "tree",
   "abilities": {
+    "root": {
+      "type": "palladium:dummy",
+      "title": "Test Titan",
+      "description": "For testing and example purposes!",
+      "gui_position": [0, 0],
+      "icon": {
+        "type": "palladium:compound",
+        "icons": [
+          "subjects_of_ymir:textures/icon/titan_face/outline.png",
+          "#subjects_of_ymir:face_icon/head",
+          "#subjects_of_ymir:face_icon/eyes",
+          "#subjects_of_ymir:face_icon/hair"
+        ]
+      }
+    },
+
     "renderer": {
       "type": "palladium:render_layer",
       "hidden": true,
@@ -12,6 +36,7 @@
 
     "unshift": {
       "type": "subjects_of_ymir:titan_unshift",
+      "icon": "subjects_of_ymir:textures/icon/eject.png",
       "hidden": false,
       "conditions": {
         "enabling": {
@@ -20,9 +45,26 @@
       }
     },
 
+    "block_dummy": {
+      "type": "palladium:dummy",
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.block.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.block.description"
+      },
+      "gui_position": [0, 1.5],
+      "icon": "subjects_of_ymir:textures/icon/block.png",
+      "conditions": {
+        "unlocking": {
+          "type": "palladium:ability_unlocked",
+          "ability": "root"
+        }
+      }
+    },
     "block": {
       "type": "subjects_of_ymir:block",
-      "hidden": false,
+      "hidden": true,
       "hidden_in_bar": true,
       "conditions": {
         "enabling": {

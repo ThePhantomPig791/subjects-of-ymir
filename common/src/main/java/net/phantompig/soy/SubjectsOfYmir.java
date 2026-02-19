@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
-import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.TitanPowerProvider;
 import net.phantompig.soy.power.ability.SoyAbilities;
@@ -38,8 +38,9 @@ public class SubjectsOfYmir {
         SoyBlocks.init();
         SoyItems.init();
         SoyEntities.init();
-        SoySounds.SOUNDS.register();
+        SoySounds.init();
         SoyBlockTags.init();
+        SoyParticles.init();
 
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {

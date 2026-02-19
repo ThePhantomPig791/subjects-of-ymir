@@ -57,6 +57,8 @@
   "ability.subjects_of_ymir.bite": "Bite Hand",
   "ability.subjects_of_ymir.conceal": "Conceal",
   "ability.subjects_of_ymir.steam_healing_overdrive": "Steam Overdrive",
+  "ability.subjects_of_ymir.titan_unshift": "Eject",
+  "ability.subjects_of_ymir.block": "Block",
 
   "ability.text.subjects_of_ymir.root.title": "Power of the Titans",
   "ability.text.subjects_of_ymir.root.description": "Under certain conditions, you are capable of transforming into your titan form.",
@@ -65,5 +67,10 @@
   "ability.text.subjects_of_ymir.conceal.title": "Conceal      ",
   "ability.text.subjects_of_ymir.conceal.description": "Intentionally inhibit your titan abilities, removing any giveaways that you possess this power.",
   "ability.text.subjects_of_ymir.steam_healing_overdrive.title": "Steam Overdrive",
-  "ability.text.subjects_of_ymir.steam_healing_overdrive.description": "Kick your steam healing into high gear, rapidly closing any wounds."
+  "ability.text.subjects_of_ymir.steam_healing_overdrive.description": "Kick your steam healing into high gear, rapidly closing any wounds.",
+  "ability.text.subjects_of_ymir.block.title": "Block     ",
+  "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage.",
+
+  "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
+  "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n§7HP:20\nATK:"
 }

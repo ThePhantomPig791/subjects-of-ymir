@@ -11,7 +11,6 @@ import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
@@ -88,7 +87,6 @@ public class TitanCommand {
                                             if (entity instanceof SoyPlayerExtension playerExt) {
                                                 var newColor = Color.decode(color);
                                                 playerExt.getTitanInstance().setEyeColor(newColor);
-                                                SubjectsOfYmir.LOGGER.info("{}", newColor);
                                                 source.sendSuccess(() -> Component.translatable("commands.titan.success.color", entity.getDisplayName(), Integer.toHexString(newColor.getRGB()).substring(2)), true);
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));

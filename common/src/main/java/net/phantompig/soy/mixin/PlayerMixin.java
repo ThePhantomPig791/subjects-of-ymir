@@ -1,7 +1,5 @@
 package net.phantompig.soy.mixin;
 
-import com.mojang.authlib.GameProfile;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.tags.DamageTypeTags;
@@ -10,9 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.titan.TitanInstance;
@@ -57,9 +53,7 @@ public abstract class PlayerMixin implements SoyPlayerExtension {
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 1), argsOnly = true)
     public float soy$modifyDamageTaken(float amount, DamageSource source) {
-        SubjectsOfYmir.LOGGER.info("mixin fired");
         if (soy$blocksDamageSource((LivingEntity) (Object) this, source)) {
-            SubjectsOfYmir.LOGGER.info("{} | new: {}", amount, amount * soy$getDamageReductionPercentage());
             return amount * soy$getDamageReductionPercentage();
         }
         return amount;

@@ -143,7 +143,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "subjects_of_ymir:dagger",
+					"name": "subjects_of_ymir:iron_bamboo_dagger",
 					"functions": [
                         {
 							"function": "minecraft:set_damage",

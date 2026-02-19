@@ -173,7 +173,7 @@
       "attribute": "minecraft:generic.movement_speed",
       "amount": -0.1,
       "operation": 1,
-      "uuid": "09ed062a-73c1-7777-1103-3331114aa03e",
+      "uuid": "09fd051b-73c1-7777-1103-3331114aa03e",
       "conditions": {
         "enabling": {
           "type": "palladium:ability_enabled",
@@ -220,10 +220,17 @@
         "enabling": {
           "type": "palladium:held"
         },
-        "unlocking": {
-          "type": "palladium:ability_unlocked",
-          "ability": "steam_healing_overdrive_unlock"
-        }
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "steam_healing_overdrive_unlock"
+          },
+          {
+            "type": "subjects_of_ymir:shift_progress",
+            "min": 0,
+            "max": 0
+          }
+        ]
       }
     },
     "steam_healing_overdrive_healing": {
@@ -247,12 +254,17 @@
     "steam_healing_particles": {
       "type": "palladium:particles",
       "hidden": true,
-      "particle_type": "minecraft:white_ash",
+      "particle_type": "subjects_of_ymir:steam",
       "emitter": "subjects_of_ymir:steam_healing",
       "conditions": {
         "enabling": {
           "type": "palladium:ability_enabled",
           "ability": "steam_healing"
+        },
+        "unlocking": {
+          "type": "subjects_of_ymir:shift_progress",
+          "min": 0,
+          "max": 0
         }
       }
     },
@@ -265,6 +277,11 @@
         "enabling": {
           "type": "palladium:ability_enabled",
           "ability": "steam_healing_overdrive_healing"
+        },
+        "unlocking": {
+          "type": "subjects_of_ymir:shift_progress",
+          "min": 0,
+          "max": 0
         }
       }
     },
