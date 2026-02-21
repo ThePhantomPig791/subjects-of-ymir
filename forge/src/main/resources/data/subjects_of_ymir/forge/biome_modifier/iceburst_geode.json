@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#subjects_of_ymir:has_iceburst_geode",
+  "features": "subjects_of_ymir:iceburst_geode",
+  "step": "underground_decoration"
+}

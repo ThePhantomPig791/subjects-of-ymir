@@ -21,10 +21,4 @@ public class SubjectsOfYmirForge {
             SubjectsOfYmirClient.init();
         }
     }
-
-    @SubscribeEvent
-    public static void gatherData(GatherDataEvent e) {
-        var output = e.getGenerator().getPackOutput();
-        e.getGenerator().addProvider(e.includeServer(), new SoyWorldGenProvider(output, e.getLookupProvider()));
-    }
 }
