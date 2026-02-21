@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
 
@@ -27,16 +28,24 @@ public class InjectionItem extends SpinalFluidHoldingItem {
     }
 
     private static boolean inject(ItemStack stack, Player player) {
-        if (stack.getItem() instanceof InjectionItem inj && player instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan == null) {
-            if (inj.get(stack) == inj.max) { // TODO pure titan if injection is not full
-                TitanInstance newTitan = new TitanInstance(player);
-                newTitan.titan = getRandom(TitanRegistry.getTitans().values().asList());
-                newTitan.variant = getRandom(newTitan.titan.variants);
-                ext.setTitanInstance(newTitan);
-            }
+        if (stack.getItem() instanceof InjectionItem inj && player instanceof SoyPlayerExtension ext) {
+            if (ext.getTitanInstance().titan == null) {
+                if (inj.get(stack) == inj.max) {
+                    TitanInstance newTitan = new TitanInstance(player);
+                    newTitan.titan = getRandom(TitanRegistry.getTitans().values().asList());
+                    newTitan.variant = getRandom(newTitan.titan.variants);
+                    ext.setTitanInstance(newTitan);
 
-            inj.set(stack, 0);
-            return true;
+                    inj.set(stack, 0);
+                    return true;
+                } else {
+                    return false; // TODO pure titan if injection is not full
+                }
+            } else if (inj.get(stack) > 0) {
+                SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + inj.get(stack));
+                inj.set(stack, 0);
+                return true;
+            }
         }
         return false;
     }

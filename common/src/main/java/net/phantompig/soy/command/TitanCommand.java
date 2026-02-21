@@ -1,6 +1,7 @@
 package net.phantompig.soy.command;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.commands.CommandSourceStack;
@@ -12,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
@@ -118,6 +120,60 @@ public class TitanCommand {
 
                                     return 1;
                                 })
+                        )
+                )
+                .then(Commands.literal("points")
+                        .then(Commands.literal("get")
+                                .then(Commands.argument("entity", EntityArgument.player())
+                                        .executes(context -> {
+                                            var source = context.getSource();
+                                            var entity = EntityArgument.getEntity(context, "entity");
+
+                                            var points = SoyProperties.PATH_POINTS.get(entity);
+                                            source.sendSuccess(() -> Component.translatable("commands.titan.success.points.get", entity.getDisplayName(), points), true);
+
+                                            return points;
+                                        })
+                                )
+                        )
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("entity", EntityArgument.player())
+                                        .then(Commands.argument("amount", IntegerArgumentType.integer(0))
+                                                .executes(context -> {
+                                                    var source = context.getSource();
+                                                    var entity = EntityArgument.getEntity(context, "entity");
+                                                    var amount = IntegerArgumentType.getInteger(context, "amount");
+
+                                                    var points = SoyProperties.PATH_POINTS.get(entity);
+                                                    SoyProperties.PATH_POINTS.set(entity, amount);
+                                                    source.sendSuccess(() -> Component.translatable("commands.titan.success.points.set", entity.getDisplayName(), amount, points), true);
+
+                                                    return points;
+                                                })
+                                        )
+                                )
+                        )
+                        .then(Commands.literal("add")
+                                .then(Commands.argument("entity", EntityArgument.player())
+                                        .then(Commands.argument("amount", IntegerArgumentType.integer())
+                                                .executes(context -> {
+                                                    var source = context.getSource();
+                                                    var entity = EntityArgument.getEntity(context, "entity");
+                                                    var amount = IntegerArgumentType.getInteger(context, "amount");
+
+                                                    SoyProperties.PATH_POINTS.set(entity, amount);
+                                                    var points = SoyProperties.PATH_POINTS.get(entity);
+                                                    if (amount >= 0) {
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.points.add", amount, entity.getDisplayName(), points), true);
+                                                    } else {
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.points.subtract", -amount, entity.getDisplayName(), points), true);
+                                                    }
+
+
+                                                    return points;
+                                                })
+                                        )
+                                )
                         )
                 )
         );

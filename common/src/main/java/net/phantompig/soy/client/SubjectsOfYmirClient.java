@@ -13,8 +13,10 @@ import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.DataHoldingItem;
 import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.particle.EmberParticleType;
 import net.phantompig.soy.particle.SoyParticles;
-import net.phantompig.soy.particle.SteamParticleType;
+import net.phantompig.soy.particle.SmallSteamParticleType;
+import net.phantompig.soy.particle.LargeSteamParticleType;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
 import net.threetag.palladium.event.PalladiumClientEvents;
@@ -42,7 +44,9 @@ public class SubjectsOfYmirClient {
         EntityRendererRegistry.register(SoyEntities.TITAN_CORPSE, TitanCorpseEntityRenderer::new);
         EntityRendererRegistry.registerModelLayer(TitanCorpseModelLayer.TITAN_CORPSE_MODEL_LAYER_LOCATION, TitanCorpseModelLayer::createBodyLayer);
 
-        ParticleProviderRegistry.register(SoyParticles.STEAM, SteamParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.SMALL_STEAM, SmallSteamParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.LARGE_STEAM, LargeSteamParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.EMBER, EmberParticleType.Provider::new);
 
         ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), (itemStack, clientLevel, livingEntity, i) -> {
             if (itemStack.getItem() instanceof DataHoldingItem item) {
@@ -50,5 +54,7 @@ public class SubjectsOfYmirClient {
             }
             return 0.0f;
         });
+
+        SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");
     }
 }

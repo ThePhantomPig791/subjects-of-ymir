@@ -126,23 +126,11 @@
       ]
     },
 
-    "steam_healing_particles": {
-      "type": "palladium:particles",
-      "hidden": true,
-      "particle_type": "subjects_of_ymir:steam",
-      "emitter": "subjects_of_ymir:steam_healing_titan",
-      "conditions": {
-        "enabling": {
-          "type": "palladium:ability_enabled",
-          "power": "subjects_of_ymir:shifter",
-          "ability": "steam_healing"
-        }
-      }
-    },
+
     "steam_healing_particles_cloud": {
       "type": "palladium:particles",
       "hidden": true,
-      "particle_type": "minecraft:cloud",
+      "particle_type": "subjects_of_ymir:large_steam",
       "emitter": "subjects_of_ymir:steam_healing_titan",
       "conditions": {
         "enabling": {

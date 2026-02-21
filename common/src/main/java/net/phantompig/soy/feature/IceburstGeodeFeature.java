@@ -24,12 +24,17 @@ public class IceburstGeodeFeature extends Feature<OreConfiguration> {
             }
         }
 
-        int r = context.config().size;
-        int fullBoxRadius = 2 * r;
-
         BlockPos pos = context.origin();
         WorldGenLevel level = context.level();
         RandomSource rand = context.random();
+
+        int r = context.config().size + rand.nextInt(-2, 1);
+        if (pos.getY() >= 30) r -= 2;
+        if (pos.getY() <= -15) r++;
+        if (pos.getY() <= -30) r++;
+        if (r == 4) r--; // hate 4
+        r = Math.max(1, r);
+        int fullBoxRadius = 2 * r;
 
         for(int x = pos.getX() - fullBoxRadius; x <= pos.getX() + fullBoxRadius; ++x) {
             for (int y = pos.getY() - fullBoxRadius; y <= pos.getY() + fullBoxRadius; ++y) {
@@ -43,7 +48,7 @@ public class IceburstGeodeFeature extends Feature<OreConfiguration> {
                     if (withinOvals(p.subtract(pos), r, 0.75f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
                         level.setBlock(p, Blocks.CALCITE.defaultBlockState(), 2);
                     }
-                    if (withinOvals(p.subtract(pos), 0.75f * r, r / 2f, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
+                    if (withinOvals(p.subtract(pos), 0.75f * r, 0.5f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
                         int i = rand.nextInt(100);
                         if (aboveDeepslate) {
                             if (i <= 5) level.setBlock(p, Blocks.DIAMOND_ORE.defaultBlockState(), 2);
@@ -57,7 +62,7 @@ public class IceburstGeodeFeature extends Feature<OreConfiguration> {
                             else level.setBlock(p, Blocks.DEEPSLATE.defaultBlockState(), 2);
                         }
                     }
-                    if (inOval(p.subtract(pos), r / 2f, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
+                    if (inOval(p.subtract(pos), 0.5f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
                         level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
                     }
                 }

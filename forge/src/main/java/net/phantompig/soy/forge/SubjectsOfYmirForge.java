@@ -11,7 +11,6 @@ import net.threetag.palladiumcore.util.Platform;
 
 @Mod(SubjectsOfYmir.MOD_ID)
 public class SubjectsOfYmirForge {
-
     public SubjectsOfYmirForge() {
         // Submit our event bus to let PalladiumCore register our content on the right time
         PalladiumCoreForge.registerModEventBus(SubjectsOfYmir.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
@@ -20,5 +19,7 @@ public class SubjectsOfYmirForge {
         if (Platform.isClient()) {
             SubjectsOfYmirClient.init();
         }
+
+        SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Forge!");
     }
 }

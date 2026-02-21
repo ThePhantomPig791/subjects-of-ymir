@@ -2,14 +2,12 @@ package net.phantompig.soy.fabric;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.fabricmc.api.ModInitializer;
-import net.phantompig.soy.feature.SoyFeatures;
 
 public class SubjectsOfYmirFabric implements ModInitializer {
 
@@ -17,6 +15,8 @@ public class SubjectsOfYmirFabric implements ModInitializer {
     public void onInitialize() {
         SubjectsOfYmir.init();
         registerPlacedFeatures();
+
+        SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Fabric!");
     }
 
     private static void registerPlacedFeatures() {

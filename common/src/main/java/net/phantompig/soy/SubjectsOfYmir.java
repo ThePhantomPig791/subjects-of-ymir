@@ -31,6 +31,8 @@ public class SubjectsOfYmir {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public static void init() {
+        LOGGER.info("Subjects of Ymir initializing...");
+
         SoyAbilities.ABILITIES.register();
         SoyConditionSerializers.CONDITION_SERIALIZERS.register();
 
@@ -58,7 +60,6 @@ public class SubjectsOfYmir {
             var titanInstance = soy.getTitanInstance();
             if (titanInstance.titan == null || titanInstance.getProgress() == 0) return EventResult.pass();
             titanInstance.forceUnshift = true;
-            titanInstance.setCharge(0);
             return EventResult.cancel();
         });
 

@@ -254,7 +254,7 @@
     "steam_healing_particles": {
       "type": "palladium:particles",
       "hidden": true,
-      "particle_type": "subjects_of_ymir:steam",
+      "particle_type": "subjects_of_ymir:small_steam",
       "emitter": "subjects_of_ymir:steam_healing",
       "conditions": {
         "enabling": {

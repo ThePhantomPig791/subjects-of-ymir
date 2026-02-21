@@ -5,6 +5,6 @@
   ],
   "slot": "offhand",
   "power": [
-    "subjects_of_ymir:dual_wielding"
+    "subjects_of_ymir:item/dual_wielding"
   ]
 }
