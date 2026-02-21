@@ -35,6 +35,10 @@ public class SoyItems {
     public static final RegistrySupplier<Item> IRON_BAMBOO_SWORD = ITEMS.register("iron_bamboo_sword", () -> new SwordItem(ToolTiers.IRON_BAMBOO, 3, -1.5f, new Item.Properties()));
     public static final RegistrySupplier<Item> IRON_BAMBOO_DAGGER = ITEMS.register("iron_bamboo_dagger", () -> new SwordItem(ToolTiers.IRON_BAMBOO, 1, -0.5f, new Item.Properties()));
 
+    public static final RegistrySupplier<Item> COMPRESSION_TABLE = ITEMS.register("compression_table", () -> new BlockItem(SoyBlocks.COMPRESSION_TABLE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> INJECTION = ITEMS.register("injection", () -> new InjectionItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+
 
     private static final String[] UNIFORM_EMBLEMS = {"garrison_", "military_police_", "survey_corps_"};
     private static final List<RegistrySupplier<Item>> UNIFORMS = new ArrayList<>();
@@ -94,6 +98,7 @@ public class SoyItems {
         UNIFORMS.add(ITEMS.register("uniform_boots", () -> new FallDamageResistantAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties(), 2)));
 
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
+            entries.add(INJECTION.get());
             entries.add(RIB.get());
             entries.add(RIBCAGE.get());
             entries.add(BROKEN_RIB.get());
@@ -104,6 +109,7 @@ public class SoyItems {
             entries.add(IRON_BAMBOO_LEAF.get());
             entries.add(IRON_BAMBOO_SWORD.get());
             entries.add(IRON_BAMBOO_DAGGER.get());
+            entries.add(COMPRESSION_TABLE.get());
 
             for (RegistrySupplier<Item> s : UNIFORMS) {
                 entries.add(s.get());

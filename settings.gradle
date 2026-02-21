@@ -11,4 +11,4 @@ include("common")
 include("fabric")
 include("forge")
 
-rootProject.name = "palladium-example-mod"
+rootProject.name = "Subjects of Ymir"

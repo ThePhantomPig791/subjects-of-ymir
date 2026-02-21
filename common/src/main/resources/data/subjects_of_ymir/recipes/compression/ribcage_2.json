@@ -1,0 +1,18 @@
+{
+  "type": "subjects_of_ymir:compression",
+  "ingredients": [
+    {
+      "item": "subjects_of_ymir:ribcage"
+    },
+    {
+      "item": "subjects_of_ymir:ribcage"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bone_meal",
+    "count": 4
+  },
+  "byproduct_type": "spinal_fluid",
+  "byproduct_chance": 0.8,
+  "byproduct_amount": 20
+}

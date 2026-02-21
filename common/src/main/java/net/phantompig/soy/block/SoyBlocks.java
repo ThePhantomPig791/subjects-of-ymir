@@ -18,6 +18,8 @@ public class SoyBlocks {
 
     public static final RegistrySupplier<Block> IRON_BAMBOO = BLOCKS.register("iron_bamboo", () -> new IronBambooBlock(BlockBehaviour.Properties.of().forceSolidOn().mapColor(MapColor.COLOR_GRAY).offsetType(BlockBehaviour.OffsetType.XZ).noOcclusion().dynamicShape().sound(SoundType.METAL).strength(1.5f, 0.5f).pushReaction(PushReaction.DESTROY).isRedstoneConductor((e, g, p) -> true)));
 
+    public static final RegistrySupplier<Block> COMPRESSION_TABLE = BLOCKS.register("compression_table", () -> new CompressionTableBlock(BlockBehaviour.Properties.of().forceSolidOn().mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).strength(2f, 1f)));
+
     public static void init() {
         BLOCKS.register();
     }

@@ -2,5 +2,31 @@
     "parent": "item/handheld",
     "textures": {
         "layer0": "subjects_of_ymir:item/injection"
-    }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "subjects_of_ymir:spinal_fluid": 0.25
+            },
+            "model": "subjects_of_ymir:item/injection_1"
+        },
+        {
+            "predicate": {
+                "subjects_of_ymir:spinal_fluid": 0.5
+            },
+            "model": "subjects_of_ymir:item/injection_2"
+        },
+        {
+            "predicate": {
+                "subjects_of_ymir:spinal_fluid": 0.75
+            },
+            "model": "subjects_of_ymir:item/injection_3"
+        },
+        {
+            "predicate": {
+                "subjects_of_ymir:spinal_fluid": 1
+            },
+            "model": "subjects_of_ymir:item/injection_4"
+        }
+    ]
 }

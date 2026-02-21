@@ -1,5 +1,6 @@
 package net.phantompig.soy.client;
 
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.client.animation.BiteAnimation;
 import net.phantompig.soy.client.animation.BlockAnimation;
@@ -10,6 +11,8 @@ import net.phantompig.soy.client.renderer.PlayerInNapeRenderLayer;
 import net.phantompig.soy.client.renderer.LightningSphereRenderLayer;
 import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
+import net.phantompig.soy.item.DataHoldingItem;
+import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.particle.SteamParticleType;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
@@ -40,5 +43,12 @@ public class SubjectsOfYmirClient {
         EntityRendererRegistry.registerModelLayer(TitanCorpseModelLayer.TITAN_CORPSE_MODEL_LAYER_LOCATION, TitanCorpseModelLayer::createBodyLayer);
 
         ParticleProviderRegistry.register(SoyParticles.STEAM, SteamParticleType.Provider::new);
+
+        ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), (itemStack, clientLevel, livingEntity, i) -> {
+            if (itemStack.getItem() instanceof DataHoldingItem item) {
+                return (float) item.get(itemStack) / item.max;
+            }
+            return 0.0f;
+        });
     }
 }

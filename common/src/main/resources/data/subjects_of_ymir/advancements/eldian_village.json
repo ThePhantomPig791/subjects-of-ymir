@@ -1,0 +1,47 @@
+{
+  "display": {
+    "icon": {
+      "item": "subjects_of_ymir:survey_corps_jacket"
+    },
+    "title": {
+      "translate": "advancements.subjects_of_ymir.eldian_village.title"
+    },
+    "description": {
+      "translate": "advancements.subjects_of_ymir.eldian_village.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "in_structure": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "location": {
+            "structure": "subjects_of_ymir:eldian_village"
+          }
+        }
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "subjects_of_ymir:tailoring/uniform"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_structure",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "subjects_of_ymir:tailoring/uniform",
+      "subjects_of_ymir:tailoring/uniform_garrison",
+      "subjects_of_ymir:tailoring/uniform_survey_corps",
+      "subjects_of_ymir:tailoring/uniform_military_police"
+    ]
+  }
+}

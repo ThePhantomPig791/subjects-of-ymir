@@ -1,0 +1,14 @@
+{
+  "type": "subjects_of_ymir:compression",
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "minecraft:bone"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bone_block"
+  }
+}

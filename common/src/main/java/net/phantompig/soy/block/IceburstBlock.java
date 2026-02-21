@@ -19,6 +19,7 @@ public class IceburstBlock extends Block {
     @Override
     public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
         super.destroy(level, pos, state);
+        // TODO silk touch somehow
         IceburstUtil.explode(pos.getCenter(), (Level) level, this.explosionStrength, AABB.ofSize(pos.getCenter(), 10, 10, 10));
     }
 }

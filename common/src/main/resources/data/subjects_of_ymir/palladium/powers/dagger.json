@@ -5,7 +5,7 @@
   "hidden": true,
   "abilities": {
     "self_stab": {
-      "type": "subjects_of_ymir:iron_bamboo_dagger",
+      "type": "subjects_of_ymir:dagger",
       "hidden": true,
       "hidden_in_bar": true,
       "amount": 3,

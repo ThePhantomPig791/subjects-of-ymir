@@ -52,5 +52,27 @@
         "name": "subjects_of_ymir:steam_2"
       }
     ]
+  },
+
+  "gas_burst": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.gas_burst",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:gas_burst_0"
+      },
+      {
+        "name": "subjects_of_ymir:gas_burst_1"
+      },
+      {
+        "name": "subjects_of_ymir:gas_burst_2"
+      },
+      {
+        "name": "subjects_of_ymir:gas_burst_3"
+      },
+      {
+        "name": "subjects_of_ymir:gas_burst_4"
+      }
+    ]
   }
 }

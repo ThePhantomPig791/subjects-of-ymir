@@ -3,9 +3,11 @@ package net.phantompig.soy.util;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.sound.SoySounds;
 import net.threetag.palladium.util.PlayerUtil;
 
 public class IceburstUtil {
@@ -35,5 +37,6 @@ public class IceburstUtil {
                 (int) strength
             );
         });
+        PlayerUtil.playSoundToAll(level, pos.x, pos.y, pos.z, 24, SoySounds.GAS_BURST.get(), SoundSource.BLOCKS, strength / 6f, 1 - (0.1f * strength / 8));
     }
 }

@@ -6,12 +6,14 @@ import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.menu.SoyMenus;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.TitanPowerProvider;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.power.condition.SoyConditionSerializers;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.recipe.SoyRecipeTypes;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
@@ -41,6 +43,8 @@ public class SubjectsOfYmir {
         SoySounds.init();
         SoyBlockTags.init();
         SoyParticles.init();
+        SoyMenus.init();
+        SoyRecipeTypes.init();
 
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
