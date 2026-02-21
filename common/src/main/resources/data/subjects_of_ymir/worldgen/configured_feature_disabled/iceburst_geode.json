@@ -1,0 +1,36 @@
+{
+  "type": "subjects_of_ymir:iceburst_geode",
+  "config": {
+    "discard_chance_on_air_exposure": 0.8,
+    "size": 5,
+    "targets": [
+      {
+        "state": {
+          "Name": "minecraft:calcite"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "minecraft:base_stone_overworld"
+        }
+      },
+      {
+        "state": {
+          "Name": "minecraft:tuff"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "minecraft:base_stone_overworld"
+        }
+      },
+      {
+        "state": {
+          "Name": "minecraft:smooth_basalt"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "minecraft:base_stone_overworld"
+        }
+      }
+    ]
+  }
+}

@@ -1,5 +1,7 @@
 package net.phantompig.soy.forge;
 
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -18,5 +20,11 @@ public class SubjectsOfYmirForge {
         if (Platform.isClient()) {
             SubjectsOfYmirClient.init();
         }
+    }
+
+    @SubscribeEvent
+    public static void gatherData(GatherDataEvent e) {
+        var output = e.getGenerator().getPackOutput();
+        e.getGenerator().addProvider(e.includeServer(), new SoyWorldGenProvider(output, e.getLookupProvider()));
     }
 }

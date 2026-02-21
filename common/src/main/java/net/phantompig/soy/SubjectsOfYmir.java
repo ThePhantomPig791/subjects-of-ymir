@@ -5,6 +5,7 @@ import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.entity.SoyEntities;
+import net.phantompig.soy.feature.SoyFeatures;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.menu.SoyMenus;
 import net.phantompig.soy.particle.SoyParticles;
@@ -45,6 +46,7 @@ public class SubjectsOfYmir {
         SoyParticles.init();
         SoyMenus.init();
         SoyRecipeTypes.init();
+        SoyFeatures.init();
 
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {

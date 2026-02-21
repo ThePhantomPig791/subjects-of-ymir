@@ -15,35 +15,35 @@ Subjects of Ymir
 
 [[dependencies.subjects_of_ymir]]
 modId = "forge"
-mandatory = true
+type = "required"
 versionRange = "[43,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.subjects_of_ymir]]
 modId = "minecraft"
-mandatory = true
+type = "required"
 versionRange = "1.20.1"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.subjects_of_ymir]]
 modId = "palladium"
-mandatory = true
+type = "required"
 versionRange = "[1.20.1-4.5.1,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.subjects_of_ymir]]
 modId = "geckolib"
-mandatory = true
+type = "required"
 versionRange = "[4.4.4,)"
 ordering = "AFTER"
 side = "CLIENT"
 
 [[dependencies.subjects_of_ymir]]
 modId = "pehkui"
-mandatory = true
+type = "required"
 versionRange = "[3.7.12,)"
 ordering = "AFTER"
 side = "BOTH"
