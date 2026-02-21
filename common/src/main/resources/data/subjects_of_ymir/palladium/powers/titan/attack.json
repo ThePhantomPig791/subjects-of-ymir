@@ -127,6 +127,17 @@
     },
 
 
+    "shifting_smoke": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "subjects_of_ymir:large_steam",
+      "emitter": "subjects_of_ymir:fast_steam_titan",
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:is_shifting"
+        }
+      }
+    },
     "steam_healing_particles_cloud": {
       "type": "palladium:particles",
       "hidden": true,

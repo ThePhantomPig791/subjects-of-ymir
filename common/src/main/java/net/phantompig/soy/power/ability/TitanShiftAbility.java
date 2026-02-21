@@ -97,7 +97,8 @@ public class TitanShiftAbility extends Ability {
             corpse.setXRot(entity.getXRot());
             corpse.setYRot(entity.getYRot());
             corpse.setYHeadRot(entity.yHeadRot);
-            corpse.setDeltaMovement(entity.getDeltaMovement());
+            corpse.setDeltaMovement(entity.getDeltaMovement().scale(1.1));
+            corpse.hasImpulse = true; // TODO fix this. no momentum is carried over
 
             TitanInstance.copyPropertiesTo(titanInstance, corpse.titanInstance);
             if (corpse.titanInstance.titan == null) {

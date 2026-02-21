@@ -161,12 +161,12 @@ public class TitanCommand {
                                                     var entity = EntityArgument.getEntity(context, "entity");
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
-                                                    SoyProperties.PATH_POINTS.set(entity, amount);
                                                     var points = SoyProperties.PATH_POINTS.get(entity);
+                                                    SoyProperties.PATH_POINTS.set(entity, amount + points);
                                                     if (amount >= 0) {
-                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.points.add", amount, entity.getDisplayName(), points), true);
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.points.add", amount, entity.getDisplayName(), amount + points), true);
                                                     } else {
-                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.points.subtract", -amount, entity.getDisplayName(), points), true);
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.points.subtract", -amount, entity.getDisplayName(), amount + points), true);
                                                     }
 
 

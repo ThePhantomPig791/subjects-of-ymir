@@ -10,6 +10,9 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.stat.SoyStats;
 import net.threetag.palladium.power.SuperpowerUtil;
 import oshi.annotation.concurrent.Immutable;
 
@@ -50,6 +53,9 @@ public class Titan {
     public void startShift(LivingEntity entity, int charge) {
         SuperpowerUtil.addSuperpower(entity, this.powerPath);
         if (!entity.getAttribute(Attributes.MAX_HEALTH).hasModifier(HEALTH_MODIFIER)) entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(HEALTH_MODIFIER);
+        if (entity instanceof Player player) {
+            player.awardStat(SoyStats.TIMES_SHIFTED, 1);
+        }
     }
 
     public void completedShift(LivingEntity entity, int charge) {
@@ -67,7 +73,9 @@ public class Titan {
     }
 
     public void tick(LivingEntity entity) {
-
+        if (entity instanceof Player player) {
+            player.awardStat(SoyStats.TIME_AS_TITAN, 1);
+        }
     }
 
 

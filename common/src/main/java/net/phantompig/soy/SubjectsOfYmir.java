@@ -16,6 +16,7 @@ import net.phantompig.soy.power.condition.SoyConditionSerializers;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.recipe.SoyRecipeTypes;
 import net.phantompig.soy.sound.SoySounds;
+import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.CommandEvents;
@@ -49,6 +50,7 @@ public class SubjectsOfYmir {
         SoyMenus.init();
         SoyRecipeTypes.init();
         SoyFeatures.init();
+        SoyStats.init();
 
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {

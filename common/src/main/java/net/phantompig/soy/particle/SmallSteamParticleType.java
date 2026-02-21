@@ -24,10 +24,10 @@ public class SmallSteamParticleType extends TextureSheetParticle {
         this.lifetime = 24;
         this.setSpriteFromAge(sprites);
         this.rCol = this.gCol = this.bCol = 1;
-        this.deltaRoll = (float) (0.2 + this.random.nextFloat() * 0.1) * (this.random.nextBoolean() ? 1 : -1);
-        this.roll = 0.5f;
+        this.deltaRoll = (float) (0.05 + this.random.nextFloat() * 0.02) * (this.random.nextBoolean() ? 1 : -1);
+        this.roll = 0.03f;
         this.quadSize = 0.2f;
-        this.scale(0.25f);
+        this.scale(1.5f);
     }
 
     @Override
@@ -37,11 +37,11 @@ public class SmallSteamParticleType extends TextureSheetParticle {
             this.setSpriteFromAge(sprites);
 
             float t = (float) this.age / this.lifetime;
-            this.scale(1.05f);
+            this.scale(1.02f);
             this.setAlpha(1 - t);
             this.oRoll = this.roll;
             this.roll += deltaRoll;
-            deltaRoll *= 0.95f;
+            deltaRoll *= 0.8f;
         }
     }
 

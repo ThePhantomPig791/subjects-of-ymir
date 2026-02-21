@@ -71,12 +71,12 @@ public class TitanCorpseEntity extends LivingEntity {
                     (SimpleParticleType) SoyParticles.LARGE_STEAM.get(),
                     true,
                     this.getX(),
-                    this.getY() + this.getBoundingBox().getYsize() / 2,
+                    this.getY() + this.getBoundingBox().getYsize() / 3,
                     this.getZ(),
                     (float) (Math.random() * this.getBoundingBox().getXsize() / 3),
-                    (float) (Math.random() * this.getBoundingBox().getYsize() / 2),
+                    (float) (Math.random() * this.getBoundingBox().getYsize() / 3),
                     (float) (Math.random() * this.getBoundingBox().getZsize() / 3),
-                    0.1f,
+                    0.08f,
                     10
             );
             PlayerUtil.spawnParticleForAll(

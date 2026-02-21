@@ -65,6 +65,10 @@
   "advancements.subjects_of_ymir.eldian_village.description": "Discover an ancient, ruined village",
 
 
+  "stat.subjects_of_ymir.times_shifted_into_titan": "Times Shifted Into Titan Form",
+  "stat.subjects_of_ymir.time_as_titan": "Time Spent in Titan Form",
+
+
   "titan.subjects_of_ymir.attack": "Attack Titan",
 
 
