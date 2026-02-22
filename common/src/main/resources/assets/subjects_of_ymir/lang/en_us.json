@@ -67,6 +67,8 @@
 
   "stat.subjects_of_ymir.times_shifted_into_titan": "Times Shifted Into Titan Form",
   "stat.subjects_of_ymir.time_as_titan": "Time Spent in Titan Form",
+  "stat.subjects_of_ymir.path_points_gained": "Path Points Gained",
+  "stat.subjects_of_ymir.amount_steam_healed": "Health Regenerated with Steam Healing",
 
 
   "titan.subjects_of_ymir.attack": "Attack Titan",

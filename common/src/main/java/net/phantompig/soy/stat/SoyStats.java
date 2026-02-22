@@ -10,13 +10,15 @@ import net.phantompig.soy.SubjectsOfYmir;
 public class SoyStats {
     public static final ResourceLocation TIMES_SHIFTED = register("times_shifted_into_titan");
     public static final ResourceLocation TIME_AS_TITAN = register("time_as_titan", StatFormatter.TIME);
+    public static final ResourceLocation PATH_POINTS_GAINED = register("path_points_gained");
+    public static final ResourceLocation AMOUNT_STEAM_HEALED = register("amount_steam_healed");
 
     private static ResourceLocation register(String name) {
         return register(name, StatFormatter.DEFAULT);
     }
     private static ResourceLocation register(String name, StatFormatter formatter) {
         var id = SubjectsOfYmir.rsrc(name);
-        Registry.register(BuiltInRegistries.CUSTOM_STAT, name, id); // sorry to all the DeferredRegister lovers out there
+        Registry.register(BuiltInRegistries.CUSTOM_STAT, id, id); // sorry to all the DeferredRegister lovers out there
         Stats.CUSTOM.get(id, formatter);
         return id;
     }

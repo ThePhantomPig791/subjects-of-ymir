@@ -45,10 +45,17 @@
       },
       "icon": "subjects_of_ymir:textures/icon/bite.png",
       "conditions": {
-        "unlocking": {
-          "type": "palladium:ability_unlocked",
-          "ability": "root"
-        }
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 3
+          }
+        ]
       }
     },
     "conceal_unlock": {
@@ -62,10 +69,17 @@
       },
       "icon": "subjects_of_ymir:textures/icon/conceal.png",
       "conditions": {
-        "unlocking": {
-          "type": "palladium:ability_unlocked",
-          "ability": "root"
-        }
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:amount_steam_healed",
+            "min": 1000
+          }
+        ]
       }
     },
     "steam_healing_overdrive_unlock": {
@@ -79,10 +93,17 @@
       },
       "icon": "subjects_of_ymir:textures/icon/steam_healing_overdrive.png",
       "conditions": {
-        "unlocking": {
-          "type": "palladium:ability_unlocked",
-          "ability": "root"
-        }
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 12000
+          }
+        ]
       }
     },
 
@@ -183,10 +204,11 @@
     },
 
     "steam_healing": {
-      "type": "palladium:healing",
+      "type": "subjects_of_ymir:stat_healing",
       "hidden": true,
+      "stat": "subjects_of_ymir:amount_steam_healed",
       "amount": 1,
-      "frequency": 30,
+      "frequency": 40,
       "conditions": {
         "enabling": [
           {
@@ -234,10 +256,11 @@
       }
     },
     "steam_healing_overdrive_healing": {
-      "type": "palladium:healing",
+      "type": "subjects_of_ymir:stat_healing",
       "hidden": true,
+      "stat": "subjects_of_ymir:amount_steam_healed",
       "amount": 1,
-      "frequency": 10,
+      "frequency": 15,
       "conditions": {
         "enabling": {
           "type": "palladium:ability_enabled",

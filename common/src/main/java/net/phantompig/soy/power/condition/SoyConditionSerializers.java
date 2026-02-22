@@ -14,4 +14,5 @@ public class SoyConditionSerializers {
     public static final RegistrySupplier<ConditionSerializer> CAN_SHIFT = CONDITION_SERIALIZERS.register("can_shift", CanShiftCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> GAMEMODE = CONDITION_SERIALIZERS.register("gamemode", GamemodeCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> AT_FULL_HEALTH = CONDITION_SERIALIZERS.register("at_full_health", AtFullHealthCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> STATISTIC = CONDITION_SERIALIZERS.register("statistic", StatisticCondition.Serializer::new);
 }

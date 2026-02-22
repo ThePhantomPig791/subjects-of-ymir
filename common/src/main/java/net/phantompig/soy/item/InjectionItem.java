@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
 
@@ -43,6 +44,7 @@ public class InjectionItem extends SpinalFluidHoldingItem {
                 }
             } else if (inj.get(stack) > 0) {
                 SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + inj.get(stack));
+                player.awardStat(SoyStats.PATH_POINTS_GAINED, inj.get(stack));
                 inj.set(stack, 0);
                 return true;
             }

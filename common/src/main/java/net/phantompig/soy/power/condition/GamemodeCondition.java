@@ -2,14 +2,10 @@ package net.phantompig.soy.power.condition;
 
 import com.google.gson.JsonObject;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
-import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.condition.Condition;
 import net.threetag.palladium.condition.ConditionSerializer;
 import net.threetag.palladium.util.context.DataContext;
-import net.threetag.palladium.util.property.IntegerProperty;
 import net.threetag.palladium.util.property.PalladiumProperty;
 import net.threetag.palladium.util.property.StringProperty;
 
@@ -45,7 +41,7 @@ public class GamemodeCondition extends Condition {
 
         @Override
         public String getDocumentationDescription() {
-            return "Checks if entity's gamemode is the specified gamemode.";
+            return "Checks if the entity's gamemode is the specified gamemode.";
         }
     }
 }

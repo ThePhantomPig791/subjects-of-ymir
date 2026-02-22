@@ -17,7 +17,7 @@ public class AtFullHealthCondition extends Condition {
 
     @Override
     public ConditionSerializer getSerializer() {
-        return SoyConditionSerializers.IS_SHIFTING.get();
+        return SoyConditionSerializers.AT_FULL_HEALTH.get();
     }
 
     public static class Serializer extends ConditionSerializer {
