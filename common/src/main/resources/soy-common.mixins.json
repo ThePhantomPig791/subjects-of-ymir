@@ -9,6 +9,7 @@
     "BlockMixin",
     "EntityMixin",
     "ItemEntityMixin",
+    "LivingEntityMixin",
     "PlayerMixin"
   ],
   "injectors": {

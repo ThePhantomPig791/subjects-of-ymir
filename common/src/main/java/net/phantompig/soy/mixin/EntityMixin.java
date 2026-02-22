@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements Nameable, EntityAccess, CommandSource {
-@Inject(method = "canBeCollidedWith", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "canBeCollidedWith", at = @At("RETURN"), cancellable = true)
     public void soy$canBeCollidedWith(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this instanceof SoyPlayerExtension extension && extension.getTitanInstance().getProgress() > 0) {
             cir.setReturnValue(true);
