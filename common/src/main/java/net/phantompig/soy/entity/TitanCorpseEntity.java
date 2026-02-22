@@ -4,10 +4,12 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.TitanInstance;
@@ -65,36 +67,40 @@ public class TitanCorpseEntity extends LivingEntity {
             }
             titanInstance.setDecay(decay + 1);
 
-            PlayerUtil.spawnParticleForAll(
-                    this.level(),
-                    64,
-                    (SimpleParticleType) SoyParticles.LARGE_STEAM.get(),
-                    true,
-                    this.getX(),
-                    this.getY() + this.getBoundingBox().getYsize() / 3,
-                    this.getZ(),
-                    (float) (Math.random() * this.getBoundingBox().getXsize() / 3),
-                    (float) (Math.random() * this.getBoundingBox().getYsize() / 3),
-                    (float) (Math.random() * this.getBoundingBox().getZsize() / 3),
-                    0.08f,
-                    10
-            );
-            PlayerUtil.spawnParticleForAll(
-                    this.level(),
-                    64,
-                    (SimpleParticleType) SoyParticles.EMBER.get(),
-                    true,
-                    this.getX(),
-                    this.getY() + this.getBoundingBox().getYsize() / 2,
-                    this.getZ(),
-                    (float) (Math.random() * this.getBoundingBox().getXsize() / 2),
-                    (float) (Math.random() * this.getBoundingBox().getYsize() / 2),
-                    (float) (Math.random() * this.getBoundingBox().getZsize() / 2),
-                    0.3f,
-                    1
-            );
-            PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, 1.5f, 0.6f);
-            PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, 1f, 0.8f);
+            final int decayParticleOffset = -(TitanInstance.START_CORPSE_DECAY + 800);
+            float amount = Mth.clamp(titanInstance.getDecay() + decayParticleOffset, 0f, decayParticleOffset) / decayParticleOffset;
+            if (amount > 0) {
+                PlayerUtil.spawnParticleForAll(
+                        this.level(),
+                        64,
+                        (SimpleParticleType) SoyParticles.LARGE_STEAM.get(),
+                        true,
+                        this.getX(),
+                        this.getY() + this.getBoundingBox().getYsize() / 3,
+                        this.getZ(),
+                        (float) (Math.random() * this.getBoundingBox().getXsize() / 3),
+                        (float) (Math.random() * this.getBoundingBox().getYsize() / 3),
+                        (float) (Math.random() * this.getBoundingBox().getZsize() / 3),
+                        0.08f,
+                        (int) (amount * 10)
+                );
+                if (3 * Math.random() < amount - 0.3) PlayerUtil.spawnParticleForAll(
+                        this.level(),
+                        64,
+                        (SimpleParticleType) SoyParticles.EMBER.get(),
+                        true,
+                        this.getX(),
+                        this.getY() + this.getBoundingBox().getYsize() / 2,
+                        this.getZ(),
+                        (float) (Math.random() * this.getBoundingBox().getXsize() / 2),
+                        (float) (Math.random() * this.getBoundingBox().getYsize() / 2),
+                        (float) (Math.random() * this.getBoundingBox().getZsize() / 2),
+                        0.3f,
+                        1
+                );
+                PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, 1.5f * amount, 0.6f);
+                PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, amount, 0.8f);
+            }
         }
     }
 
