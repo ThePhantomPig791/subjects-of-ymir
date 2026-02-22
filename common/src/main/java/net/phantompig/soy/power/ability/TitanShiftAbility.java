@@ -113,18 +113,18 @@ public class TitanShiftAbility extends Ability {
             entity.level().addFreshEntity(corpse);
 
             // shifter entity
-            if (entity instanceof Player player) {
-                player.getInventory().dropAll();
-                player.getInventory().load(titanInstance.playerInventory);
-                titanInstance.playerInventory = null;
-            }
-
             entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, true, false));
 
             titanInstance.setProgress(0);
             titanInstance.setCharge(0);
             titanInstance.resetScale();
             titanInstance.titan.unshift(entity);
+
+            if (entity instanceof Player player) {
+                player.getInventory().dropAll();
+                player.getInventory().load(titanInstance.playerInventory);
+                titanInstance.playerInventory = null;
+            }
 
             entity.teleportTo(entity.getX(), entity.getY() + titanInstance.titan.scale * 1.4, entity.getZ());
             entity.addDeltaMovement(entity.getLookAngle().scale(-0.5));

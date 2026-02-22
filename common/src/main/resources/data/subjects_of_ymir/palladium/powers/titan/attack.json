@@ -123,7 +123,15 @@
         "chest",
         "legs",
         "feet"
-      ]
+      ],
+      "conditions": {
+        "enabling": {
+          "type": "palladium:not",
+          "conditions": {
+            "type": "subjects_of_ymir:is_unshifting"
+          }
+        }
+      }
     },
 
 
