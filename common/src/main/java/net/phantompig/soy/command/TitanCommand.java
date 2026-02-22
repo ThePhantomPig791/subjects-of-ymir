@@ -79,17 +79,37 @@ public class TitanCommand {
                         )
                 )
                 .then(Commands.literal("eyes")
-                        .then(Commands.argument("entity", EntityArgument.entity())
-                                .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> builder.suggest("\"#ffffff\"").buildFuture())
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("entity", EntityArgument.entity())
+                                        .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> builder.suggest("\"#ffffff\"").buildFuture())
+                                                .executes(context -> {
+                                                    var source = context.getSource();
+                                                    var entity = EntityArgument.getEntity(context, "entity");
+                                                    var color = StringArgumentType.getString(context, "color");
+
+                                                    if (entity instanceof SoyPlayerExtension playerExt) {
+                                                        var newColor = Color.decode(color);
+                                                        playerExt.getTitanInstance().setEyeColor(newColor);
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.color.set", entity.getDisplayName(), Integer.toHexString(newColor.getRGB()).substring(2)), true);
+                                                    } else {
+                                                        source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                                        return 0;
+                                                    }
+
+                                                    return 1;
+                                                })
+                                        )
+                                )
+                        )
+                        .then(Commands.literal("randomize")
+                                .then(Commands.argument("entity", EntityArgument.entity())
                                         .executes(context -> {
                                             var source = context.getSource();
                                             var entity = EntityArgument.getEntity(context, "entity");
-                                            var color = StringArgumentType.getString(context, "color");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
-                                                var newColor = Color.decode(color);
-                                                playerExt.getTitanInstance().setEyeColor(newColor);
-                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.color", entity.getDisplayName(), Integer.toHexString(newColor.getRGB()).substring(2)), true);
+                                                playerExt.getTitanInstance().randomizeEyeColor();
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.color.randomize", entity.getDisplayName(), Integer.toHexString(playerExt.getTitanInstance().getEyeColor().getRGB()).substring(2)), true);
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                 return 0;

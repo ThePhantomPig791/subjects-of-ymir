@@ -1,7 +1,8 @@
 {
   "commands.titan.success.set": "Set %s's titan to %s",
   "commands.titan.success.remove": "Removed %s's titan",
-  "commands.titan.success.color": "Set %s's titan eye color to #%s",
+  "commands.titan.success.color.set": "Set %s's titan eye color to #%s",
+  "commands.titan.success.color.randomize": "Randomized %s's titan eye color to #%s",
   "commands.titan.success.unshift": "Force unshifted %s from their titan form",
   "commands.titan.success.points.get": "%s has %s Path Points",
   "commands.titan.success.points.set": "Set %s's Path Points to %s (was %s)",
@@ -20,6 +21,9 @@
 
   
   "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",
+
+
+  "entity.subjects_of_ymir.titan_corpse": "Titan Corpse",
 
 
   "palladium.tailoring_recipe.category.subjects_of_ymir.uniforms": "AOT Uniforms",

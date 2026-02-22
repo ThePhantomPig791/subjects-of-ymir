@@ -91,6 +91,12 @@ public class TitanInstance {
     public void setEyeColor(Color color) {
         SoyProperties.EYE_COLOR.set(entity, color);
     }
+    public void randomizeEyeColor() {
+        float red = ((float) Math.random() + 1) / 2;
+        float green = ((float) Math.random() + 1) / 2;
+        float blue = ((float) Math.random() + 1) / 2;
+        this.setEyeColor(new Color(red, green, blue));
+    }
 
     public boolean canShift() {
         return this.canShiftTicks > 0;
@@ -180,7 +186,7 @@ public class TitanInstance {
                 tag.getList("Stacks", 5).stream().map(t -> TitanRegistry.getTitan(new ResourceLocation(t.getAsString()))).toList()
         );
         inst.isCorpse = tag.getBoolean("IsCorpse");
-        if (entity instanceof Player player) {
+        if (entity instanceof Player) {
             inst.playerInventory = tag.getList("PlayerInventory", Tag.TAG_COMPOUND);
         }
         inst.updateProperties();
