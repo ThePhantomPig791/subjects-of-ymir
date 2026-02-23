@@ -5,9 +5,11 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.SoyAbilities;
@@ -20,12 +22,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin implements SoyPlayerExtension {
+public abstract class PlayerMixin extends Entity implements SoyPlayerExtension {
     @Unique
     @NotNull
     private TitanInstance soy$titanInstance = new TitanInstance((Player) (Object) this);
+
+    private PlayerMixin(EntityType<?> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
     public void soy$readAdditionalSaveData(CompoundTag compound, CallbackInfo ci) {
@@ -48,6 +55,15 @@ public abstract class PlayerMixin implements SoyPlayerExtension {
     public void setTitanInstance(TitanInstance instance) {
         soy$titanInstance = instance;
         instance.updateProperties();
+    }
+
+
+    @Inject(method = "causeFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;causeFallDamage(FFLnet/minecraft/world/damagesource/DamageSource;)Z"))
+    public void soy$causeFallDamage(float fallDistance, float multiplier, DamageSource source, CallbackInfoReturnable<Boolean> cir) {
+        if (this.soy$titanInstance.getProgress() > 0 && fallDistance > this.getBoundingBox().getYsize() / 4) {
+            var pos = this.getPosition(0);
+            this.level().explode(this,null, null,  pos.x, pos.y, pos.z, (float) Math.pow(fallDistance, this.getBoundingBox().getYsize() / 18) / 5, false, Level.ExplosionInteraction.TNT, false);
+        }
     }
 
 

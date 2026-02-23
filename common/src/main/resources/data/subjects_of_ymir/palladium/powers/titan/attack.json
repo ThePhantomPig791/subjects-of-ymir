@@ -146,16 +146,17 @@
         }
       }
     },
-    "steam_healing_particles_cloud": {
-      "type": "palladium:particles",
+
+    "jump": {
+      "type": "palladium:attribute_modifier",
       "hidden": true,
-      "particle_type": "subjects_of_ymir:large_steam",
-      "emitter": "subjects_of_ymir:steam_healing_titan",
+      "attribute": "palladium:jump_power",
+      "amount": 0.4,
+      "operation": 1,
+      "uuid": "41118ed1-025d-47a5-9365-e2f6aa7eabe0",
       "conditions": {
         "enabling": {
-          "type": "palladium:ability_enabled",
-          "power": "subjects_of_ymir:shifter",
-          "ability": "steam_healing"
+          "type": "palladium:sprinting"
         }
       }
     },

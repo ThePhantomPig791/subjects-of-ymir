@@ -3,6 +3,7 @@ package net.phantompig.soy.titan;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,8 +12,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.phantompig.soy.particle.SoyParticles;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.stat.SoyStats;
 import net.threetag.palladium.power.SuperpowerUtil;
+import net.threetag.palladium.util.PlayerUtil;
 import oshi.annotation.concurrent.Immutable;
 
 import java.util.List;
@@ -82,6 +86,25 @@ public class Titan {
     public void tick(LivingEntity entity) {
         if (entity instanceof Player player) {
             player.awardStat(SoyStats.TIME_AS_TITAN, 1);
+
+            if (!(entity instanceof SoyPlayerExtension ext)) return;
+            if (ext.getTitanInstance().getProgress() > 0 && entity.getHealth() != entity.getMaxHealth()) {
+                float emptyHealthPercent = 1 - entity.getHealth() / entity.getMaxHealth();
+                for (int count = 0; count <= 3.5 * emptyHealthPercent; count++) {
+                    if (0.5 * Math.random() < emptyHealthPercent) PlayerUtil.spawnParticleForAll(
+                            entity.level(),
+                            64,
+                            (ParticleOptions) SoyParticles.LARGE_STEAM.get(),
+                            true,
+                            entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),
+                            entity.getY() + entity.getBoundingBox().getYsize() / 3 + 6 * (Math.random() - 0.5),
+                            entity.getZ() + entity.getBoundingBox().getZsize() * (Math.random() - 0.5),
+                            0, 0, 0,
+                            0.1f * emptyHealthPercent * (float) (Math.random() - 0.5),
+                            1
+                    );
+                }
+            }
         }
     }
 
