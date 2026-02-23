@@ -11,7 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.stat.SoyStats;
 import net.threetag.palladium.power.SuperpowerUtil;
 import oshi.annotation.concurrent.Immutable;
@@ -53,6 +52,8 @@ public class Titan {
     public void startShift(LivingEntity entity, int charge) {
         SuperpowerUtil.addSuperpower(entity, this.powerPath);
         if (!entity.getAttribute(Attributes.MAX_HEALTH).hasModifier(HEALTH_MODIFIER)) entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(HEALTH_MODIFIER);
+        entity.extinguishFire();
+        entity.removeAllEffects();
         if (entity instanceof Player player) {
             player.awardStat(SoyStats.TIMES_SHIFTED, 1);
         }
@@ -65,6 +66,9 @@ public class Titan {
     public void unshift(LivingEntity entity) {
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
+        entity.heal(20);
+        entity.removeAllEffects();
+        entity.extinguishFire();
         if (entity instanceof ServerPlayer player) {
             player.heal(1);
             player.hurt(player.damageSources().magic(), 1);

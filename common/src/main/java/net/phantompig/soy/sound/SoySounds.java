@@ -9,15 +9,15 @@ import net.threetag.palladiumcore.registry.RegistrySupplier;
 public class SoySounds {
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(SubjectsOfYmir.MOD_ID, Registries.SOUND_EVENT);
 
-    public static final RegistrySupplier<SoundEvent> SHIFT = make("shift");
-    public static final RegistrySupplier<SoundEvent> SHIFT_LOCAL = make("shift_local");
-    public static final RegistrySupplier<SoundEvent> ELECTRICITY = make("electricity");
-    public static final RegistrySupplier<SoundEvent> ELECTRICITY_FINAL = make("electricity_final");
-    public static final RegistrySupplier<SoundEvent> STEAM = make("steam");
-    public static final RegistrySupplier<SoundEvent> GAS_BURST = make("gas_burst");
+    public static final RegistrySupplier<SoundEvent> SHIFT = make("shift", 128);
+    public static final RegistrySupplier<SoundEvent> SHIFT_LOCAL = make("shift_local", 16);
+    public static final RegistrySupplier<SoundEvent> ELECTRICITY = make("electricity", 16);
+    public static final RegistrySupplier<SoundEvent> ELECTRICITY_FINAL = make("electricity_final", 16);
+    public static final RegistrySupplier<SoundEvent> STEAM = make("steam", 32);
+    public static final RegistrySupplier<SoundEvent> GAS_BURST = make("gas_burst", 16);
 
-    public static RegistrySupplier<SoundEvent> make(String name) {
-        return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(SubjectsOfYmir.rsrc(name)));
+    public static RegistrySupplier<SoundEvent> make(String name, float range) {
+        return SOUNDS.register(name, () -> new SoundEvent(SubjectsOfYmir.rsrc(name), range, false));
     }
 
     public static void init() {

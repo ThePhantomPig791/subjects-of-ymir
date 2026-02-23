@@ -4,12 +4,10 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.TitanInstance;
@@ -68,7 +66,7 @@ public class TitanCorpseEntity extends LivingEntity {
             titanInstance.setDecay(decay + 1);
 
             final int decayParticleOffset = -(TitanInstance.START_CORPSE_DECAY + 800);
-            float amount = Mth.clamp(titanInstance.getDecay() + decayParticleOffset, 0f, decayParticleOffset) / decayParticleOffset;
+            float amount = Math.min(titanInstance.getDecay() + decayParticleOffset, decayParticleOffset) / (float) decayParticleOffset;
             if (amount > 0) {
                 PlayerUtil.spawnParticleForAll(
                         this.level(),
@@ -98,8 +96,8 @@ public class TitanCorpseEntity extends LivingEntity {
                         0.3f,
                         1
                 );
-                PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, 1.5f * amount, 0.6f);
-                PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, amount, 0.8f);
+                PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY() + this.getBoundingBox().getYsize() / 2, this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, 1.5f * amount, 0.6f);
+                PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY() + this.getBoundingBox().getYsize() / 2, this.getZ(), 64, SoySounds.STEAM.get(), SoundSource.NEUTRAL, amount, 0.8f);
             }
         }
     }

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TitanInstance {
-    public static final int START_CORPSE_DECAY = -1800;
+    public static final int START_CORPSE_DECAY = -3600;
     public static final int MAX_CORPSE_DECAY = 1800;
 
     @Nullable

@@ -21,7 +21,17 @@
           }
         }
       },
-      "texture": "#subjects_of_ymir:titan_skeleton"
+      "texture": "#subjects_of_ymir:titan_skeleton",
+      "animation_file": "subjects_of_ymir:animations/combat.animation.json",
+      "animation_controller": [
+        {
+          "name": "combat_controller",
+          "transition_tick_time": 10,
+          "triggers": {
+            "attack_right": "Attack1"
+          }
+        }
+      ]
     },
     {
       "type": "geckolib:default",
@@ -39,7 +49,17 @@
           }
         }
       },
-      "texture": "#subjects_of_ymir:titan_muscle"
+      "texture": "#subjects_of_ymir:titan_muscle",
+      "animation_file": "subjects_of_ymir:animations/combat.animation.json",
+      "animation_controller": [
+        {
+          "name": "combat_controller",
+          "transition_tick_time": 10,
+          "triggers": {
+            "attack_right": "Attack1"
+          }
+        }
+      ]
     },
     {
       "type": "geckolib:default",
@@ -57,7 +77,17 @@
           }
         }
       },
-      "texture": "#subjects_of_ymir:titan_skin"
+      "texture": "#subjects_of_ymir:titan_skin",
+      "animation_file": "subjects_of_ymir:animations/combat.animation.json",
+      "animation_controller": [
+        {
+          "name": "combat_controller",
+          "transition_tick_time": 10,
+          "triggers": {
+            "attack_right": "Attack1"
+          }
+        }
+      ]
     },
     {
       "type": "geckolib:default",
@@ -75,7 +105,17 @@
           }
         }
       },
-      "texture": "#subjects_of_ymir:titan_hair"
+      "texture": "#subjects_of_ymir:titan_hair",
+      "animation_file": "subjects_of_ymir:animations/combat.animation.json",
+      "animation_controller": [
+        {
+          "name": "combat_controller",
+          "transition_tick_time": 10,
+          "triggers": {
+            "attack_right": "Attack1"
+          }
+        }
+      ]
     },
     {
       "type": "geckolib:default",
@@ -94,7 +134,17 @@
         }
       },
       "texture": "#subjects_of_ymir:titan_eyes",
-      "render_type": "glow"
+      "render_type": "glow",
+      "animation_file": "subjects_of_ymir:animations/combat.animation.json",
+      "animation_controller": [
+        {
+          "name": "combat_controller",
+          "transition_tick_time": 10,
+          "triggers": {
+            "attack_right": "Attack1"
+          }
+        }
+      ]
     }
   ]
 }

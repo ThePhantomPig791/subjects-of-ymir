@@ -1,0 +1,9 @@
+{
+  "variants": [
+    "reiner"
+  ],
+
+  "scale": 7.5,
+  "speed": 2,
+  "extra_health": 20
+}

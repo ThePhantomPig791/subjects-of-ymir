@@ -57,14 +57,6 @@ public class SubjectsOfYmir {
             TitanCommand.register(dispatcher);
         });
 
-        LivingEntityEvents.DEATH.register((entity, source) -> {
-            if (!(entity instanceof SoyPlayerExtension soy)) return EventResult.pass();
-            var titanInstance = soy.getTitanInstance();
-            if (titanInstance.titan == null || titanInstance.getProgress() == 0) return EventResult.pass();
-            titanInstance.forceUnshift = true;
-            return EventResult.cancel();
-        });
-
         LivingEntityEvents.HURT.register(((entity, damageSource, amount) -> {
             if (!(entity instanceof SoyPlayerExtension soy)) return EventResult.pass();
             var titanInstance = soy.getTitanInstance();

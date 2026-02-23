@@ -24,6 +24,8 @@ subprojects {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-${rootProject.parchment_mappings}")
         }
+
+        modCompileOnlyApi("software.bernie.geckolib:geckolib-fabric-1.20.1:${rootProject.geckolib_version}")
     }
 }
 
@@ -122,6 +124,12 @@ allprojects {
             name = "ModMaven"
             url = "https://modmaven.dev"
             content { excludeGroup("net.fabricmc.fabric-api") }
+        }
+
+        // GeckoLib
+        maven {
+            name = 'Gecko Lib'
+            url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
         }
     }
 

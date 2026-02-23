@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.stat.SoyStats;
@@ -35,6 +36,7 @@ public class InjectionItem extends SpinalFluidHoldingItem {
             if (ext.getTitanInstance().titan == null) {
                 if (inj.get(stack) == inj.max) {
                     TitanInstance newTitan = new TitanInstance(player);
+                    SubjectsOfYmir.LOGGER.info("titans: {}", TitanRegistry.getTitans().values().asList());
                     newTitan.titan = getRandom(TitanRegistry.getTitans().values().asList()); // TODO investigate: this may have gotten me into a weird ghost state where the attack was rendered but i gained the power of the test titan
                     newTitan.variant = getRandom(newTitan.titan.variants);
                     ext.setTitanInstance(newTitan);

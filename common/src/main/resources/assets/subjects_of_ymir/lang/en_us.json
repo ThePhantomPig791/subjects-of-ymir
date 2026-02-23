@@ -66,7 +66,7 @@
 
 
   "advancements.subjects_of_ymir.eldian_village.title": "Ragako",
-  "advancements.subjects_of_ymir.eldian_village.description": "Discover an ancient, ruined village",
+  "advancements.subjects_of_ymir.eldian_village.description": "Discover an ancient Eldian Village",
 
 
   "stat.subjects_of_ymir.times_shifted_into_titan": "Times Shifted Into Titan Form",
@@ -76,6 +76,7 @@
 
 
   "titan.subjects_of_ymir.attack": "Attack Titan",
+  "titan.subjects_of_ymir.armored": "Armored Titan",
 
 
   "power.subjects_of_ymir.shifter": "Power of the Titans",
@@ -99,5 +100,7 @@
   "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage.",
 
   "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
-  "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n§7HP:20\nATK:"
+  "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: XX\nSPD: 3",
+  "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
+  "ability.text.subjects_of_ymir.armored.root.description": "[placeholder].\n\n§7HP: 20\nATK: XX\nSPD: 2"
 }

@@ -1,6 +1,6 @@
 {
   "name": {
-    "translate": "titan.subjects_of_ymir.attack"
+    "translate": "titan.subjects_of_ymir.armored"
   },
   "background": "minecraft:textures/block/bone_block_side.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/titan.png",
@@ -18,10 +18,10 @@
     "root": {
       "type": "palladium:dummy",
       "title": {
-        "translate": "ability.text.subjects_of_ymir.attack.root.title"
+        "translate": "ability.text.subjects_of_ymir.armored.root.title"
       },
       "description": {
-        "translate": "ability.text.subjects_of_ymir.attack.root.description"
+        "translate": "ability.text.subjects_of_ymir.armored.root.description"
       },
       "gui_position": [0, 0],
       "icon": {
@@ -156,21 +156,6 @@
           "type": "palladium:ability_enabled",
           "power": "subjects_of_ymir:shifter",
           "ability": "steam_healing"
-        }
-      }
-    },
-
-    "punch": {
-      "type": "geckolib:render_layer_animation",
-      "hidden_in_bar": false,
-      "list_index": 2,
-      "render_layer": "subjects_of_ymir:titan",
-      "controller": "combat_controller",
-      "animation_trigger": "attack_right",
-      "conditions": {
-        "enabling": {
-          "type": "palladium:action",
-          "key_type": "left_click"
         }
       }
     }
