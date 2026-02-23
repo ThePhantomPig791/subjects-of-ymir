@@ -17,7 +17,7 @@ public class IceburstUtil {
                     .subtract(e.getEyePosition())
                     .normalize()
                     .reverse()
-                    .scale(Math.min(2, strength / pos.distanceToSqr(e.getEyePosition())))
+                    .scale(Math.min(2, strength / pos.distanceToSqr(e.getEyePosition()) / Math.pow(e.getBoundingBox().getYsize() / 2, 2)))
             );
             if (e instanceof ServerPlayer player) {
                 player.connection.send(new ClientboundSetEntityMotionPacket(player));
