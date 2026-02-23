@@ -21,7 +21,7 @@
     },
     "DECAY": {
       "type": "subjects_of_ymir:titan_decay",
-      "subtract": 440,
+      "subtract": 500,
       "min": 0,
       "max": 255
     }

@@ -138,8 +138,8 @@ public class TitanInstance {
         ScaleTypes.REACH.getScaleData(entity).setTargetScale((float) Math.sqrt(Math.pow(value, 1.5)));
         ScaleTypes.HELD_ITEM.getScaleData(entity).setTargetScale(1 / value);
 
-        ScaleTypes.MOTION.getScaleData(entity).setTargetScale(this.titan.speed);
-        ScaleTypes.JUMP_HEIGHT.getScaleData(entity).setTargetScale(this.titan.jump);
+        ScaleTypes.MOTION.getScaleData(entity).setTargetScale(this.titan.stats.speed);
+        ScaleTypes.JUMP_HEIGHT.getScaleData(entity).setTargetScale(this.titan.stats.jump);
     }
     private void setScaleTime(int value) {
         ScaleTypes.WIDTH.getScaleData(entity).setScaleTickDelay(value);

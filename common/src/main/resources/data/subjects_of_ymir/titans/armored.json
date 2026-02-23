@@ -2,8 +2,11 @@
   "variants": [
     "reiner"
   ],
-
   "scale": 7.5,
-  "speed": 2,
-  "extra_health": 20
+  "stats": {
+    "speed": 2,
+    "jump": 1.4,
+    "extra_health": 20,
+    "extra_armor": 10
+  }
 }

@@ -93,14 +93,14 @@
   "ability.text.subjects_of_ymir.bite.title": "Bite        ",
   "ability.text.subjects_of_ymir.bite.description": "Bite your hand, intentionally drawing blood, to allow for a titan transformation.",
   "ability.text.subjects_of_ymir.conceal.title": "Conceal      ",
-  "ability.text.subjects_of_ymir.conceal.description": "Intentionally inhibit your titan abilities, removing any giveaways that you possess this power.",
+  "ability.text.subjects_of_ymir.conceal.description": "Intentionally inhibit your titan abilities, removing any visual giveaways for your power.",
   "ability.text.subjects_of_ymir.steam_healing_overdrive.title": "Steam Overdrive",
   "ability.text.subjects_of_ymir.steam_healing_overdrive.description": "Kick your steam healing into high gear, rapidly closing any wounds.",
   "ability.text.subjects_of_ymir.block.title": "Block     ",
   "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage.",
 
   "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
-  "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: XX\nSPD: 3",
+  "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: XX\nSPD: 3\nDEF: 0",
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
-  "ability.text.subjects_of_ymir.armored.root.description": "[placeholder].\n\n§7HP: 20\nATK: XX\nSPD: 2"
+  "ability.text.subjects_of_ymir.armored.root.description": "Your titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: XX\nSPD: 2\nDEF: 10"
 }

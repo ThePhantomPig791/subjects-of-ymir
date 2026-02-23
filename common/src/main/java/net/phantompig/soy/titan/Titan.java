@@ -21,7 +21,7 @@ import java.util.UUID;
 @Immutable
 public class Titan {
     public static final UUID TITAN_HEALTH_ATTRIBUTE_UUID = UUID.fromString("09ed062b-73c1-4a2d-0803-8512514aa03e");
-    public static final AttributeModifier HEALTH_MODIFIER = new AttributeModifier(TITAN_HEALTH_ATTRIBUTE_UUID, "titan max health", 20, AttributeModifier.Operation.ADDITION);
+    public static final UUID TITAN_ARMOR_ATTRIBUTE_UUID = UUID.fromString("12abc62b-73c1-4a2d-0000-8512514aa03e");
 
     public final ResourceLocation id;
     public final ResourceLocation powerPath;
@@ -31,19 +31,16 @@ public class Titan {
     public final int maxProgress;
     public final int maxCharge;
 
-    public final float speed, jump;
-    public final double extraHealth;
+    public final TitanStats stats;
 
-    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, float speed, float jump, double extraHealth) {
+    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, TitanStats stats) {
         this.id = id;
         this.variants = variants;
         this.resolution = resolution;
         this.scale = scale;
         this.maxProgress = maxProgress;
         this.maxCharge = maxCharge;
-        this.speed = speed;
-        this.jump = jump;
-        this.extraHealth = extraHealth;
+        this.stats = stats;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
     }
@@ -51,7 +48,12 @@ public class Titan {
 
     public void startShift(LivingEntity entity, int charge) {
         SuperpowerUtil.addSuperpower(entity, this.powerPath);
-        if (!entity.getAttribute(Attributes.MAX_HEALTH).hasModifier(HEALTH_MODIFIER)) entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(HEALTH_MODIFIER);
+        if (entity.getAttribute(Attributes.MAX_HEALTH).getModifier(TITAN_HEALTH_ATTRIBUTE_UUID) == null) {
+            entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(new AttributeModifier(TITAN_HEALTH_ATTRIBUTE_UUID, "titan extra health", this.stats.extraHealth, AttributeModifier.Operation.ADDITION));
+        }
+        if (entity.getAttribute(Attributes.ARMOR).getModifier(TITAN_ARMOR_ATTRIBUTE_UUID) == null) {
+            entity.getAttribute(Attributes.ARMOR).addPermanentModifier(new AttributeModifier(TITAN_ARMOR_ATTRIBUTE_UUID, "titan armor", this.stats.extraArmor, AttributeModifier.Operation.ADDITION));
+        }
         entity.extinguishFire();
         entity.removeAllEffects();
         if (entity instanceof Player player) {
@@ -66,13 +68,14 @@ public class Titan {
     public void unshift(LivingEntity entity) {
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
+        entity.getAttribute(Attributes.ARMOR).removeModifier(TITAN_ARMOR_ATTRIBUTE_UUID);
         entity.heal(20);
         entity.removeAllEffects();
         entity.extinguishFire();
         if (entity instanceof ServerPlayer player) {
             player.heal(1);
             player.hurt(player.damageSources().magic(), 1);
-            player.connection.send(new ClientboundUpdateAttributesPacket(player.getId(), List.of(player.getAttribute(Attributes.MAX_HEALTH))));
+            player.connection.send(new ClientboundUpdateAttributesPacket(player.getId(), List.of(player.getAttribute(Attributes.MAX_HEALTH), player.getAttribute(Attributes.ARMOR))));
         }
     }
 
@@ -91,9 +94,7 @@ public class Titan {
         builder.scale = GsonHelper.getAsFloat(json, "scale", 1);
         builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 15);
         builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 50);
-        builder.speed = GsonHelper.getAsFloat(json, "speed", 1);
-        builder.jump = GsonHelper.getAsFloat(json, "jump", 1);
-        builder.extraHealth = GsonHelper.getAsDouble(json, "extra_health", 0);
+        builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));
         return builder.create();
     }
 
@@ -105,14 +106,35 @@ public class Titan {
         public float scale;
         public int maxProgress;
         public int maxCharge;
-        public float speed;
-        public float jump;
-        public double extraHealth;
+        public TitanStats stats;
 
         public TitanBuilder() {}
 
         public Titan create() {
-            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, speed, jump, extraHealth);
+            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, stats);
+        }
+
+        public TitanBuilder withStats(TitanStats stats) {
+            this.stats = stats;
+            return this;
+        }
+    }
+
+    public static class TitanStats {
+        public float speed;
+        public float jump;
+        public double extraHealth;
+        public double extraArmor;
+
+        public TitanStats() {}
+
+        public static TitanStats fromJson(JsonObject json) {
+            TitanStats stats = new TitanStats();
+            stats.jump = GsonHelper.getAsFloat(json, "jump", 1);
+            stats.speed = GsonHelper.getAsFloat(json, "speed", 1);
+            stats.extraHealth = GsonHelper.getAsDouble(json, "extra_health", 0);
+            stats.extraArmor = GsonHelper.getAsDouble(json, "extra_armor", 0);
+            return stats;
         }
     }
 
