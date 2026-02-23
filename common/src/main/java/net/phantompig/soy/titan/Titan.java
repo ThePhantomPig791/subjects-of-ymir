@@ -87,8 +87,7 @@ public class Titan {
         if (entity instanceof Player player) {
             player.awardStat(SoyStats.TIME_AS_TITAN, 1);
 
-            if (!(entity instanceof SoyPlayerExtension ext)) return;
-            if (ext.getTitanInstance().getProgress() > 0 && entity.getHealth() != entity.getMaxHealth()) {
+            if (entity.getHealth() != entity.getMaxHealth()) {
                 float emptyHealthPercent = 1 - entity.getHealth() / entity.getMaxHealth();
                 for (int count = 0; count <= 3.5 * emptyHealthPercent; count++) {
                     if (0.5 * Math.random() < emptyHealthPercent) PlayerUtil.spawnParticleForAll(
