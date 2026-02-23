@@ -205,4 +205,15 @@ public class TitanInstance {
         if (this.playerInventory != null) tag.put("PlayerInventory", this.playerInventory);
         return tag;
     }
+
+    @Override
+    public String toString() {
+        return "TitanInstance{" +
+                "titan=" + titan +
+                ", stacks=" + stacks +
+                ", variant='" + variant + '\'' +
+                ", entity=" + entity +
+                ", isCorpse=" + isCorpse +
+                '}';
+    }
 }

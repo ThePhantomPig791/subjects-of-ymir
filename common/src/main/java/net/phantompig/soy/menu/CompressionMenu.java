@@ -117,12 +117,12 @@ public class CompressionMenu extends AbstractContainerMenu {
             for (int i = 0; i < 3; i++) {
                 ItemStack itemStack = this.inputs.items.get(i);
                 if (!itemStack.isEmpty()) {
-                    player.drop(itemStack, false);
+                    if (!player.getInventory().add(itemStack)) player.drop(itemStack, false);
                 }
             }
             ItemStack itemStack = this.output.itemStacks.get(1);
             if (!itemStack.isEmpty()) {
-                player.drop(itemStack, false);
+                if (!player.getInventory().add(itemStack)) player.drop(itemStack, false);
             }
         }
     }

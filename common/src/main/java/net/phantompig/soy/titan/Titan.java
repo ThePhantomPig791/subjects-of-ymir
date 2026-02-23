@@ -115,4 +115,12 @@ public class Titan {
             return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, speed, jump, extraHealth);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Titan{" +
+                "id=" + id +
+                ", variants=" + variants +
+                '}';
+    }
 }

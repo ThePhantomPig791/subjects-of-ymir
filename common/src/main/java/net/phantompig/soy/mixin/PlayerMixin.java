@@ -47,6 +47,7 @@ public abstract class PlayerMixin implements SoyPlayerExtension {
     @Override
     public void setTitanInstance(TitanInstance instance) {
         soy$titanInstance = instance;
+        instance.updateProperties();
     }
 
 
