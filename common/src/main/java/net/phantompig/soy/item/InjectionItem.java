@@ -11,10 +11,7 @@ import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
-import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladium.util.PlayerUtil;
-
-import java.util.List;
 
 public class InjectionItem extends SpinalFluidHoldingItem {
     public InjectionItem(Properties properties) {
@@ -34,12 +31,7 @@ public class InjectionItem extends SpinalFluidHoldingItem {
         if (stack.getItem() instanceof InjectionItem inj && player instanceof SoyPlayerExtension ext) {
             if (ext.getTitanInstance().titan == null) {
                 if (inj.get(stack) == inj.max) {
-                    TitanInstance newTitan = new TitanInstance(player);
-                    newTitan.titan = getRandom(TitanRegistry.getTitans().values().asList());
-                    newTitan.variant = getRandom(newTitan.titan.variants);
-                    ext.setTitanInstance(newTitan);
-                    ext.getTitanInstance().randomizeEyeColor();
-
+                    TitanInstance.randomizeFor(player);
                     injectSound(player.level(), player.getX(), player.getY(), player.getZ());
                     inj.set(stack, 0);
                     return true;
@@ -54,10 +46,6 @@ public class InjectionItem extends SpinalFluidHoldingItem {
             }
         }
         return false;
-    }
-
-    private static <T> T getRandom(List<T> list) {
-        return list.get((int) (list.size() * Math.random()));
     }
 
     private static void injectSound(Level level, double x, double y, double z) {

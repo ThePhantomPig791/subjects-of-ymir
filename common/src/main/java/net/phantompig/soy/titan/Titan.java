@@ -4,21 +4,34 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.phantompig.soy.entity.SoyEntities;
+import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.threetag.palladium.power.SuperpowerUtil;
 import net.threetag.palladium.util.PlayerUtil;
+import net.threetag.palladium.util.json.GsonUtil;
+import org.jetbrains.annotations.Nullable;
 import oshi.annotation.concurrent.Immutable;
 
+import java.awt.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,16 +47,19 @@ public class Titan {
     public final float scale;
     public final int maxProgress;
     public final int maxCharge;
+    @Nullable
+    public final Color baseEyeColor;
 
     public final TitanStats stats;
 
-    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, TitanStats stats) {
+    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, Color baseEyeColor, TitanStats stats) {
         this.id = id;
         this.variants = variants;
         this.resolution = resolution;
         this.scale = scale;
         this.maxProgress = maxProgress;
         this.maxCharge = maxCharge;
+        this.baseEyeColor = baseEyeColor;
         this.stats = stats;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
@@ -58,11 +74,28 @@ public class Titan {
         if (entity.getAttribute(Attributes.ARMOR).getModifier(TITAN_ARMOR_ATTRIBUTE_UUID) == null) {
             entity.getAttribute(Attributes.ARMOR).addPermanentModifier(new AttributeModifier(TITAN_ARMOR_ATTRIBUTE_UUID, "titan armor", this.stats.extraArmor, AttributeModifier.Operation.ADDITION));
         }
+
         entity.extinguishFire();
         entity.removeAllEffects();
+
         if (entity instanceof Player player) {
             player.awardStat(SoyStats.TIMES_SHIFTED, 1);
+
+            PlayerUtil.playSound(player, entity.getX(), entity.getY(), entity.getZ(), SoySounds.SHIFT_LOCAL.get(), SoundSource.PLAYERS);
         }
+
+        PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getY(), entity.getZ(), 64, SoySounds.SHIFT_LOCAL.get(), SoundSource.PLAYERS);
+
+        strikeLightning(entity);
+        strikeLightning(entity);
+        strikeLightning(entity);
+
+        entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20, 10, true, false));
+        entity.addEffect(new MobEffectInstance(MobEffects.SATURATION, 20, 10, true, false));
+    }
+
+    public void tickDuringShift(LivingEntity entity, int charge) {
+        entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, Level.ExplosionInteraction.MOB, false).explode();
     }
 
     public void completedShift(LivingEntity entity, int charge) {
@@ -70,16 +103,53 @@ public class Titan {
     }
 
     public void unshift(LivingEntity entity) {
+        if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null) return;
+
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
         entity.getAttribute(Attributes.ARMOR).removeModifier(TITAN_ARMOR_ATTRIBUTE_UUID);
+
         entity.heal(20);
         entity.removeAllEffects();
         entity.extinguishFire();
+        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, true, false));
         if (entity instanceof ServerPlayer player) {
             player.heal(1);
             player.hurt(player.damageSources().magic(), 1);
             player.connection.send(new ClientboundUpdateAttributesPacket(player.getId(), List.of(player.getAttribute(Attributes.MAX_HEALTH), player.getAttribute(Attributes.ARMOR))));
+        }
+
+
+        // corpse
+        TitanCorpseEntity corpse = new TitanCorpseEntity(SoyEntities.TITAN_CORPSE.get(), entity.level());
+        corpse.setPos(entity.getPosition(0));
+        corpse.setXRot(entity.getXRot());
+        corpse.setYRot(entity.getYRot());
+        corpse.setYHeadRot(entity.yHeadRot);
+        corpse.setDeltaMovement(entity.getDeltaMovement().scale(1.1));
+        corpse.hasImpulse = true; // TODO fix this. no momentum is carried over
+
+        TitanInstance.copyPropertiesTo(ext.getTitanInstance(), corpse.titanInstance);
+        if (corpse.titanInstance.titan == null) {
+            corpse.discard();
+            return;
+        }
+        corpse.titanInstance.isCorpse = true;
+        corpse.titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
+        corpse.titanInstance.setScaleImmediate();
+        SuperpowerUtil.addSuperpower(corpse, corpse.titanInstance.titan.powerPath);
+
+        entity.level().addFreshEntity(corpse);
+
+
+        ext.getTitanInstance().setProgress(0);
+        ext.getTitanInstance().setCharge(0);
+        ext.getTitanInstance().resetScale();
+
+        entity.teleportTo(entity.getX(), entity.getY() + ext.getTitanInstance().titan.scale * 1.4, entity.getZ());
+        entity.addDeltaMovement(entity.getLookAngle().scale(-0.5));
+        if (entity instanceof ServerPlayer player) {
+            player.connection.send(new ClientboundSetEntityMotionPacket(player));
         }
     }
 
@@ -107,6 +177,29 @@ public class Titan {
         }
     }
 
+    public void onFall(LivingEntity entity, float fallDistance) {
+        if (fallDistance > entity.getBoundingBox().getYsize() / 4) {
+            var pos = entity.getPosition(0).add(0, -1, 0);
+            float strength = (float) Math.pow(fallDistance, entity.getBoundingBox().getYsize() / 18) / 5;
+            entity.level().explode(entity,null, null,  pos.x, pos.y, pos.z, strength, false, Level.ExplosionInteraction.TNT, false);
+
+            for (int count = 0; count <= 10 * strength; count++) {
+                PlayerUtil.spawnParticleForAll(
+                        entity.level(),
+                        64,
+                        (ParticleOptions) SoyParticles.DIRT_CLOUD.get(),
+                        true,
+                        entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),
+                        entity.getY(),
+                        entity.getZ() + entity.getBoundingBox().getZsize() * (Math.random() - 0.5),
+                        0, 0, 0,
+                        2f * strength * (float) (Math.random() - 0.5),
+                        1
+                );
+            }
+        }
+    }
+
 
     public static Titan fromJson(ResourceLocation id, JsonObject json) {
         var builder = new TitanBuilder();
@@ -116,8 +209,17 @@ public class Titan {
         builder.scale = GsonHelper.getAsFloat(json, "scale", 1);
         builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 15);
         builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 50);
+        builder.baseEyeColor = GsonUtil.getAsColor(json, "base_eye_color", null);
         builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));
         return builder.create();
+    }
+
+
+    private static void strikeLightning(LivingEntity entity) {
+        LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, entity.level());
+        lightningBolt.setPos(entity.getPosition(0));
+        lightningBolt.setVisualOnly(true);
+        entity.level().addFreshEntity(lightningBolt);
     }
 
 
@@ -128,12 +230,14 @@ public class Titan {
         public float scale;
         public int maxProgress;
         public int maxCharge;
+        @Nullable
+        public Color baseEyeColor;
         public TitanStats stats;
 
         public TitanBuilder() {}
 
         public Titan create() {
-            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, stats);
+            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, baseEyeColor, stats);
         }
 
         public TitanBuilder withStats(TitanStats stats) {

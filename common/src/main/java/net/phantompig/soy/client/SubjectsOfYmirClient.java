@@ -13,10 +13,7 @@ import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.DataHoldingItem;
 import net.phantompig.soy.item.SoyItems;
-import net.phantompig.soy.particle.EmberParticleType;
-import net.phantompig.soy.particle.SoyParticles;
-import net.phantompig.soy.particle.SmallSteamParticleType;
-import net.phantompig.soy.particle.LargeSteamParticleType;
+import net.phantompig.soy.particle.*;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
 import net.threetag.palladium.event.PalladiumClientEvents;
@@ -47,6 +44,7 @@ public class SubjectsOfYmirClient {
         ParticleProviderRegistry.register(SoyParticles.SMALL_STEAM, SmallSteamParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.LARGE_STEAM, LargeSteamParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.EMBER, EmberParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.DIRT_CLOUD, DirtCloudParticleType.Provider::new);
 
         ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), (itemStack, clientLevel, livingEntity, i) -> {
             if (itemStack.getItem() instanceof DataHoldingItem item) {

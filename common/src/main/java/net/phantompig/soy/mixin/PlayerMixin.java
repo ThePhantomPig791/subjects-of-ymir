@@ -60,9 +60,8 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension {
 
     @Inject(method = "causeFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;causeFallDamage(FFLnet/minecraft/world/damagesource/DamageSource;)Z"))
     public void soy$causeFallDamage(float fallDistance, float multiplier, DamageSource source, CallbackInfoReturnable<Boolean> cir) {
-        if (this.soy$titanInstance.getProgress() > 0 && fallDistance > this.getBoundingBox().getYsize() / 4) {
-            var pos = this.getPosition(0).add(0, -1, 0);
-            this.level().explode(this,null, null,  pos.x, pos.y, pos.z, (float) Math.pow(fallDistance, this.getBoundingBox().getYsize() / 18) / 5, false, Level.ExplosionInteraction.TNT, false);
+        if (this.soy$titanInstance.titan != null && this.soy$titanInstance.getProgress() > 0) {
+            this.soy$titanInstance.titan.onFall((LivingEntity) (Object) this, fallDistance);
         }
     }
 

@@ -23,11 +23,12 @@ public class EmberParticleType extends TextureSheetParticle {
         this.gravity = -1;
         this.lifetime = 120;
         this.setSpriteFromAge(sprites);
-        this.deltaRoll = (float) (0.05 + this.random.nextFloat() * 0.1) * (this.random.nextBoolean() ? 1 : -1);
-        this.roll = 0.1f;
         this.rCol = 1;
         this.gCol = 0.65f;
         this.bCol = 0;
+        final int direction = (this.random.nextBoolean() ? 1 : -1);
+        this.deltaRoll = (float) (0.05 + this.random.nextFloat() * 0.1) * direction;
+        this.roll = 0.1f * direction;
         this.scale(0.25f);
     }
 

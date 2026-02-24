@@ -1,6 +1,10 @@
 {
   "variants": [
-    "reiner"
+    "reiner",
+    "angle",
+    "fright",
+    "lash",
+    "stoic"
   ],
   "scale": 7.5,
   "stats": {
@@ -8,5 +12,6 @@
     "jump": 1.4,
     "extra_health": 20,
     "extra_armor": 10
-  }
+  },
+  "base_eye_color": "#ffffcc"
 }

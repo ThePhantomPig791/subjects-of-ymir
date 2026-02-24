@@ -5,8 +5,10 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import org.jetbrains.annotations.Nullable;
 import virtuoel.pehkui.api.ScaleTypes;
@@ -95,7 +97,21 @@ public class TitanInstance {
         float red = ((float) Math.random() + 1) / 2;
         float green = ((float) Math.random() + 1) / 2;
         float blue = ((float) Math.random() + 1) / 2;
-        this.setEyeColor(new Color(red, green, blue));
+        this.setEyeColor(mixColorWithBase(new Color(red, green, blue)));
+    }
+    public boolean setEyeColorToBase() {
+        if (this.titan == null || this.titan.baseEyeColor == null) return false;
+        SoyProperties.EYE_COLOR.set(entity, this.titan.baseEyeColor);
+        return true;
+    }
+    public Color mixColorWithBase(Color color) {
+        if (this.titan == null || this.titan.baseEyeColor == null) return color;
+        float[] c1 = color.getRGBColorComponents(null);
+        float[] c2 = this.titan.baseEyeColor.getRGBColorComponents(null);
+        float red = (float) Math.sqrt((Math.pow(c1[0], 2) + Math.pow(c2[0], 2)) / 2);
+        float green = (float) Math.sqrt((Math.pow(c1[1], 2) + Math.pow(c2[1], 2)) / 2);
+        float blue = (float) Math.sqrt((Math.pow(c1[2], 2) + Math.pow(c2[2], 2)) / 2);
+        return new Color(red, green, blue);
     }
 
     public boolean canShift() {
@@ -215,5 +231,18 @@ public class TitanInstance {
                 ", entity=" + entity +
                 ", isCorpse=" + isCorpse +
                 '}';
+    }
+
+
+    public static Tuple<Titan, String> randomizeFor(LivingEntity entity) {
+        if (!(entity instanceof SoyPlayerExtension playerExt)) return null;
+        Tuple<Titan, String> randomTitanAndVariant = TitanRegistry.getRandomTitan();
+        TitanInstance newTitan = new TitanInstance(entity, randomTitanAndVariant.getA(), randomTitanAndVariant.getB());
+        playerExt.setTitanInstance(newTitan);
+        playerExt.getTitanInstance().randomizeEyeColor();
+        playerExt.getTitanInstance().setProgress(0);
+        playerExt.getTitanInstance().setCharge(0);
+        playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
+        return randomTitanAndVariant;
     }
 }

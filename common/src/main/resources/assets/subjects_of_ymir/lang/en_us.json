@@ -1,5 +1,6 @@
 {
-  "commands.titan.success.set": "Set %s's titan to %s",
+  "commands.titan.success.set": "Set %s's titan to %s with variant \"%s\"",
+  "commands.titan.success.randomize": "Randomized %s's titan to %s with variant \"%s\"",
   "commands.titan.success.remove": "Removed %s's titan",
   "commands.titan.success.color.set": "Set %s's titan eye color to #%s",
   "commands.titan.success.color.randomize": "Randomized %s's titan eye color to #%s",

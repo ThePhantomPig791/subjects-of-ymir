@@ -23,9 +23,9 @@ public class SmallSteamParticleType extends TextureSheetParticle {
         this.gravity = -0.6f;
         this.lifetime = 24;
         this.setSpriteFromAge(sprites);
-        this.rCol = this.gCol = this.bCol = 1;
-        this.deltaRoll = (float) (0.05 + this.random.nextFloat() * 0.02) * (this.random.nextBoolean() ? 1 : -1);
-        this.roll = 0.03f;
+        final int direction = (this.random.nextBoolean() ? 1 : -1);
+        this.deltaRoll = (float) (0.05 + this.random.nextFloat() * 0.02) * direction;
+        this.roll = 0.03f * direction;
         this.quadSize = 0.2f;
         this.scale(1.5f);
     }

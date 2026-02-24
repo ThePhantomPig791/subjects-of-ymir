@@ -1,12 +1,12 @@
 {
   "variants": [
-    "eren"
+    "eren",
+    "kruger"
   ],
   "scale": 7.5,
   "stats": {
     "speed": 3,
     "extra_health": 20
   },
-
-  "eye_color_that_looks_good_obviously_unused_field": "#33cc33"
+  "base_eye_color": "#33cc33"
 }

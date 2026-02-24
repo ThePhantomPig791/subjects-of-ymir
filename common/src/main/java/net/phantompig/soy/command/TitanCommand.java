@@ -11,6 +11,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
@@ -44,7 +45,7 @@ public class TitanCommand {
                                                         playerExt.getTitanInstance().setProgress(0);
                                                         playerExt.getTitanInstance().setCharge(0);
                                                         playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
-                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), id), true);
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), id, variant), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                         return 0;
@@ -81,8 +82,10 @@ public class TitanCommand {
                 .then(Commands.literal("eyes")
                         .then(Commands.literal("set")
                                 .then(Commands.argument("entity", EntityArgument.entity())
-                                        .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> builder.suggest("\"#ffffff\"").buildFuture())
-                                                .executes(context -> {
+                                        .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> {
+                                                            if (EntityArgument.getEntity(ctx, "entity") instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && ext.getTitanInstance().titan.baseEyeColor != null) return builder.suggest("\"#" + Integer.toHexString(ext.getTitanInstance().titan.baseEyeColor.getRGB()).substring(2) + "\"").buildFuture();
+                                                            return builder.suggest("\"#ffffff\"").buildFuture();
+                                                }).executes(context -> {
                                                     var source = context.getSource();
                                                     var entity = EntityArgument.getEntity(context, "entity");
                                                     var color = StringArgumentType.getString(context, "color");
@@ -194,6 +197,28 @@ public class TitanCommand {
                                                 })
                                         )
                                 )
+                        )
+                )
+                .then(Commands.literal("randomize")
+                        .then(Commands.argument("entity", EntityArgument.entity())
+                                .executes(context -> {
+                                    var source = context.getSource();
+                                    var entity = EntityArgument.getEntity(context, "entity");
+
+                                    if (entity instanceof SoyPlayerExtension playerExt && entity instanceof LivingEntity living) {
+                                        if (playerExt.getTitanInstance().getProgress() > 0) {
+                                            source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
+                                            return 0;
+                                        }
+                                        Tuple<Titan, String> randomTitanAndVariant = TitanInstance.randomizeFor(living);
+                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.randomize", entity.getDisplayName(), randomTitanAndVariant.getA().id, randomTitanAndVariant.getB()), true);
+                                    } else {
+                                        source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                        return 0;
+                                    }
+
+                                    return 1;
+                                })
                         )
                 )
         );

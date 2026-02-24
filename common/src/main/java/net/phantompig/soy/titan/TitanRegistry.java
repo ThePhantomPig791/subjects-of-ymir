@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.threetag.palladium.addonpack.log.AddonPackLog;
@@ -16,6 +16,7 @@ import net.threetag.palladiumcore.registry.ReloadListenerRegistry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TitanRegistry extends SimpleJsonResourceReloadListener {
@@ -55,5 +56,15 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
 
     public static ImmutableMap<ResourceLocation, Titan> getTitans() {
         return ImmutableMap.copyOf(INSTANCE.titans);
+    }
+
+    public static Tuple<Titan, String> getRandomTitan() {
+        Tuple<Titan, String> tuple = new Tuple<>(getRandom(TitanRegistry.getTitans().values().asList()), null);
+        tuple.setB(getRandom(tuple.getA().variants));
+        return tuple;
+    }
+
+    private static <T> T getRandom(List<T> list) {
+        return list.get((int) (list.size() * Math.random()));
     }
 }
