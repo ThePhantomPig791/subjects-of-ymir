@@ -70,7 +70,7 @@ public class TitanCorpseEntity extends LivingEntity {
             if (amount > 0) {
                 PlayerUtil.spawnParticleForAll(
                         this.level(),
-                        64,
+                        128,
                         (SimpleParticleType) SoyParticles.LARGE_STEAM.get(),
                         true,
                         this.getX(),
@@ -84,7 +84,7 @@ public class TitanCorpseEntity extends LivingEntity {
                 );
                 if (3 * Math.random() < amount - 0.3) PlayerUtil.spawnParticleForAll(
                         this.level(),
-                        64,
+                        128,
                         (SimpleParticleType) SoyParticles.EMBER.get(),
                         true,
                         this.getX(),

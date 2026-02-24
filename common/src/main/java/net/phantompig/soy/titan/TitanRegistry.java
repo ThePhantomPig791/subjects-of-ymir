@@ -54,6 +54,10 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
         return INSTANCE.titans.get(id);
     }
 
+    public static boolean titanExists(ResourceLocation id) {
+        return INSTANCE.titans.containsKey(id);
+    }
+
     public static ImmutableMap<ResourceLocation, Titan> getTitans() {
         return ImmutableMap.copyOf(INSTANCE.titans);
     }
@@ -64,7 +68,7 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
         return tuple;
     }
 
-    private static <T> T getRandom(List<T> list) {
+    public static <T> T getRandom(List<T> list) {
         return list.get((int) (list.size() * Math.random()));
     }
 }

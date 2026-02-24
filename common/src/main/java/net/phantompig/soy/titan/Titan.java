@@ -162,7 +162,7 @@ public class Titan {
                 for (int count = 0; count <= 3.5 * emptyHealthPercent; count++) {
                     if (0.5 * Math.random() < emptyHealthPercent) PlayerUtil.spawnParticleForAll(
                             entity.level(),
-                            64,
+                            128,
                             (ParticleOptions) SoyParticles.LARGE_STEAM.get(),
                             true,
                             entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),
@@ -186,7 +186,7 @@ public class Titan {
             for (int count = 0; count <= 10 * strength; count++) {
                 PlayerUtil.spawnParticleForAll(
                         entity.level(),
-                        64,
+                        128,
                         (ParticleOptions) SoyParticles.DIRT_CLOUD.get(),
                         true,
                         entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),

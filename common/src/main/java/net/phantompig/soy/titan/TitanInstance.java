@@ -233,7 +233,7 @@ public class TitanInstance {
                 '}';
     }
 
-
+    @Nullable
     public static Tuple<Titan, String> randomizeFor(LivingEntity entity) {
         if (!(entity instanceof SoyPlayerExtension playerExt)) return null;
         Tuple<Titan, String> randomTitanAndVariant = TitanRegistry.getRandomTitan();

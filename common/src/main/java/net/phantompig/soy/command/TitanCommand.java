@@ -26,42 +26,47 @@ public class TitanCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("titan").requires((player) -> player.hasPermission(2))
                 .then(Commands.literal("set")
-                        .then(Commands.argument("entity", EntityArgument.entity())
+                        .then(Commands.argument("entity", EntityArgument.player())
                                 .then(Commands.argument("titan", ResourceLocationArgument.id()).suggests(SUGGEST_TITANS)
                                         .then(Commands.argument("variant", StringArgumentType.string()).suggests(SUGGEST_VARIANTS)
                                                 .executes(context -> {
                                                     var source = context.getSource();
-                                                    var entity = EntityArgument.getEntity(context, "entity");
+                                                    var entity = EntityArgument.getPlayer(context, "entity");
                                                     var id = ResourceLocationArgument.getId(context, "titan");
+                                                    if (!TitanRegistry.titanExists(id)) {
+                                                        source.sendFailure(Component.translatable("commands.titan.error.noSuchTitan", id));
+                                                        return 0;
+                                                    }
                                                     var variant = StringArgumentType.getString(context, "variant");
-
-                                                    if (entity instanceof SoyPlayerExtension playerExt) {
-                                                        if (playerExt.getTitanInstance().getProgress() > 0) {
-                                                            source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
-                                                            return 0;
-                                                        }
-                                                        TitanInstance inst = new TitanInstance((LivingEntity) entity, TitanRegistry.getTitan(id), variant);
-                                                        playerExt.setTitanInstance(inst);
-                                                        playerExt.getTitanInstance().setProgress(0);
-                                                        playerExt.getTitanInstance().setCharge(0);
-                                                        playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
-                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), id, variant), true);
-                                                    } else {
-                                                        source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                                    var titan = TitanRegistry.getTitan(id);
+                                                    if (!titan.variants.contains(variant)) {
+                                                        source.sendFailure(Component.translatable("commands.titan.error.noSuchVariant", id, variant));
                                                         return 0;
                                                     }
 
-                                                    return 1;
+                                                    return setTitanAndVariant(entity, id, variant, source);
                                                 })
                                         )
+                                        .executes(context -> {
+                                            var source = context.getSource();
+                                            var entity = EntityArgument.getPlayer(context, "entity");
+                                            var id = ResourceLocationArgument.getId(context, "titan");
+                                            if (!TitanRegistry.titanExists(id)) {
+                                                source.sendFailure(Component.translatable("commands.titan.error.noSuchTitan", id));
+                                                return 0;
+                                            }
+                                            var variant = TitanRegistry.getRandom(TitanRegistry.getTitan(id).variants);
+
+                                            return setTitanAndVariant(entity, id, variant, source);
+                                        })
                                 )
                         )
                 )
                 .then(Commands.literal("remove")
-                        .then(Commands.argument("entity", EntityArgument.entity())
+                        .then(Commands.argument("entity", EntityArgument.player())
                                 .executes(context -> {
                                     var source = context.getSource();
-                                    var entity = EntityArgument.getEntity(context, "entity");
+                                    var entity = EntityArgument.getPlayer(context, "entity");
 
                                     if (entity instanceof SoyPlayerExtension playerExt) {
                                         if (playerExt.getTitanInstance().getProgress() > 0) {
@@ -81,13 +86,13 @@ public class TitanCommand {
                 )
                 .then(Commands.literal("eyes")
                         .then(Commands.literal("set")
-                                .then(Commands.argument("entity", EntityArgument.entity())
+                                .then(Commands.argument("entity", EntityArgument.player())
                                         .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> {
-                                                            if (EntityArgument.getEntity(ctx, "entity") instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && ext.getTitanInstance().titan.baseEyeColor != null) return builder.suggest("\"#" + Integer.toHexString(ext.getTitanInstance().titan.baseEyeColor.getRGB()).substring(2) + "\"").buildFuture();
+                                                            if (EntityArgument.getPlayer(ctx, "entity") instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && ext.getTitanInstance().titan.baseEyeColor != null) return builder.suggest("\"#" + Integer.toHexString(ext.getTitanInstance().titan.baseEyeColor.getRGB()).substring(2) + "\"").buildFuture();
                                                             return builder.suggest("\"#ffffff\"").buildFuture();
                                                 }).executes(context -> {
                                                     var source = context.getSource();
-                                                    var entity = EntityArgument.getEntity(context, "entity");
+                                                    var entity = EntityArgument.getPlayer(context, "entity");
                                                     var color = StringArgumentType.getString(context, "color");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
@@ -105,10 +110,10 @@ public class TitanCommand {
                                 )
                         )
                         .then(Commands.literal("randomize")
-                                .then(Commands.argument("entity", EntityArgument.entity())
+                                .then(Commands.argument("entity", EntityArgument.player())
                                         .executes(context -> {
                                             var source = context.getSource();
-                                            var entity = EntityArgument.getEntity(context, "entity");
+                                            var entity = EntityArgument.getPlayer(context, "entity");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
                                                 playerExt.getTitanInstance().randomizeEyeColor();
@@ -124,12 +129,16 @@ public class TitanCommand {
                         )
                 )
                 .then(Commands.literal("unshift")
-                        .then(Commands.argument("entity", EntityArgument.entity())
+                        .then(Commands.argument("entity", EntityArgument.player())
                                 .executes(context -> {
                                     var source = context.getSource();
-                                    var entity = EntityArgument.getEntity(context, "entity");
+                                    var entity = EntityArgument.getPlayer(context, "entity");
 
                                     if (entity instanceof SoyPlayerExtension playerExt) {
+                                        if (playerExt.getTitanInstance().titan == null) {
+                                            source.sendFailure(Component.translatable("commands.titan.error.noTitan", entity.getDisplayName()));
+                                            return 0;
+                                        }
                                         if (playerExt.getTitanInstance().getProgress() == 0) {
                                             source.sendFailure(Component.translatable("commands.titan.error.notShifted", entity.getDisplayName()));
                                             return 0;
@@ -150,7 +159,7 @@ public class TitanCommand {
                                 .then(Commands.argument("entity", EntityArgument.player())
                                         .executes(context -> {
                                             var source = context.getSource();
-                                            var entity = EntityArgument.getEntity(context, "entity");
+                                            var entity = EntityArgument.getPlayer(context, "entity");
 
                                             var points = SoyProperties.PATH_POINTS.get(entity);
                                             source.sendSuccess(() -> Component.translatable("commands.titan.success.points.get", entity.getDisplayName(), points), true);
@@ -164,7 +173,7 @@ public class TitanCommand {
                                         .then(Commands.argument("amount", IntegerArgumentType.integer(0))
                                                 .executes(context -> {
                                                     var source = context.getSource();
-                                                    var entity = EntityArgument.getEntity(context, "entity");
+                                                    var entity = EntityArgument.getPlayer(context, "entity");
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     var points = SoyProperties.PATH_POINTS.get(entity);
@@ -181,7 +190,7 @@ public class TitanCommand {
                                         .then(Commands.argument("amount", IntegerArgumentType.integer())
                                                 .executes(context -> {
                                                     var source = context.getSource();
-                                                    var entity = EntityArgument.getEntity(context, "entity");
+                                                    var entity = EntityArgument.getPlayer(context, "entity");
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     var points = SoyProperties.PATH_POINTS.get(entity);
@@ -200,18 +209,39 @@ public class TitanCommand {
                         )
                 )
                 .then(Commands.literal("randomize")
-                        .then(Commands.argument("entity", EntityArgument.entity())
+                        .then(Commands.argument("entity", EntityArgument.player())
                                 .executes(context -> {
                                     var source = context.getSource();
-                                    var entity = EntityArgument.getEntity(context, "entity");
+                                    var entity = EntityArgument.getPlayer(context, "entity");
 
-                                    if (entity instanceof SoyPlayerExtension playerExt && entity instanceof LivingEntity living) {
+                                    if (entity instanceof SoyPlayerExtension playerExt) {
                                         if (playerExt.getTitanInstance().getProgress() > 0) {
                                             source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
                                             return 0;
                                         }
-                                        Tuple<Titan, String> randomTitanAndVariant = TitanInstance.randomizeFor(living);
+                                        Tuple<Titan, String> randomTitanAndVariant = TitanInstance.randomizeFor(entity);
                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.randomize", entity.getDisplayName(), randomTitanAndVariant.getA().id, randomTitanAndVariant.getB()), true);
+                                    } else {
+                                        source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                        return 0;
+                                    }
+
+                                    return 1;
+                                })
+                        )
+                )
+                .then(Commands.literal("get")
+                        .then(Commands.argument("entity", EntityArgument.player())
+                                .executes(context -> {
+                                    var source = context.getSource();
+                                    var entity = EntityArgument.getPlayer(context, "entity");
+
+                                    if (entity instanceof SoyPlayerExtension playerExt) {
+                                        if (playerExt.getTitanInstance().titan == null) {
+                                            source.sendSuccess(() -> Component.translatable("commands.titan.success.noTitan", entity.getDisplayName()), true);
+                                            return 0;
+                                        }
+                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.get", entity.getDisplayName(), playerExt.getTitanInstance().titan.id, playerExt.getTitanInstance().variant), true);
                                     } else {
                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                         return 0;
@@ -231,4 +261,24 @@ public class TitanCommand {
         if (titan != null) variants.addAll(titan.variants);
         return SharedSuggestionProvider.suggest(variants, builder);
     };
+
+    private static int setTitanAndVariant(LivingEntity entity, ResourceLocation id, String variant, CommandSourceStack source) {
+        if (entity instanceof SoyPlayerExtension playerExt) {
+            if (playerExt.getTitanInstance().getProgress() > 0) {
+                source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
+                return 0;
+            }
+            TitanInstance inst = new TitanInstance(entity, TitanRegistry.getTitan(id), variant);
+            playerExt.setTitanInstance(inst);
+            playerExt.getTitanInstance().setProgress(0);
+            playerExt.getTitanInstance().setCharge(0);
+            playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
+            source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), id, variant), true);
+        } else {
+            source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+            return 0;
+        }
+
+        return 1;
+    }
 }
