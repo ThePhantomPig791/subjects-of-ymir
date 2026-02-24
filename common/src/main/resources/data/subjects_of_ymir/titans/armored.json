@@ -11,7 +11,9 @@
     "speed": 2,
     "jump": 1.4,
     "extra_health": 20,
-    "extra_armor": 10
+    "extra_armor": 10,
+    "extra_attack_damage": 8,
+    "attack_speed": 30
   },
   "base_eye_color": "#ffffcc"
 }

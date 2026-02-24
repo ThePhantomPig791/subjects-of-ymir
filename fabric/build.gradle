@@ -37,10 +37,10 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
     modApi "net.threetag:palladium-fabric:${rootProject.palladium_version}"
 
+    //modApi("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim_version}")
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-
-    modImplementation("software.bernie.geckolib:geckolib-fabric-1.20.1:${rootProject.geckolib_version}")
 }
 
 processResources {

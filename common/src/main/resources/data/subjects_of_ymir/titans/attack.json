@@ -6,7 +6,9 @@
   "scale": 7.5,
   "stats": {
     "speed": 3,
-    "extra_health": 20
+    "extra_health": 20,
+    "extra_attack_damage": 7,
+    "attack_speed": 20
   },
   "base_eye_color": "#33cc33"
 }

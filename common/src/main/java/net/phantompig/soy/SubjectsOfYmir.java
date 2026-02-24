@@ -8,8 +8,10 @@ import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.feature.SoyFeatures;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.menu.SoyMenus;
+import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.phantompig.soy.power.TitanPowerProvider;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.power.condition.SoyConditionSerializers;
@@ -51,6 +53,7 @@ public class SubjectsOfYmir {
         SoyRecipeTypes.init();
         SoyFeatures.init();
         SoyStats.init();
+        SoyNetwork.init();
 
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
@@ -66,8 +69,12 @@ public class SubjectsOfYmir {
         }));
 
         LivingEntityEvents.TICK.register((entity -> {
-            if (!(entity instanceof SoyPlayerExtension soy) || soy.getTitanInstance().titan == null) return;
-            soy.getTitanInstance().tick();
+            if (entity instanceof SoyPlayerExtension soy && soy.getTitanInstance().titan != null) {
+                soy.getTitanInstance().tick();
+            }
+            if (!entity.level().isClientSide && entity instanceof SoyServerPlayerExtension serverExt) {
+                serverExt.soy$getCombatSystem().tick();
+            }
         }));
 
         PlayerEvents.CLONE.register(((oldPlayer, newPlayer, wasDeath) -> {

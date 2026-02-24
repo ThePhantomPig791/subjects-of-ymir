@@ -6,3 +6,5 @@ accessible  class   net/minecraft/world/inventory/MenuType$MenuSupplier
 accessible  method  net/minecraft/client/renderer/item/ItemProperties register (Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/renderer/item/ClampedItemPropertyFunction;)V
 
 accessible  method net/minecraft/sounds/SoundEvent  <init> (Lnet/minecraft/resources/ResourceLocation;FZ)V
+
+accessible  field   net/minecraft/world/entity/LivingEntity attackStrengthTicker I

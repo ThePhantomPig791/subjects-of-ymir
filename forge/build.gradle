@@ -54,13 +54,10 @@ dependencies {
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0"))
     implementation(include("io.github.llamalad7:mixinextras-forge:0.2.0"))
 
+    //modApi("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_anim_version}")
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
-
-    // GeckoLib
-    implementation("com.eliotlash.mclib:mclib:20")
-    forgeRuntimeLibrary("com.eliotlash.mclib:mclib:20")
-    modApi("software.bernie.geckolib:geckolib-forge-1.20.1:${rootProject.geckolib_version}")
 }
 
 processResources {

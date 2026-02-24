@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -39,6 +40,7 @@ import java.util.UUID;
 public class Titan {
     public static final UUID TITAN_HEALTH_ATTRIBUTE_UUID = UUID.fromString("09ed062b-73c1-4a2d-0803-8512514aa03e");
     public static final UUID TITAN_ARMOR_ATTRIBUTE_UUID = UUID.fromString("12abc62b-73c1-4a2d-0000-8512514aa03e");
+    public static final UUID TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID = UUID.fromString("ba2e2d7f-1f67-4800-8c9e-31b9e693ecdb");
 
     public final ResourceLocation id;
     public final ResourceLocation powerPath;
@@ -59,7 +61,8 @@ public class Titan {
         this.scale = scale;
         this.maxProgress = maxProgress;
         this.maxCharge = maxCharge;
-        this.baseEyeColor = baseEyeColor;
+        if (baseEyeColor.getAlpha() == 0) this.baseEyeColor = null;
+        else this.baseEyeColor = baseEyeColor;
         this.stats = stats;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
@@ -73,6 +76,9 @@ public class Titan {
         }
         if (entity.getAttribute(Attributes.ARMOR).getModifier(TITAN_ARMOR_ATTRIBUTE_UUID) == null) {
             entity.getAttribute(Attributes.ARMOR).addPermanentModifier(new AttributeModifier(TITAN_ARMOR_ATTRIBUTE_UUID, "titan armor", this.stats.extraArmor, AttributeModifier.Operation.ADDITION));
+        }
+        if (entity.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID) == null) {
+            entity.getAttribute(Attributes.ATTACK_DAMAGE).addPermanentModifier(new AttributeModifier(TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID, "titan attack damage", this.stats.extraDamage, AttributeModifier.Operation.ADDITION));
         }
 
         entity.extinguishFire();
@@ -108,6 +114,7 @@ public class Titan {
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
         entity.getAttribute(Attributes.ARMOR).removeModifier(TITAN_ARMOR_ATTRIBUTE_UUID);
+        entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID);
 
         entity.heal(20);
         entity.removeAllEffects();
@@ -251,6 +258,8 @@ public class Titan {
         public float jump;
         public double extraHealth;
         public double extraArmor;
+        public double extraDamage;
+        public int attackSpeed;
 
         public TitanStats() {}
 
@@ -260,7 +269,28 @@ public class Titan {
             stats.speed = GsonHelper.getAsFloat(json, "speed", 1);
             stats.extraHealth = GsonHelper.getAsDouble(json, "extra_health", 0);
             stats.extraArmor = GsonHelper.getAsDouble(json, "extra_armor", 0);
+            stats.extraDamage = GsonHelper.getAsDouble(json, "extra_attack_damage", 0);
+            stats.attackSpeed = GsonHelper.getAsInt(json, "attack_speed", 20);
             return stats;
+        }
+
+        public static TitanStats fromNetwork(FriendlyByteBuf buf) {
+            TitanStats stats = new TitanStats();
+            stats.jump = buf.readFloat();
+            stats.speed = buf.readFloat();
+            stats.extraHealth = buf.readDouble();
+            stats.extraArmor = buf.readDouble();
+            stats.extraDamage = buf.readDouble();
+            stats.attackSpeed = buf.readInt();
+            return stats;
+        }
+        public static void toNetwork(TitanStats stats, FriendlyByteBuf buf) {
+            buf.writeFloat(stats.jump);
+            buf.writeFloat(stats.speed);
+            buf.writeDouble(stats.extraHealth);
+            buf.writeDouble(stats.extraArmor);
+            buf.writeDouble(stats.extraDamage);
+            buf.writeInt(stats.attackSpeed);
         }
     }
 
@@ -270,5 +300,31 @@ public class Titan {
                 "id=" + id +
                 ", variants=" + variants +
                 '}';
+    }
+
+    public static Titan fromNetwork(FriendlyByteBuf buf) {
+        return new Titan(
+                buf.readResourceLocation(),
+                buf.readList(FriendlyByteBuf::readUtf),
+                buf.readInt(),
+                buf.readFloat(),
+                buf.readInt(),
+                buf.readInt(),
+                buf.readBoolean() ? new Color(buf.readInt(), buf.readInt(), buf.readInt()) : new Color(buf.readInt(), buf.readInt(), buf.readInt(), 0),
+                TitanStats.fromNetwork(buf)
+        );
+    }
+    public static void toNetwork(Titan titan, FriendlyByteBuf buf) {
+        buf.writeResourceLocation(titan.id);
+        buf.writeCollection(titan.variants, FriendlyByteBuf::writeUtf);
+        buf.writeInt(titan.resolution);
+        buf.writeFloat(titan.scale);
+        buf.writeInt(titan.maxProgress);
+        buf.writeInt(titan.maxCharge);
+        buf.writeBoolean(titan.baseEyeColor != null); // represents if the titan has a defined base eye color
+        buf.writeInt(titan.baseEyeColor != null ? titan.baseEyeColor.getRed() : 0);
+        buf.writeInt(titan.baseEyeColor != null ? titan.baseEyeColor.getGreen() : 0);
+        buf.writeInt(titan.baseEyeColor != null ? titan.baseEyeColor.getBlue() : 0);
+        TitanStats.toNetwork(titan.stats, buf);
     }
 }

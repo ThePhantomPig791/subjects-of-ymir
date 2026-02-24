@@ -1,5 +1,8 @@
 package net.phantompig.soy.client;
 
+import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.client.animation.BiteAnimation;
@@ -51,6 +54,13 @@ public class SubjectsOfYmirClient {
                 return (float) item.get(itemStack) / item.max;
             }
             return 0.0f;
+        });
+
+        PlayerAnimationAccess.REGISTER_ANIMATION_EVENT.register((player, animationStack) -> {
+            ModifierLayer<IAnimation> layer = new ModifierLayer<>();
+            //layer.addModifierLast(new TitanAttackSpeedModifier(player));
+            animationStack.addAnimLayer(0, layer);
+            PlayerAnimationAccess.getPlayerAssociatedData(player).set(SubjectsOfYmir.rsrc("soy_animation"), layer);
         });
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");

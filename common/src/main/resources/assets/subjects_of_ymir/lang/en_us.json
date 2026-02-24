@@ -106,7 +106,7 @@
   "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage.",
 
   "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
-  "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: XX\nSPD: 3\nDEF: 0",
+  "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 0",
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
-  "ability.text.subjects_of_ymir.armored.root.description": "Your titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: XX\nSPD: 2\nDEF: 10"
+  "ability.text.subjects_of_ymir.armored.root.description": "Your titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 10"
 }

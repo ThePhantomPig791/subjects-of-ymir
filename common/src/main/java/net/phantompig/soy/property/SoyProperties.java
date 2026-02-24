@@ -21,6 +21,7 @@ public class SoyProperties {
     public static final PalladiumProperty<Color> EYE_COLOR = new ColorProperty("subjects_of_ymir/eye_color").sync(SyncType.EVERYONE);
 
     public static final PalladiumProperty<Integer> PATH_POINTS = new IntegerProperty("subjects_of_ymir/path_points").sync(SyncType.NONE);
+    public static final PalladiumProperty<Integer> ATTACK_SPEED = new IntegerProperty("subjects_of_ymir/attack_speed").sync(SyncType.EVERYONE);
 
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
@@ -32,6 +33,7 @@ public class SoyProperties {
                 handler.register(DECAY, TitanInstance.START_CORPSE_DECAY);
                 handler.register(EYE_COLOR, Color.WHITE);
                 handler.register(PATH_POINTS, 0);
+                handler.register(ATTACK_SPEED, 20);
             }
         });
     }

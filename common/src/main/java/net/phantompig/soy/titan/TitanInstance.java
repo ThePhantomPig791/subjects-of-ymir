@@ -174,6 +174,7 @@ public class TitanInstance {
         if (this.titan == null) return;
         SoyProperties.TITAN.set(this.entity, this.titan.id);
         SoyProperties.VARIANT.set(this.entity, this.variant);
+        SoyProperties.ATTACK_SPEED.set(this.entity, this.titan.stats.attackSpeed);
     }
 
     public static void copyPropertiesToEntity(LivingEntity from, LivingEntity to) {
@@ -182,6 +183,7 @@ public class TitanInstance {
         SoyProperties.PROGRESS.set(to, SoyProperties.PROGRESS.get(from));
         SoyProperties.CHARGE.set(to, SoyProperties.CHARGE.get(from));
         SoyProperties.EYE_COLOR.set(to, SoyProperties.EYE_COLOR.get(from));
+        SoyProperties.ATTACK_SPEED.set(to, SoyProperties.ATTACK_SPEED.get(from));
     }
 
     public static void copyPropertiesTo(TitanInstance from, TitanInstance to) {

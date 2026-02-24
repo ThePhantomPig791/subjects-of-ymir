@@ -2,6 +2,7 @@ package net.phantompig.soy.mixin.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.phantompig.soy.combat.ClientCombatSystem;
 import net.phantompig.soy.property.SoyProperties;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,12 +17,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MinecraftMixin {
     @Shadow @Nullable public LocalPlayer player;
 
+    @Unique
+    public ClientCombatSystem soy$combatSystem;
+    @Unique
+    private void soy$reinstateCombatSystem() {
+        this.soy$combatSystem = new ClientCombatSystem(this.player);
+    }
+
     @Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
     public void soy$startAttack(CallbackInfoReturnable<Boolean> ci) {
-        if (false && this.player != null && SoyProperties.PROGRESS.get(this.player) > 0) {
-            //AnimationUtil.playTitanAnimation(this.player, "combat_controller", "attack_right");
+        if (this.soy$combatSystem == null || this.soy$combatSystem.player == null) soy$reinstateCombatSystem();
+        if (this.player != null && SoyProperties.PROGRESS.get(this.player) > 0) {
+            this.soy$combatSystem.attack();
             ci.cancel();
         }
+    }
+
+    @Inject(method = "continueAttack", at = @At("HEAD"), cancellable = true)
+    public void soy$continueAttack(boolean leftClick, CallbackInfo ci) {
+        soy$cancelCallbackIfTitan(ci);
     }
 
     @Inject(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;useItemOn(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;"), cancellable = true)

@@ -159,21 +159,6 @@
           "type": "palladium:sprinting"
         }
       }
-    },
-
-    "punch": {
-      "type": "geckolib:render_layer_animation",
-      "hidden_in_bar": false,
-      "list_index": 2,
-      "render_layer": "subjects_of_ymir:titan",
-      "controller": "combat_controller",
-      "animation_trigger": "attack_right",
-      "conditions": {
-        "enabling": {
-          "type": "palladium:action",
-          "key_type": "left_click"
-        }
-      }
     }
   }
 }

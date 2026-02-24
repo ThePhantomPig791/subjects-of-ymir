@@ -3,6 +3,7 @@ package net.phantompig.soy.mixin;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.SoyAbilities;
+import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import org.jetbrains.annotations.NotNull;
@@ -65,6 +67,14 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension {
         }
     }
 
+
+    @Inject(method = "getAttackStrengthScale", at = @At(value = "HEAD"), cancellable = true)
+    public void soy$getAttackStrengthScale(float adjustTicks, CallbackInfoReturnable<Float> cir) {
+        if (SoyProperties.PROGRESS.get(this) > 0) {
+            final int max = 2 * SoyProperties.ATTACK_SPEED.get(this);
+            cir.setReturnValue(Mth.clamp((((LivingEntity) (Object) this).attackStrengthTicker + (float) max) / max, 0.0F, 1.0F));
+        }
+    }
 
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 1), argsOnly = true)

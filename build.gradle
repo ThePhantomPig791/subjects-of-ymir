@@ -25,7 +25,8 @@ subprojects {
             parchment("org.parchmentmc.data:parchment-${rootProject.parchment_mappings}")
         }
 
-        modCompileOnlyApi("software.bernie.geckolib:geckolib-fabric-1.20.1:${rootProject.geckolib_version}")
+        implementation("dev.kosmx.player-anim:anim-core:${project.player_anim_version}")
+        modImplementation("dev.kosmx.player-anim:player-animation-lib:${project.player_anim_version}")
     }
 }
 
@@ -126,10 +127,10 @@ allprojects {
             content { excludeGroup("net.fabricmc.fabric-api") }
         }
 
-        // GeckoLib
+        // playerAnimator
         maven {
-            name = 'Gecko Lib'
-            url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            name "KosmX's maven"
+            url 'https://maven.kosmx.dev/'
         }
     }
 

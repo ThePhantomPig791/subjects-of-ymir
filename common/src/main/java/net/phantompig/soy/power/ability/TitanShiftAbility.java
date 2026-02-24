@@ -68,7 +68,7 @@ public class TitanShiftAbility extends Ability {
 
             titanInstance.titan.unshift(entity);
 
-            if (entity instanceof Player player) {
+            if (entity instanceof Player player && titanInstance.playerInventory != null) {
                 player.getInventory().dropAll();
                 player.getInventory().load(titanInstance.playerInventory);
                 titanInstance.playerInventory = null;

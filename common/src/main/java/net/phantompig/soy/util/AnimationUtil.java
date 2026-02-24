@@ -1,42 +1,29 @@
 package net.phantompig.soy.util;
 
-import net.minecraft.world.entity.LivingEntity;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
+import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+import dev.kosmx.playerAnim.core.util.Ease;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
+import net.minecraft.client.player.LocalPlayer;
 import net.phantompig.soy.SubjectsOfYmir;
-import net.threetag.palladium.client.renderer.renderlayer.CompoundPackRenderLayer;
-import net.threetag.palladium.client.renderer.renderlayer.IPackRenderLayer;
-import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
-import net.threetag.palladium.client.renderer.renderlayer.RenderLayerStates;
-import net.threetag.palladium.compat.geckolib.renderlayer.GeckoLayerState;
-import net.threetag.palladium.entity.PalladiumLivingEntityExtension;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-
-import java.util.Collections;
-import java.util.List;
 
 public class AnimationUtil {
-    public static void playTitanAnimation(LivingEntity entity, String controllerId, String animationTrigger) {
-        if (!(entity instanceof PalladiumLivingEntityExtension extension)) return;
-        IPackRenderLayer layer = PackRenderLayerManager.getInstance().getLayer(SubjectsOfYmir.rsrc("titan"));
-        if (layer == null) return;
-        List<IPackRenderLayer> layers;
-        if (layer instanceof CompoundPackRenderLayer com) {
-            layers = com.layers();
-        } else {
-            layers = Collections.singletonList(layer);
-        }
-        SubjectsOfYmir.LOGGER.info("layers: {}", layers);
+    public static void playTitanAnimation(LocalPlayer player, String id) {
+        KeyframeAnimation anim = PlayerAnimationRegistry.getAnimation(SubjectsOfYmir.rsrc(id));
+        ModifierLayer<IAnimation>  animationContainer = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData(player).get(SubjectsOfYmir.rsrc("soy_animation"));
 
-        for (IPackRenderLayer renderLayer : layers) {
-            RenderLayerStates.State state = extension.palladium$getRenderLayerStates().get(renderLayer);
-            if (!(state instanceof GeckoLayerState gecko)) continue;
-            AnimatableManager<?> manager = gecko.getAnimatableInstanceCache().getManagerForId(gecko.hashCode() + entity.getId());
-            AnimationController<?> controller = manager.getAnimationControllers().get(controllerId);
-            SubjectsOfYmir.LOGGER.info("bone snapshots: {}", manager.getBoneSnapshotCollection());
-            if (controller == null) continue;
-            //controller.forceAnimationReset();
-            controller.stop();
-            controller.tryTriggerAnimation(animationTrigger);
-        }
+        if (anim == null || animationContainer == null) return;
+
+        animationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(20, Ease.INOUTSINE),
+                new KeyframeAnimationPlayer(anim)
+                        .setFirstPersonMode(FirstPersonMode.NONE)
+                        .setFirstPersonConfiguration(new FirstPersonConfiguration().setShowRightArm(true).setShowLeftArm(true))
+        );
     }
 }
