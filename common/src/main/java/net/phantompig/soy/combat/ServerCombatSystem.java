@@ -50,7 +50,7 @@ public class ServerCombatSystem {
             return;
         }
 
-        if (player.getXRot() > 45) {
+        if (player.getXRot() > 30) {
             attackType = AttackType.GROUND;
         } else {
             attackType = AttackType.PUNCH;
@@ -101,9 +101,9 @@ public class ServerCombatSystem {
         }
         if (attackType == AttackType.GROUND) {
             if (attackStage < 3) {
-                explodeInFront(1.5f, 5, -0.7f);
+                explodeInFront(1.5f, 6, -0.75f);
             } else {
-                explodeInFront(3, 6, -0.7f);
+                explodeInFront(3, 7, -0.75f);
 
                 cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 2;
                 updateAttackTicker(-cooldown);
@@ -119,7 +119,7 @@ public class ServerCombatSystem {
         strength *= (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 5;
 
         var start = player.getEyePosition();
-        var end = player.getLookAngle().multiply(1, 0, 1).normalize().scale(distance);
+        var end = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
         Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getBoundingBox().getYsize(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, en -> true).getLocation();
 
         player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, Level.ExplosionInteraction.TNT);
