@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.network.SetAttackTickerMessage;
 import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.network.TitanAttackAnimationMessage;
@@ -31,7 +30,8 @@ public class ServerCombatSystem {
 
     public enum AttackType {
         PUNCH(3),
-        GROUND(3);
+        GROUND(3),
+        KICK(2);
 
         final int maxAttackStage;
         AttackType(int maxAttackStage) {
@@ -50,7 +50,11 @@ public class ServerCombatSystem {
             return;
         }
 
-        if (player.getXRot() > 30) {
+        player.setYBodyRot(player.getYHeadRot());
+
+        if (player.getXRot() > 50) {
+            attackType = AttackType.KICK;
+        } else if (player.getXRot() > 30) {
             attackType = AttackType.GROUND;
         } else {
             attackType = AttackType.PUNCH;
@@ -60,22 +64,20 @@ public class ServerCombatSystem {
             if (++attackStage > attackType.maxAttackStage) attackStage = 1;
         } else attackStage = 1;
 
-        SubjectsOfYmir.LOGGER.info("type: {}", attackType);
         String animationId = attackType.toString() + attackStage;
-        SubjectsOfYmir.LOGGER.info("anim id: {}", animationId);
 
-        SubjectsOfYmir.LOGGER.info("server entities: {}", player.level().getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(150)));
         player.level().getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(150)).forEach(pl -> {
             SoyNetwork.NETWORK.sendToPlayer((ServerPlayer) pl, new TitanAttackAnimationMessage(player, animationId));
         });
 
         player.attackStrengthTicker = -20;
         attackTimer = extension.getTitanInstance().titan.stats.attackSpeed;
-        nextStageTimer = attackTimer + 10;
+        nextStageTimer = attackTimer + 20;
         updateAttackTicker(-attackTimer);
     }
 
     public void tick() {
+        if (extension.getTitanInstance().titan == null) return;
         if (attackTimer > 0) attackTimer--;
         if (attackTimer == 12 * 20 / extension.getTitanInstance().titan.stats.attackSpeed) {
             attackEffect();
@@ -91,9 +93,9 @@ public class ServerCombatSystem {
 
         if (attackType == AttackType.PUNCH) {
             if (attackStage < 3) {
-                explodeInFront(1, 5, 0);
+                explodeInFrontPartialLooking(1, 5, 0, -0.2f);
             } else {
-                explodeInFront(2, 5, 0.1f);
+                explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
                 cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 3 / 2;
                 updateAttackTicker(-cooldown);
@@ -101,13 +103,20 @@ public class ServerCombatSystem {
         }
         if (attackType == AttackType.GROUND) {
             if (attackStage < 3) {
-                explodeInFront(1.5f, 6, -0.75f);
+                explodeInFrontPartialLooking(1.5f, 6, 0, -0.6f);
             } else {
-                explodeInFront(3, 7, -0.75f);
+                explodeInFrontPartialLooking(3, 7, 0, -0.6f);
 
                 cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 2;
                 updateAttackTicker(-cooldown);
             }
+        }
+        if (attackType == AttackType.KICK) {
+            explodeInFrontFlat(1.5f, 4, -0.85f, 0);
+
+            cooldown = (int) (extension.getTitanInstance().titan.stats.attackSpeed * 1.5f);
+            updateAttackTicker(-cooldown);
+            nextStageTimer += 10;
         }
     }
 
@@ -115,12 +124,22 @@ public class ServerCombatSystem {
         SoyNetwork.NETWORK.sendToPlayer(this.player, new SetAttackTickerMessage(ticks));
     }
 
-    public void explodeInFront(float strength, float distance, float endHeightOffset) {
+    public void explodeInFrontPartialLooking(float strength, float distance, float startHeightOffset, float endHeightOffset) {
         strength *= (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 5;
 
-        var start = player.getEyePosition();
+        var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
         var end = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
-        Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getBoundingBox().getYsize(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, en -> true).getLocation();
+        Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
+
+        player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, Level.ExplosionInteraction.TNT);
+    }
+
+    public void explodeInFrontFlat(float strength, float distance, float startHeightOffset, float endHeightOffset) {
+        strength *= (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 5;
+
+        var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
+        var end = player.getLookAngle().multiply(1, 0, 1).normalize().scale(distance);
+        Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
 
         player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, Level.ExplosionInteraction.TNT);
     }

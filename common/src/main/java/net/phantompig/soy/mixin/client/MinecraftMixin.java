@@ -29,6 +29,7 @@ public abstract class MinecraftMixin {
         if (this.soy$combatSystem == null || this.soy$combatSystem.player == null) soy$reinstateCombatSystem();
         if (this.player != null && SoyProperties.PROGRESS.get(this.player) > 0) {
             this.soy$combatSystem.attack();
+            if (this.player.attackStrengthTicker >= 0) player.setYBodyRot(player.getYHeadRot());
             ci.cancel();
         }
     }
