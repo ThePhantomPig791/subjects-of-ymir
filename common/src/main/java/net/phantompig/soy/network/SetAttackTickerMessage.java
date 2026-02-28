@@ -37,6 +37,5 @@ public class SetAttackTickerMessage extends MessageS2C {
     public void handleClient(MessageContext messageContext) {
         if (Minecraft.getInstance().player == null) return;
         Minecraft.getInstance().player.attackStrengthTicker = ticks;
-
     }
 }

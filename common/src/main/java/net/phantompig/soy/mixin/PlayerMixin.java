@@ -71,7 +71,7 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension {
     @Inject(method = "getAttackStrengthScale", at = @At(value = "HEAD"), cancellable = true)
     public void soy$getAttackStrengthScale(float adjustTicks, CallbackInfoReturnable<Float> cir) {
         if (SoyProperties.PROGRESS.get(this) > 0) {
-            final int max = 2 * SoyProperties.ATTACK_SPEED.get(this);
+            final int max = 2 * SoyProperties.ATTACK_TIME.get(this);
             cir.setReturnValue(Mth.clamp((((LivingEntity) (Object) this).attackStrengthTicker + (float) max) / max, 0.0F, 1.0F));
         }
     }

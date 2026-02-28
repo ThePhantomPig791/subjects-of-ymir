@@ -8,6 +8,7 @@ import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.client.animation.BiteAnimation;
 import net.phantompig.soy.client.animation.BlockAnimation;
 import net.phantompig.soy.client.animation.DaggerAnimation;
+import net.phantompig.soy.client.animation.modifier.TitanAttackSpeedModifier;
 import net.phantompig.soy.client.entity.TitanCorpseEntityRenderer;
 import net.phantompig.soy.client.model.TitanCorpseModelLayer;
 import net.phantompig.soy.client.renderer.PlayerInNapeRenderLayer;
@@ -58,7 +59,7 @@ public class SubjectsOfYmirClient {
 
         PlayerAnimationAccess.REGISTER_ANIMATION_EVENT.register((player, animationStack) -> {
             ModifierLayer<IAnimation> layer = new ModifierLayer<>();
-            //layer.addModifierLast(new TitanAttackSpeedModifier(player));
+            layer.addModifierBefore(new TitanAttackSpeedModifier(player));
             animationStack.addAnimLayer(0, layer);
             PlayerAnimationAccess.getPlayerAssociatedData(player).set(SubjectsOfYmir.rsrc("soy_animation"), layer);
         });

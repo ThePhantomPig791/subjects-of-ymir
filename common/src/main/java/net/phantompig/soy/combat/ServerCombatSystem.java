@@ -1,6 +1,9 @@
 package net.phantompig.soy.combat;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
@@ -54,8 +57,22 @@ public class ServerCombatSystem {
 
         if (player.getXRot() > 50) {
             attackType = AttackType.KICK;
+            player.addEffect(new MobEffectInstance(
+                    MobEffects.MOVEMENT_SLOWDOWN,
+                    extension.getTitanInstance().titan.stats.attackSpeed,
+                    4,
+                    false,
+                    false
+            ));
         } else if (player.getXRot() > 30) {
             attackType = AttackType.GROUND;
+            player.addEffect(new MobEffectInstance(
+                    MobEffects.MOVEMENT_SLOWDOWN,
+                    extension.getTitanInstance().titan.stats.attackSpeed / 2,
+                    0,
+                    false,
+                    false
+            ));
         } else {
             attackType = AttackType.PUNCH;
         }
@@ -70,16 +87,15 @@ public class ServerCombatSystem {
             SoyNetwork.NETWORK.sendToPlayer((ServerPlayer) pl, new TitanAttackAnimationMessage(player, animationId));
         });
 
-        player.attackStrengthTicker = -20;
         attackTimer = extension.getTitanInstance().titan.stats.attackSpeed;
-        nextStageTimer = attackTimer + 20;
+        nextStageTimer = (int) (1.2 * attackTimer) + 20;
         updateAttackTicker(-attackTimer);
     }
 
     public void tick() {
         if (extension.getTitanInstance().titan == null) return;
         if (attackTimer > 0) attackTimer--;
-        if (attackTimer == 12 * 20 / extension.getTitanInstance().titan.stats.attackSpeed) {
+        if (attackTimer == Mth.lerpInt(12 / 20f, 0, extension.getTitanInstance().titan.stats.attackSpeed)) {
             attackEffect();
         }
         if (nextStageTimer > 0) nextStageTimer--;
@@ -93,7 +109,7 @@ public class ServerCombatSystem {
 
         if (attackType == AttackType.PUNCH) {
             if (attackStage < 3) {
-                explodeInFrontPartialLooking(1, 5, 0, -0.2f);
+                explodeInFrontPartialLooking(1.5f, 5, 0, -0.2f);
             } else {
                 explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
@@ -105,7 +121,7 @@ public class ServerCombatSystem {
             if (attackStage < 3) {
                 explodeInFrontPartialLooking(1.5f, 6, 0, -0.6f);
             } else {
-                explodeInFrontPartialLooking(3, 7, 0, -0.6f);
+                explodeInFrontPartialLooking(2.5f, 7, 0, -0.6f);
 
                 cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 2;
                 updateAttackTicker(-cooldown);

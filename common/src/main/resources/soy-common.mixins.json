@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "client.MinecraftMixin",
+    "client.MouseHandlerMixin",
     "client.StuckInBodyLayerMixin"
   ],
   "mixins": [
