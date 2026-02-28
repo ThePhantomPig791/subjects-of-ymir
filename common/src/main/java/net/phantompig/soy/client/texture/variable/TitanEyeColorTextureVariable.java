@@ -9,8 +9,6 @@ import net.threetag.palladium.client.dynamictexture.variable.ITextureVariableSer
 import net.threetag.palladium.documentation.JsonDocumentationBuilder;
 import net.threetag.palladium.util.context.DataContext;
 
-import java.awt.*;
-
 public class TitanEyeColorTextureVariable implements ITextureVariable {
     @Override
     public Object get(DataContext context) {

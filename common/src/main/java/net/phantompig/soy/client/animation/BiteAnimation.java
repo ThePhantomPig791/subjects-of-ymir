@@ -6,7 +6,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.power.ability.BiteAbility;
-import net.phantompig.soy.power.ability.BlockAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.threetag.palladium.client.model.animation.PalladiumAnimation;
 import net.threetag.palladium.power.ability.AbilityInstance;

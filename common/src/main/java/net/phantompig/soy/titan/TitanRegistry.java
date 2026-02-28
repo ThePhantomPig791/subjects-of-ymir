@@ -2,8 +2,6 @@ package net.phantompig.soy.titan;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;

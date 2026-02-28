@@ -3,7 +3,6 @@ package net.phantompig.soy.power.condition;
 import com.google.gson.JsonObject;
 import net.minecraft.world.entity.Entity;
 import net.phantompig.soy.player.SoyPlayerExtension;
-import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.condition.Condition;
 import net.threetag.palladium.condition.ConditionSerializer;
 import net.threetag.palladium.util.context.DataContext;

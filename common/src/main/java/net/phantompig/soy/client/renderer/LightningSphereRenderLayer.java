@@ -3,23 +3,17 @@ package net.phantompig.soy.client.renderer;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.util.RenderingUtil;
-import net.threetag.palladium.client.renderer.PalladiumRenderTypes;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
 import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.context.DataContext;
 import net.threetag.palladium.util.json.GsonUtil;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 
 import java.awt.*;
 

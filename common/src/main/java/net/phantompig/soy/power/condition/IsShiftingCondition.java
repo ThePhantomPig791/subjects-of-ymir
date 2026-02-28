@@ -7,8 +7,6 @@ import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.condition.Condition;
 import net.threetag.palladium.condition.ConditionSerializer;
 import net.threetag.palladium.util.context.DataContext;
-import net.threetag.palladium.util.property.IntegerProperty;
-import net.threetag.palladium.util.property.PalladiumProperty;
 
 public class IsShiftingCondition extends Condition {
     public IsShiftingCondition() {}
