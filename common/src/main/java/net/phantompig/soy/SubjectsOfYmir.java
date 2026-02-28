@@ -1,15 +1,10 @@
 package net.phantompig.soy;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.goal.GoalSelector;
-import net.minecraft.world.entity.npc.Villager;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.entity.SoyEntities;
-import net.phantompig.soy.entity.goal.RunFromTitanGoal;
 import net.phantompig.soy.feature.SoyFeatures;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.menu.SoyMenus;
