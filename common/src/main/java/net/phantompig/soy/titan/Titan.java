@@ -190,7 +190,7 @@ public class Titan {
             float strength = (float) Math.pow(fallDistance, entity.getBoundingBox().getYsize() / 18) / 5;
             entity.level().explode(entity,null, null,  pos.x, pos.y, pos.z, strength, false, Level.ExplosionInteraction.TNT, false);
 
-            for (int count = 0; count <= 10 * strength; count++) {
+            for (int count = 0; count <= Math.min(10 * strength, 50); count++) {
                 PlayerUtil.spawnParticleForAll(
                         entity.level(),
                         128,

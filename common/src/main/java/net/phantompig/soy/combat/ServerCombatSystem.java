@@ -48,7 +48,7 @@ public class ServerCombatSystem {
     }
 
     public void attack() {
-        if (attackTimer > 0 || cooldown > 0 || extension == null || extension.getTitanInstance().titan == null) {
+        if (attackTimer > 0 || cooldown > 0 || extension == null || extension.getTitanInstance().titan == null || this.player.isSpectator()) {
             attackStage = 1;
             return;
         }

@@ -14,7 +14,8 @@
     "ItemEntityMixin",
     "LivingEntityMixin",
     "PlayerMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin",
+    "VillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

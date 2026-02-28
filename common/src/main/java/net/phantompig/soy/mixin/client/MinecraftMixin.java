@@ -27,7 +27,7 @@ public abstract class MinecraftMixin {
     @Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
     public void soy$startAttack(CallbackInfoReturnable<Boolean> ci) {
         if (this.soy$combatSystem == null || this.soy$combatSystem.player == null) soy$reinstateCombatSystem();
-        if (this.player != null && SoyProperties.PROGRESS.get(this.player) > 0) {
+        if (this.player != null && SoyProperties.PROGRESS.get(this.player) > 0 && !this.player.isSpectator()) {
             this.soy$combatSystem.attack();
             if (this.player.attackStrengthTicker >= 0) player.setYBodyRot(player.getYHeadRot());
             ci.cancel();
