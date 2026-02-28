@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.util.AnimationUtil;
 import net.threetag.palladiumcore.network.MessageContext;
 import net.threetag.palladiumcore.network.MessageS2C;
@@ -47,7 +46,6 @@ public class TitanAttackAnimationMessage extends MessageS2C {
     public void handleClient(MessageContext messageContext) {
         var player = Minecraft.getInstance().player;
         var entities = Minecraft.getInstance().level.getEntities((Player) null, player.getBoundingBox().inflate(150), pl -> pl.getUUID().equals(this.playerUuid));
-        SubjectsOfYmir.LOGGER.info("entities: {}", entities);
         if (entities.isEmpty()) return;
         if (entities.get(0) instanceof LocalPlayer pl) AnimationUtil.playTitanAnimation(pl, id);
     }

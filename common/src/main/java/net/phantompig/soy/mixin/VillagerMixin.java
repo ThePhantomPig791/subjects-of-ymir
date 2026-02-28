@@ -6,7 +6,6 @@ import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.Level;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.entity.goal.RunFromTitanGoal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,14 +20,9 @@ public abstract class VillagerMixin extends AbstractVillager {
 
     @Inject(method = "registerBrainGoals", at = @At("TAIL"))
     public void soy$registerBrainGoals(Brain<Villager> villagerBrain, CallbackInfo ci) {
-        SubjectsOfYmir.LOGGER.info("applied goal to {}", this);
         GoalSelector goals = this.goalSelector;
         if (this.goalSelector == null) return;
         goals.getAvailableGoals().removeIf(goal -> goal.getGoal() instanceof RunFromTitanGoal);
         goals.addGoal(0, new RunFromTitanGoal(this));
-        SubjectsOfYmir.LOGGER.info("   goals:");
-        goals.getAvailableGoals().forEach(goal -> {
-            SubjectsOfYmir.LOGGER.info("   | {}", goal.getGoal());
-        });
     }
 }
