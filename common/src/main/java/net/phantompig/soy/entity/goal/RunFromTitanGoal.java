@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.property.SoyProperties;
 import org.jetbrains.annotations.Nullable;
 
@@ -81,7 +82,7 @@ public class RunFromTitanGoal extends Goal {
         return this.mob.level()
                 .getEntities(this.mob, this.mob.getBoundingBox().inflate(range))
                 .stream()
-                .filter(en -> SoyProperties.PROGRESS.get(en) != null && SoyProperties.PROGRESS.get(en) > 0)
+                .filter(en -> (!(en instanceof TitanCorpseEntity corpse) || corpse.titanInstance.getDecay() < 0) && SoyProperties.PROGRESS.get(en) != null && SoyProperties.PROGRESS.get(en) > 0)
                 .min(Comparator.comparing(e -> e.distanceTo(this.mob)))
                 .orElse(null);
     }
