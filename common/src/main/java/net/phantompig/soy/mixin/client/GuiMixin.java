@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Gui.class)
 public abstract class GuiMixin {
     @Unique
-    private static ResourceLocation soy$ICONS = SubjectsOfYmir.rsrc("textures/gui/icons.png");
+    private static final ResourceLocation soy$ICONS = SubjectsOfYmir.rsrc("textures/gui/icons.png");
 
     @Unique
     private int soy$maxStageTimer = 0;
