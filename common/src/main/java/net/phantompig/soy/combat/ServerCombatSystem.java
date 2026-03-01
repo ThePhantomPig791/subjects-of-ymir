@@ -123,9 +123,9 @@ public class ServerCombatSystem {
         }
         if (attackType == AttackType.GROUND) {
             if (attackStage < 3) {
-                explodeInFrontPartialLooking(1.5f, 6, 0, -0.6f);
+                explodeInFrontPartialLooking(1.5f, 6, 0.1f, -0.7f);
             } else {
-                explodeInFrontPartialLooking(2.5f, 7, 0, -0.6f);
+                explodeInFrontPartialLooking(2.5f, 7, 0.1f, -0.7f);
 
                 cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 2;
                 nextStageTimer = 0;
