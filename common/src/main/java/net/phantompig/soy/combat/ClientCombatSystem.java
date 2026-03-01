@@ -10,13 +10,18 @@ import net.phantompig.soy.network.TitanAttackMessage;
 public class ClientCombatSystem {
     public final LocalPlayer player;
 
-    public byte cooldown;
+    public int nextStageTimer;
 
     public ClientCombatSystem(LocalPlayer player) {
         this.player = player;
+        this.nextStageTimer = 0;
     }
 
     public void attack() {
         SoyNetwork.NETWORK.sendToServer(new TitanAttackMessage());
+    }
+
+    public void tick() {
+        if (this.nextStageTimer > 0) this.nextStageTimer--;
     }
 }

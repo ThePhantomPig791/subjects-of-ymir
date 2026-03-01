@@ -10,3 +10,5 @@ accessible  method  net/minecraft/sounds/SoundEvent  <init>  (Lnet/minecraft/res
 accessible  field   net/minecraft/world/entity/LivingEntity attackStrengthTicker    I
 
 accessible  field   net/minecraft/world/entity/Mob  goalSelector    Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+
+accessible  method  net/minecraft/client/gui/GuiGraphics    innerBlit   (Lnet/minecraft/resources/ResourceLocation;IIIIIFFFFFFFF)V

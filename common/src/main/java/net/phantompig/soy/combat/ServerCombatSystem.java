@@ -10,6 +10,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.network.SetAttackTickerMessage;
+import net.phantompig.soy.network.SetNextAttackStageTimerMessage;
 import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.network.TitanAttackAnimationMessage;
 import net.phantompig.soy.player.SoyPlayerExtension;
@@ -89,7 +90,8 @@ public class ServerCombatSystem {
 
         attackTimer = extension.getTitanInstance().titan.stats.attackSpeed;
         nextStageTimer = (int) (1.2 * attackTimer) + 20;
-        updateAttackTicker(-attackTimer);
+        sendUpdateAttackTicker(-attackTimer);
+        sendUpdateStageTimer(nextStageTimer);
     }
 
     public void tick() {
@@ -114,7 +116,9 @@ public class ServerCombatSystem {
                 explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
                 cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 3 / 2;
-                updateAttackTicker(-cooldown);
+                nextStageTimer = 0;
+                sendUpdateAttackTicker(-cooldown);
+                sendUpdateStageTimer(nextStageTimer);
             }
         }
         if (attackType == AttackType.GROUND) {
@@ -124,20 +128,26 @@ public class ServerCombatSystem {
                 explodeInFrontPartialLooking(2.5f, 7, 0, -0.6f);
 
                 cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 2;
-                updateAttackTicker(-cooldown);
+                nextStageTimer = 0;
+                sendUpdateAttackTicker(-cooldown);
+                sendUpdateStageTimer(nextStageTimer);
             }
         }
         if (attackType == AttackType.KICK) {
             explodeInFrontFlat(1.5f, 4, -0.85f, 0);
 
             cooldown = (int) (extension.getTitanInstance().titan.stats.attackSpeed * 1.5f);
-            updateAttackTicker(-cooldown);
-            nextStageTimer += 10;
+            nextStageTimer += nextStageTimer / 2;
+            sendUpdateAttackTicker(-cooldown);
+            sendUpdateStageTimer(nextStageTimer);
         }
     }
 
-    public void updateAttackTicker(int ticks) {
+    public void sendUpdateAttackTicker(int ticks) {
         SoyNetwork.NETWORK.sendToPlayer(this.player, new SetAttackTickerMessage(ticks));
+    }
+    public void sendUpdateStageTimer(int ticks) {
+        SoyNetwork.NETWORK.sendToPlayer(this.player, new SetNextAttackStageTimerMessage(ticks));
     }
 
     public void explodeInFrontPartialLooking(float strength, float distance, float startHeightOffset, float endHeightOffset) {
