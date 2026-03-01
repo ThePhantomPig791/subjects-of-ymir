@@ -30,7 +30,7 @@ public abstract class GuiMixin {
 
     @Shadow protected int screenWidth;
 
-    @Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getAttackStrengthScale(F)F", shift = At.Shift.AFTER))
+    @Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;attackIndicator()Lnet/minecraft/client/OptionInstance;"))
     public void soy$renderStageAdvanceIcon(GuiGraphics guiGraphics, CallbackInfo ci) {
         if (this.minecraft instanceof ClientCombatHolder com && SoyProperties.PROGRESS.get(this.minecraft.player) > 0) {
             if (this.minecraft.player == null || this.minecraft.player.attackStrengthTicker < 0) return;
