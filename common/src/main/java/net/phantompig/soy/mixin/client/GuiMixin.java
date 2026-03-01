@@ -18,10 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Gui.class)
 public abstract class GuiMixin {
     @Unique
-    private static ResourceLocation ICONS = SubjectsOfYmir.rsrc("textures/gui/icons.png");
+    private static ResourceLocation soy$ICONS = SubjectsOfYmir.rsrc("textures/gui/icons.png");
 
     @Unique
-    private int maxStageTimer = 0;
+    private int soy$maxStageTimer = 0;
 
     @Shadow @Final
     private Minecraft minecraft;
@@ -36,17 +36,17 @@ public abstract class GuiMixin {
             if (this.minecraft.player == null || this.minecraft.player.attackStrengthTicker < 0) return;
 
             int nextStageTimer = com.soy$getCombatSystem().nextStageTimer;
-            if (nextStageTimer > maxStageTimer) maxStageTimer = nextStageTimer;
+            if (nextStageTimer > soy$maxStageTimer) soy$maxStageTimer = nextStageTimer;
             if (nextStageTimer == 0) {
-                maxStageTimer = 0;
+                soy$maxStageTimer = 0;
                 return;
             }
 
             SubjectsOfYmir.LOGGER.info("timer: {}", nextStageTimer);
 
             int j = this.screenHeight / 2 - 7 + 16, k = this.screenWidth / 2 - 8;
-            float d = (float) nextStageTimer / maxStageTimer;
-            guiGraphics.innerBlit(ICONS, k, k + 16, j, j + 16, 0, 0, 16 / 256f, 0, 16 / 256f, d, d, d, d);
+            float d = (float) nextStageTimer / soy$maxStageTimer;
+            guiGraphics.innerBlit(soy$ICONS, k, k + 16, j, j + 16, 0, 0, 16 / 256f, 0, 16 / 256f, d, d, d, d);
         }
     }
 }
