@@ -182,6 +182,8 @@ public class Titan {
 
         HardeningSystem hardening = hardh.soy$getHardeningSystem();
         hardening.setAllHardening(0);
+        hardening.setKnuckles(0);
+        hardening.setHands(0);
 
 
         if (entity instanceof Player player && ext.getTitanInstance().playerInventory != null) {

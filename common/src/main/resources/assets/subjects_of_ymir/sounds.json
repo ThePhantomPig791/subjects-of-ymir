@@ -88,5 +88,15 @@
         "attenuation_distance": 48
       }
     ]
+  },
+  "quick_harden": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.harden",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:quick_harden",
+        "attenuation_distance": 48
+      }
+    ]
   }
 }

@@ -16,4 +16,5 @@ public class SoyConditionSerializers {
     public static final RegistrySupplier<ConditionSerializer> AT_FULL_HEALTH = CONDITION_SERIALIZERS.register("at_full_health", AtFullHealthCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> STATISTIC = CONDITION_SERIALIZERS.register("statistic", StatisticCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_UNSHIFTING = CONDITION_SERIALIZERS.register("is_unshifting", IsUnshiftingCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> HARDENING = CONDITION_SERIALIZERS.register("hardening", HardeningCondition.Serializer::new);
 }

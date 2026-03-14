@@ -42,8 +42,6 @@ public abstract class GuiMixin {
                 return;
             }
 
-            SubjectsOfYmir.LOGGER.info("timer: {}", nextStageTimer);
-
             int j = this.screenHeight / 2 - 7 + 16, k = this.screenWidth / 2 - 8;
             float d = (float) nextStageTimer / soy$maxStageTimer;
             guiGraphics.innerBlit(soy$ICONS, k, k + 16, j, j + 16, 0, 0, 16 / 256f, 0, 16 / 256f, d, d, d, d);

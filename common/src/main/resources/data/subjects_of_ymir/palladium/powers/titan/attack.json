@@ -114,7 +114,7 @@
         "unlocking": [
           {
             "type": "palladium:ability_unlocked",
-            "ability": "crystal_eject"
+            "ability": "hardening_knuckles_dummy"
           },
           {
             "type": "palladium:property_buyable",
@@ -124,6 +124,65 @@
             "description": {
               "translate": "ability.text.subjects_of_ymir.path_points"
             }
+          }
+        ]
+      }
+    },
+
+    "hardening_knuckles_dummy": {
+      "type": "palladium:dummy",
+      "icon": "subjects_of_ymir:textures/icon/hardening_knuckles.png",
+      "gui_position": [-1.5, -2],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.attack.hardening_knuckles.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.attack.hardening_knuckles.description"
+      },
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "crystal_eject"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 10000
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 7
+          }
+        ]
+      }
+    },
+    "hardening_hands_dummy": {
+      "type": "palladium:dummy",
+      "icon": "subjects_of_ymir:textures/icon/hardening_hands.png",
+      "gui_position": [-1.5, -3],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.attack.hardening_hands.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.attack.hardening_hands.description"
+      },
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "infinite_crystal"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 24000
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 13
           }
         ]
       }
@@ -186,6 +245,74 @@
       }
     },
 
+    "hardening_knuckles": {
+      "type": "subjects_of_ymir:hardening_knuckles",
+      "icon": "subjects_of_ymir:textures/icon/hardening_knuckles.png",
+      "hidden": true,
+      "hidden_in_bar": false,
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.attack.hardening_knuckles.title"
+      },
+      "list_index": 0,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        },
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "hardening_knuckles_dummy"
+          },
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "subjects_of_ymir:hardening",
+              "hardening_type": "knuckles",
+              "min": 1,
+              "max": 1
+            }
+          }
+        ]
+      }
+    },
+    "hardening_hands": {
+      "type": "subjects_of_ymir:hardening_hands",
+      "icon": "subjects_of_ymir:textures/icon/hardening_hands.png",
+      "hidden": true,
+      "hidden_in_bar": false,
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.attack.hardening_hands.title"
+      },
+      "list_index": 0,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        },
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "hardening_hands_dummy"
+          },
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_unlocked",
+              "ability": "hardening_knuckles"
+            }
+          },
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "subjects_of_ymir:hardening",
+              "hardening_type": "hands",
+              "min": 1,
+              "max": 1
+            }
+          }
+        ]
+      }
+    },
+
     "restrict_armor": {
       "type": "palladium:restrict_slots",
       "hidden": true,
@@ -228,6 +355,28 @@
       "conditions": {
         "enabling": {
           "type": "palladium:sprinting"
+        }
+      }
+    },
+
+    "hardening_particles": {
+      "type": "palladium:particles",
+      "emitter": "subjects_of_ymir:hardening_hands",
+      "particle_type": "minecraft:dust",
+      "options": "0.8 0.95 1 1.5",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:or",
+          "conditions": [
+            {
+              "type": "palladium:ability_enabled",
+              "ability": "hardening_knuckles"
+            },
+            {
+              "type": "palladium:ability_enabled",
+              "ability": "hardening_hands"
+            }
+          ]
         }
       }
     }

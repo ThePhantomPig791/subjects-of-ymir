@@ -116,6 +116,10 @@
   "ability.text.subjects_of_ymir.attack.crystal_eject.description": "Apply hardening to every inch of your skin, forming a tough, solid crystal before ejecting from titan form §7(held keybind)§r.",
   "ability.text.subjects_of_ymir.attack.infinite_crystal.title": "Crystal Domain",
   "ability.text.subjects_of_ymir.attack.infinite_crystal.description": "With practice and extra titan serum, you can continue to grow your hardened crystal forever up until ejection.",
+  "ability.text.subjects_of_ymir.attack.hardening_knuckles.title": "Hardened Knuckles",
+  "ability.text.subjects_of_ymir.attack.hardening_knuckles.description": "You can harden the skin of just your fingers, lethally augmenting your punches at the cost of attack speed.",
+  "ability.text.subjects_of_ymir.attack.hardening_hands.title": "Hardening Hands",
+  "ability.text.subjects_of_ymir.attack.hardening_hands.description": "You can harden the rest of your hands, dealing even more damage.",
 
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
   "ability.text.subjects_of_ymir.armored.root.description": "Your titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 10"

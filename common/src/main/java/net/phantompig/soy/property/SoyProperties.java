@@ -24,6 +24,8 @@ public class SoyProperties {
     public static final PalladiumProperty<Integer> ATTACK_TIME = new IntegerProperty("subjects_of_ymir/attack_time").sync(SyncType.EVERYONE);
 
     public static final PalladiumProperty<Integer> HARDENING_ALL = new IntegerProperty("subjects_of_ymir/hardening/all").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Integer> HARDENING_KNUCKLES = new IntegerProperty("subjects_of_ymir/hardening/knuckles").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Integer> HARDENING_HANDS = new IntegerProperty("subjects_of_ymir/hardening/hands").sync(SyncType.EVERYONE);
 
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
@@ -37,6 +39,8 @@ public class SoyProperties {
                 handler.register(PATH_POINTS, 0);
                 handler.register(ATTACK_TIME, 20);
                 handler.register(HARDENING_ALL, 0);
+                handler.register(HARDENING_KNUCKLES, 0);
+                handler.register(HARDENING_HANDS, 0);
             }
         });
     }

@@ -13,7 +13,7 @@ import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.property.*;
 
 public class HardeningAllAbility extends Ability {
-    public static final PalladiumProperty<Integer> TIME = new IntegerProperty("time").configurable("The time it takes to fully crystal harden. After this amount of ticks, the crystal will start to grow outwards while the ability is still enabled. When the ability is disabled, the entity will be ejected from titan form");
+    public static final PalladiumProperty<Integer> TIME = new IntegerProperty("time").configurable("The time it takes to fully crystal harden. When the ability is disabled, the entity will be ejected from titan form");
     public static final PalladiumProperty<String> INFINITE_RANGE_ABILITY = new StringProperty("infinite_range_ability").configurable("Points to an ability in the same power. If that ability is unlocked and enabled, then the crystal will have infinite range (the range does not increase linearly)");
 
     public static final PalladiumProperty<Integer> TIMER = new IntegerProperty("timer").sync(SyncType.NONE);
@@ -52,7 +52,7 @@ public class HardeningAllAbility extends Ability {
             float percentage = entry.getProperty(TIMER) / (float) entry.getProperty(TIME);
             String infRangeName = entry.getProperty(INFINITE_RANGE_ABILITY);
             boolean infRange = holder.getAbilities().containsKey(infRangeName) && holder.getAbilities().get(infRangeName).isEnabled();
-            if (percentage < 1) {
+            if (percentage <= 1) {
                 hardening.setAllHardening(percentage);
             }
             for (int i = 0; i < 4; i++) {

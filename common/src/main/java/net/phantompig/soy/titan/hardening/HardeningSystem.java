@@ -15,6 +15,7 @@ import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.PlayerUtil;
 import org.joml.Vector3f;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class HardeningSystem {
@@ -25,17 +26,20 @@ public class HardeningSystem {
 
     public final LivingEntity entity;
 
-    public int attackTimeIncrease = 0;
+    public static final int INC_ARRAY_LEN = 6;
+    public int[] attackTimeIncrease = new int[INC_ARRAY_LEN]; // like a low-tech attribute with hardcoded uuids for modifiers
+    // 0 = all/general
+    // 1 = knuckles
+    // 2 = fists
+    // 3 = hands
+    // 4 = legs
+    // 5 = unused (potentially for addons)
+    public int getAttackTimeIncrease() {
+        return Arrays.stream(attackTimeIncrease).sum();
+    }
 
     public HardeningSystem(LivingEntity entity) {
         this.entity = entity;
-    }
-
-    public enum HardeningTypes {
-        ALL,
-        HAND,
-        LEGS,
-        NAPE
     }
 
     public float getAllHardening() {
@@ -47,7 +51,26 @@ public class HardeningSystem {
         changeArmor(20 * percentage);
         changeAttackDamage(4 * percentage);
         changeJumpPower(-5 * percentage);
-        attackTimeIncrease = (int) (percentage * 10);
+        attackTimeIncrease[0] = (int) (percentage * 300);
+    }
+
+    public float getKnuckles() {
+        return SoyProperties.HARDENING_KNUCKLES.get(this.entity) / 255f;
+    }
+    public void setKnuckles(float percentage) {
+        SoyProperties.HARDENING_KNUCKLES.set(this.entity, (int) (percentage * 255));
+        changeAttackDamage(3 * percentage);
+        attackTimeIncrease[1] = (int) (percentage * 4);
+    }
+
+    public float getHands() {
+        return SoyProperties.HARDENING_HANDS.get(this.entity) / 255f;
+    }
+    public void setHands(float percentage) {
+        SoyProperties.HARDENING_HANDS.set(this.entity, (int) (percentage * 255));
+        changeAttackDamage(2 * percentage); // remember, they stack, and hands can only come after knuckles (as of yet)
+        changeMovementSpeed(-0.001 * percentage);
+        attackTimeIncrease[1] = (int) (percentage * 3);
     }
 
     public void changeMovementSpeed(double amount) {
@@ -70,7 +93,7 @@ public class HardeningSystem {
 
     public void placePhysicalHardening(float percentage, boolean infiniteRange) {
         double yaw = Math.random() * Math.PI * 2;
-        double pitch = (1.3 * Math.random() - 0.7) * Math.PI * percentage / (percentage + 5) * (1 - percentage / (1.5 * percentage + 20));
+        double pitch = (1.3 * Math.random() - 0.7) * Math.PI * percentage / (percentage + 5) * (infiniteRange ? (1 - percentage / (1.5 * percentage + 20)) : 1);
         double range;
         if (infiniteRange) range = Math.pow(percentage, 0.4);
         else range = (percentage / (percentage + 0.1)) * (0.2 * percentage / (percentage + 1) + 1.5);
@@ -83,7 +106,7 @@ public class HardeningSystem {
         );
 
         if (entity.level().getBlockState(pos).is(SoyBlockTags.HARDENING_CAN_REPLACE) && !entity.getBoundingBox().intersects(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1)) {
-            entity.level().setBlockAndUpdate(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState());
+            entity.level().setBlockAndUpdate(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState()); // TODO fix ghost blocks still appearing
             PlayerUtil.playSoundToAll(entity.level(),
                     pos.getCenter().x,
                     pos.getCenter().y,
@@ -114,18 +137,21 @@ public class HardeningSystem {
 
     public CompoundTag toTag() {
         CompoundTag tag = new CompoundTag();
-        tag.putInt("AttackTimeIncrease", attackTimeIncrease);
+        tag.putIntArray("AttackTimeIncrease", attackTimeIncrease);
         return tag;
     }
     public static HardeningSystem fromTag(LivingEntity entity, CompoundTag tag) {
         HardeningSystem h = new HardeningSystem(entity);
-        h.attackTimeIncrease = tag.getInt("AttackTimeIncrease");
+        h.attackTimeIncrease = tag.getIntArray("AttackTimeIncrease");
+        if (h.attackTimeIncrease.length != INC_ARRAY_LEN) h.attackTimeIncrease = new int[INC_ARRAY_LEN];
         return h;
     }
 
 
     public static void copyPropertiesToEntity(LivingEntity from, LivingEntity to) {
         SoyProperties.HARDENING_ALL.set(to, SoyProperties.HARDENING_ALL.get(from));
+        SoyProperties.HARDENING_KNUCKLES.set(to, SoyProperties.HARDENING_KNUCKLES.get(from));
+        SoyProperties.HARDENING_HANDS.set(to, SoyProperties.HARDENING_HANDS.get(from));
     }
 
     public static void copyTo(HardeningSystem from, HardeningSystem to) {
