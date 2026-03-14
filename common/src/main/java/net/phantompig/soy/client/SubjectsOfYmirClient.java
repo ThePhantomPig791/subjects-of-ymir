@@ -21,6 +21,7 @@ import net.phantompig.soy.particle.*;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
 import net.threetag.palladium.event.PalladiumClientEvents;
+import net.threetag.palladium.util.SplashTextUtil;
 import net.threetag.palladiumcore.registry.client.EntityRendererRegistry;
 import net.threetag.palladiumcore.registry.client.ParticleProviderRegistry;
 
@@ -64,6 +65,8 @@ public class SubjectsOfYmirClient {
             animationStack.addAnimLayer(0, layer);
             PlayerAnimationAccess.getPlayerAssociatedData(player).set(SubjectsOfYmir.rsrc("soy_animation"), layer);
         });
+
+        SplashTextUtil.addRandom(250, "Dedicate your heart!");
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");
     }

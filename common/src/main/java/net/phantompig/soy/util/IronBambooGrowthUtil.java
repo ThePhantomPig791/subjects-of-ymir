@@ -36,7 +36,7 @@ public class IronBambooGrowthUtil {
         if (bambooBlock.getValue(BlockStateProperties.BAMBOO_LEAVES) == BambooLeaves.SMALL) {
             spawnLeaves(level, bamboo, 4);
         }
-        level.setBlock(bamboo, SoyBlocks.IRON_BAMBOO.get().defaultBlockState().setValue(BambooStalkBlock.AGE, bambooBlock.getValue(BambooStalkBlock.AGE)).setValue(BambooStalkBlock.STAGE, 1), 2);
+        level.setBlock(bamboo, SoyBlocks.IRON_BAMBOO.get().defaultBlockState().setValue(BambooStalkBlock.AGE, bambooBlock.getValue(BambooStalkBlock.AGE)).setValue(BambooStalkBlock.STAGE, 1), 3);
 
         PlayerUtil.spawnParticleForAll(
                 level,
@@ -53,8 +53,8 @@ public class IronBambooGrowthUtil {
                 8
         );
         PlayerUtil.playSoundToAll(level, pos.getCenter().x, pos.getCenter().y, pos.getCenter().z, 24, level.getBlockState(pos).getSoundType().getBreakSound(), SoundSource.BLOCKS);
-        if (level.getBlockState(pos).is(Blocks.DEEPSLATE_IRON_ORE)) level.setBlock(pos, Blocks.DEEPSLATE.defaultBlockState(), 2);
-        else if (level.getBlockState(pos).is(Blocks.IRON_ORE)) level.setBlock(pos, Blocks.STONE.defaultBlockState(), 2);
+        if (level.getBlockState(pos).is(Blocks.DEEPSLATE_IRON_ORE)) level.setBlock(pos, Blocks.DEEPSLATE.defaultBlockState(), 3);
+        else if (level.getBlockState(pos).is(Blocks.IRON_ORE)) level.setBlock(pos, Blocks.STONE.defaultBlockState(), 3);
     }
 
     public static void spawnLeaves(Level level, BlockPos pos, int max) {

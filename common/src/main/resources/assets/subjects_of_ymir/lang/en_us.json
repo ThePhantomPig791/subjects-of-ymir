@@ -97,6 +97,8 @@
   "ability.subjects_of_ymir.titan_unshift": "Eject",
   "ability.subjects_of_ymir.block": "Block",
 
+  "ability.text.subjects_of_ymir.path_points": "Path Points",
+
   "ability.text.subjects_of_ymir.root.title": "Power of the Titans",
   "ability.text.subjects_of_ymir.root.description": "Under certain conditions, you are capable of transforming into your titan form.",
   "ability.text.subjects_of_ymir.bite.title": "Bite        ",
@@ -113,7 +115,7 @@
   "ability.text.subjects_of_ymir.attack.crystal_eject.title": "Crystal Ejection",
   "ability.text.subjects_of_ymir.attack.crystal_eject.description": "Apply hardening to every inch of your skin, forming a tough, solid crystal before ejecting from titan form §7(held keybind)§r.",
   "ability.text.subjects_of_ymir.attack.infinite_crystal.title": "Crystal Domain",
-  "ability.text.subjects_of_ymir.attack.infinite_crystal.description": "With practice, you can continue to grow your hardened crystal forever up until ejection.",
+  "ability.text.subjects_of_ymir.attack.infinite_crystal.description": "With practice and extra titan serum, you can continue to grow your hardened crystal forever up until ejection.",
 
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
   "ability.text.subjects_of_ymir.armored.root.description": "Your titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 10"

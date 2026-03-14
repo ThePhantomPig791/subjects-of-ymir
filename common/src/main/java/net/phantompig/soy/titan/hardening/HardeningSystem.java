@@ -69,22 +69,6 @@ public class HardeningSystem {
 
 
     public void placePhysicalHardening(float percentage, boolean infiniteRange) {
-        /*percentage /= percentage + 1;
-        percentage += 0.5f;
-        var pos = this.entity.blockPosition().offset(
-                (int) (3 * this.entity.getBoundingBox().getXsize() * percentage * (Math.random() - 0.5)),
-                (int) (2 * this.entity.getBoundingBox().getYsize() * percentage * (Math.random() - 0.2)),
-                (int) (3 * this.entity.getBoundingBox().getZsize() * percentage * (Math.random() - 0.5))
-        );
-        if (
-                entity.level().getBlockState(pos).is(SoyBlockTags.HARDENING_CAN_REPLACE)
-                        && ShapeUtil.inOval(pos.getCenter().subtract(entity.position()), (float) (1.5 * percentage * this.entity.getBoundingBox().getXsize()), 1, 2, 1)
-                        && !entity.getBoundingBox().intersects(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1)
-        ) {
-            entity.level().setBlock(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState(), 2);
-        }*/
-
-
         double yaw = Math.random() * Math.PI * 2;
         double pitch = (1.3 * Math.random() - 0.7) * Math.PI * percentage / (percentage + 5) * (1 - percentage / (1.5 * percentage + 20));
         double range;
@@ -99,7 +83,7 @@ public class HardeningSystem {
         );
 
         if (entity.level().getBlockState(pos).is(SoyBlockTags.HARDENING_CAN_REPLACE) && !entity.getBoundingBox().intersects(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1)) {
-            entity.level().setBlock(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState(), 2);
+            entity.level().setBlockAndUpdate(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState());
             PlayerUtil.playSoundToAll(entity.level(),
                     pos.getCenter().x,
                     pos.getCenter().y,

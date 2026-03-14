@@ -82,10 +82,21 @@
         "enabling": {
           "type": "palladium:held"
         },
-        "unlocking": {
-          "type": "palladium:ability_unlocked",
-          "ability": "root"
-        }
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 500,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
       }
     },
     "infinite_crystal": {
@@ -106,8 +117,13 @@
             "ability": "crystal_eject"
           },
           {
-            "type": "palladium:experience_level_buyable",
-            "xp_level": 1
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 1000,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
           }
         ]
       }

@@ -1,5 +1,7 @@
 package net.phantompig.soy.power.ability;
 
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
@@ -7,6 +9,7 @@ import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.power.IPowerHolder;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
+import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.property.*;
 
 public class HardeningAllAbility extends Ability {
@@ -29,6 +32,16 @@ public class HardeningAllAbility extends Ability {
     public void firstTick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
         if (enabled) {
             entry.setUniqueProperty(TIMER, 0);
+            PlayerUtil.playSoundToAll(entity.level(),
+                    entity.getX(),
+                    entity.getY(),
+                    entity.getZ(),
+                    48,
+                    SoundEvents.ZOMBIE_VILLAGER_CURE,
+                    SoundSource.PLAYERS,
+                    0.7f,
+                    (float) (0.1 * Math.random() + 1.8)
+            );
         }
     }
 
