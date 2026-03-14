@@ -59,7 +59,7 @@ public class HardeningAllAbility extends Ability {
                 hardening.placePhysicalHardening(percentage, infRange);
             }
             entry.setUniqueProperty(TIMER, entry.getProperty(TIMER) + 1);
-            if (ext.getTitanInstance().getStamina() > 100) ext.getTitanInstance().exhaust(100);
+            if (ext.getTitanInstance().getStamina() > 10) ext.getTitanInstance().exhaust(10);
         }
     }
 

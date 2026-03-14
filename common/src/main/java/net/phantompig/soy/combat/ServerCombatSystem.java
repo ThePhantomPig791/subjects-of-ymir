@@ -115,11 +115,10 @@ public class ServerCombatSystem {
             return;
         }
 
+        double staminaToUse = player.getAttribute(Attributes.ATTACK_DAMAGE).getValue();
         if (attackType == AttackType.PUNCH) {
             if (attackStage < 3) {
                 explodeInFrontPartialLooking(1.5f, 5, 0, -0.2f);
-
-                exhaust((int) (10 * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
             } else {
                 explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
@@ -128,14 +127,12 @@ public class ServerCombatSystem {
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
 
-                exhaust((int) (12f * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
+                staminaToUse *= 1.25;
             }
         }
         if (attackType == AttackType.GROUND) {
             if (attackStage < 3) {
                 explodeInFrontPartialLooking(1.5f, 6, 0.1f, -0.7f);
-
-                exhaust((int) (10 * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
             } else {
                 explodeInFrontPartialLooking(2.5f, 7, 0.1f, -0.7f);
 
@@ -144,7 +141,7 @@ public class ServerCombatSystem {
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
 
-                exhaust((int) (15f * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
+                staminaToUse *= 1.5;
             }
         }
         if (attackType == AttackType.KICK) {
@@ -154,9 +151,9 @@ public class ServerCombatSystem {
             nextStageTimer += nextStageTimer / 2;
             sendUpdateAttackTicker(-cooldown);
             sendUpdateStageTimer(nextStageTimer);
-
-            exhaust((int) (10 * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
         }
+
+        exhaust((int) staminaToUse);
     }
 
     public void exhaust(int stamina) {

@@ -119,7 +119,7 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
         CompoundTag soyTag = compound.contains("Titan", Tag.TAG_COMPOUND) ? compound.getCompound("Titan") : new CompoundTag();
         this.titanInstance = TitanInstance.fromTag(this, soyTag);
         CompoundTag hardeningTag = compound.contains("Hardening", Tag.TAG_COMPOUND) ? compound.getCompound("Hardening") : new CompoundTag();
-        this.titanInstance = TitanInstance.fromTag(this, hardeningTag);
+        this.hardeningSystem = HardeningSystem.fromTag(this, hardeningTag);
     }
 
     @Override

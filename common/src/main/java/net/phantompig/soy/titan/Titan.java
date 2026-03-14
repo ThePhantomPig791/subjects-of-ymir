@@ -274,7 +274,7 @@ public class Titan {
                 );
             }
 
-            ext.getTitanInstance().exhaust((int) (fallDistance * 10));
+            ext.getTitanInstance().exhaust((int) (fallDistance * 2));
         }
     }
 

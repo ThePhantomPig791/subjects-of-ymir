@@ -46,7 +46,7 @@ public class HardeningHandsAbility extends Ability {
                         0.7f,
                         (float) (0.1 * Math.random() + 0.8)
                 );
-                ext.getTitanInstance().exhaust(16);
+                ext.getTitanInstance().exhaust(2);
             }
             entry.setUniqueProperty(TIMER, entry.getProperty(TIMER) + 1);
         }

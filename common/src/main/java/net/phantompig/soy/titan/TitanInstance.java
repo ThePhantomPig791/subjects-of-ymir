@@ -135,7 +135,7 @@ public class TitanInstance {
     }
     public void exhaust(int stamina) {
         setStamina(getStamina() - stamina);
-        regainStaminaCooldown = (int) (50 * stamina / (stamina + 20f));
+        regainStaminaCooldown = (int) (200 * stamina / (stamina + 20f));
     }
     public void regainStamina(int stamina) {
         setStamina(getStamina() + stamina);

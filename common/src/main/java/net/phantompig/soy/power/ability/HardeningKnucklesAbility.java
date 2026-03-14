@@ -43,7 +43,7 @@ public class HardeningKnucklesAbility extends Ability {
                         0.7f,
                         (float) (0.1 * Math.random() + 1)
                 );
-                ext.getTitanInstance().exhaust(14);
+                ext.getTitanInstance().exhaust(1);
             }
             entry.setUniqueProperty(TIMER, entry.getProperty(TIMER) + 1);
         }
