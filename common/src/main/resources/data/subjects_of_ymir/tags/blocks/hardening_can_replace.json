@@ -4,6 +4,9 @@
         "#minecraft:dirt",
         "#minecraft:ice",
         "#minecraft:leaves",
+        "minecraft:snow_block",
+        "minecraft:snow",
+        "minecraft:powder_snow",
 
         "#minecraft:flowers",
         "minecraft:grass",
