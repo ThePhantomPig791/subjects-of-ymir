@@ -132,7 +132,7 @@
     "hardening_knuckles_dummy": {
       "type": "palladium:dummy",
       "icon": "subjects_of_ymir:textures/icon/hardening_knuckles.png",
-      "gui_position": [-1.5, -2],
+      "gui_position": [-1.75, -2],
       "title": {
         "translate": "ability.text.subjects_of_ymir.attack.hardening_knuckles.title"
       },
@@ -242,6 +242,88 @@
           "type": "palladium:ability_enabled",
           "ability": "block"
         }
+      }
+    },
+
+    "attribute_attack_damage_1": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/strength.png",
+      "title": "+0.5 ATK",
+      "gui_position": [0, -2.25],
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 0.5,
+      "operation": 0,
+      "uuid": "31415926-c9fe-4a9a-afb2-b3c6dee2c1a5",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "block_dummy"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 200,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_attack_damage_2": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/strength.png",
+      "title": "+0.5 ATK",
+      "gui_position": [0, -3],
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 0.5,
+      "operation": 0,
+      "uuid": "31415926-d1fe-3a9a-afb2-b3c6dee2c1a2",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_attack_damage_1"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 250,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_attack_damage_3": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/strength.png",
+      "title": "+0.5 ATK",
+      "gui_position": [0, -3.75],
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 0.5,
+      "operation": 0,
+      "uuid": "31415926-a3a3-fa9a-afb2-b3c6dee2c1a2",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_attack_damage_1"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 300,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
       }
     },
 
