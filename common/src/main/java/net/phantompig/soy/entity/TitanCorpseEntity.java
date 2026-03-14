@@ -11,12 +11,17 @@ import net.minecraft.world.level.Level;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.TitanInstance;
+import net.phantompig.soy.titan.hardening.HardeningSystem;
+import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.util.PlayerUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class TitanCorpseEntity extends LivingEntity {
+public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHolder {
     public TitanInstance titanInstance = new TitanInstance(this);
+
+    public HardeningSystem hardeningSystem = new HardeningSystem(this);
 
     public TitanCorpseEntity(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
@@ -52,6 +57,11 @@ public class TitanCorpseEntity extends LivingEntity {
     @Override
     public boolean canBeCollidedWith() {
         return true;
+    }
+
+    @Override
+    public @NotNull HardeningSystem soy$getHardeningSystem() {
+        return this.hardeningSystem;
     }
 
     @Override
@@ -108,11 +118,14 @@ public class TitanCorpseEntity extends LivingEntity {
         super.readAdditionalSaveData(compound);
         CompoundTag soyTag = compound.contains("Titan", Tag.TAG_COMPOUND) ? compound.getCompound("Titan") : new CompoundTag();
         this.titanInstance = TitanInstance.fromTag(this, soyTag);
+        CompoundTag hardeningTag = compound.contains("Hardening", Tag.TAG_COMPOUND) ? compound.getCompound("Hardening") : new CompoundTag();
+        this.titanInstance = TitanInstance.fromTag(this, hardeningTag);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.put("Titan", this.titanInstance.toTag());
+        compound.put("Hardening", this.hardeningSystem.toTag());
     }
 }

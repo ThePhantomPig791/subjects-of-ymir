@@ -2,7 +2,6 @@ package net.phantompig.soy.feature;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -10,6 +9,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.phantompig.soy.block.SoyBlocks;
+import net.phantompig.soy.util.ShapeUtil;
 
 public class IceburstGeodeFeature extends Feature<OreConfiguration> {
     public IceburstGeodeFeature(Codec<OreConfiguration> codec) {
@@ -41,14 +41,14 @@ public class IceburstGeodeFeature extends Feature<OreConfiguration> {
                 for (int z = pos.getZ() - fullBoxRadius; z <= pos.getZ() + fullBoxRadius; ++z) {
                     BlockPos p = new BlockPos(x, y, z);
                     boolean aboveDeepslate = p.getY() > rand.nextFloat() * 3 + 1;
-                    if (withinOvals(p.subtract(pos), 1.5f * r, r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
+                    if (ShapeUtil.withinOvals(p.subtract(pos), 1.5f * r, r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
                         if (aboveDeepslate) level.setBlock(p, Blocks.TUFF.defaultBlockState(), 2);
                         else level.setBlock(p, Blocks.SMOOTH_BASALT.defaultBlockState(), 2);
                     }
-                    if (withinOvals(p.subtract(pos), r, 0.75f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
+                    if (ShapeUtil.withinOvals(p.subtract(pos), r, 0.75f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
                         level.setBlock(p, Blocks.CALCITE.defaultBlockState(), 2);
                     }
-                    if (withinOvals(p.subtract(pos), 0.75f * r, 0.5f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
+                    if (ShapeUtil.withinOvals(p.subtract(pos), 0.75f * r, 0.5f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
                         int i = rand.nextInt(100);
                         if (aboveDeepslate) {
                             if (i <= 5) level.setBlock(p, Blocks.DIAMOND_ORE.defaultBlockState(), 2);
@@ -62,7 +62,7 @@ public class IceburstGeodeFeature extends Feature<OreConfiguration> {
                             else level.setBlock(p, Blocks.DEEPSLATE.defaultBlockState(), 2);
                         }
                     }
-                    if (inOval(p.subtract(pos), 0.5f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
+                    if (ShapeUtil.inOval(p.subtract(pos), 0.5f * r, 1, 2, 1) && level.getBlockState(p).getBlock() != Blocks.BEDROCK) {
                         level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
                     }
                 }
@@ -70,13 +70,5 @@ public class IceburstGeodeFeature extends Feature<OreConfiguration> {
         }
 
         return true;
-    }
-
-    private static boolean inOval(Vec3i pos, float r, int rx, int ry, int rz) {
-        return (Math.pow(pos.getX(), 2) / rx + Math.pow(pos.getY(), 2) / ry + Math.pow(pos.getZ(), 2) / rz) <= r * r;
-    }
-
-    private static boolean withinOvals(Vec3i pos, float r, float outerRadius, int rx, int ry, int rz) {
-        return (Math.pow(pos.getX(), 2) / rx + Math.pow(pos.getY(), 2) / ry + Math.pow(pos.getZ(), 2) / rz) <= r * r && !inOval(pos, outerRadius, rx, ry, rz);
     }
 }

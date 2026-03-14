@@ -1,11 +1,8 @@
 package net.phantompig.soy.power.ability;
 
-import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.phantompig.soy.player.SoyPlayerExtension;
-import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.power.IPowerHolder;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
@@ -28,28 +25,17 @@ public class TitanShiftAbility extends Ability {
 
         if (enabled && charge < maxCharge) {
             titanInstance.setCharge(++charge);
-            // SubjectsOfYmir.LOGGER.info("charge {}", charge);
         } else {
             if (charge >= 1) {
-                // SubjectsOfYmir.LOGGER.info("pr {}" , titanInstance.getProgress());
                 if (progress < titanInstance.titan.maxProgress && !titanInstance.forceUnshift) {
                     if (progress < 0) titanInstance.setProgress(0);
                     if (titanInstance.getProgress() == 0) {
                         // first shifting tick
                         titanInstance.titan.startShift(entity, charge);
-                        titanInstance.startScaleChange();
-                        titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
-                        titanInstance.canShiftTicks = 0;
-
-                        if (entity instanceof Player player) {
-                            titanInstance.playerInventory = player.getInventory().save(new ListTag());
-                            player.getInventory().clearContent();
-                        }
                     }
 
                     // each shifting tick
-                    titanInstance.setProgress(++progress);
-                    titanInstance.titan.tickDuringShift(entity, charge);
+                    titanInstance.titan.tickDuringShift(entity, progress, charge);
                 } else {
                     // completed shift
                     titanInstance.titan.completedShift(entity, charge);
@@ -62,17 +48,10 @@ public class TitanShiftAbility extends Ability {
             titanInstance.titan.tick(entity);
         }
 
-        // triggered from the unshift ability. i moved it here so you can "cancel" mid-shift, the other option was to make another property for tracking cancelled shifts
         if (titanInstance.forceUnshift && titanInstance.getProgress() > 0) {
             titanInstance.forceUnshift = false;
 
             titanInstance.titan.unshift(entity);
-
-            if (entity instanceof Player player && titanInstance.playerInventory != null) {
-                player.getInventory().dropAll();
-                player.getInventory().load(titanInstance.playerInventory);
-                titanInstance.playerInventory = null;
-            }
         }
     }
 

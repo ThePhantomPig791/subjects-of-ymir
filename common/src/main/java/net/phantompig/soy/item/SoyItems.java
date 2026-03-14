@@ -38,6 +38,8 @@ public class SoyItems {
     public static final RegistrySupplier<Item> COMPRESSION_TABLE = ITEMS.register("compression_table", () -> new BlockItem(SoyBlocks.COMPRESSION_TABLE.get(), new Item.Properties()));
     public static final RegistrySupplier<Item> INJECTION = ITEMS.register("injection", () -> new InjectionItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
+    public static final RegistrySupplier<Item> HARDENING_BLOCK = ITEMS.register("hardening_block", () -> new BlockItem(SoyBlocks.HARDENING_BLOCK.get(), new Item.Properties()));
+
 
 
     private static final String[] UNIFORM_EMBLEMS = {"garrison_", "military_police_", "survey_corps_"};
@@ -49,8 +51,16 @@ public class SoyItems {
         public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(SubjectsOfYmir.MOD_ID, Registries.CREATIVE_MODE_TAB);
 
         public static final RegistrySupplier<CreativeModeTab> SOY = TABS.register("soy",
-                () -> CreativeModeTabRegistry.create(Component.translatable("itemGroup.subjects_of_ymir.soy"),
-                        () ->  new ItemStack(RIB.get())));
+            () -> CreativeModeTabRegistry.create(Component.translatable("itemGroup.subjects_of_ymir.soy"),
+                () ->  {
+                    ItemStack stack = new ItemStack(INJECTION.get());
+                    if (stack.getItem() instanceof DataHoldingItem d) {
+                        d.set(stack, 100);
+                    }
+                    return stack;
+                }
+            )
+        );
     }
 
     public static class ToolTiers {
@@ -110,6 +120,7 @@ public class SoyItems {
             entries.add(IRON_BAMBOO_SWORD.get());
             entries.add(IRON_BAMBOO_DAGGER.get());
             entries.add(COMPRESSION_TABLE.get());
+            entries.add(HARDENING_BLOCK.get());
 
             for (RegistrySupplier<Item> s : UNIFORMS) {
                 entries.add(s.get());

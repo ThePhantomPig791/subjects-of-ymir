@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
@@ -26,6 +27,8 @@ import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
+import net.phantompig.soy.titan.hardening.HardeningSystem;
+import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.power.SuperpowerUtil;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.json.GsonUtil;
@@ -70,6 +73,8 @@ public class Titan {
 
 
     public void startShift(LivingEntity entity, int charge) {
+        if (!(entity instanceof SoyPlayerExtension ext)) return;
+
         SuperpowerUtil.addSuperpower(entity, this.powerPath);
         if (entity.getAttribute(Attributes.MAX_HEALTH).getModifier(TITAN_HEALTH_ATTRIBUTE_UUID) == null) {
             entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(new AttributeModifier(TITAN_HEALTH_ATTRIBUTE_UUID, "titan extra health", this.stats.extraHealth, AttributeModifier.Operation.ADDITION));
@@ -85,6 +90,9 @@ public class Titan {
         entity.removeAllEffects();
 
         if (entity instanceof Player player) {
+            ext.getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
+            player.getInventory().clearContent();
+
             player.awardStat(SoyStats.TIMES_SHIFTED, 1);
 
             PlayerUtil.playSound(player, entity.getX(), entity.getY(), entity.getZ(), SoySounds.SHIFT_LOCAL.get(), SoundSource.PLAYERS);
@@ -98,9 +106,15 @@ public class Titan {
 
         entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20, 10, true, false));
         entity.addEffect(new MobEffectInstance(MobEffects.SATURATION, 20, 10, true, false));
+
+        ext.getTitanInstance().startScaleChange();
+        ext.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
+        ext.getTitanInstance().canShiftTicks = 0;
     }
 
-    public void tickDuringShift(LivingEntity entity, int charge) {
+    public void tickDuringShift(LivingEntity entity, int progress, int charge) {
+        if (!(entity instanceof SoyPlayerExtension ext)) return;
+        ext.getTitanInstance().setProgress(++progress);
         entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, Level.ExplosionInteraction.MOB, false).explode();
     }
 
@@ -109,7 +123,11 @@ public class Titan {
     }
 
     public void unshift(LivingEntity entity) {
-        if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null) return;
+        unshift(entity, true, true);
+    }
+
+    public void unshift(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
+        if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh)) return;
 
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
@@ -128,25 +146,28 @@ public class Titan {
 
 
         // corpse
-        TitanCorpseEntity corpse = new TitanCorpseEntity(SoyEntities.TITAN_CORPSE.get(), entity.level());
-        corpse.setPos(entity.getPosition(0));
-        corpse.setXRot(entity.getXRot());
-        corpse.setYRot(entity.getYRot());
-        corpse.setYHeadRot(entity.yHeadRot);
-        corpse.setDeltaMovement(entity.getDeltaMovement().scale(1.1));
-        corpse.hasImpulse = true; // TODO fix this. no momentum is carried over
+        if (spawnCorpse) {
+            TitanCorpseEntity corpse = new TitanCorpseEntity(SoyEntities.TITAN_CORPSE.get(), entity.level());
+            corpse.setPos(entity.getPosition(0));
+            corpse.setXRot(entity.getXRot());
+            corpse.setYRot(entity.getYRot());
+            corpse.setYHeadRot(entity.yHeadRot);
+            corpse.setDeltaMovement(entity.getDeltaMovement().scale(1.1));
+            corpse.hasImpulse = true; // TODO fix this. no momentum is carried over
 
-        TitanInstance.copyPropertiesTo(ext.getTitanInstance(), corpse.titanInstance);
-        if (corpse.titanInstance.titan == null) {
-            corpse.discard();
-            return;
+            TitanInstance.copyTo(ext.getTitanInstance(), corpse.titanInstance);
+            HardeningSystem.copyTo(hardh.soy$getHardeningSystem(), corpse.hardeningSystem);
+            if (corpse.titanInstance.titan == null) {
+                corpse.discard();
+                return;
+            }
+            if (shouldCorpseDecay) corpse.titanInstance.isCorpse = true;
+            corpse.titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
+            corpse.titanInstance.setScaleImmediate();
+            SuperpowerUtil.addSuperpower(corpse, corpse.titanInstance.titan.powerPath);
+
+            entity.level().addFreshEntity(corpse);
         }
-        corpse.titanInstance.isCorpse = true;
-        corpse.titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
-        corpse.titanInstance.setScaleImmediate();
-        SuperpowerUtil.addSuperpower(corpse, corpse.titanInstance.titan.powerPath);
-
-        entity.level().addFreshEntity(corpse);
 
 
         ext.getTitanInstance().setProgress(0);
@@ -157,6 +178,16 @@ public class Titan {
         entity.addDeltaMovement(entity.getLookAngle().scale(-0.5));
         if (entity instanceof ServerPlayer player) {
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
+        }
+
+        HardeningSystem hardening = hardh.soy$getHardeningSystem();
+        hardening.setAllHardening(0);
+
+
+        if (entity instanceof Player player && ext.getTitanInstance().playerInventory != null) {
+            player.getInventory().dropAll();
+            player.getInventory().load(ext.getTitanInstance().playerInventory);
+            ext.getTitanInstance().playerInventory = null;
         }
     }
 

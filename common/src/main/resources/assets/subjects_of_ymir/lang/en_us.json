@@ -24,6 +24,7 @@
   "subtitle.subjects_of_ymir.electricity": "Electricity crackles",
   "subtitle.subjects_of_ymir.steam": "Steam hisses",
   "subtitle.subjects_of_ymir.gas_burst": "Gas bursts",
+  "subtitle.subjects_of_ymir.short_harden": "Titan hardens",
 
   
   "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",
@@ -67,6 +68,8 @@
 
   "block.subjects_of_ymir.compression_table": "Compression Table",
 
+  "block.subjects_of_ymir.hardening_block": "Hardening Block",
+
 
   "container.subjects_of_ymir.compression": "Compression Table",
 
@@ -107,6 +110,11 @@
 
   "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
   "ability.text.subjects_of_ymir.attack.root.description": "Your titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 0",
+  "ability.text.subjects_of_ymir.attack.crystal_eject.title": "Crystal Ejection",
+  "ability.text.subjects_of_ymir.attack.crystal_eject.description": "Apply hardening to every inch of your skin, forming a tough, solid crystal before ejecting from titan form §7(held keybind)§r.",
+  "ability.text.subjects_of_ymir.attack.infinite_crystal.title": "Crystal Domain",
+  "ability.text.subjects_of_ymir.attack.infinite_crystal.description": "With practice, you can continue to grow your hardened crystal forever up until ejection.",
+
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
   "ability.text.subjects_of_ymir.armored.root.description": "Your titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 10"
 }

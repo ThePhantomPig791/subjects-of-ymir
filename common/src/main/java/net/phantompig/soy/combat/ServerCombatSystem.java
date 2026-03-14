@@ -14,11 +14,14 @@ import net.phantompig.soy.network.SetNextAttackStageTimerMessage;
 import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.network.TitanAttackAnimationMessage;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.titan.hardening.HardeningSystem;
+import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.util.EntityUtil;
 
 public class ServerCombatSystem {
     public final ServerPlayer player;
     public SoyPlayerExtension extension;
+    public HardeningSystem hardening;
 
     public int attackTimer, nextStageTimer, cooldown;
 
@@ -29,6 +32,9 @@ public class ServerCombatSystem {
         this.player = player;
         if (player instanceof SoyPlayerExtension ext) {
             extension = ext;
+        }
+        if (player instanceof HardeningSystemHolder hardh) {
+            this.hardening = hardh.soy$getHardeningSystem();
         }
     }
 
@@ -60,7 +66,7 @@ public class ServerCombatSystem {
             attackType = AttackType.KICK;
             player.addEffect(new MobEffectInstance(
                     MobEffects.MOVEMENT_SLOWDOWN,
-                    extension.getTitanInstance().titan.stats.attackSpeed,
+                    (extension.getTitanInstance().titan.stats.attackSpeed + hardening.attackTimeIncrease),
                     4,
                     false,
                     false
@@ -69,7 +75,7 @@ public class ServerCombatSystem {
             attackType = AttackType.GROUND;
             player.addEffect(new MobEffectInstance(
                     MobEffects.MOVEMENT_SLOWDOWN,
-                    extension.getTitanInstance().titan.stats.attackSpeed / 2,
+                    (extension.getTitanInstance().titan.stats.attackSpeed + hardening.attackTimeIncrease) / 2,
                     0,
                     false,
                     false
@@ -88,7 +94,7 @@ public class ServerCombatSystem {
             SoyNetwork.NETWORK.sendToPlayer((ServerPlayer) pl, new TitanAttackAnimationMessage(player, animationId));
         });
 
-        attackTimer = extension.getTitanInstance().titan.stats.attackSpeed;
+        attackTimer = (extension.getTitanInstance().titan.stats.attackSpeed + hardening.attackTimeIncrease);
         nextStageTimer = (int) (1.2 * attackTimer) + 20;
         sendUpdateAttackTicker(-attackTimer);
         sendUpdateStageTimer(nextStageTimer);
@@ -97,7 +103,7 @@ public class ServerCombatSystem {
     public void tick() {
         if (extension.getTitanInstance().titan == null) return;
         if (attackTimer > 0) attackTimer--;
-        if (attackTimer == Mth.lerpInt(12 / 20f, 0, extension.getTitanInstance().titan.stats.attackSpeed)) {
+        if (attackTimer == Mth.lerpInt(12 / 20f, 0, (extension.getTitanInstance().titan.stats.attackSpeed + hardening.attackTimeIncrease))) {
             attackEffect();
         }
         if (nextStageTimer > 0) nextStageTimer--;
@@ -115,7 +121,7 @@ public class ServerCombatSystem {
             } else {
                 explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
-                cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 3 / 2;
+                cooldown = (extension.getTitanInstance().titan.stats.attackSpeed + hardening.attackTimeIncrease) * 3 / 2;
                 nextStageTimer = 0;
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
@@ -127,7 +133,7 @@ public class ServerCombatSystem {
             } else {
                 explodeInFrontPartialLooking(2.5f, 7, 0.1f, -0.7f);
 
-                cooldown = extension.getTitanInstance().titan.stats.attackSpeed * 2;
+                cooldown = (extension.getTitanInstance().titan.stats.attackSpeed + hardening.attackTimeIncrease) * 2;
                 nextStageTimer = 0;
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
@@ -136,7 +142,7 @@ public class ServerCombatSystem {
         if (attackType == AttackType.KICK) {
             explodeInFrontFlat(1.5f, 4, -0.85f, 0);
 
-            cooldown = (int) (extension.getTitanInstance().titan.stats.attackSpeed * 1.5f);
+            cooldown = (int) ((extension.getTitanInstance().titan.stats.attackSpeed + hardening.attackTimeIncrease) * 1.5f);
             nextStageTimer += nextStageTimer / 2;
             sendUpdateAttackTicker(-cooldown);
             sendUpdateStageTimer(nextStageTimer);

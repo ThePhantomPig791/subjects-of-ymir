@@ -186,7 +186,7 @@ public class TitanInstance {
         SoyProperties.ATTACK_TIME.set(to, SoyProperties.ATTACK_TIME.get(from));
     }
 
-    public static void copyPropertiesTo(TitanInstance from, TitanInstance to) {
+    public static void copyTo(TitanInstance from, TitanInstance to) {
         copyPropertiesToEntity(from.entity, to.entity);
         to.titan = from.titan;
         to.variant = from.variant;

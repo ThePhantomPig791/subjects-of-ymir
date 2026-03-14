@@ -15,6 +15,7 @@ public class SoySounds {
     public static final RegistrySupplier<SoundEvent> ELECTRICITY_FINAL = make("electricity_final", 16);
     public static final RegistrySupplier<SoundEvent> STEAM = make("steam", 32);
     public static final RegistrySupplier<SoundEvent> GAS_BURST = make("gas_burst", 16);
+    public static final RegistrySupplier<SoundEvent> SHORT_HARDEN = make("short_harden", 48);
 
     public static RegistrySupplier<SoundEvent> make(String name, float range) {
         return SOUNDS.register(name, () -> new SoundEvent(SubjectsOfYmir.rsrc(name), range, false));

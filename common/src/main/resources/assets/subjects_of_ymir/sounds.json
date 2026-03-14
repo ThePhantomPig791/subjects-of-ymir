@@ -77,5 +77,16 @@
         "name": "subjects_of_ymir:gas_burst_4"
       }
     ]
+  },
+
+  "short_harden": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.harden",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:short_harden",
+        "attenuation_distance": 48
+      }
+    ]
   }
 }

@@ -34,7 +34,7 @@ public abstract class DataHoldingItem extends Item {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        return get(stack) != max;
+        return get(stack) != max && get(stack) != 0;
     }
     @Override
     public int getBarColor(ItemStack stack) {

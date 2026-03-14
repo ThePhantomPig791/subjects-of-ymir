@@ -1,0 +1,18 @@
+{
+  "base": "subjects_of_ymir:textures/models/hardening/all.png",
+  "variables": {
+    "HARDENING": {
+      "type": "subjects_of_ymir:hardening_all",
+      "divide": 1.25,
+      "min": 0,
+      "max": 205
+    }
+  },
+  "transformers": [
+    {
+      "type": "palladium:alpha_mask",
+      "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#HARDENING.png"
+    }
+  ],
+  "output": "subjects_of_ymir:textures/models/hardening/all_#HARDENING"
+}

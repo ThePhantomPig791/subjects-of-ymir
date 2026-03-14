@@ -35,6 +35,7 @@ public class SubjectsOfYmirClient {
         DynamicTextureManager.registerVariable(new TitanProgressTextureVariable.Serializer());
         DynamicTextureManager.registerVariable(new TitanDecayTextureVariable.Serializer());
         DynamicTextureManager.registerVariable(new TitanEyeColorTextureVariable.Serializer());
+        DynamicTextureManager.registerVariable(new HardeningAllVariable.Serializer());
 
         PalladiumClientEvents.REGISTER_ANIMATIONS.register(registry -> {
             registry.accept(SubjectsOfYmir.rsrc("block"), BlockAnimation.INSTANCE);

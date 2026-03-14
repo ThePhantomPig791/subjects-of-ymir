@@ -46,9 +46,9 @@ public class IronBambooGrowthUtil {
                 pos.getCenter().x,
                 pos.getCenter().y,
                 pos.getCenter().z,
-                0,
-                0,
-                0,
+                0.75f,
+                0.75f,
+                0.75f,
                 0.1f,
                 8
         );

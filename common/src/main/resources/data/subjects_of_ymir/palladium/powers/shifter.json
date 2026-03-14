@@ -5,13 +5,12 @@
   "background": "minecraft:textures/block/bone_block_top.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/shifter.png",
   "gui_display_type": "tree",
+  "persistent_data": true,
   "icon": {
     "type": "palladium:compound",
     "icons": [
       "subjects_of_ymir:textures/icon/titan_face/outline.png",
-      "#subjects_of_ymir:face_icon/head",
-      "#subjects_of_ymir:face_icon/eyes",
-      "#subjects_of_ymir:face_icon/hair"
+      "subjects_of_ymir:textures/icon/titan_face/steve.png"
     ]
   },
   "abilities": {
@@ -28,9 +27,7 @@
         "type": "palladium:compound",
         "icons": [
           "subjects_of_ymir:textures/icon/titan_face/outline.png",
-          "#subjects_of_ymir:face_icon/head",
-          "#subjects_of_ymir:face_icon/eyes",
-          "#subjects_of_ymir:face_icon/hair"
+          "subjects_of_ymir:textures/icon/titan_face/steve.png"
         ]
       }
     },

@@ -15,4 +15,5 @@ public class SoyAbilities {
     public static final RegistrySupplier<Ability> DAGGER = ABILITIES.register("dagger", DaggerAbility::new);
     public static final RegistrySupplier<Ability> REPEAT_SOUND = ABILITIES.register("repeat_sound", RepeatSoundAbility::new);
     public static final RegistrySupplier<Ability> STAT_HEALING = ABILITIES.register("stat_healing", StatHealingAbility::new);
+    public static final RegistrySupplier<Ability> HARDENING_ALL = ABILITIES.register("hardening_all", HardeningAllAbility::new);
 }

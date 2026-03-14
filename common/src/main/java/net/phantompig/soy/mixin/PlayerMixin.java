@@ -16,6 +16,8 @@ import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.TitanInstance;
+import net.phantompig.soy.titan.hardening.HardeningSystem;
+import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,10 +29,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin extends Entity implements SoyPlayerExtension {
+public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, HardeningSystemHolder {
     @Unique
     @NotNull
     private TitanInstance soy$titanInstance = new TitanInstance((Player) (Object) this);
+
+    @Unique
+    @NotNull
+    private HardeningSystem soy$hardeningSystem = new HardeningSystem((Player) (Object) this);
 
     private PlayerMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -40,11 +46,14 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension {
     public void soy$readAdditionalSaveData(CompoundTag compound, CallbackInfo ci) {
         CompoundTag soyTag = compound.contains("Titan", Tag.TAG_COMPOUND) ? compound.getCompound("Titan") : new CompoundTag();
         soy$titanInstance = TitanInstance.fromTag((Player) (Object) this, soyTag);
+        CompoundTag hardeningTag = compound.contains("Hardening", Tag.TAG_COMPOUND) ? compound.getCompound("Hardening") : new CompoundTag();
+        soy$hardeningSystem = HardeningSystem.fromTag((Player) (Object) this, hardeningTag);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
     public void soy$addAdditionalSaveData(CompoundTag compound, CallbackInfo ci) {
         compound.put("Titan", this.soy$titanInstance.toTag());
+        compound.put("Hardening", this.soy$hardeningSystem.toTag());
     }
 
     @Override
@@ -57,6 +66,12 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension {
     public void setTitanInstance(TitanInstance instance) {
         soy$titanInstance = instance;
         instance.updateProperties();
+    }
+
+    @Override
+    @NotNull
+    public HardeningSystem soy$getHardeningSystem() {
+        return this.soy$hardeningSystem;
     }
 
 
