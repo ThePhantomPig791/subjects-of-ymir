@@ -13,8 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class LivingEntityMixin {
     @Shadow public abstract void setHealth(float health);
 
-    @Shadow public abstract boolean removeAllEffects();
-
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
     public void soy$isPushable(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this instanceof SoyPlayerExtension extension && extension.getTitanInstance().getProgress() > 0) {
@@ -24,8 +22,8 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "checkTotemDeathProtection", at = @At("HEAD"), cancellable = true)
     private void soy$checkTotemDeathProtection(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
-        if (this instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
-            ext.getTitanInstance().forceUnshift = true;
+        if (this instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && ext.getTitanInstance().getProgress() > 0) {
+            ext.getTitanInstance().titan.unshiftWithAdverseEffects((LivingEntity) (Object) this);
             this.setHealth(1.0F);
             cir.setReturnValue(true);
         }

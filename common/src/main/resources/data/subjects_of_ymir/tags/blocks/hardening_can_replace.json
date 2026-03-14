@@ -3,15 +3,26 @@
     "values": [
         "#minecraft:dirt",
         "#minecraft:ice",
-        "#minecraft:flowers",
+        "#minecraft:leaves",
 
+        "#minecraft:flowers",
         "minecraft:grass",
         "minecraft:tall_grass",
+        "minecraft:seagrass",
+        "minecraft:tall_seagrass",
+        "minecraft:fern",
+        "minecraft:large_fern",
+        "#minecraft:saplings",
+        "minecraft:dead_bush",
+        "minecraft:cactus",
 
         "minecraft:grass_block",
         "minecraft:gravel",
         "minecraft:sand",
         "minecraft:red_sand",
+        "minecraft:sandstone",
+        "minecraft:clay",
+        "minecraft:dirt_path",
 
         "minecraft:air",
         "minecraft:cave_air",

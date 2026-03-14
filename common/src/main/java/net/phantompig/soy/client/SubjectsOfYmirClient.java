@@ -13,6 +13,7 @@ import net.phantompig.soy.client.entity.TitanCorpseEntityRenderer;
 import net.phantompig.soy.client.model.TitanCorpseModelLayer;
 import net.phantompig.soy.client.renderer.PlayerInNapeRenderLayer;
 import net.phantompig.soy.client.renderer.LightningSphereRenderLayer;
+import net.phantompig.soy.client.screen.overlay.SoyOverlays;
 import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.DataHoldingItem;
@@ -23,6 +24,7 @@ import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager
 import net.threetag.palladium.event.PalladiumClientEvents;
 import net.threetag.palladium.util.SplashTextUtil;
 import net.threetag.palladiumcore.registry.client.EntityRendererRegistry;
+import net.threetag.palladiumcore.registry.client.OverlayRegistry;
 import net.threetag.palladiumcore.registry.client.ParticleProviderRegistry;
 
 public class SubjectsOfYmirClient {
@@ -69,6 +71,9 @@ public class SubjectsOfYmirClient {
         });
 
         SplashTextUtil.addRandom(250, "Dedicate your heart!");
+
+        OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/titan_exhaustion", SoyOverlays::renderExhaustionOverlay);
+        OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/all_hardening", SoyOverlays::renderAllHardeningOverlay);
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");
     }

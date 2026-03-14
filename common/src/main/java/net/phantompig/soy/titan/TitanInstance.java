@@ -4,7 +4,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +39,8 @@ public class TitanInstance {
 
     public ListTag playerInventory;
 
+    public int regainStaminaCooldown = 0;
+
 
     public TitanInstance(LivingEntity entity) {
         this(entity, null);
@@ -61,6 +65,7 @@ public class TitanInstance {
 
     public void tick() {
         if (this.canShiftTicks > 0) this.canShiftTicks--;
+        staminaTick();
     }
 
 
@@ -114,8 +119,53 @@ public class TitanInstance {
         return new Color(red, green, blue);
     }
 
+    public int getStamina() {
+        return SoyProperties.STAMINA.get(this.entity);
+    }
+    public void setStamina(int stamina) {
+        int m = getMaxStamina();
+        if (stamina > m) stamina = m;
+        SoyProperties.STAMINA.set(this.entity, stamina);
+    }
+    public int getMaxStamina() {
+        return SoyProperties.MAX_STAMINA.get(this.entity);
+    }
+    public void setMaxStamina(int max) {
+        SoyProperties.MAX_STAMINA.set(this.entity, max);
+    }
+    public void exhaust(int stamina) {
+        setStamina(getStamina() - stamina);
+        regainStaminaCooldown = (int) (50 * stamina / (stamina + 20f));
+    }
+    public void regainStamina(int stamina) {
+        setStamina(getStamina() + stamina);
+    }
+    public void staminaTick() {
+        if (entity instanceof ServerPlayer player) {
+            player.displayClientMessage(Component.literal(getStamina() + " / " + getMaxStamina()), true);
+        }
+        if (regainStaminaCooldown > 0) regainStaminaCooldown--;
+        else {
+            int stam = getStamina(), max = getMaxStamina();
+            if (stam < max) {
+                if (this.getProgress() > 0) {
+                    if (stam < 0.7f * max) SoyProperties.PATH_POINTS.set(entity, SoyProperties.PATH_POINTS.get(entity) + 1);
+                    regainStamina(1);
+                    if (Math.random() < 0.1) setMaxStamina(max + 1);
+                } else {
+                    if (Math.random() < 0.4) regainStamina(1);
+
+                }
+            }
+        }
+
+        if (getStamina() <= 0 && this.titan != null && this.getProgress() > 0) {
+            this.titan.unshiftWithAdverseEffects(entity);
+        }
+    }
+
     public boolean canShift() {
-        return this.canShiftTicks > 0;
+        return this.canShiftTicks > 0 && getStamina() > 0.7 * getMaxStamina();
     }
 
 

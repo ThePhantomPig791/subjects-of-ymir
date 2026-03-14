@@ -126,6 +126,41 @@ public class Titan {
         unshift(entity, true, true);
     }
 
+    public void unshiftWithAdverseEffects(LivingEntity entity) {
+        unshift(entity, true, true);
+        entity.addEffect(new MobEffectInstance(
+                MobEffects.WEAKNESS,
+                1200,
+                1,
+                false,
+                false
+        ));
+        entity.addEffect(new MobEffectInstance(
+                MobEffects.MOVEMENT_SLOWDOWN,
+                800,
+                0,
+                false,
+                false
+        ));
+        entity.addEffect(new MobEffectInstance(
+                MobEffects.CONFUSION,
+                160,
+                0,
+                false,
+                false
+        ));
+        entity.addEffect(new MobEffectInstance(
+                MobEffects.BLINDNESS,
+                240,
+                0,
+                false,
+                false
+        ));
+        if (entity instanceof Player player) {
+            player.causeFoodExhaustion(8);
+        }
+    }
+
     public void unshift(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
         if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh)) return;
 
@@ -218,6 +253,7 @@ public class Titan {
     }
 
     public void onFall(LivingEntity entity, float fallDistance) {
+        if (!(entity instanceof SoyPlayerExtension ext)) return;
         if (fallDistance > entity.getBoundingBox().getYsize() / 4) {
             var pos = entity.getPosition(0).add(0, -1, 0);
             float strength = (float) Math.pow(fallDistance, entity.getBoundingBox().getYsize() / 18) / 5;
@@ -237,6 +273,8 @@ public class Titan {
                         1
                 );
             }
+
+            ext.getTitanInstance().exhaust((int) (fallDistance * 10));
         }
     }
 

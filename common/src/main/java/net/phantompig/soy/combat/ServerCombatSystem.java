@@ -118,6 +118,8 @@ public class ServerCombatSystem {
         if (attackType == AttackType.PUNCH) {
             if (attackStage < 3) {
                 explodeInFrontPartialLooking(1.5f, 5, 0, -0.2f);
+
+                exhaust((int) (10 * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
             } else {
                 explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
@@ -125,11 +127,15 @@ public class ServerCombatSystem {
                 nextStageTimer = 0;
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
+
+                exhaust((int) (12f * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
             }
         }
         if (attackType == AttackType.GROUND) {
             if (attackStage < 3) {
                 explodeInFrontPartialLooking(1.5f, 6, 0.1f, -0.7f);
+
+                exhaust((int) (10 * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
             } else {
                 explodeInFrontPartialLooking(2.5f, 7, 0.1f, -0.7f);
 
@@ -137,6 +143,8 @@ public class ServerCombatSystem {
                 nextStageTimer = 0;
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
+
+                exhaust((int) (15f * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
             }
         }
         if (attackType == AttackType.KICK) {
@@ -146,7 +154,13 @@ public class ServerCombatSystem {
             nextStageTimer += nextStageTimer / 2;
             sendUpdateAttackTicker(-cooldown);
             sendUpdateStageTimer(nextStageTimer);
+
+            exhaust((int) (10 * player.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
         }
+    }
+
+    public void exhaust(int stamina) {
+        extension.getTitanInstance().exhaust(stamina);
     }
 
     public void sendUpdateAttackTicker(int ticks) {

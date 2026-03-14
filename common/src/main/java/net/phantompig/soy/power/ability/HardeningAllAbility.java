@@ -47,7 +47,7 @@ public class HardeningAllAbility extends Ability {
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (enabled && entity instanceof HardeningSystemHolder hardh) {
+        if (enabled && entity instanceof HardeningSystemHolder hardh && entity instanceof SoyPlayerExtension ext) {
             HardeningSystem hardening = hardh.soy$getHardeningSystem();
             float percentage = entry.getProperty(TIMER) / (float) entry.getProperty(TIME);
             String infRangeName = entry.getProperty(INFINITE_RANGE_ABILITY);
@@ -59,6 +59,7 @@ public class HardeningAllAbility extends Ability {
                 hardening.placePhysicalHardening(percentage, infRange);
             }
             entry.setUniqueProperty(TIMER, entry.getProperty(TIMER) + 1);
+            if (ext.getTitanInstance().getStamina() > 100) ext.getTitanInstance().exhaust(100);
         }
     }
 

@@ -31,7 +31,7 @@ public class HardeningHandsAbility extends Ability {
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (enabled && entity instanceof HardeningSystemHolder hardh) {
+        if (enabled && entity instanceof HardeningSystemHolder hardh && entity instanceof SoyPlayerExtension ext) {
             HardeningSystem hardening = hardh.soy$getHardeningSystem();
             float percentage = entry.getProperty(TIMER) / (float) entry.getProperty(TIME);
             if (percentage <= 1) {
@@ -46,6 +46,7 @@ public class HardeningHandsAbility extends Ability {
                         0.7f,
                         (float) (0.1 * Math.random() + 0.8)
                 );
+                ext.getTitanInstance().exhaust(16);
             }
             entry.setUniqueProperty(TIMER, entry.getProperty(TIMER) + 1);
         }
