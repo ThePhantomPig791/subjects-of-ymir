@@ -10,11 +10,11 @@ import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.phantompig.soy.SubjectsOfYmir;
 
 public class AnimationUtil {
-    public static void playTitanAnimation(LocalPlayer player, String id) {
+    public static void playTitanAnimation(AbstractClientPlayer player, String id) {
         KeyframeAnimation anim = PlayerAnimationRegistry.getAnimation(SubjectsOfYmir.rsrc(id));
         ModifierLayer<IAnimation>  animationContainer = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData(player).get(SubjectsOfYmir.rsrc("soy_animation"));
 

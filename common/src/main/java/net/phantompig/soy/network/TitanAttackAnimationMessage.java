@@ -1,7 +1,7 @@
 package net.phantompig.soy.network;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.util.AnimationUtil;
@@ -47,6 +47,7 @@ public class TitanAttackAnimationMessage extends MessageS2C {
         var player = Minecraft.getInstance().player;
         var entities = Minecraft.getInstance().level.getEntities((Player) null, player.getBoundingBox().inflate(150), pl -> pl.getUUID().equals(this.playerUuid));
         if (entities.isEmpty()) return;
-        if (entities.get(0) instanceof LocalPlayer pl) AnimationUtil.playTitanAnimation(pl, id);
+        if (entities.get(0) instanceof AbstractClientPlayer pl) AnimationUtil.playTitanAnimation(pl, id);
+        // TIL there are two different types of client players: LocalPlayer and RemotePlayer
     }
 }

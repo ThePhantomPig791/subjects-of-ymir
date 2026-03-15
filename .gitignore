@@ -1,6 +1,7 @@
 build/
 *.ipr
 run/
+run_2/
 !run/addonpacks
 *.iws
 out/

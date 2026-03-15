@@ -48,9 +48,9 @@ public class HardeningSystem {
     public void setAllHardening(float percentage) {
         SoyProperties.HARDENING_ALL.set(this.entity, (int) (percentage * 255));
         changeMovementSpeed(percentage == 0 ? 0 : -Easing.outExpo(percentage));
+        changeJumpPower(-5 * percentage);
         changeArmor(20 * percentage);
         changeAttackDamage(4 * percentage);
-        changeJumpPower(-5 * percentage);
         attackTimeIncrease[0] = (int) (percentage * 300);
     }
 
@@ -92,6 +92,8 @@ public class HardeningSystem {
 
 
     public void placePhysicalHardening(float percentage, boolean infiniteRange) {
+        if (this.entity.level().isClientSide()) return;
+
         double yaw = Math.random() * Math.PI * 2;
         double pitch = (1.3 * Math.random() - 0.7) * Math.PI * percentage / (percentage + 5) * (infiniteRange ? (1 - percentage / (1.5 * percentage + 20)) : 1);
         double range;
@@ -106,7 +108,7 @@ public class HardeningSystem {
         );
 
         if (entity.level().getBlockState(pos).is(SoyBlockTags.HARDENING_CAN_REPLACE) && !entity.getBoundingBox().intersects(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1)) {
-            entity.level().setBlockAndUpdate(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState()); // TODO fix ghost blocks still appearing
+            entity.level().setBlockAndUpdate(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState());
             PlayerUtil.playSoundToAll(entity.level(),
                     pos.getCenter().x,
                     pos.getCenter().y,

@@ -55,11 +55,10 @@ public class HardeningAllAbility extends Ability {
             if (percentage <= 1) {
                 hardening.setAllHardening(percentage);
             }
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 8; i++) {
                 hardening.placePhysicalHardening(percentage, infRange);
             }
             entry.setUniqueProperty(TIMER, entry.getProperty(TIMER) + 1);
-            if (ext.getTitanInstance().getStamina() > 10) ext.getTitanInstance().exhaust(10);
         }
     }
 
@@ -68,7 +67,7 @@ public class HardeningAllAbility extends Ability {
         if (enabled) {
             if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null) return;
             entry.setUniqueProperty(TIMER, 0);
-            ext.getTitanInstance().titan.unshift(entity, true, false);
+            if (ext.getTitanInstance().getProgress() > 0) ext.getTitanInstance().titan.unshift(entity, true, false);
         }
     }
 }
