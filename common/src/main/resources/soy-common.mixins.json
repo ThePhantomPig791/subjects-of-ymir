@@ -12,6 +12,7 @@
     "BlockBehaviourMixin",
     "BlockMixin",
     "EntityMixin",
+    "FoodDataMixin",
     "ItemEntityMixin",
     "LivingEntityMixin",
     "PlayerMixin",

@@ -53,7 +53,7 @@ public class HardeningAllAbility extends Ability {
             String infRangeName = entry.getProperty(INFINITE_RANGE_ABILITY);
             boolean infRange = holder.getAbilities().containsKey(infRangeName) && holder.getAbilities().get(infRangeName).isEnabled();
             if (percentage <= 1) {
-                hardening.setAllHardening(percentage);
+                if (!entity.level().isClientSide()) hardening.setAllHardening(percentage);
             }
             for (int i = 0; i < 8; i++) {
                 hardening.placePhysicalHardening(percentage, infRange);

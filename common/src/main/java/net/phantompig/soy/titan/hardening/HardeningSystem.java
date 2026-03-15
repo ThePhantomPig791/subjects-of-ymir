@@ -34,8 +34,18 @@ public class HardeningSystem {
     // 3 = hands
     // 4 = legs
     // 5 = unused (potentially for addons)
+    public int attackTimeIncreaseSum = 0;
+    public boolean attackTimeIncreaseSumDirty = true;
     public int getAttackTimeIncrease() {
-        return Arrays.stream(attackTimeIncrease).sum();
+        if (attackTimeIncreaseSumDirty) {
+            attackTimeIncreaseSumDirty = false;
+            attackTimeIncreaseSum = Arrays.stream(attackTimeIncrease).sum();
+        }
+        return attackTimeIncreaseSum;
+    }
+    public void setAttackTimeIncrease(int index, int amount) {
+        attackTimeIncrease[index] = amount;
+        attackTimeIncreaseSumDirty = true;
     }
 
     public HardeningSystem(LivingEntity entity) {
@@ -51,7 +61,7 @@ public class HardeningSystem {
         changeJumpPower(-5 * percentage);
         changeArmor(20 * percentage);
         changeAttackDamage(4 * percentage);
-        attackTimeIncrease[0] = (int) (percentage * 300);
+        setAttackTimeIncrease(0, (int) (percentage * 400));
     }
 
     public float getKnuckles() {
@@ -60,7 +70,7 @@ public class HardeningSystem {
     public void setKnuckles(float percentage) {
         SoyProperties.HARDENING_KNUCKLES.set(this.entity, (int) (percentage * 255));
         changeAttackDamage(3 * percentage);
-        attackTimeIncrease[1] = (int) (percentage * 4);
+        setAttackTimeIncrease(1, (int) (percentage * 4));
     }
 
     public float getHands() {
@@ -68,9 +78,9 @@ public class HardeningSystem {
     }
     public void setHands(float percentage) {
         SoyProperties.HARDENING_HANDS.set(this.entity, (int) (percentage * 255));
-        changeAttackDamage(2 * percentage); // remember, they stack, and hands can only come after knuckles (as of yet)
+        changeAttackDamage(2 * percentage); // remember, they stack, and hands can only come after knuckles
         changeMovementSpeed(-0.001 * percentage);
-        attackTimeIncrease[1] = (int) (percentage * 3);
+        setAttackTimeIncrease(1, (int) (percentage * 3));
     }
 
     public void changeMovementSpeed(double amount) {

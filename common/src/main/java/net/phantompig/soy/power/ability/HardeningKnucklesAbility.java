@@ -32,7 +32,7 @@ public class HardeningKnucklesAbility extends Ability {
             HardeningSystem hardening = hardh.soy$getHardeningSystem();
             float percentage = entry.getProperty(TIMER) / (float) entry.getProperty(TIME);
             if (percentage <= 1) {
-                hardening.setKnuckles(percentage);
+                if (!entity.level().isClientSide()) hardening.setKnuckles(percentage);
                 PlayerUtil.playSoundToAll(entity.level(),
                         entity.getX(),
                         entity.getY() + entity.getBoundingBox().getYsize() / 2,

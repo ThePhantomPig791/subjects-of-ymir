@@ -35,7 +35,7 @@ public class HardeningHandsAbility extends Ability {
             HardeningSystem hardening = hardh.soy$getHardeningSystem();
             float percentage = entry.getProperty(TIMER) / (float) entry.getProperty(TIME);
             if (percentage <= 1) {
-                hardening.setHands(percentage);
+                if (!entity.level().isClientSide()) hardening.setHands(percentage);
                 PlayerUtil.playSoundToAll(entity.level(),
                         entity.getX(),
                         entity.getY() + entity.getBoundingBox().getYsize() / 2,

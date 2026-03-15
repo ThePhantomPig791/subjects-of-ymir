@@ -296,7 +296,7 @@ public class TitanCommand {
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                                        if (playerExt.getTitanInstance().getStamina() == playerExt.getTitanInstance().getMaxStamina()) {
+                                                        if (amount > 0 && playerExt.getTitanInstance().getStamina() == playerExt.getTitanInstance().getMaxStamina()) {
                                                             source.sendFailure(Component.translatable("commands.titan.error.maxStamina", entity.getDisplayName()));
                                                             return 0;
                                                         }

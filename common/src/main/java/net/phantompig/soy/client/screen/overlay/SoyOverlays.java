@@ -18,9 +18,9 @@ public class SoyOverlays {
         if (!(minecraft.player instanceof SoyPlayerExtension ext)) return;
         float a = 1 - Mth.clamp((float) ext.getTitanInstance().getStamina() / ext.getTitanInstance().getMaxStamina(), 0, 1);
         if (ext.getTitanInstance().getProgress() == 0) {
-            a = Easing.inCubic(a);
+            a = Easing.outCubic(a);
         } else {
-            a = Easing.outQuad(a);
+            a = Easing.inQuad(a);
         }
         if (a > 0) guiGraphics.innerBlit(EXHAUSTION_LOCATION, 0, width, 0, height, 0, 0, 1, 0, 1, 1, 1, 1, a);
     }
