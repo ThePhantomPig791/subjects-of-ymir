@@ -79,7 +79,7 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, 
     public void soy$causeFallDamage(float fallDistance, float multiplier, DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (this.soy$titanInstance.titan != null && this.soy$titanInstance.getProgress() > 0) {
             this.soy$titanInstance.titan.onFall((LivingEntity) (Object) this, fallDistance);
-        } // TODO make corpses explode on fall too?
+        }
     }
 
 

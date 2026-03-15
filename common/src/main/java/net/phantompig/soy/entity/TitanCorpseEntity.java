@@ -4,6 +4,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
@@ -112,6 +113,11 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
         }
     }
 
+    @Override
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+        if (this.titanInstance.titan != null) this.titanInstance.titan.onFall(this, fallDistance);
+        return super.causeFallDamage(fallDistance, multiplier, source);
+    }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {

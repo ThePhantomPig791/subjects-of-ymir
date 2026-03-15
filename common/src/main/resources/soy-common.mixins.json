@@ -6,6 +6,7 @@
     "client.GuiMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
+    "client.PlayerRendererMixin",
     "client.StuckInBodyLayerMixin"
   ],
   "mixins": [
