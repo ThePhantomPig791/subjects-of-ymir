@@ -236,9 +236,18 @@
       "icon": "subjects_of_ymir:textures/icon/steam_healing_overdrive.png",
       "list_index": 1,
       "conditions": {
-        "enabling": {
-          "type": "palladium:held"
-        },
+        "enabling": [
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "subjects_of_ymir:at_full_health"
+            }
+          },
+          {
+            "type": "palladium:held",
+            "cooldown": 160
+          }
+        ],
         "unlocking": [
           {
             "type": "palladium:ability_unlocked",

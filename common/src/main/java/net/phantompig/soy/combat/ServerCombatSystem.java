@@ -105,6 +105,10 @@ public class ServerCombatSystem {
 
     public void tick() {
         if (extension.getTitanInstance().titan == null) return;
+        if (extension.getTitanInstance().getProgress() == 0) {
+            attackTimer = nextStageTimer = cooldown = 0;
+            return;
+        }
         if (attackTimer > 0) attackTimer--;
         if (attackTimer == Mth.lerpInt(12 / 20f, 0, (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease()))) {
             attackEffect();
