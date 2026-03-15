@@ -27,7 +27,7 @@ public class TitanUnshiftAbility extends Ability {
         if (enabled) {
             var titanInstance = ((SoyPlayerExtension) entity).getTitanInstance();
             if (titanInstance.titan == null || titanInstance.getProgress() == 0) return;
-            titanInstance.titan.unshift(entity, entry.getProperty(SPAWN_CORPSE), true);
+            titanInstance.titan.unshift(entity, entry.getProperty(SPAWN_CORPSE));
         }
     }
 

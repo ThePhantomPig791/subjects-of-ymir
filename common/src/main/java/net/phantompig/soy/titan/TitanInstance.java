@@ -125,6 +125,7 @@ public class TitanInstance {
     public void setStamina(int stamina) {
         int m = getMaxStamina();
         if (stamina > m) stamina = m;
+        if (stamina < 0) stamina = 0;
         SoyProperties.STAMINA.set(this.entity, stamina);
     }
     public int getMaxStamina() {

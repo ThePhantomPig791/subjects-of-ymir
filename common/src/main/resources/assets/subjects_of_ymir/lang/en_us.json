@@ -11,6 +11,10 @@
   "commands.titan.success.points.subtract": "Took %s Path Points from %s (now %s)",
   "commands.titan.success.noTitan": "%s does not have a titan",
   "commands.titan.success.get": "%s has titan %s with variant \"%s\"",
+  "commands.titan.success.stamina.get": "%s has %s stamina available out of %s max stamina",
+  "commands.titan.success.stamina.set_max": "Set %s's max stamina to %s (was %s)",
+  "commands.titan.success.stamina.set": "Set %s's stamina to %s (was %s)",
+  "commands.titan.success.stamina.add": "Added %s stamina to %s (now %s)",
 
   "commands.titan.error.notPlayer": "Targeted entity must be a player",
   "commands.titan.error.shifted": "Cannot modify %s's titan while they are shifted",
@@ -18,6 +22,7 @@
   "commands.titan.error.noSuchTitan": "Could not find titan %s",
   "commands.titan.error.noSuchVariant": "Could not find variant \"%s\" for titan %s",
   "commands.titan.error.noTitan": "%s does not have a titan",
+  "commands.titan.error.maxStamina": "%s is already at full stamina",
 
 
   "subtitle.subjects_of_ymir.shift": "Titan shifts",

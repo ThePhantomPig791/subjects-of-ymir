@@ -123,11 +123,16 @@ public class Titan {
     }
 
     public void unshift(LivingEntity entity) {
-        unshift(entity, true, true);
+        unshift(entity, true);
+    }
+
+    public void unshift(LivingEntity entity, boolean spawnCorpse) {
+        boolean decay = (entity instanceof HardeningSystemHolder hh && hh.soy$getHardeningSystem().getAllHardening() == 0);
+        unshift(entity, spawnCorpse, decay);
     }
 
     public void unshiftWithAdverseEffects(LivingEntity entity) {
-        unshift(entity, true, true);
+        unshift(entity);
         entity.addEffect(new MobEffectInstance(
                 MobEffects.WEAKNESS,
                 1200,

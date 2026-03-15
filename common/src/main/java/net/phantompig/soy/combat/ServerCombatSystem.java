@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.network.SetAttackTickerMessage;
 import net.phantompig.soy.network.SetNextAttackStageTimerMessage;
 import net.phantompig.soy.network.SoyNetwork;
@@ -92,7 +91,6 @@ public class ServerCombatSystem {
         String animationId = attackType.toString() + attackStage;
 
         player.level().getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(150)).forEach(e -> {
-            SubjectsOfYmir.LOGGER.info("detected entity {}", e);
             if (e instanceof ServerPlayer pl) SoyNetwork.NETWORK.sendToPlayer(pl, new TitanAttackAnimationMessage(player, animationId));
         });
 
