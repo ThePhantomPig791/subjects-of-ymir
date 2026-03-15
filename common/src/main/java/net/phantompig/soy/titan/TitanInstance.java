@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.threetag.palladiumcore.util.Platform;
 import org.jetbrains.annotations.Nullable;
 import virtuoel.pehkui.api.ScaleTypes;
 
@@ -142,8 +143,8 @@ public class TitanInstance {
         setStamina(getStamina() + stamina);
     }
     public void staminaTick() {
-        if (entity instanceof ServerPlayer player) {
-            player.displayClientMessage(Component.literal(getStamina() + " / " + getMaxStamina()), true);
+        if (!Platform.isProduction() && entity instanceof ServerPlayer player) {
+            player.displayClientMessage(Component.literal("Stamina: " + getStamina() + " / " + getMaxStamina()), true);
         }
         if (regainStaminaCooldown > 0) regainStaminaCooldown--;
         else {

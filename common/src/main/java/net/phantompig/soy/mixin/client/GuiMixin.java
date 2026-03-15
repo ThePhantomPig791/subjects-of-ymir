@@ -1,5 +1,6 @@
 package net.phantompig.soy.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -7,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.property.SoyProperties;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,5 +48,12 @@ public abstract class GuiMixin {
             float d = (float) nextStageTimer / soy$maxStageTimer;
             guiGraphics.innerBlit(soy$ICONS, k, k + 16, j, j + 16, 0, 0, 16 / 256f, 0, 16 / 256f, d, d, d, d);
         }
+    }
+
+    @ModifyExpressionValue(method = "renderPlayerHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;getVehicleMaxHearts(Lnet/minecraft/world/entity/LivingEntity;)I", opcode = Opcodes.GETFIELD))
+    public int soy$removeHungerBar(int original) {
+        if (SoyProperties.PROGRESS.get(this.minecraft.player) > 0) {
+            return -1;
+        } else return original;
     }
 }
