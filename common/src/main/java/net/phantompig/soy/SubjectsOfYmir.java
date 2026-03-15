@@ -74,6 +74,15 @@ public class SubjectsOfYmir {
             }
         }));
 
+        LivingEntityEvents.DEATH.register(((livingEntity, damageSource) -> {
+            if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
+                if (++ext.getTitanInstance().deaths >= 13) {
+                    ext.setTitanInstance(new TitanInstance(livingEntity));
+                }
+            }
+            return EventResult.pass();
+        }));
+
         PlayerEvents.CLONE.register(((oldPlayer, newPlayer, wasDeath) -> {
             if (oldPlayer instanceof SoyPlayerExtension oldExt && newPlayer instanceof SoyPlayerExtension newExt) {
                 newExt.setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.getTitanInstance().toTag()));

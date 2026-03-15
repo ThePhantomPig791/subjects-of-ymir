@@ -42,6 +42,8 @@ public class TitanInstance {
 
     public int regainStaminaCooldown = 0;
 
+    public int deaths = 0;
+
 
     public TitanInstance(LivingEntity entity) {
         this(entity, null);
@@ -67,6 +69,10 @@ public class TitanInstance {
     public void tick() {
         if (this.canShiftTicks > 0) this.canShiftTicks--;
         staminaTick();
+
+        if (!Platform.isProduction() && entity instanceof ServerPlayer player) {
+            player.displayClientMessage(Component.literal("Stamina: " + getStamina() + " / " + getMaxStamina() + ", Deaths: " + this.deaths), true);
+        }
     }
 
 
@@ -143,9 +149,6 @@ public class TitanInstance {
         setStamina(getStamina() + stamina);
     }
     public void staminaTick() {
-        if (!Platform.isProduction() && entity instanceof ServerPlayer player) {
-            player.displayClientMessage(Component.literal("Stamina: " + getStamina() + " / " + getMaxStamina()), true);
-        }
         if (regainStaminaCooldown > 0) regainStaminaCooldown--;
         else {
             int stam = getStamina(), max = getMaxStamina();
@@ -243,6 +246,8 @@ public class TitanInstance {
         to.titan = from.titan;
         to.variant = from.variant;
         to.stacks = new ArrayList<>(from.stacks);
+        to.playerInventory = from.playerInventory;
+        to.deaths = from.deaths;
     }
 
     public static TitanInstance fromTag(LivingEntity entity, CompoundTag tag) {
@@ -259,6 +264,7 @@ public class TitanInstance {
         if (entity instanceof Player) {
             inst.playerInventory = tag.getList("PlayerInventory", Tag.TAG_COMPOUND);
         }
+        inst.deaths = tag.getInt("Deaths");
         inst.updateProperties();
         return inst;
     }
@@ -273,6 +279,7 @@ public class TitanInstance {
         tag.put("Stacks", stacks);
         tag.putBoolean("IsCorpse", this.isCorpse);
         if (this.playerInventory != null) tag.put("PlayerInventory", this.playerInventory);
+        tag.putInt("Deaths", this.deaths);
         return tag;
     }
 
