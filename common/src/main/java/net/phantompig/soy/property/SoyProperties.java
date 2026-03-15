@@ -22,6 +22,7 @@ public class SoyProperties {
 
     public static final PalladiumProperty<Integer> PATH_POINTS = new IntegerProperty("subjects_of_ymir/path_points").sync(SyncType.NONE);
     public static final PalladiumProperty<Integer> ATTACK_TIME = new IntegerProperty("subjects_of_ymir/attack_time").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Integer> ATTACK_TIME_INCREASE = new IntegerProperty("subjects_of_ymir/attack_time_increase").sync(SyncType.EVERYONE);
 
     public static final PalladiumProperty<Integer> HARDENING_ALL = new IntegerProperty("subjects_of_ymir/hardening/all").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<Integer> HARDENING_KNUCKLES = new IntegerProperty("subjects_of_ymir/hardening/knuckles").sync(SyncType.EVERYONE);
@@ -41,6 +42,7 @@ public class SoyProperties {
                 handler.register(EYE_COLOR, Color.WHITE);
                 handler.register(PATH_POINTS, 0);
                 handler.register(ATTACK_TIME, 20);
+                handler.register(ATTACK_TIME_INCREASE, 0);
                 handler.register(HARDENING_ALL, 0);
                 handler.register(HARDENING_KNUCKLES, 0);
                 handler.register(HARDENING_HANDS, 0);

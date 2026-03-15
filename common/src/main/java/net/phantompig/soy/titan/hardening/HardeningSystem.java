@@ -40,6 +40,7 @@ public class HardeningSystem {
         if (attackTimeIncreaseSumDirty) {
             attackTimeIncreaseSumDirty = false;
             attackTimeIncreaseSum = Arrays.stream(attackTimeIncrease).sum();
+            SoyProperties.ATTACK_TIME_INCREASE.set(entity, attackTimeIncreaseSum);
         }
         return attackTimeIncreaseSum;
     }
@@ -60,7 +61,7 @@ public class HardeningSystem {
         changeMovementSpeed(percentage == 0 ? 0 : -Easing.outExpo(percentage));
         changeJumpPower(-5 * percentage);
         changeArmor(20 * percentage);
-        changeAttackDamage(4 * percentage);
+        changeAttackDamage(-20 * percentage);
         setAttackTimeIncrease(0, (int) (percentage * 400));
     }
 

@@ -13,7 +13,7 @@ public class TitanAttackSpeedModifier extends SpeedModifier {
 
     @Override
     public void tick() {
-        int attackSpeed = SoyProperties.ATTACK_TIME.get(player);
+        int attackSpeed = SoyProperties.ATTACK_TIME.get(player) + SoyProperties.ATTACK_TIME_INCREASE.get(player);
         this.speed = 20f / attackSpeed;
         super.tick();
     }
