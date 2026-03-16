@@ -18,6 +18,7 @@ import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
+import net.phantompig.soy.util.ListUtil;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class TitanCommand {
                                                 source.sendFailure(Component.translatable("commands.titan.error.noSuchTitan", id));
                                                 return 0;
                                             }
-                                            var variant = TitanRegistry.getRandom(TitanRegistry.getTitan(id).variants);
+                                            var variant = ListUtil.getRandom(TitanRegistry.getTitan(id).variants);
 
                                             return setTitanAndVariant(entity, id, variant, source);
                                         })

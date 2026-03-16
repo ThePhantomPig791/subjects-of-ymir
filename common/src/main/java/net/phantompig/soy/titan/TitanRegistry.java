@@ -15,6 +15,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.util.ListUtil;
 import net.threetag.palladium.addonpack.log.AddonPackLog;
 import net.threetag.palladiumcore.registry.ReloadListenerRegistry;
 import org.jetbrains.annotations.Nullable;
@@ -65,13 +66,9 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
     }
 
     public static Tuple<Titan, String> getRandomTitan() { // TODO make it have to go through a full cycle before giving the same titan again? like so if someone gets the attack, someone immediately after can't also get the attack
-        Tuple<Titan, String> tuple = new Tuple<>(getRandom(TitanRegistry.getTitans().values().asList()), null);
-        tuple.setB(getRandom(tuple.getA().variants));
+        Tuple<Titan, String> tuple = new Tuple<>(ListUtil.getRandom(TitanRegistry.getTitans().values().asList()), null);
+        tuple.setB(ListUtil.getRandom(tuple.getA().variants));
         return tuple;
-    }
-
-    public static <T> T getRandom(List<T> list) {
-        return list.get((int) (list.size() * Math.random()));
     }
 
 
@@ -86,10 +83,10 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
             available.removeIf(used::contains);
         }
 
-        ResourceLocation titanRsrc = getRandom(available);
+        ResourceLocation titanRsrc = ListUtil.getRandom(available);
         Titan titan = TitanRegistry.getTitan(titanRsrc);
         data.use(titanRsrc);
-        return new Tuple<>(titan, getRandom(titan.variants));
+        return new Tuple<>(titan, ListUtil.getRandom(titan.variants));
     }
 
 
