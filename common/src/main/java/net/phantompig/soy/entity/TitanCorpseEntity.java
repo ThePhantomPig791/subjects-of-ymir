@@ -116,7 +116,7 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
     @Override
     public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
         if (this.titanInstance.titan != null) this.titanInstance.titan.onFall(this, fallDistance);
-        return super.causeFallDamage(fallDistance, multiplier, source);
+        return false;
     }
 
     @Override
