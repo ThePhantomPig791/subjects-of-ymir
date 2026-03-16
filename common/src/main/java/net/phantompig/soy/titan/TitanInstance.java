@@ -294,16 +294,25 @@ public class TitanInstance {
                 '}';
     }
 
-    @Nullable
     public static Tuple<Titan, String> randomizeFor(LivingEntity entity) {
-        if (!(entity instanceof SoyPlayerExtension playerExt)) return null;
         Tuple<Titan, String> randomTitanAndVariant = TitanRegistry.getRandomTitan();
-        TitanInstance newTitan = new TitanInstance(entity, randomTitanAndVariant.getA(), randomTitanAndVariant.getB());
+        randomizeFor(entity, randomTitanAndVariant);
+        return randomTitanAndVariant;
+    }
+
+    public static Tuple<Titan, String> sequentialRandomizeFor(LivingEntity entity) {
+        Tuple<Titan, String> randomTitanAndVariant = TitanRegistry.getSequentialRandomTitan(entity.getServer());
+        randomizeFor(entity, randomTitanAndVariant);
+        return randomTitanAndVariant;
+    }
+
+    private static void randomizeFor(LivingEntity entity, Tuple<Titan, String> titan) {
+        if (!(entity instanceof SoyPlayerExtension playerExt)) return;
+        TitanInstance newTitan = new TitanInstance(entity, titan.getA(), titan.getB());
         playerExt.setTitanInstance(newTitan);
         playerExt.getTitanInstance().randomizeEyeColor();
         playerExt.getTitanInstance().setProgress(0);
         playerExt.getTitanInstance().setCharge(0);
         playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
-        return randomTitanAndVariant;
     }
 }

@@ -31,7 +31,7 @@ public class InjectionItem extends SpinalFluidHoldingItem {
         if (stack.getItem() instanceof InjectionItem inj && player instanceof SoyPlayerExtension ext) {
             if (ext.getTitanInstance().titan == null) {
                 if (inj.get(stack) == inj.max) {
-                    TitanInstance.randomizeFor(player);
+                    TitanInstance.sequentialRandomizeFor(player);
                     injectSound(player.level(), player.getX(), player.getY(), player.getZ());
                     inj.set(stack, 0);
                     return true;
