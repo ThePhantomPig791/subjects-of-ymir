@@ -22,7 +22,9 @@ public class InjectionItem extends SpinalFluidHoldingItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         if (level.isClientSide()) return InteractionResultHolder.pass(stack);
-        if (player.isCrouching() && inject(stack, player)) return InteractionResultHolder.consume(stack);
+        if (player.isCrouching()) {
+            if (inject(stack, player)) return InteractionResultHolder.consume(stack);
+        }
         // TODO injecting others
         return InteractionResultHolder.pass(stack);
     }

@@ -15,5 +15,6 @@
     "extra_attack_damage": 8,
     "attack_speed": 30
   },
-  "base_eye_color": "#ffffcc"
+  "base_eye_color": "#ffffcc",
+  "weight": 1
 }

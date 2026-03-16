@@ -54,10 +54,11 @@ public class Titan {
     public final int maxCharge;
     @Nullable
     public final Color baseEyeColor;
+    public final double weight;
 
     public final TitanStats stats;
 
-    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, Color baseEyeColor, TitanStats stats) {
+    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, Color baseEyeColor, TitanStats stats, double weight) {
         this.id = id;
         this.variants = variants;
         this.resolution = resolution;
@@ -67,6 +68,7 @@ public class Titan {
         if (baseEyeColor.getAlpha() == 0) this.baseEyeColor = null;
         else this.baseEyeColor = baseEyeColor;
         this.stats = stats;
+        this.weight = weight;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
     }
@@ -294,6 +296,7 @@ public class Titan {
         builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 50);
         builder.baseEyeColor = GsonUtil.getAsColor(json, "base_eye_color", null);
         builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));
+        builder.weight = GsonHelper.getAsDouble(json, "weight", 1);
         return builder.create();
     }
 
@@ -316,11 +319,12 @@ public class Titan {
         @Nullable
         public Color baseEyeColor;
         public TitanStats stats;
+        public double weight;
 
         public TitanBuilder() {}
 
         public Titan create() {
-            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, baseEyeColor, stats);
+            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, baseEyeColor, stats, weight);
         }
 
         public TitanBuilder withStats(TitanStats stats) {
@@ -387,7 +391,8 @@ public class Titan {
                 buf.readInt(),
                 buf.readInt(),
                 buf.readBoolean() ? new Color(buf.readInt(), buf.readInt(), buf.readInt()) : new Color(buf.readInt(), buf.readInt(), buf.readInt(), 0),
-                TitanStats.fromNetwork(buf)
+                TitanStats.fromNetwork(buf),
+                buf.readDouble()
         );
     }
     public static void toNetwork(Titan titan, FriendlyByteBuf buf) {
@@ -402,5 +407,6 @@ public class Titan {
         buf.writeInt(titan.baseEyeColor != null ? titan.baseEyeColor.getGreen() : 0);
         buf.writeInt(titan.baseEyeColor != null ? titan.baseEyeColor.getBlue() : 0);
         TitanStats.toNetwork(titan.stats, buf);
+        buf.writeDouble(titan.weight);
     }
 }

@@ -27,6 +27,7 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
     public static final TitanRegistry INSTANCE = new TitanRegistry(GSON, "titans");
 
     private final Map<ResourceLocation, Titan> titans = new HashMap<>();
+    private final Map<ResourceLocation, Double> titanWeights = new HashMap<>();
 
     public static void init() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, SubjectsOfYmir.rsrc("titans"), TitanRegistry.INSTANCE);
@@ -39,6 +40,7 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
         titans.clear();
+        titanWeights.clear();
         object.forEach((id, json) -> {
             try {
                 register(id, Titan.fromJson(id, json.getAsJsonObject()));
@@ -50,6 +52,7 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
 
     public void register(ResourceLocation id, Titan titan) {
         titans.put(id, titan);
+        titanWeights.put(id, titan.weight);
     }
 
     @Nullable
@@ -65,12 +68,11 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
         return ImmutableMap.copyOf(INSTANCE.titans);
     }
 
-    public static Tuple<Titan, String> getRandomTitan() { // TODO make it have to go through a full cycle before giving the same titan again? like so if someone gets the attack, someone immediately after can't also get the attack
+    public static Tuple<Titan, String> getRandomTitan() {
         Tuple<Titan, String> tuple = new Tuple<>(ListUtil.getRandom(TitanRegistry.getTitans().values().asList()), null);
         tuple.setB(ListUtil.getRandom(tuple.getA().variants));
         return tuple;
     }
-
 
     // when this method is called, it can't return a titan that has already been returned, with the list keeping track of that resetting when there are no more titans to give. i.e. it ensures that players get unique titans, unless we run out of titans to give in which case it starts over
     public static Tuple<Titan, String> getSequentialRandomTitan(MinecraftServer server) {
@@ -83,7 +85,8 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
             available.removeIf(used::contains);
         }
 
-        ResourceLocation titanRsrc = ListUtil.getRandom(available);
+        List<Tuple<ResourceLocation, Double>> weighted = available.stream().map(rsrc -> new Tuple<>(rsrc, INSTANCE.titanWeights.get(rsrc))).toList();
+        ResourceLocation titanRsrc = ListUtil.getRandomWeighted(weighted);
         Titan titan = TitanRegistry.getTitan(titanRsrc);
         data.use(titanRsrc);
         return new Tuple<>(titan, ListUtil.getRandom(titan.variants));
