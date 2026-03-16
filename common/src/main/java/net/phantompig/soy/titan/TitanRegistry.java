@@ -60,7 +60,7 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
         return ImmutableMap.copyOf(INSTANCE.titans);
     }
 
-    public static Tuple<Titan, String> getRandomTitan() {
+    public static Tuple<Titan, String> getRandomTitan() { // TODO make it have to go through a full cycle before giving the same titan again? like so if someone gets the attack, someone immediately after can't also get the attack
         Tuple<Titan, String> tuple = new Tuple<>(getRandom(TitanRegistry.getTitans().values().asList()), null);
         tuple.setB(getRandom(tuple.getA().variants));
         return tuple;

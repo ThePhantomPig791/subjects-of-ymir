@@ -33,7 +33,7 @@
     },
     "bite_unlock": {
       "type": "palladium:dummy",
-      "gui_position": [0, 1.5],
+      "gui_position": [0, 1],
       "title": {
         "translate": "ability.text.subjects_of_ymir.bite.title"
       },
@@ -57,7 +57,7 @@
     },
     "conceal_unlock": {
       "type": "palladium:dummy",
-      "gui_position": [1, 1],
+      "gui_position": [1, 0],
       "title": {
         "translate": "ability.text.subjects_of_ymir.conceal.title"
       },
@@ -81,7 +81,7 @@
     },
     "steam_healing_overdrive_unlock": {
       "type": "palladium:dummy",
-      "gui_position": [-1, 1],
+      "gui_position": [-1, 0],
       "title": {
         "translate": "ability.text.subjects_of_ymir.steam_healing_overdrive.title"
       },
@@ -99,6 +99,39 @@
             "type": "subjects_of_ymir:statistic",
             "stat": "subjects_of_ymir:time_as_titan",
             "min": 12000
+          }
+        ]
+      }
+    },
+    "failsafe_unlock": {
+      "type": "palladium:dummy",
+      "gui_position": [0, -1],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.failsafe.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.failsafe.description"
+      },
+      "icon": "subjects_of_ymir:textures/icon/failsafe.png",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 30
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 500,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
           }
         ]
       }

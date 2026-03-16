@@ -30,6 +30,8 @@ public class SubjectsOfYmir {
     public static final String MOD_ID = "subjects_of_ymir";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+    public static final ResourceLocation SHIFTER_POWER = rsrc("shifter");
+
     public static void init() {
         LOGGER.info("Subjects of Ymir initializing...");
 
