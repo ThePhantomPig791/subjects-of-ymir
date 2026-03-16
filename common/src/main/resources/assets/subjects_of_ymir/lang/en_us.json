@@ -83,6 +83,14 @@
 
   "advancements.subjects_of_ymir.eldian_village.title": "Ragako",
   "advancements.subjects_of_ymir.eldian_village.description": "Discover an ancient Eldian Village",
+  "advancements.subjects_of_ymir.titan_bones.title": "Tomb Raider",
+  "advancements.subjects_of_ymir.titan_bones.description": "Dig up ancient bones from an Eldian Graveyard",
+  "advancements.subjects_of_ymir.titan_shift.title": "Island Devil",
+  "advancements.subjects_of_ymir.titan_shift.description": "§dS§kub§r§dj§kect of §r§dYmir§k§r§d, D§ke§r§dvil§k of §r§dPa§kra§r§ddi§ks§r§d, Mo§kns§r§dt§ke§r§dr",
+  "advancements.subjects_of_ymir.iron_bamboo.title": "Ferrocalamus",
+  "advancements.subjects_of_ymir.iron_bamboo.description": "Discover Iron Bamboo",
+  "advancements.subjects_of_ymir.craft_uniform.title": "Dedicate Your Heart",
+  "advancements.subjects_of_ymir.craft_uniform.description": "Tailor a Uniform",
 
 
   "stat.subjects_of_ymir.times_shifted_into_titan": "Times Shifted Into Titan Form",

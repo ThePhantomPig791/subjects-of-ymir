@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "subjects_of_ymir:survey_corps_jacket"
+      "item": "minecraft:mossy_stone_bricks"
     },
     "title": {
       "translate": "advancements.subjects_of_ymir.eldian_village.title"
@@ -9,7 +9,8 @@
     "description": {
       "translate": "advancements.subjects_of_ymir.eldian_village.description"
     },
-    "frame": "goal"
+    "frame": "task",
+    "hidden": true
   },
   "parent": "minecraft:adventure/root",
   "criteria": {
@@ -28,12 +29,33 @@
       "conditions": {
         "recipe": "subjects_of_ymir:tailoring/uniform"
       }
+    },
+    "has_the_garrison_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "subjects_of_ymir:tailoring/uniform_garrison"
+      }
+    },
+    "has_the_sc_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "subjects_of_ymir:tailoring/uniform_survey_corps"
+      }
+    },
+    "has_the_mp_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "subjects_of_ymir:tailoring/uniform_military_police"
+      }
     }
   },
   "requirements": [
     [
       "in_structure",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_the_garrison_recipe",
+      "has_the_sc_recipe",
+      "has_the_mp_recipe"
     ]
   ],
   "rewards": {

@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "subjects_of_ymir:survey_corps_jacket"
+    },
+    "title": {
+      "translate": "advancements.subjects_of_ymir.craft_uniform.title"
+    },
+    "description": {
+      "translate": "advancements.subjects_of_ymir.craft_uniform.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "subjects_of_ymir:iron_bamboo",
+  "criteria": {
+    "leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:uniform_leggings"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "leggings"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

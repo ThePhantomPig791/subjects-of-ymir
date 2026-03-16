@@ -21,6 +21,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.particle.SoyParticles;
@@ -44,6 +45,9 @@ public class Titan {
     public static final UUID TITAN_HEALTH_ATTRIBUTE_UUID = UUID.fromString("09ed062b-73c1-4a2d-0803-8512514aa03e");
     public static final UUID TITAN_ARMOR_ATTRIBUTE_UUID = UUID.fromString("12abc62b-73c1-4a2d-0000-8512514aa03e");
     public static final UUID TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID = UUID.fromString("ba2e2d7f-1f67-4800-8c9e-31b9e693ecdb");
+
+    public static final ResourceLocation TITAN_SHIFT_ADVANCEMENT = SubjectsOfYmir.rsrc("titan_shift");
+
 
     public final ResourceLocation id;
     public final ResourceLocation powerPath;
@@ -121,7 +125,9 @@ public class Titan {
     }
 
     public void completedShift(LivingEntity entity, int charge) {
-
+        if (entity instanceof ServerPlayer pl) {
+            pl.getAdvancements().award(pl.server.getAdvancements().getAdvancement(TITAN_SHIFT_ADVANCEMENT), "shift");
+        }
     }
 
     public void unshift(LivingEntity entity) {
@@ -260,7 +266,6 @@ public class Titan {
     }
 
     public void onFall(LivingEntity entity, float fallDistance) {
-        if (!(entity instanceof SoyPlayerExtension ext)) return;
         if (fallDistance > entity.getBoundingBox().getYsize() / 4) {
             var pos = entity.getPosition(0).add(0, -1, 0);
             float strength = (float) Math.pow(fallDistance, entity.getBoundingBox().getYsize() / 18) / 5;
@@ -281,7 +286,9 @@ public class Titan {
                 );
             }
 
-            ext.getTitanInstance().exhaust((int) (fallDistance * 2));
+            if (entity instanceof SoyPlayerExtension ext) {
+                ext.getTitanInstance().exhaust((int) (fallDistance * 2));
+            }
         }
     }
 

@@ -1,0 +1,62 @@
+{
+  "display": {
+    "icon": {
+      "item": "subjects_of_ymir:iron_bamboo"
+    },
+    "title": {
+      "translate": "advancements.subjects_of_ymir.iron_bamboo.title"
+    },
+    "description": {
+      "translate": "advancements.subjects_of_ymir.iron_bamboo.description"
+    },
+    "frame": "task"
+  },
+  "parent": "subjects_of_ymir:eldian_village",
+  "criteria": {
+    "has_iron_bamboo": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:iron_bamboo"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_iron_bamboo_leaf": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:iron_bamboo_leaf"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "subjects_of_ymir:iron_bamboo_sword"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_bamboo",
+      "has_iron_bamboo_leaf",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "subjects_of_ymir:iron_bamboo_sword",
+      "subjects_of_ymir:raw_ultrahard_steel",
+      "subjects_of_ymir:ultrahard_steel_ingot_from_raw",
+      "subjects_of_ymir:ultrahard_steel_ingot_from_raw_blasting"
+    ]
+  }
+}

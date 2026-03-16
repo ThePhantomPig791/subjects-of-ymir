@@ -1,0 +1,80 @@
+{
+  "display": {
+    "icon": {
+      "item": "subjects_of_ymir:ribcage"
+    },
+    "title": {
+      "translate": "advancements.subjects_of_ymir.titan_bones.title"
+    },
+    "description": {
+      "translate": "advancements.subjects_of_ymir.titan_bones.description"
+    },
+    "frame": "task"
+  },
+  "parent": "subjects_of_ymir:eldian_village",
+  "criteria": {
+    "ribcage": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:ribcage"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rib": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:rib"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "broken_rib": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:broken_rib"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_compression_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "subjects_of_ymir:compression_table"
+      }
+    },
+    "has_injection_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "subjects_of_ymir:injection"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ribcage",
+      "rib",
+      "broken_rib",
+      "has_compression_recipe",
+      "has_injection_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "subjects_of_ymir:compression_table",
+      "subjects_of_ymir:injection"
+    ]
+  }
+}
