@@ -29,12 +29,24 @@
         "minecraft:clay",
         "minecraft:dirt_path",
 
+        "minecraft:stone",
+        "minecraft:diorite",
+        "minecraft:andesite",
+        "minecraft:calcite",
+        "minecraft:tuff",
+        "minecraft:dripstone_block",
+        "minecraft:pointed_dripstone",
+        "minecraft:infested_stone",
+        "minecraft:infested_cobblestone",
+
         "minecraft:air",
         "minecraft:cave_air",
         "minecraft:void_air",
 
         "minecraft:fire",
         "minecraft:water",
-        "minecraft:lava"
+        "minecraft:lava",
+
+        "#minecraft:buttons"
     ]
 }
