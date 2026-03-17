@@ -111,10 +111,10 @@ public class TitanInstance {
         float blue = ((float) Math.random() + 1) / 2;
         this.setEyeColor(mixColorWithBase(new Color(red, green, blue)));
     }
-    public boolean setEyeColorToBase() {
-        if (this.titan == null || this.titan.baseEyeColor == null) return false;
-        SoyProperties.EYE_COLOR.set(entity, this.titan.baseEyeColor);
-        return true;
+    public void setEyeColorToBase() {
+        if (this.titan == null || this.titan.baseEyeColor == null) {
+            setEyeColor(Color.WHITE);
+        } else setEyeColor(this.titan.baseEyeColor);
     }
     public Color mixColorWithBase(Color color) {
         if (this.titan == null || this.titan.baseEyeColor == null) return color;
@@ -296,17 +296,17 @@ public class TitanInstance {
 
     public static Tuple<Titan, String> randomizeFor(LivingEntity entity) {
         Tuple<Titan, String> randomTitanAndVariant = TitanRegistry.getRandomTitan();
-        randomizeFor(entity, randomTitanAndVariant);
+        setFor(entity, randomTitanAndVariant);
         return randomTitanAndVariant;
     }
 
     public static Tuple<Titan, String> sequentialRandomizeFor(LivingEntity entity) {
         Tuple<Titan, String> randomTitanAndVariant = TitanRegistry.getSequentialRandomTitan(entity.getServer());
-        randomizeFor(entity, randomTitanAndVariant);
+        setFor(entity, randomTitanAndVariant);
         return randomTitanAndVariant;
     }
 
-    private static void randomizeFor(LivingEntity entity, Tuple<Titan, String> titan) {
+    public static void setFor(LivingEntity entity, Tuple<Titan, String> titan) {
         if (!(entity instanceof SoyPlayerExtension playerExt)) return;
         TitanInstance newTitan = new TitanInstance(entity, titan.getA(), titan.getB());
         playerExt.setTitanInstance(newTitan);
@@ -314,5 +314,16 @@ public class TitanInstance {
         playerExt.getTitanInstance().setProgress(0);
         playerExt.getTitanInstance().setCharge(0);
         playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
+        SoyProperties.STAMINA.set(entity, titan.getA().defaultMaxStamina);
+        SoyProperties.MAX_STAMINA.set(entity, titan.getA().defaultMaxStamina);
+    }
+
+    // removes stamina and all properties
+    public static void clearTitanFor(LivingEntity entity) {
+        if (!(entity instanceof SoyPlayerExtension playerExt)) return;
+        playerExt.setTitanInstance(new TitanInstance(entity));
+        playerExt.getTitanInstance().setStamina(0);
+        playerExt.getTitanInstance().setMaxStamina(0);
+        SoyProperties.PATH_POINTS.set(entity, 0);
     }
 }

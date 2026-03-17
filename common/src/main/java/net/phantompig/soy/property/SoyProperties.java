@@ -29,7 +29,7 @@ public class SoyProperties {
     public static final PalladiumProperty<Integer> HARDENING_HANDS = new IntegerProperty("subjects_of_ymir/hardening/hands").sync(SyncType.EVERYONE);
 
     public static final PalladiumProperty<Integer> STAMINA = new IntegerProperty("subjects_of_ymir/stamina").sync(SyncType.SELF);
-    public static final PalladiumProperty<Integer> MAX_STAMINA = new IntegerProperty("subjects_of_ymir/max_stamina").sync(SyncType.NONE);
+    public static final PalladiumProperty<Integer> MAX_STAMINA = new IntegerProperty("subjects_of_ymir/max_stamina").sync(SyncType.SELF);
 
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
@@ -46,8 +46,8 @@ public class SoyProperties {
                 handler.register(HARDENING_ALL, 0);
                 handler.register(HARDENING_KNUCKLES, 0);
                 handler.register(HARDENING_HANDS, 0);
-                handler.register(STAMINA, 100);
-                handler.register(MAX_STAMINA, 100);
+                handler.register(STAMINA, 0);
+                handler.register(MAX_STAMINA, 0);
             }
         });
     }

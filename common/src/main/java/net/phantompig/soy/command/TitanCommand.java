@@ -30,36 +30,9 @@ public class TitanCommand {
                         .then(Commands.literal("set")
                                 .then(Commands.argument("titan", ResourceLocationArgument.id()).suggests(SUGGEST_TITANS)
                                         .then(Commands.argument("variant", StringArgumentType.string()).suggests(SUGGEST_VARIANTS)
-                                                .executes(context -> {
-                                                    var source = context.getSource();
-                                                    var entity = EntityArgument.getPlayer(context, "entity");
-                                                    var id = ResourceLocationArgument.getId(context, "titan");
-                                                    if (!TitanRegistry.titanExists(id)) {
-                                                        source.sendFailure(Component.translatable("commands.titan.error.noSuchTitan", id));
-                                                        return 0;
-                                                    }
-                                                    var variant = StringArgumentType.getString(context, "variant");
-                                                    var titan = TitanRegistry.getTitan(id);
-                                                    if (!titan.variants.contains(variant)) {
-                                                        source.sendFailure(Component.translatable("commands.titan.error.noSuchVariant", id, variant));
-                                                        return 0;
-                                                    }
-
-                                                    return setTitanAndVariant(entity, id, variant, source);
-                                                })
+                                                .executes(context -> setTitanAndVariant(EntityArgument.getPlayer(context, "entity"), ResourceLocationArgument.getId(context, "titan"), StringArgumentType.getString(context, "variant"), context.getSource()))
                                         )
-                                        .executes(context -> {
-                                            var source = context.getSource();
-                                            var entity = EntityArgument.getPlayer(context, "entity");
-                                            var id = ResourceLocationArgument.getId(context, "titan");
-                                            if (!TitanRegistry.titanExists(id)) {
-                                                source.sendFailure(Component.translatable("commands.titan.error.noSuchTitan", id));
-                                                return 0;
-                                            }
-                                            var variant = ListUtil.getRandom(TitanRegistry.getTitan(id).variants);
-
-                                            return setTitanAndVariant(entity, id, variant, source);
-                                        })
+                                        .executes(context -> setTitan(EntityArgument.getPlayer(context, "entity"), ResourceLocationArgument.getId(context, "titan"), context.getSource()))
                                 )
                         )
                         .then(Commands.literal("remove")
@@ -72,7 +45,7 @@ public class TitanCommand {
                                             source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
                                             return 0;
                                         }
-                                        playerExt.setTitanInstance(new TitanInstance((LivingEntity) entity));
+                                        TitanInstance.clearTitanFor(entity);
                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.remove", entity.getDisplayName()), true);
                                     } else {
                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -224,13 +197,13 @@ public class TitanCommand {
                                             source.sendSuccess(() -> Component.translatable("commands.titan.success.noTitan", entity.getDisplayName()), true);
                                             return 0;
                                         }
-                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.get", entity.getDisplayName(), playerExt.getTitanInstance().titan.id, playerExt.getTitanInstance().variant), true);
+                                        ResourceLocation id = playerExt.getTitanInstance().titan.id;
+                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.get", entity.getDisplayName(), id, playerExt.getTitanInstance().variant), true);
+                                        return TitanRegistry.indexOf(id) + 1;
                                     } else {
                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                         return 0;
                                     }
-
-                                    return 1;
                                 })
                         )
                         .then(Commands.literal("stamina")
@@ -241,12 +214,11 @@ public class TitanCommand {
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
                                                 source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.get", entity.getDisplayName(), playerExt.getTitanInstance().getStamina(), playerExt.getTitanInstance().getMaxStamina()), true);
+                                                return playerExt.getTitanInstance().getStamina();
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                 return 0;
                                             }
-
-                                            return 1;
                                         })
                                 )
                                 .then(Commands.literal("set_max")
@@ -383,18 +355,35 @@ public class TitanCommand {
         return SharedSuggestionProvider.suggest(variants, builder);
     };
 
+    private static int setTitan(LivingEntity entity, ResourceLocation id, CommandSourceStack source) {
+        if (!TitanRegistry.titanExists(id)) {
+            source.sendFailure(Component.translatable("commands.titan.error.noSuchTitan", id));
+            return 0;
+        }
+        return setTitan(entity, TitanRegistry.getTitan(id), source);
+    }
+    private static int setTitan(LivingEntity entity, Titan titan, CommandSourceStack source) {
+        return setTitanAndVariant(entity, titan, ListUtil.getRandom(titan.variants), source);
+    }
     private static int setTitanAndVariant(LivingEntity entity, ResourceLocation id, String variant, CommandSourceStack source) {
+        if (!TitanRegistry.titanExists(id)) {
+            source.sendFailure(Component.translatable("commands.titan.error.noSuchTitan", id));
+            return 0;
+        }
+        return setTitanAndVariant(entity, TitanRegistry.getTitan(id), variant, source);
+    }
+    private static int setTitanAndVariant(LivingEntity entity, Titan titan, String variant, CommandSourceStack source) {
         if (entity instanceof SoyPlayerExtension playerExt) {
+            if (!titan.variants.contains(variant)) {
+                source.sendFailure(Component.translatable("commands.titan.error.noSuchVariant", titan.id, variant));
+                return 0;
+            }
             if (playerExt.getTitanInstance().getProgress() > 0) {
                 source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
                 return 0;
             }
-            TitanInstance inst = new TitanInstance(entity, TitanRegistry.getTitan(id), variant);
-            playerExt.setTitanInstance(inst);
-            playerExt.getTitanInstance().setProgress(0);
-            playerExt.getTitanInstance().setCharge(0);
-            playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
-            source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), id, variant), true);
+            TitanInstance.setFor(entity, new Tuple<>(titan, variant));
+            source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), titan.id, variant), true);
         } else {
             source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
             return 0;

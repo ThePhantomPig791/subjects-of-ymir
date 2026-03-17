@@ -15,7 +15,7 @@ public class SoyOverlays {
     public static final ResourceLocation HARDENING_LOCATION = SubjectsOfYmir.rsrc("textures/gui/overlay/hardening.png");
 
     public static void renderExhaustionOverlay(Minecraft minecraft, Gui gui, GuiGraphics guiGraphics, float partialTicks, int width, int height) {
-        if (!(minecraft.player instanceof SoyPlayerExtension ext)) return;
+        if (!(minecraft.player instanceof SoyPlayerExtension ext) || ext.getTitanInstance().getMaxStamina() == 0) return;
         float a = 1 - Mth.clamp((float) ext.getTitanInstance().getStamina() / ext.getTitanInstance().getMaxStamina(), 0, 1);
         if (ext.getTitanInstance().getProgress() == 0) {
             a = Easing.outCubic(a);

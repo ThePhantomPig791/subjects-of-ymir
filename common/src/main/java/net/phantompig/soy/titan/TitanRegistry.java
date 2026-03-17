@@ -64,6 +64,10 @@ public class TitanRegistry extends SimpleJsonResourceReloadListener {
         return INSTANCE.titans.containsKey(id);
     }
 
+    public static int indexOf(ResourceLocation titan) {
+        return new ArrayList<>(INSTANCE.titans.keySet()).indexOf(titan);
+    }
+
     public static ImmutableMap<ResourceLocation, Titan> getTitans() {
         return ImmutableMap.copyOf(INSTANCE.titans);
     }

@@ -84,7 +84,7 @@ public class SubjectsOfYmir {
         LivingEntityEvents.DEATH.register(((livingEntity, damageSource) -> {
             if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
                 if (++ext.getTitanInstance().deaths >= 13) {
-                    ext.setTitanInstance(new TitanInstance(livingEntity));
+                    TitanInstance.clearTitanFor(livingEntity);
                 }
             }
             return EventResult.pass();
