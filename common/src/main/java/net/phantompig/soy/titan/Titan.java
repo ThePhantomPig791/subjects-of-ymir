@@ -130,6 +130,9 @@ public class Titan {
         if (entity instanceof ServerPlayer pl) {
             pl.getAdvancements().award(pl.server.getAdvancements().getAdvancement(TITAN_SHIFT_ADVANCEMENT), "shift");
         }
+        if (entity instanceof SoyPlayerExtension ext) {
+            ext.getTitanInstance().setStamina((int) (ext.getTitanInstance().getStamina() * 0.6));
+        }
     }
 
     public void unshift(LivingEntity entity) {
@@ -173,6 +176,9 @@ public class Titan {
         ));
         if (entity instanceof Player player) {
             player.causeFoodExhaustion(8);
+        }
+        if (entity instanceof SoyPlayerExtension ext) {
+            ext.getTitanInstance().setStamina((int) (ext.getTitanInstance().getStamina() * 0.1));
         }
     }
 

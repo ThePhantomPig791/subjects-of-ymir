@@ -154,9 +154,10 @@ public class TitanInstance {
             int stam = getStamina(), max = getMaxStamina();
             if (stam < max) {
                 if (this.getProgress() > 0) {
-                    if (stam < 0.3f * max) SoyProperties.PATH_POINTS.set(entity, SoyProperties.PATH_POINTS.get(entity) + 1);
+                    if (stam < 0.4f * max) SoyProperties.PATH_POINTS.set(entity, SoyProperties.PATH_POINTS.get(entity) + 1);
                     regainStamina(1);
                     if (Math.random() < 0.1) setMaxStamina(max + 1);
+                    if (Math.random() > entity.getHealth() / entity.getMaxHealth()) exhaust(1);
                 } else {
                     if (Math.random() < 0.4) regainStamina(1);
 
