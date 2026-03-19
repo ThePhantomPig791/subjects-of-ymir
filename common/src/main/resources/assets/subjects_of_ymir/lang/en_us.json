@@ -52,9 +52,14 @@
   "item.subjects_of_ymir.broken_rib": "Broken Rib",
   
   "item.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo",
+  "item.subjects_of_ymir.raw_iceburst": "Raw Iceburst",
+  "item.subjects_of_ymir.raw_ultrahard_steel": "Raw Ultrahard Steel",
+  "item.subjects_of_ymir.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
+
   "item.subjects_of_ymir.iron_bamboo_leaf": "Iron-Weave Bamboo Leaf",
   "item.subjects_of_ymir.iron_bamboo_sword": "Iron-Weave Bamboo Sword",
   "item.subjects_of_ymir.iron_bamboo_dagger": "Iron-Weave Bamboo Dagger",
+  "item.subjects_of_ymir.blade": "Blade",
 
   "item.subjects_of_ymir.cloak": "Cloak",
   "item.subjects_of_ymir.uniform_jacket": "Uniform Jacket",
@@ -69,9 +74,7 @@
 
   "item.subjects_of_ymir.injection": "Injection",
 
-  "item.subjects_of_ymir.raw_iceburst": "Raw Iceburst",
 
-  
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",
   "block.subjects_of_ymir.deepslate_iceburst_ore": "Deepslate Iceburst Ore",
 

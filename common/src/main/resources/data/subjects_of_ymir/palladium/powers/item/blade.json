@@ -1,5 +1,5 @@
 {
-  "name": "Dagger",
+  "name": "Blade",
   "background": "minecraft:textures/block/bone_block_top.png",
   "icon": "bone",
   "hidden": true,
@@ -8,8 +8,8 @@
       "type": "subjects_of_ymir:dagger",
       "hidden": true,
       "hidden_in_bar": true,
-      "amount": 2,
-      "time": 3,
+      "amount": 4,
+      "time": 2,
       "damage_type": "stab",
       "conditions": {
         "enabling": {
@@ -26,7 +26,7 @@
                   {
                     "type": "palladium:item_in_slot",
                     "item": {
-                      "item": "subjects_of_ymir:iron_bamboo_dagger"
+                      "item": "subjects_of_ymir:blade"
                     },
                     "slot": "offhand"
                   },
@@ -38,7 +38,7 @@
               {
                 "type": "palladium:item_in_slot",
                 "item": {
-                  "item": "subjects_of_ymir:iron_bamboo_dagger"
+                  "item": "subjects_of_ymir:blade"
                 },
                 "slot": "mainhand"
               },

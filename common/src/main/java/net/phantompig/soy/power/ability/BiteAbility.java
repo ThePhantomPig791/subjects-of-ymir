@@ -48,8 +48,8 @@ public class BiteAbility extends Ability implements AnimationTimer {
         if (enabled) {
             if (entry.getProperty(TIMER).equals(entry.getProperty(TIME)) && !entity.isCrouching()) {
                 DamageSource source = switch (entry.getProperty(DAMAGE_TYPE)) {
-                    case "stab" -> SoyDamageSources.selfStab(entity.level(), entity);
-                    default -> SoyDamageSources.selfBite(entity.level(), entity);
+                    case "stab" -> SoyDamageSources.selfStab(entity.level(), null, entity, null);
+                    default -> SoyDamageSources.selfBite(entity.level(), null, entity, null);
                 };
                 entity.hurt(source, entry.getProperty(AMOUNT));
                 if (entity instanceof SoyPlayerExtension ext) ext.getTitanInstance().canShiftTicks += 60;

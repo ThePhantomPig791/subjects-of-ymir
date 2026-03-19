@@ -6,7 +6,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
-import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.item.SoyItemTags;
 import net.phantompig.soy.power.ability.BiteAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.threetag.palladium.client.model.animation.PalladiumAnimation;
@@ -45,7 +45,7 @@ public class DaggerAnimation extends PalladiumAnimation {
         var progress = this.getProgress(player, partialTicks);
 
         if (progress > 0F) {
-            var armType = player.getItemInHand(InteractionHand.MAIN_HAND).is(SoyItems.IRON_BAMBOO_DAGGER.get()) ? player.getMainArm() : player.getMainArm().getOpposite();
+            var armType = player.getItemInHand(InteractionHand.MAIN_HAND).is(SoyItemTags.CAN_BE_USED_TO_SELF_STAB) ? player.getMainArm() : player.getMainArm().getOpposite();
             if (armType == HumanoidArm.LEFT) {
                 if (!firstPersonContext.firstPerson()) {
                     builder.get(PlayerModelPart.LEFT_ARM)

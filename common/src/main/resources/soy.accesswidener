@@ -12,3 +12,5 @@ accessible  field   net/minecraft/world/entity/LivingEntity attackStrengthTicker
 accessible  field   net/minecraft/world/entity/Mob  goalSelector    Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 
 accessible  method  net/minecraft/client/gui/GuiGraphics    innerBlit   (Lnet/minecraft/resources/ResourceLocation;IIIIIFFFFFFFF)V
+
+accessible  method  net/minecraft/world/damagesource/DamageSource    <init>  (Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V
