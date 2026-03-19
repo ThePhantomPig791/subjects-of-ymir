@@ -40,6 +40,11 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> HARDENING_BLOCK = ITEMS.register("hardening_block", () -> new BlockItem(SoyBlocks.HARDENING_BLOCK.get(), new Item.Properties()));
 
+    public static final RegistrySupplier<Item> RAW_ULTRAHARD_STEEL = ITEMS.register("raw_ultrahard_steel", () -> new Item(new Item.Properties()));
+    public static final RegistrySupplier<Item> ULTRAHARD_STEEL_INGOT = ITEMS.register("ultrahard_steel_ingot", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+    public static final RegistrySupplier<Item> BLADE = ITEMS.register("blade", () -> new BladeItem(new Item.Properties().stacksTo(16)));
+
 
 
     private static final String[] UNIFORM_EMBLEMS = {"garrison_", "military_police_", "survey_corps_"};

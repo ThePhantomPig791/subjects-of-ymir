@@ -1,6 +1,7 @@
 package net.phantompig.soy.power.ability;
 
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.player.SoyPlayerExtension;
@@ -8,14 +9,12 @@ import net.threetag.palladium.power.IPowerHolder;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladium.power.ability.AnimationTimer;
-import net.threetag.palladium.util.property.IntegerProperty;
-import net.threetag.palladium.util.property.PalladiumProperty;
-import net.threetag.palladium.util.property.PropertyManager;
-import net.threetag.palladium.util.property.SyncType;
+import net.threetag.palladium.util.property.*;
 
 public class BiteAbility extends Ability implements AnimationTimer {
     public static final PalladiumProperty<Integer> TIME = new IntegerProperty("time").configurable("The time the ability needs to be active for in order to succeed and deal damage");
     public static final PalladiumProperty<Integer> AMOUNT = new IntegerProperty("amount").configurable("The amount of damage to deal");
+    public static final PalladiumProperty<String> DAMAGE_TYPE = new StringProperty("damage_type").configurable("The damage source to use. Accepts \"bite\" or \"stab\"");
 
     public static final PalladiumProperty<Integer> TIMER = new IntegerProperty("timer").sync(SyncType.NONE);
     public static final PalladiumProperty<Integer> PREV_TIMER = new IntegerProperty("prev_timer").sync(SyncType.NONE);
@@ -23,6 +22,7 @@ public class BiteAbility extends Ability implements AnimationTimer {
     public BiteAbility() {
         this.withProperty(TIME, 10);
         this.withProperty(AMOUNT, 1);
+        this.withProperty(DAMAGE_TYPE, "bite");
     }
 
     @Override
@@ -47,7 +47,11 @@ public class BiteAbility extends Ability implements AnimationTimer {
     public void lastTick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
         if (enabled) {
             if (entry.getProperty(TIMER).equals(entry.getProperty(TIME)) && !entity.isCrouching()) {
-                entity.hurt(SoyDamageSources.selfBite(entity.level(), entity), entry.getProperty(AMOUNT));
+                DamageSource source = switch (entry.getProperty(DAMAGE_TYPE)) {
+                    case "stab" -> SoyDamageSources.selfStab(entity.level(), entity);
+                    default -> SoyDamageSources.selfBite(entity.level(), entity);
+                };
+                entity.hurt(source, entry.getProperty(AMOUNT));
                 if (entity instanceof SoyPlayerExtension ext) ext.getTitanInstance().canShiftTicks += 60;
             }
         }

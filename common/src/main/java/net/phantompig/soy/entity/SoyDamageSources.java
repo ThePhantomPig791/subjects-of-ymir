@@ -10,12 +10,22 @@ import net.phantompig.soy.SubjectsOfYmir;
 
 public class SoyDamageSources {
     public static final ResourceKey<DamageType> SELF_BITE = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("self_bite"));
+    public static final ResourceKey<DamageType> SELF_STAB = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("self_stab"));
 
     public static DamageSource selfBite(Level level, Entity entity) {
         return new DamageSource(
                 level.registryAccess()
                         .lookupOrThrow(Registries.DAMAGE_TYPE)
                         .get(SELF_BITE).get(),
+                entity
+        );
+    }
+
+    public static DamageSource selfStab(Level level, Entity entity) {
+        return new DamageSource(
+                level.registryAccess()
+                        .lookupOrThrow(Registries.DAMAGE_TYPE)
+                        .get(SELF_STAB).get(),
                 entity
         );
     }

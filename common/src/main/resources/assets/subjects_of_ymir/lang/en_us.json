@@ -33,6 +33,10 @@
   "subtitle.subjects_of_ymir.gas_burst": "Gas bursts",
   "subtitle.subjects_of_ymir.short_harden": "Titan hardens",
 
+
+  "death.attack.selfBite": "%s bit their own hand off",
+  "death.attack.selfStab": "%s stabbed themselves to death",
+
   
   "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",
 

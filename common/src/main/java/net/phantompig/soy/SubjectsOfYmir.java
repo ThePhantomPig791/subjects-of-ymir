@@ -1,7 +1,6 @@
 package net.phantompig.soy;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Tuple;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
@@ -22,13 +21,9 @@ import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
-import net.phantompig.soy.util.ListUtil;
 import net.threetag.palladiumcore.event.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SubjectsOfYmir {
 

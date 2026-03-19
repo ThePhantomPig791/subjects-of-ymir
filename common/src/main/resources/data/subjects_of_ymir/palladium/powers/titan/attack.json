@@ -47,6 +47,14 @@
       "render_layer": "subjects_of_ymir:hardening"
     },
 
+    "name": {
+      "type": "palladium:name_change",
+      "hidden": true,
+      "name": {
+        "translate": "titan.subjects_of_ymir.attack"
+      }
+    },
+
     "unshift": {
       "type": "subjects_of_ymir:titan_unshift",
       "icon": "subjects_of_ymir:textures/icon/eject.png",
