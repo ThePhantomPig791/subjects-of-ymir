@@ -120,10 +120,13 @@ public class SoyItems {
             entries.add(RAW_ICEBURST.get());
             entries.add(ICEBURST_ORE.get());
             entries.add(DEEPSLATE_ICEBURST_ORE.get());
+            entries.add(RAW_ULTRAHARD_STEEL.get());
+            entries.add(ULTRAHARD_STEEL_INGOT.get());
             entries.add(IRON_BAMBOO.get());
             entries.add(IRON_BAMBOO_LEAF.get());
             entries.add(IRON_BAMBOO_SWORD.get());
             entries.add(IRON_BAMBOO_DAGGER.get());
+            entries.add(BLADE.get());
             entries.add(COMPRESSION_TABLE.get());
             entries.add(HARDENING_BLOCK.get());
 
