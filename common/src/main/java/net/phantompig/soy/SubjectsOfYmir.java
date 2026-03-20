@@ -90,6 +90,11 @@ public class SubjectsOfYmir {
                 newExt.setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.getTitanInstance().toTag()));
             }
         }));
+
+        ChatEvents.SERVER_SUBMITTED.register((player, raw, message) -> {
+            message.copy().withStyle(style -> style.withObfuscated(true));
+            return EventResult.pass();
+        });
     }
 
     public static ResourceLocation rsrc(String path) {

@@ -48,7 +48,10 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     modApi("net.threetag:palladium-forge:${rootProject.palladium_version}") {
         exclude group: "software.bernie.geckolib"
+        exclude group: 'dev.latvian.mods.kubejs'
     }
+
+    modCompileOnly("dev.latvian.mods:kubejs-forge:2001.6.4-build.114")
 
     // Mixin Extras
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0"))

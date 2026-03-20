@@ -2,19 +2,29 @@ package net.phantompig.soy.fabric;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.message.v1.ServerMessageDecoratorEvent;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.fabricmc.api.ModInitializer;
+import net.phantompig.soy.player.SoyPlayerExtension;
+
+import java.util.concurrent.CompletableFuture;
 
 public class SubjectsOfYmirFabric implements ModInitializer {
-
     @Override
     public void onInitialize() {
         SubjectsOfYmir.init();
         registerPlacedFeatures();
+
+        ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.STYLING_PHASE, (entity, message) -> {
+            if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
+                return CompletableFuture.completedFuture(message.copy().withStyle(style -> style.withObfuscated(true)));
+            }
+            return CompletableFuture.completedFuture(message);
+        });
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Fabric!");
     }

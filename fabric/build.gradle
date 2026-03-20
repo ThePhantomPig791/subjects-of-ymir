@@ -35,7 +35,13 @@ configurations {
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    modApi "net.threetag:palladium-fabric:${rootProject.palladium_version}"
+    modApi("net.threetag:palladium-fabric:${rootProject.palladium_version}") {
+        exclude group: 'dev.latvian.mods.kubejs'
+    }
+
+    modCompileOnly("dev.latvian.mods:kubejs-fabric:2001.6.4-build.114")
+    modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.3")
+    modCompileOnly("io.github.fabricators_of_create.Porting-Lib:attributes:2.3.15+1.20.1")
 
     //modApi("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim_version}")
 

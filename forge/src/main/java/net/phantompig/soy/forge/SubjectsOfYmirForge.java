@@ -1,9 +1,12 @@
 package net.phantompig.soy.forge;
 
+import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.phantompig.soy.client.SubjectsOfYmirClient;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.threetag.palladiumcore.forge.PalladiumCoreForge;
 import net.threetag.palladiumcore.util.Platform;
 
@@ -19,5 +22,12 @@ public class SubjectsOfYmirForge {
         }
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Forge!");
+    }
+
+    @SubscribeEvent
+    public void obfuscateChatFromTitan(ServerChatEvent event) {
+        if (event.getPlayer() instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
+            event.setMessage(event.getMessage().copy().withStyle(style -> style.withObfuscated(true)));
+        }
     }
 }

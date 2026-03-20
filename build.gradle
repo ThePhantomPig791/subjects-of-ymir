@@ -132,6 +132,9 @@ allprojects {
             name "KosmX's maven"
             url 'https://maven.kosmx.dev/'
         }
+
+        // porting lib
+        maven { url = "https://mvn.devos.one/releases/" }
     }
 
     tasks.withType(JavaCompile) {
