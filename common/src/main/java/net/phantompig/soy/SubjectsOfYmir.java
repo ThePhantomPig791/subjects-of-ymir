@@ -1,6 +1,7 @@
 package net.phantompig.soy;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
@@ -77,8 +78,9 @@ public class SubjectsOfYmir {
         }));
 
         LivingEntityEvents.DEATH.register(((livingEntity, damageSource) -> {
-            if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
+            if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && livingEntity instanceof Player player) {
                 if (++ext.getTitanInstance().deaths >= 13) {
+                    player.drop(TitanInstance.toSpineIem(ext.getTitanInstance()), true, true);
                     TitanInstance.clearTitanFor(livingEntity);
                 }
             }

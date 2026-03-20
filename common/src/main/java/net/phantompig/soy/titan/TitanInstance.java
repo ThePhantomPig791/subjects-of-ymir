@@ -1,15 +1,15 @@
 package net.phantompig.soy.titan;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.item.SpineItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladiumcore.util.Platform;
@@ -38,6 +38,7 @@ public class TitanInstance {
 
     public int canShiftTicks = 0;
 
+    @Nullable
     public ListTag playerInventory;
 
     public int regainStaminaCooldown = 0;
@@ -261,11 +262,11 @@ public class TitanInstance {
                 tag.getString("Variant"),
                 tag.getList("Stacks", 5).stream().map(t -> TitanRegistry.getTitan(new ResourceLocation(t.getAsString()))).toList()
         );
-        inst.isCorpse = tag.getBoolean("IsCorpse");
+        inst.isCorpse = tag.contains("IsCorpse") && tag.getBoolean("IsCorpse");
         if (entity instanceof Player) {
-            inst.playerInventory = tag.getList("PlayerInventory", Tag.TAG_COMPOUND);
+            inst.playerInventory = tag.contains("PlayerInventory", Tag.TAG_LIST) ? tag.getList("PlayerInventory", Tag.TAG_COMPOUND) : null;
         }
-        inst.deaths = tag.getInt("Deaths");
+        inst.deaths = tag.contains("Deaths") ? tag.getInt("Deaths") : 0;
         inst.updateProperties();
         return inst;
     }
@@ -326,5 +327,34 @@ public class TitanInstance {
         playerExt.getTitanInstance().setStamina(0);
         playerExt.getTitanInstance().setMaxStamina(0);
         SoyProperties.PATH_POINTS.set(entity, 0);
+    }
+
+    public static ItemStack toSpineIem(TitanInstance inst) {
+        ItemStack stack = SoyItems.SPINE.get().getDefaultInstance();
+        CompoundTag tag = inst.toTag();
+        tag.remove("PlayerInventory");
+        tag.remove("Deaths");
+        tag.remove("IsCorpse");
+        Color eye = inst.getEyeColor();
+        IntArrayTag rgb = new IntArrayTag(new int[]{eye.getRed(), eye.getGreen(), eye.getBlue()});
+        tag.put("EyeColor", rgb);
+        var pi = new CompoundTag();
+        pi.putString("Name", inst.entity.getDisplayName().getString());
+        pi.putUUID("UUID", inst.entity.getUUID());
+        tag.put("PreviousInheritor", pi);
+        stack.getOrCreateTag().put("TitanInstance", tag);
+        return stack;
+    }
+
+    public static void setFromSpineItem(LivingEntity forEntity, ItemStack stack) {
+        if (!(forEntity instanceof SoyPlayerExtension ext)) return;
+        var tag = SpineItem.getTitanInstanceTag(stack);
+        if (tag.isEmpty()) return;
+        var inst = fromTag(forEntity, tag);
+        ext.setTitanInstance(inst);
+        int[] rgb = tag.getIntArray("EyeColor");
+        inst.setEyeColor(new Color(rgb[0], rgb[1], rgb[2]));
+        inst.setMaxStamina(inst.titan.defaultMaxStamina);
+        inst.setStamina(inst.titan.defaultMaxStamina);
     }
 }

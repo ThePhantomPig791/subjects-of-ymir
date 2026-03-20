@@ -25,24 +25,24 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "rib": {
+    "spine": {
       "conditions": {
         "items": [
           {
             "items": [
-              "subjects_of_ymir:rib"
+              "subjects_of_ymir:spine"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "broken_rib": {
+    "broken_spine": {
       "conditions": {
         "items": [
           {
             "items": [
-              "subjects_of_ymir:broken_rib"
+              "subjects_of_ymir:broken_spine"
             ]
           }
         ]
@@ -65,8 +65,8 @@
   "requirements": [
     [
       "ribcage",
-      "rib",
-      "broken_rib",
+      "spine",
+      "broken_spine",
       "has_compression_recipe",
       "has_injection_recipe"
     ]

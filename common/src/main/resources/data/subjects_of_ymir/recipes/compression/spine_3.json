@@ -2,20 +2,19 @@
   "type": "subjects_of_ymir:compression",
   "ingredients": [
     {
-      "item": "subjects_of_ymir:rib"
+      "item": "subjects_of_ymir:spine"
     },
     {
-      "item": "subjects_of_ymir:rib"
+      "item": "subjects_of_ymir:spine"
     },
     {
-      "item": "subjects_of_ymir:rib"
+      "item": "subjects_of_ymir:spine"
     }
   ],
   "result": {
     "item": "minecraft:bone_meal",
-    "count": 3
+    "count": 24
   },
   "byproduct_type": "spinal_fluid",
-  "byproduct_chance": 0.4,
-  "byproduct_amount": 15
+  "byproduct_amount": 270
 }

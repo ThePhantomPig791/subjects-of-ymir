@@ -2,10 +2,10 @@
   "type": "subjects_of_ymir:compression",
   "ingredients": [
     {
-      "item": "subjects_of_ymir:broken_rib"
+      "item": "subjects_of_ymir:broken_spine"
     },
     {
-      "item": "subjects_of_ymir:broken_rib"
+      "item": "subjects_of_ymir:broken_spine"
     }
   ],
   "result": {

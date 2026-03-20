@@ -16,16 +16,16 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:ribcage"
+                    "name": "subjects_of_ymir:ribcage",
+                    "weight": 2
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:rib",
-                    "weight": 3
+                    "name": "subjects_of_ymir:spine"
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:broken_rib",
+                    "name": "subjects_of_ymir:broken_spine",
                     "weight": 4
                 },
                 {
@@ -35,8 +35,11 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:gold_nugget",
-                    "weight": 1
+                    "name": "minecraft:gold_nugget"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:iron_nugget"
                 }
             ],
             "rolls": 1.0

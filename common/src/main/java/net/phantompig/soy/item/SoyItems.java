@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.phantompig.soy.SubjectsOfYmir;
@@ -21,9 +22,9 @@ import java.util.*;
 public class SoyItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(SubjectsOfYmir.MOD_ID, Registries.ITEM);
 
-    public static final RegistrySupplier<Item> RIB = ITEMS.register("rib", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(16)));
     public static final RegistrySupplier<Item> RIBCAGE = ITEMS.register("ribcage", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(16)));
-    public static final RegistrySupplier<Item> BROKEN_RIB = ITEMS.register("broken_rib", () -> new Item(new Item.Properties()));
+    public static final RegistrySupplier<Item> BROKEN_SPINE = ITEMS.register("broken_spine", () -> new Item(new Item.Properties()));
+    public static final RegistrySupplier<Item> SPINE = ITEMS.register("spine", () -> new SpineItem(new Item.Properties().food(new FoodProperties.Builder().build()).rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistrySupplier<Item> RAW_ICEBURST = ITEMS.register("raw_iceburst", () -> new IceburstItem(new Item.Properties()));
     public static final RegistrySupplier<Item> ICEBURST_ORE = ITEMS.register("iceburst_ore", () -> new BlockItem(SoyBlocks.ICEBURST_ORE.get(), new Item.Properties()));
@@ -114,9 +115,9 @@ public class SoyItems {
 
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
             entries.add(INJECTION.get());
-            entries.add(RIB.get());
+            entries.add(SPINE.get());
             entries.add(RIBCAGE.get());
-            entries.add(BROKEN_RIB.get());
+            entries.add(BROKEN_SPINE.get());
             entries.add(RAW_ICEBURST.get());
             entries.add(ICEBURST_ORE.get());
             entries.add(DEEPSLATE_ICEBURST_ORE.get());

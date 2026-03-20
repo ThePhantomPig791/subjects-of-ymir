@@ -7,20 +7,20 @@
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:bone",
-                    "weight": 5
+                    "weight": 3
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:ribcage"
+                    "name": "subjects_of_ymir:ribcage",
+                    "weight": 3
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:rib",
-                    "weight": 2
+                    "name": "subjects_of_ymir:spine"
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:broken_rib",
+                    "name": "subjects_of_ymir:broken_spine",
                     "weight": 2
                 },
                 {
@@ -31,12 +31,12 @@
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:gold_nugget",
-                    "weight": 2
+                    "weight": 1
                 },
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:gold_ingot",
-                    "weight": 1
+                    "weight": 2
                 },
                 {
                     "type": "minecraft:item",
@@ -62,6 +62,10 @@
                     "type": "minecraft:item",
                     "name": "minecraft:mourner_pottery_sherd",
                     "weight": 1
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:golden_helmet"
                 }
             ],
             "rolls": 1.0

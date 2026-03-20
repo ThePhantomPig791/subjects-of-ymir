@@ -47,9 +47,9 @@
   "palladium.tailoring_recipe.category.subjects_of_ymir.uniforms": "AOT Uniforms",
 
   
-  "item.subjects_of_ymir.rib": "Rib",
+  "item.subjects_of_ymir.spine": "Spine",
   "item.subjects_of_ymir.ribcage": "Ribcage",
-  "item.subjects_of_ymir.broken_rib": "Broken Rib",
+  "item.subjects_of_ymir.broken_spine": "Broken Spine",
   
   "item.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo",
   "item.subjects_of_ymir.raw_iceburst": "Raw Iceburst",
@@ -73,6 +73,9 @@
   "item.subjects_of_ymir.military_police_jacket": "Uniform Jacket",
 
   "item.subjects_of_ymir.injection": "Injection",
+
+
+  "tooltip.subjects_of_ymir.spine": "%s's spine",
 
 
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",
