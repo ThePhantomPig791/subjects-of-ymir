@@ -16,18 +16,11 @@
   "criteria": {
     "shift": {
       "trigger": "minecraft:impossible"
-    },
-    "has_dagger_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "subjects_of_ymir:dagger"
-      }
     }
   },
   "requirements": [
     [
-      "shift",
-      "has_dagger_recipe"
+      "shift"
     ]
   ],
   "rewards": {

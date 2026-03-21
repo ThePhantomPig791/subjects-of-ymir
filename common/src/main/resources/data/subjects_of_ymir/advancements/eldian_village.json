@@ -23,39 +23,11 @@
           }
         }
       }
-    },
-    "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "subjects_of_ymir:tailoring/uniform"
-      }
-    },
-    "has_the_garrison_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "subjects_of_ymir:tailoring/uniform_garrison"
-      }
-    },
-    "has_the_sc_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "subjects_of_ymir:tailoring/uniform_survey_corps"
-      }
-    },
-    "has_the_mp_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "subjects_of_ymir:tailoring/uniform_military_police"
-      }
     }
   },
   "requirements": [
     [
-      "in_structure",
-      "has_the_recipe",
-      "has_the_garrison_recipe",
-      "has_the_sc_recipe",
-      "has_the_mp_recipe"
+      "in_structure"
     ]
   ],
   "rewards": {

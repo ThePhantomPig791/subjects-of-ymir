@@ -36,19 +36,12 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "subjects_of_ymir:iron_bamboo_sword"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_iron_bamboo",
-      "has_iron_bamboo_leaf",
-      "has_the_recipe"
+      "has_iron_bamboo_leaf"
     ]
   ],
   "rewards": {
