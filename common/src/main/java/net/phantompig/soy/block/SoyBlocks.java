@@ -24,5 +24,6 @@ public class SoyBlocks {
 
     public static void init() {
         BLOCKS.register();
+        SoyBlockTags.init();
     }
 }

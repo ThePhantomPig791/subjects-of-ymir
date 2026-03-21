@@ -34,4 +34,8 @@ public class SoyDamageSources {
                 damageSourcePosition
         );
     }
+
+    public static void init() {
+        SoyDamageTypeTags.init();
+    }
 }

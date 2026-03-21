@@ -135,5 +135,7 @@ public class SoyItems {
                 entries.add(s.get());
             }
         });
+
+        SoyItemTags.init();
     }
 }

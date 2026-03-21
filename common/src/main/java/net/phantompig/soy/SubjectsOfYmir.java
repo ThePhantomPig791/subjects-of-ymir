@@ -5,6 +5,8 @@ import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
+import net.phantompig.soy.entity.SoyDamageSources;
+import net.phantompig.soy.entity.SoyDamageTypeTags;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.feature.SoyFeatures;
 import net.phantompig.soy.item.SoyItems;
@@ -54,6 +56,7 @@ public class SubjectsOfYmir {
         SoyFeatures.init();
         SoyStats.init();
         SoyNetwork.init();
+        SoyDamageSources.init();
 
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
@@ -61,7 +64,7 @@ public class SubjectsOfYmir {
         });
 
         LivingEntityEvents.HURT.register(((entity, damageSource, amount) -> {
-            if (!(entity instanceof SoyPlayerExtension soy)) return EventResult.pass();
+            if (damageSource.is(SoyDamageTypeTags.CANNOT_CAUSE_SHIFT) || !(entity instanceof SoyPlayerExtension soy)) return EventResult.pass();
             var titanInstance = soy.getTitanInstance();
             if (titanInstance.titan == null || titanInstance.getProgress() != 0) return EventResult.pass();
             titanInstance.canShiftTicks += (int) (amount.get() * 15);

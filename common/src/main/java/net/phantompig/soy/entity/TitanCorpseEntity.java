@@ -66,6 +66,11 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
     }
 
     @Override
+    public boolean canBreatheUnderwater() {
+        return true;
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (titanInstance.isCorpse) {
