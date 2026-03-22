@@ -146,6 +146,10 @@ public class TitanInstance {
         setStamina(getStamina() - stamina);
         regainStaminaCooldown = (int) (200 * stamina / (stamina + 20f));
     }
+    public void exhaustSafe(int stamina) {
+        if (stamina >= getStamina()) exhaust(getStamina() - 1);
+        else exhaust(stamina);
+    }
     public void regainStamina(int stamina) {
         setStamina(getStamina() + stamina);
     }
@@ -161,7 +165,7 @@ public class TitanInstance {
                     if (Math.random() > entity.getHealth() / entity.getMaxHealth()) exhaust(1);
                 } else {
                     if (Math.random() < 0.4) regainStamina(1);
-
+                    if (Math.random() < 0.02) setMaxStamina(max + 1);
                 }
             }
         }

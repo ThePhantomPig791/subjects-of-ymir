@@ -145,7 +145,10 @@ public class Titan {
     }
 
     public void unshiftWithAdverseEffects(LivingEntity entity) {
-        unshift(entity);
+        unshiftWithAdverseEffects(entity, true, true);
+    }
+    public void unshiftWithAdverseEffects(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
+        unshift(entity, spawnCorpse, shouldCorpseDecay);
         entity.addEffect(new MobEffectInstance(
                 MobEffects.WEAKNESS,
                 1200,

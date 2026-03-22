@@ -176,6 +176,7 @@ public class ServerCombatSystem {
 
     public void explodeInFrontPartialLooking(float strength, float distance, float startHeightOffset, float endHeightOffset) {
         strength *= (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 5;
+        strength += 0.5f * getStrengthEffectBoost();
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
         var end = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
@@ -186,11 +187,18 @@ public class ServerCombatSystem {
 
     public void explodeInFrontFlat(float strength, float distance, float startHeightOffset, float endHeightOffset) {
         strength *= (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 5;
+        strength += 0.5f * getStrengthEffectBoost();
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
         var end = player.getLookAngle().multiply(1, 0, 1).normalize().scale(distance);
         Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
 
         player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, Level.ExplosionInteraction.TNT);
+    }
+
+    private int getStrengthEffectBoost() {
+        var effect = this.player.getEffect(MobEffects.DAMAGE_BOOST);
+        if (effect == null) return 0;
+        return effect.getAmplifier();
     }
 }

@@ -5,6 +5,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.power.ability.BerserkAbility;
+import net.phantompig.soy.power.ability.SoyAbilities;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,6 +31,14 @@ public abstract class LivingEntityMixin {
     private void soy$checkTotemDeathProtection(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
         if (this instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
             if (ext.getTitanInstance().getProgress() > 0) {
+                if (AbilityUtil.isTypeEnabled(ext.getTitanInstance().entity, SoyAbilities.BERSERK.get())) {
+                    AbilityUtil.getEnabledInstances(ext.getTitanInstance().entity, SoyAbilities.BERSERK.get()).forEach(ability -> {
+                        ability.setUniqueProperty(BerserkAbility.TIMER, ability.getProperty(BerserkAbility.MAX_TIME));
+                    });
+                    this.setHealth(20);
+                    cir.setReturnValue(true);
+                    return;
+                }
                 ext.getTitanInstance().titan.unshiftWithAdverseEffects(ext.getTitanInstance().entity);
                 this.setHealth(8);
                 cir.setReturnValue(true);

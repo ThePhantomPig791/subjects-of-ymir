@@ -149,6 +149,8 @@
   "ability.text.subjects_of_ymir.attack.hardening_knuckles.description": "You can harden the skin of just your fingers, lethally augmenting your punches at the cost of attack speed.",
   "ability.text.subjects_of_ymir.attack.hardening_hands.title": "Hardening Hands",
   "ability.text.subjects_of_ymir.attack.hardening_hands.description": "You can harden the rest of your hands, dealing even more damage.",
+  "ability.text.subjects_of_ymir.attack.berserk.title": "Berserk",
+  "ability.text.subjects_of_ymir.attack.berserk.description": "Gain a violent, fiery second wind upon death that lasts for up to sixty seconds.",
 
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
   "ability.text.subjects_of_ymir.armored.root.description": "Your Titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 10"

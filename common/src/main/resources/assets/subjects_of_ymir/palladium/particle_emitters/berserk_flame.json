@@ -1,0 +1,10 @@
+[
+  {
+    "body_part": "body",
+    "amount": 60,
+    "offset": [0, -6, 0],
+    "offset_random": [40, 120, 40],
+    "motion": [0, 1, 0],
+    "motion_random": [10, 10, 10]
+  }
+]

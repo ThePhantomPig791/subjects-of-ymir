@@ -65,10 +65,19 @@
         "enabling": {
           "type": "palladium:action"
         },
-        "unlocking": {
-          "type": "palladium:ability_unlocked",
-          "ability": "root"
-        }
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "palladium:ability_integer_property",
+            "ability": "berserk_unlock",
+            "property": "timer",
+            "min": -1,
+            "max": -1
+          }
+        ]
       }
     },
 
@@ -103,6 +112,13 @@
             "description": {
               "translate": "ability.text.subjects_of_ymir.path_points"
             }
+          },
+          {
+            "type": "palladium:ability_integer_property",
+            "ability": "berserk_unlock",
+            "property": "timer",
+            "min": -1,
+            "max": -1
           }
         ]
       }
@@ -283,10 +299,10 @@
     "attribute_attack_damage_2": {
       "type": "palladium:attribute_modifier",
       "icon": "minecraft:textures/mob_effect/strength.png",
-      "title": "+0.5 ATK",
+      "title": "+1 ATK",
       "gui_position": [0, -3],
       "attribute": "minecraft:generic.attack_damage",
-      "amount": 0.5,
+      "amount": 1,
       "operation": 0,
       "uuid": "31415926-d1fe-3a9a-afb2-b3c6dee2c1a2",
       "conditions": {
@@ -298,7 +314,7 @@
           {
             "type": "palladium:property_buyable",
             "property": "subjects_of_ymir/path_points",
-            "score": 250,
+            "score": 300,
             "icon": "subjects_of_ymir:textures/icon/path_points.png",
             "description": {
               "translate": "ability.text.subjects_of_ymir.path_points"
@@ -307,15 +323,17 @@
         ]
       }
     },
-    "attribute_attack_damage_3": {
-      "type": "palladium:attribute_modifier",
-      "icon": "minecraft:textures/mob_effect/strength.png",
-      "title": "+0.5 ATK",
+    "berserk_unlock": {
+      "type": "subjects_of_ymir:berserk",
+      "icon": "minecraft:textures/mob_effect/fire_resistance.png",
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.attack.berserk.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.attack.berserk.description"
+      },
       "gui_position": [0, -3.75],
-      "attribute": "minecraft:generic.attack_damage",
-      "amount": 0.5,
-      "operation": 0,
-      "uuid": "31415926-a3a3-fa9a-afb2-b3c6dee2c1a2",
+      "max_time": 1200,
       "conditions": {
         "unlocking": [
           {
@@ -323,9 +341,118 @@
             "ability": "attribute_attack_damage_1"
           },
           {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 24
+          }
+        ]
+      }
+    },
+
+    "attribute_speed_1": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/speed.png",
+      "title": "+0.1 SPD",
+      "hidden": false,
+      "gui_position": [1, -1.5],
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.01,
+      "operation": 0,
+      "uuid": "0e5865bc-6265-41a7-acc5-3291d9b1a76a",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
             "type": "palladium:property_buyable",
             "property": "subjects_of_ymir/path_points",
-            "score": 300,
+            "score": 100,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_armor_1": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/resistance.png",
+      "title": "+2 DEF",
+      "hidden": false,
+      "gui_position": [1.75, -2],
+      "attribute": "minecraft:generic.armor",
+      "amount": 2,
+      "operation": 0,
+      "uuid": "e84adcb2-06b5-4049-917b-3d09ee0644b6",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_speed_1"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 125,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_speed_2": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/speed.png",
+      "title": "+0.15 SPD",
+      "hidden": false,
+      "gui_position": [1, -2.5],
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.015,
+      "operation": 0,
+      "uuid": "1e5865bc-6265-41a7-acc5-3291d9b1a76a",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_armor_1"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 150,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_armor_2": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/resistance.png",
+      "title": "+2 DEF",
+      "hidden": false,
+      "gui_position": [1.5, -3],
+      "attribute": "minecraft:generic.armor",
+      "amount": 2,
+      "operation": 0,
+      "uuid": "e24adcb2-06b5-4049-917b-3d09ee0644b6",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_speed_2"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 175,
             "icon": "subjects_of_ymir:textures/icon/path_points.png",
             "description": {
               "translate": "ability.text.subjects_of_ymir.path_points"
@@ -451,6 +578,7 @@
 
     "hardening_particles": {
       "type": "palladium:particles",
+      "hidden": true,
       "emitter": "subjects_of_ymir:hardening_hands",
       "particle_type": "minecraft:dust",
       "options": "0.8 0.95 1 1.5",
@@ -467,6 +595,22 @@
               "ability": "hardening_hands"
             }
           ]
+        }
+      }
+    },
+
+    "berserk_particles": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "emitter": "subjects_of_ymir:berserk_flame",
+      "particle_type": "minecraft:flame",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_integer_property",
+          "ability": "berserk_unlock",
+          "property": "timer",
+          "min": 1,
+          "max": 1200
         }
       }
     }

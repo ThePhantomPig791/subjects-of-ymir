@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PlayerModel;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
+import net.threetag.palladium.client.screen.AccessoryScreen;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.context.DataContext;
 import virtuoel.pehkui.api.ScaleTypes;
@@ -39,7 +41,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
 
     @Override
     public void render(DataContext context, PoseStack poseStack, MultiBufferSource bufferSource, EntityModel<Entity> parentModel, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (Minecraft.getInstance().screen instanceof InventoryScreen) return; // TODO this fix doesn't work!! the player is still visible in the inventory and other menus
+        if (shouldHidePlayer(Minecraft.getInstance().screen)) return;
 
         LivingEntity entity = context.getLivingEntity();
 
@@ -55,6 +57,7 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
             poseStack.pushPose();
             poseStack.scale(1 / scale, 1 / scale, 1 / scale);
             poseStack.translate(body.x, body.y + 1, body.z + 0.5 * (scale - 1) / scale);
+            //model.body.offsetPos(new Vector3f(body.x, body.y + 1, (float) (body.z + 0.5 * (scale - 1) / scale)));
             if (player.isCrouching()) poseStack.translate(0, -2, 0.5);
             poseStack.mulPose(Axis.XP.rotation(body.xRot));
             poseStack.mulPose(Axis.YP.rotation(body.yRot));
@@ -73,5 +76,9 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
 
     public static PlayerInNapeRenderLayer parse(JsonObject json) {
         return new PlayerInNapeRenderLayer();
+    }
+
+    private static boolean shouldHidePlayer(Screen screen) {
+        return screen instanceof InventoryScreen || screen instanceof AccessoryScreen;
     }
 }
