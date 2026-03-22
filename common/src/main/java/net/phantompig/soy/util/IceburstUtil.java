@@ -22,7 +22,9 @@ public class IceburstUtil {
             if (e instanceof ServerPlayer player) {
                 player.connection.send(new ClientboundSetEntityMotionPacket(player));
             }
-            PlayerUtil.spawnParticleForAll(
+        });
+        PlayerUtil.playSoundToAll(level, pos.x, pos.y, pos.z, 24, SoySounds.GAS_BURST.get(), SoundSource.BLOCKS, strength / 6f, 1 - (0.1f * strength / 8));
+        PlayerUtil.spawnParticleForAll(
                 level,
                 64,
                 ParticleTypes.CLOUD,
@@ -35,8 +37,6 @@ public class IceburstUtil {
                 0,
                 strength / 10,
                 (int) strength
-            );
-        });
-        PlayerUtil.playSoundToAll(level, pos.x, pos.y, pos.z, 24, SoySounds.GAS_BURST.get(), SoundSource.BLOCKS, strength / 6f, 1 - (0.1f * strength / 8));
+        );
     }
 }
