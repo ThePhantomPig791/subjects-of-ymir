@@ -1,6 +1,7 @@
 package net.phantompig.soy;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
@@ -23,6 +24,7 @@ import net.phantompig.soy.recipe.SoyRecipeTypes;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
+import net.phantompig.soy.titan.TitanMemoryManager;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.*;
 import org.slf4j.Logger;
@@ -74,6 +76,7 @@ public class SubjectsOfYmir {
         LivingEntityEvents.TICK.register((entity -> {
             if (entity instanceof SoyPlayerExtension soy && soy.getTitanInstance().titan != null) {
                 soy.getTitanInstance().tick();
+                if (entity instanceof ServerPlayer player && soy.getTitanInstance().memoryManager != null) soy.getTitanInstance().memoryManager.tick(player);
             }
             if (!entity.level().isClientSide && entity instanceof SoyServerPlayerExtension serverExt) {
                 serverExt.soy$getCombatSystem().tick();
@@ -95,6 +98,14 @@ public class SubjectsOfYmir {
                 newExt.setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.getTitanInstance().toTag()));
             }
         }));
+
+        ChatEvents.SERVER_SUBMITTED.register((player, raw, message) -> {
+            if (player instanceof SoyPlayerExtension ext) {
+                if (ext.getTitanInstance().memoryManager == null) ext.getTitanInstance().memoryManager = new TitanMemoryManager();
+                ext.getTitanInstance().memoryManager.onChat(player, raw);
+            }
+            return EventResult.pass();
+        });
     }
 
     public static ResourceLocation rsrc(String path) {
