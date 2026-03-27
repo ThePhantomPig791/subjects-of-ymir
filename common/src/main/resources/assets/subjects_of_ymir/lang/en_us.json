@@ -140,7 +140,7 @@
   "ability.text.subjects_of_ymir.failsafe.description": "After shifting into a Titan enough times, it can become enough of a habit that you subconsciously transform to save yourself from death.",
 
   "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
-  "ability.text.subjects_of_ymir.attack.root.description": "Your Titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 0",
+  "ability.text.subjects_of_ymir.attack.root.description": "Your Titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 8",
   "ability.text.subjects_of_ymir.attack.crystal_eject.title": "Crystal Ejection",
   "ability.text.subjects_of_ymir.attack.crystal_eject.description": "Apply hardening to every inch of your skin, forming a tough, solid crystal before ejecting from Titan form §7(held keybind)§r.",
   "ability.text.subjects_of_ymir.attack.infinite_crystal.title": "Crystal Domain",
@@ -153,5 +153,5 @@
   "ability.text.subjects_of_ymir.attack.berserk.description": "Gain a violent, fiery second wind upon death that lasts for up to sixty seconds.",
 
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
-  "ability.text.subjects_of_ymir.armored.root.description": "Your Titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 10"
+  "ability.text.subjects_of_ymir.armored.root.description": "Your Titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 30"
 }
