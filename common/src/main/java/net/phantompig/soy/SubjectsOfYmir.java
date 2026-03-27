@@ -24,7 +24,6 @@ import net.phantompig.soy.recipe.SoyRecipeTypes;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
-import net.phantompig.soy.titan.TitanMemoryManager;
 import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladiumcore.event.*;
 import org.slf4j.Logger;
@@ -101,8 +100,7 @@ public class SubjectsOfYmir {
 
         ChatEvents.SERVER_SUBMITTED.register((player, raw, message) -> {
             if (player instanceof SoyPlayerExtension ext) {
-                if (ext.getTitanInstance().memoryManager == null) ext.getTitanInstance().memoryManager = new TitanMemoryManager();
-                ext.getTitanInstance().memoryManager.onChat(player, raw);
+                ext.getTitanInstance().getMemoryManager().onChat(player, raw);
             }
             return EventResult.pass();
         });

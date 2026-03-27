@@ -13,6 +13,7 @@ import net.phantompig.soy.item.SpineItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladiumcore.util.Platform;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import virtuoel.pehkui.api.ScaleTypes;
 
@@ -177,6 +178,13 @@ public class TitanInstance {
             this.titan.unshiftWithAdverseEffects(entity);
         }
     }
+
+    @NotNull
+    public TitanMemoryManager getMemoryManager() {
+        if (this.memoryManager == null) return this.memoryManager = new TitanMemoryManager();
+        return this.memoryManager;
+    }
+
 
     public boolean canShift() {
         return this.canShiftTicks > 0 && getStamina() > 0.7 * getMaxStamina();

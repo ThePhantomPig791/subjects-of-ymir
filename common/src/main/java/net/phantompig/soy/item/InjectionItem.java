@@ -2,6 +2,7 @@ package net.phantompig.soy.item;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.stat.SoyStats;
+import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.util.PlayerUtil;
 
@@ -33,7 +35,8 @@ public class InjectionItem extends SpinalFluidHoldingItem {
         if (stack.getItem() instanceof InjectionItem inj && player instanceof SoyPlayerExtension ext) {
             if (ext.getTitanInstance().titan == null) {
                 if (inj.get(stack) == inj.max) {
-                    TitanInstance.sequentialRandomizeFor(player);
+                    Tuple<Titan, String> titan = TitanInstance.sequentialRandomizeFor(player);
+                    ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(titan.getB());
                     injectSound(player.level(), player.getX(), player.getY(), player.getZ());
                     inj.set(stack, 0);
                     return true;
