@@ -32,6 +32,9 @@ public class TitanInstance {
 
     public final LivingEntity entity;
 
+    @Nullable
+    public TitanMemoryManager memoryManager = null;
+
     public boolean forceUnshift = false;
 
     public boolean isCorpse = false;
@@ -238,68 +241,6 @@ public class TitanInstance {
         SoyProperties.ATTACK_TIME.set(this.entity, this.titan.stats.attackSpeed);
     }
 
-    public static void copyPropertiesToEntity(LivingEntity from, LivingEntity to) {
-        SoyProperties.TITAN.set(to, SoyProperties.TITAN.get(from));
-        SoyProperties.VARIANT.set(to, SoyProperties.VARIANT.get(from));
-        SoyProperties.PROGRESS.set(to, SoyProperties.PROGRESS.get(from));
-        SoyProperties.CHARGE.set(to, SoyProperties.CHARGE.get(from));
-        SoyProperties.EYE_COLOR.set(to, SoyProperties.EYE_COLOR.get(from));
-        SoyProperties.ATTACK_TIME.set(to, SoyProperties.ATTACK_TIME.get(from));
-    }
-
-    public static void copyTo(TitanInstance from, TitanInstance to) {
-        copyPropertiesToEntity(from.entity, to.entity);
-        to.titan = from.titan;
-        to.variant = from.variant;
-        to.stacks = new ArrayList<>(from.stacks);
-        to.playerInventory = from.playerInventory;
-        to.deaths = from.deaths;
-    }
-
-    public static TitanInstance fromTag(LivingEntity entity, CompoundTag tag) {
-        if (tag.isEmpty()) return new TitanInstance(entity);
-        ResourceLocation id = new ResourceLocation(tag.getString("Titan"));
-
-        TitanInstance inst = new TitanInstance(
-                entity,
-                TitanRegistry.getTitan(id),
-                tag.getString("Variant"),
-                tag.getList("Stacks", 5).stream().map(t -> TitanRegistry.getTitan(new ResourceLocation(t.getAsString()))).toList()
-        );
-        inst.isCorpse = tag.contains("IsCorpse") && tag.getBoolean("IsCorpse");
-        if (entity instanceof Player) {
-            inst.playerInventory = tag.contains("PlayerInventory", Tag.TAG_LIST) ? tag.getList("PlayerInventory", Tag.TAG_COMPOUND) : null;
-        }
-        inst.deaths = tag.contains("Deaths") ? tag.getInt("Deaths") : 0;
-        inst.updateProperties();
-        return inst;
-    }
-
-    public CompoundTag toTag() {
-        CompoundTag tag = new CompoundTag();
-        if (this.titan == null) return tag;
-        tag.putString("Titan", this.titan.id.toString());
-        tag.putString("Variant", this.variant);
-        ListTag stacks = new ListTag();
-        stacks.addAll(this.stacks.stream().map(ti -> StringTag.valueOf(ti.id.toString())).toList());
-        tag.put("Stacks", stacks);
-        tag.putBoolean("IsCorpse", this.isCorpse);
-        if (this.playerInventory != null) tag.put("PlayerInventory", this.playerInventory);
-        tag.putInt("Deaths", this.deaths);
-        return tag;
-    }
-
-    @Override
-    public String toString() {
-        return "TitanInstance{" +
-                "titan=" + titan +
-                ", stacks=" + stacks +
-                ", variant='" + variant + '\'' +
-                ", entity=" + entity +
-                ", isCorpse=" + isCorpse +
-                '}';
-    }
-
     public static Tuple<Titan, String> randomizeFor(LivingEntity entity) {
         Tuple<Titan, String> randomTitanAndVariant = TitanRegistry.getRandomTitan();
         setFor(entity, randomTitanAndVariant);
@@ -346,6 +287,7 @@ public class TitanInstance {
         pi.putString("Name", inst.entity.getDisplayName().getString());
         pi.putUUID("UUID", inst.entity.getUUID());
         tag.put("PreviousInheritor", pi);
+        if (inst.memoryManager != null) tag.put("MemoryManager", inst.memoryManager.inherited().toTag());
         stack.getOrCreateTag().put("TitanInstance", tag);
         return stack;
     }
@@ -360,5 +302,71 @@ public class TitanInstance {
         inst.setEyeColor(new Color(rgb[0], rgb[1], rgb[2]));
         inst.setMaxStamina(inst.titan.defaultMaxStamina);
         inst.setStamina(inst.titan.defaultMaxStamina);
+        inst.memoryManager = tag.contains("MemoryManager") ? TitanMemoryManager.fromTag(tag.getCompound("MemoryManager")) : null;
+    }
+
+    public static void copyPropertiesToEntity(LivingEntity from, LivingEntity to) {
+        SoyProperties.TITAN.set(to, SoyProperties.TITAN.get(from));
+        SoyProperties.VARIANT.set(to, SoyProperties.VARIANT.get(from));
+        SoyProperties.PROGRESS.set(to, SoyProperties.PROGRESS.get(from));
+        SoyProperties.CHARGE.set(to, SoyProperties.CHARGE.get(from));
+        SoyProperties.EYE_COLOR.set(to, SoyProperties.EYE_COLOR.get(from));
+        SoyProperties.ATTACK_TIME.set(to, SoyProperties.ATTACK_TIME.get(from));
+    }
+
+    public static void copyTo(TitanInstance from, TitanInstance to) {
+        copyPropertiesToEntity(from.entity, to.entity);
+        to.titan = from.titan;
+        to.variant = from.variant;
+        to.stacks = new ArrayList<>(from.stacks);
+        to.playerInventory = from.playerInventory;
+        to.deaths = from.deaths;
+        to.memoryManager = from.memoryManager;
+    }
+
+    public static TitanInstance fromTag(LivingEntity entity, CompoundTag tag) {
+        if (tag.isEmpty()) return new TitanInstance(entity);
+        ResourceLocation id = new ResourceLocation(tag.getString("Titan"));
+
+        TitanInstance inst = new TitanInstance(
+                entity,
+                TitanRegistry.getTitan(id),
+                tag.getString("Variant"),
+                tag.getList("Stacks", 5).stream().map(t -> TitanRegistry.getTitan(new ResourceLocation(t.getAsString()))).toList()
+        );
+        inst.isCorpse = tag.contains("IsCorpse") && tag.getBoolean("IsCorpse");
+        if (entity instanceof Player) {
+            inst.playerInventory = tag.contains("PlayerInventory", Tag.TAG_LIST) ? tag.getList("PlayerInventory", Tag.TAG_COMPOUND) : null;
+        }
+        inst.deaths = tag.contains("Deaths") ? tag.getInt("Deaths") : 0;
+        inst.memoryManager = tag.contains("MemoryManager") ? TitanMemoryManager.fromTag(tag.getCompound("MemoryManager")) : null;
+        inst.updateProperties();
+        return inst;
+    }
+
+    public CompoundTag toTag() {
+        CompoundTag tag = new CompoundTag();
+        if (this.titan == null) return tag;
+        tag.putString("Titan", this.titan.id.toString());
+        tag.putString("Variant", this.variant);
+        ListTag stacks = new ListTag();
+        stacks.addAll(this.stacks.stream().map(ti -> StringTag.valueOf(ti.id.toString())).toList());
+        tag.put("Stacks", stacks);
+        tag.putBoolean("IsCorpse", this.isCorpse);
+        if (this.playerInventory != null) tag.put("PlayerInventory", this.playerInventory);
+        tag.putInt("Deaths", this.deaths);
+        if (this.memoryManager != null) tag.put("MemoryManager", this.memoryManager.toTag());
+        return tag;
+    }
+
+    @Override
+    public String toString() {
+        return "TitanInstance{" +
+                "titan=" + titan +
+                ", stacks=" + stacks +
+                ", variant='" + variant + '\'' +
+                ", entity=" + entity +
+                ", isCorpse=" + isCorpse +
+                '}';
     }
 }
