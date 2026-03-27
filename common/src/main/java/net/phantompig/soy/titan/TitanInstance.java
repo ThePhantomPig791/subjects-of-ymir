@@ -282,6 +282,7 @@ public class TitanInstance {
         SoyProperties.PATH_POINTS.set(entity, 0);
     }
 
+    // WILL inherit memories! aka you can't go backwards to the exact same titan instance from the item since the MemoryManager will be different
     public static ItemStack toSpineIem(TitanInstance inst) {
         ItemStack stack = SoyItems.SPINE.get().getDefaultInstance();
         CompoundTag tag = inst.toTag();

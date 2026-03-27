@@ -1,8 +1,11 @@
 package net.phantompig.soy.command;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -36,24 +39,10 @@ public class TitanCommand {
                                 )
                         )
                         .then(Commands.literal("remove")
-                                .executes(context -> {
-                                    var source = context.getSource();
-                                    var entity = EntityArgument.getPlayer(context, "entity");
-
-                                    if (entity instanceof SoyPlayerExtension playerExt) {
-                                        if (playerExt.getTitanInstance().getProgress() > 0) {
-                                            source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
-                                            return 0;
-                                        }
-                                        TitanInstance.clearTitanFor(entity);
-                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.remove", entity.getDisplayName()), true);
-                                    } else {
-                                        source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
-                                        return 0;
-                                    }
-
-                                    return 1;
-                                })
+                                .executes(context -> removeTitan(context, false))
+                                .then(Commands.argument("pop_spine", BoolArgumentType.bool()).suggests((ctx, builder) -> builder.suggest("false").suggest("true").buildFuture())
+                                        .executes(context -> removeTitan(context, BoolArgumentType.getBool(context, "pop_spine")))
+                                )
                         )
                         .then(Commands.literal("eyes")
                                 .then(Commands.literal("set")
@@ -384,6 +373,30 @@ public class TitanCommand {
             }
             TitanInstance.setFor(entity, new Tuple<>(titan, variant));
             source.sendSuccess(() -> Component.translatable("commands.titan.success.set", entity.getDisplayName(), titan.id, variant), true);
+        } else {
+            source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+            return 0;
+        }
+
+        return 1;
+    }
+
+    private static int removeTitan(CommandContext<CommandSourceStack> context, boolean popSpine) throws CommandSyntaxException {
+        var source = context.getSource();
+        var entity = EntityArgument.getPlayer(context, "entity");
+
+        if (entity instanceof SoyPlayerExtension playerExt) {
+            if (playerExt.getTitanInstance().getProgress() > 0) {
+                source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
+                return 0;
+            }
+            if (popSpine) {
+                entity.drop(TitanInstance.toSpineIem(playerExt.getTitanInstance()), false, true);
+                source.sendSuccess(() -> Component.translatable("commands.titan.success.remove_pop", entity.getDisplayName()), true);
+            } else {
+                source.sendSuccess(() -> Component.translatable("commands.titan.success.remove", entity.getDisplayName()), true);
+            }
+            TitanInstance.clearTitanFor(entity);
         } else {
             source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
             return 0;
