@@ -194,7 +194,6 @@ public class TitanMemoryManager {
         ANCIENT_MESSAGES.add("Aurora Borealis?");
         ANCIENT_MESSAGES.add("Always look on the bright side of life");
         ANCIENT_MESSAGES.add("In the gallows");
-        ANCIENT_MESSAGES.add("Cat");
         ANCIENT_MESSAGES.add("You've suffered enough.");
         ANCIENT_MESSAGES.add("Just go to sleep!");
         ANCIENT_MESSAGES.add("You're not done yet. In case you've forgotten.");
@@ -246,6 +245,15 @@ public class TitanMemoryManager {
         ANCIENT_MESSAGES.add("I'm at your house");
         ANCIENT_MESSAGES.add("There are monsters nearby");
         ANCIENT_MESSAGES.add("Gross face marks");
+        ANCIENT_MESSAGES.add("I know the end");
+        ANCIENT_MESSAGES.add("they're really all gone");
+        ANCIENT_MESSAGES.add("where did my family go?");
+        ANCIENT_MESSAGES.add("will anyone help?");
+        ANCIENT_MESSAGES.add("Let me tell you something");
+        ANCIENT_MESSAGES.add("are you here to save us?");
+        ANCIENT_MESSAGES.add("it's dark in here");
+        ANCIENT_MESSAGES.add("how do these powers work?");
+        ANCIENT_MESSAGES.add("Titan food");
     }
 
     public void populateWithAncientMessages(String name) {
