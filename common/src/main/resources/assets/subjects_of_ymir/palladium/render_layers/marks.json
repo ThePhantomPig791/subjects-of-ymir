@@ -1,0 +1,35 @@
+{
+  "type": "palladium:compound",
+  "layers": [
+    {
+      "type": "palladium:skin_overlay",
+      "texture": {
+        "base": "#NAMESPACE:textures/models/titan/#TITAN/#VAR/marks.png",
+        "variables": {
+          "NAMESPACE": {
+            "type": "subjects_of_ymir:titan_namespace"
+          },
+          "TITAN": {
+            "type": "subjects_of_ymir:titan_id"
+          },
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          },
+          "MARKS": {
+            "type": "subjects_of_ymir:stamina",
+            "multiply": -1,
+            "add": 255,
+            "min": 0,
+            "max": 255
+          }
+        },
+        "transformers": [
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#MARKS.png"
+          }
+        ]
+      }
+    }
+  ]
+}

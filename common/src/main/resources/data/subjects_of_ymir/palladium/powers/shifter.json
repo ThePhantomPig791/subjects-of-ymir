@@ -510,6 +510,20 @@
           }
         ]
       }
+    },
+
+
+    "marks": {
+      "type": "palladium:render_layer",
+      "hidden": true,
+      "render_layer": "subjects_of_ymir:marks",
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:shift_progress",
+          "min": 0,
+          "max": 4
+        }
+      }
     }
   }
 }

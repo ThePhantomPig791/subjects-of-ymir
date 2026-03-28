@@ -41,6 +41,7 @@ public class SubjectsOfYmirClient {
         DynamicTextureManager.registerVariable(new HardeningAllVariable.Serializer());
         DynamicTextureManager.registerVariable(new HardeningKnucklesVariable.Serializer());
         DynamicTextureManager.registerVariable(new HardeningHandsVariable.Serializer());
+        DynamicTextureManager.registerVariable(new StaminaVariable.Serializer());
 
         PalladiumClientEvents.REGISTER_ANIMATIONS.register(registry -> {
             registry.accept(SubjectsOfYmir.rsrc("block"), BlockAnimation.INSTANCE);

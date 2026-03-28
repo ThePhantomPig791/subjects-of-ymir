@@ -28,8 +28,8 @@ public class SoyProperties {
     public static final PalladiumProperty<Integer> HARDENING_KNUCKLES = new IntegerProperty("subjects_of_ymir/hardening/knuckles").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<Integer> HARDENING_HANDS = new IntegerProperty("subjects_of_ymir/hardening/hands").sync(SyncType.EVERYONE);
 
-    public static final PalladiumProperty<Integer> STAMINA = new IntegerProperty("subjects_of_ymir/stamina").sync(SyncType.SELF);
-    public static final PalladiumProperty<Integer> MAX_STAMINA = new IntegerProperty("subjects_of_ymir/max_stamina").sync(SyncType.SELF);
+    public static final PalladiumProperty<Integer> STAMINA = new IntegerProperty("subjects_of_ymir/stamina").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Integer> MAX_STAMINA = new IntegerProperty("subjects_of_ymir/max_stamina").sync(SyncType.EVERYONE);
 
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
