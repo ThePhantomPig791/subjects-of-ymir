@@ -24,7 +24,7 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> RIBCAGE = ITEMS.register("ribcage", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(16)));
     public static final RegistrySupplier<Item> BROKEN_SPINE = ITEMS.register("broken_spine", () -> new Item(new Item.Properties()));
-    public static final RegistrySupplier<Item> SPINE = ITEMS.register("spine", () -> new SpineItem(new Item.Properties().food(new FoodProperties.Builder().build()).rarity(Rarity.RARE).stacksTo(1)));
+    public static final RegistrySupplier<Item> SPINE = ITEMS.register("spine", () -> new SpineItem(new Item.Properties().food(new FoodProperties.Builder().build()).rarity(Rarity.RARE).stacksTo(16)));
 
     public static final RegistrySupplier<Item> RAW_ICEBURST = ITEMS.register("raw_iceburst", () -> new IceburstItem(new Item.Properties()));
     public static final RegistrySupplier<Item> ICEBURST_ORE = ITEMS.register("iceburst_ore", () -> new BlockItem(SoyBlocks.ICEBURST_ORE.get(), new Item.Properties()));
