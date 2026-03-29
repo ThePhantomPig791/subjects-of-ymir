@@ -65,7 +65,11 @@ public class SubjectsOfYmir {
         });
 
         LivingEntityEvents.HURT.register(((entity, damageSource, amount) -> {
-            if (damageSource.is(SoyDamageTypeTags.CANNOT_CAUSE_SHIFT) || !(entity instanceof SoyPlayerExtension soy)) return EventResult.pass();
+            if (damageSource.is(SoyDamageTypeTags.CANNOT_CAUSE_SHIFT)
+                    || !(entity instanceof SoyPlayerExtension soy)
+                    || amount.get() < soy.getTitanInstance().getDamageThreshold()) {
+                return EventResult.pass();
+            }
             var titanInstance = soy.getTitanInstance();
             if (titanInstance.titan == null || titanInstance.getProgress() != 0) return EventResult.pass();
             titanInstance.canShiftTicks += (int) (amount.get() * 15);

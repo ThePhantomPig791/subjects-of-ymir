@@ -41,6 +41,11 @@
       "hidden": true,
       "render_layer": "subjects_of_ymir:titan"
     },
+    "hardening_renderer": {
+      "type": "palladium:render_layer",
+      "hidden": true,
+      "render_layer": "subjects_of_ymir:hardening"
+    },
 
     "name": {
       "type": "palladium:name_change",
@@ -55,16 +60,58 @@
       "icon": "subjects_of_ymir:textures/icon/eject.png",
       "hidden": false,
       "list_index": 4,
-      "gui_position": [0, -0.5],
+      "gui_position": [0, 0.5],
       "conditions": {
         "enabling": {
           "type": "palladium:action"
         },
-        "unlocking": {
-          "type": "palladium:ability_unlocked",
-          "ability": "root"
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          }
+        ]
+      }
+    },
+
+    "restrict_armor": {
+      "type": "palladium:restrict_slots",
+      "hidden": true,
+      "slots": [
+        "head",
+        "chest",
+        "legs",
+        "feet"
+      ],
+      "conditions": {
+        "enabling": {
+          "type": "palladium:not",
+          "conditions": {
+            "type": "subjects_of_ymir:is_unshifting"
+          }
         }
       }
+    },
+
+    "shifting_smoke": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "subjects_of_ymir:large_steam",
+      "emitter": "subjects_of_ymir:fast_steam_titan",
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:is_shifting"
+        }
+      }
+    },
+
+    "fall_resistance": {
+      "type": "palladium:attribute_modifier",
+      "hidden": true,
+      "attribute": "palladium:fall_resistance",
+      "amount": 2.5,
+      "operation": 1,
+      "uuid": "03ed062a-73c1-2345-5367-abf1114aa03e"
     },
 
     "block_dummy": {
@@ -75,7 +122,7 @@
       "description": {
         "translate": "ability.text.subjects_of_ymir.block.description"
       },
-      "gui_position": [0, 1.5],
+      "gui_position": [0, -1],
       "icon": "subjects_of_ymir:textures/icon/block.png",
       "conditions": {
         "unlocking": {
@@ -122,47 +169,6 @@
           "ability": "block"
         }
       }
-    },
-
-    "restrict_armor": {
-      "type": "palladium:restrict_slots",
-      "hidden": true,
-      "slots": [
-        "head",
-        "chest",
-        "legs",
-        "feet"
-      ],
-      "conditions": {
-        "enabling": {
-          "type": "palladium:not",
-          "conditions": {
-            "type": "subjects_of_ymir:is_unshifting"
-          }
-        }
-      }
-    },
-
-
-    "shifting_smoke": {
-      "type": "palladium:particles",
-      "hidden": true,
-      "particle_type": "subjects_of_ymir:large_steam",
-      "emitter": "subjects_of_ymir:fast_steam_titan",
-      "conditions": {
-        "enabling": {
-          "type": "subjects_of_ymir:is_shifting"
-        }
-      }
-    },
-
-    "fall_resistance": {
-      "type": "palladium:attribute_modifier",
-      "hidden": true,
-      "attribute": "palladium:fall_resistance",
-      "amount": 2.5,
-      "operation": 1,
-      "uuid": "03ed062a-73c1-2345-5367-abf1114aa03e"
     }
   }
 }

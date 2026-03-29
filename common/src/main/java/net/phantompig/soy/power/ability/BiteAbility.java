@@ -13,7 +13,7 @@ import net.threetag.palladium.util.property.*;
 
 public class BiteAbility extends Ability implements AnimationTimer {
     public static final PalladiumProperty<Integer> TIME = new IntegerProperty("time").configurable("The time the ability needs to be active for in order to succeed and deal damage");
-    public static final PalladiumProperty<Integer> AMOUNT = new IntegerProperty("amount").configurable("The amount of damage to deal");
+    public static final PalladiumProperty<Integer> AMOUNT = new IntegerProperty("amount").configurable("The amount of damage to deal. Set to -1 to automatically use the entity's minimum damage threshold");
     public static final PalladiumProperty<String> DAMAGE_TYPE = new StringProperty("damage_type").configurable("The damage source to use. Accepts \"bite\" or \"stab\"");
 
     public static final PalladiumProperty<Integer> TIMER = new IntegerProperty("timer").sync(SyncType.NONE);
@@ -21,7 +21,7 @@ public class BiteAbility extends Ability implements AnimationTimer {
 
     public BiteAbility() {
         this.withProperty(TIME, 10);
-        this.withProperty(AMOUNT, 1);
+        this.withProperty(AMOUNT, -1);
         this.withProperty(DAMAGE_TYPE, "bite");
     }
 
@@ -51,8 +51,11 @@ public class BiteAbility extends Ability implements AnimationTimer {
                     case "stab" -> SoyDamageSources.selfStab(entity.level(), null, entity, null);
                     default -> SoyDamageSources.selfBite(entity.level(), null, entity, null);
                 };
-                entity.hurt(source, entry.getProperty(AMOUNT));
-                if (entity instanceof SoyPlayerExtension ext) ext.getTitanInstance().canShiftTicks += 60;
+                if (entity instanceof SoyPlayerExtension ext) {
+                    var amount = entry.getProperty(AMOUNT);
+                    entity.hurt(source, amount == -1 ? ext.getTitanInstance().getDamageThreshold() : amount);
+                    ext.getTitanInstance().canShiftTicks = 60;
+                }
             }
         }
     }

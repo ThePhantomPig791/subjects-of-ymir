@@ -101,7 +101,7 @@ public class ServerCombatSystem {
         });
 
         nextStageTimer = (int) (1.2 * attackTimer) + 20;
-        sendUpdateAttackTicker(-(attackTimer = maxAttackTime));
+        sendUpdateAttackTicker((int) (-(attackTimer = maxAttackTime) * 12f / 20));
         sendUpdateStageTimer(nextStageTimer);
     }
 

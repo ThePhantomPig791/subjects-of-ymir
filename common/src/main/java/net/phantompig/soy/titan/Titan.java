@@ -184,6 +184,7 @@ public class Titan {
         }
         if (entity instanceof SoyPlayerExtension ext) {
             ext.getTitanInstance().setStamina((int) (ext.getTitanInstance().getStamina() * 0.1));
+            ext.getTitanInstance().setMarksTimer(6000);
         }
     }
 

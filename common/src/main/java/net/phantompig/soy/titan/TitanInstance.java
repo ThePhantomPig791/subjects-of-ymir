@@ -202,6 +202,10 @@ public class TitanInstance {
         return this.memoryManager;
     }
 
+    public float getDamageThreshold() {
+        return Math.max(35 - 5 * (float) Math.log(this.getMaxStamina()), 1);
+    }
+
 
     public boolean canShift() {
         return this.canShiftTicks > 0 && getStamina() > 0.7 * getMaxStamina();
