@@ -44,15 +44,15 @@ public class TitanMemoryManager {
     public void onChat(Player player, String raw) {
         if (Math.random() < 0.01 || (Math.random() < 0.2 && player instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0)) {
             this.currentHolderMessages.add("<" + player.getDisplayName().getString() + "> " + raw);
-            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS);
+            PlayerUtil.playSound(player, player.getX(), player.getEyeY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS);
         }
     }
 
     public void tick(ServerPlayer player) {
         // roughly once every ten minutes
-        if (!this.historicalMessages.isEmpty() && Math.random() < (1f / 20 / 60 / 10)) {
+        if (!this.historicalMessages.isEmpty() && Math.random() < 0.005 || Math.random() < (1f / 20 / 60 / 10)) {
             player.sendSystemMessage(Component.literal(ListUtil.getRandom(this.historicalMessages.stream().toList())), false);
-            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 0.9f + (float) (0.1 * Math.random()));
+            PlayerUtil.playSound(player, player.getX(), player.getEyeY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 0.9f + (float) (0.1 * Math.random()));
         }
     }
 
@@ -265,7 +265,7 @@ public class TitanMemoryManager {
     public void populateWithAncientMessages(String name) {
         name = name.substring(0, 1).toUpperCase().concat(name.substring(1));
         ArrayList<String> available = new ArrayList<>(ANCIENT_MESSAGES);
-        int count = (int) (10 * Math.random() - 3);
+        int count = (int) (10 * Math.random() + 5);
         for (int i = 0; i < count && !available.isEmpty(); i++) {
             this.historicalMessages.add("<" + name + "> " + available.remove((int) (available.size() * Math.random())));
         }
