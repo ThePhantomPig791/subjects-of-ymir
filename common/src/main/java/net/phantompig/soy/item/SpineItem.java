@@ -53,7 +53,7 @@ public class SpineItem extends Item {
 
         Player player = livingEntity instanceof Player ? (Player)livingEntity : null;
         if (player instanceof ServerPlayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)player, stack); // TODO add advancement
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)player, stack);
         }
 
         TitanInstance.setFromSpineItem(livingEntity, itemStack);
