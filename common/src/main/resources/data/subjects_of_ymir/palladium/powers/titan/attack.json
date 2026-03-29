@@ -81,6 +81,52 @@
       }
     },
 
+    "restrict_armor": {
+      "type": "palladium:restrict_slots",
+      "hidden": true,
+      "slots": [
+        "head",
+        "chest",
+        "legs",
+        "feet"
+      ],
+      "conditions": {
+        "enabling": {
+          "type": "palladium:not",
+          "conditions": {
+            "type": "subjects_of_ymir:is_unshifting"
+          }
+        }
+      }
+    },
+
+    "shifting_smoke": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "subjects_of_ymir:large_steam",
+      "emitter": "subjects_of_ymir:fast_steam_titan",
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:is_shifting"
+        }
+      }
+    },
+
+    "jump": {
+      "type": "palladium:attribute_modifier",
+      "hidden": true,
+      "attribute": "palladium:jump_power",
+      "amount": 0.4,
+      "operation": 1,
+      "uuid": "41118ed1-025d-47a5-9365-e2f6aa7eabe0",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:sprinting"
+        }
+      }
+    },
+
+
     "crystal_eject": {
       "type": "subjects_of_ymir:hardening_all",
       "icon": "subjects_of_ymir:textures/icon/crystal_eject.png",
@@ -530,52 +576,6 @@
       }
     },
 
-    "restrict_armor": {
-      "type": "palladium:restrict_slots",
-      "hidden": true,
-      "slots": [
-        "head",
-        "chest",
-        "legs",
-        "feet"
-      ],
-      "conditions": {
-        "enabling": {
-          "type": "palladium:not",
-          "conditions": {
-            "type": "subjects_of_ymir:is_unshifting"
-          }
-        }
-      }
-    },
-
-
-    "shifting_smoke": {
-      "type": "palladium:particles",
-      "hidden": true,
-      "particle_type": "subjects_of_ymir:large_steam",
-      "emitter": "subjects_of_ymir:fast_steam_titan",
-      "conditions": {
-        "enabling": {
-          "type": "subjects_of_ymir:is_shifting"
-        }
-      }
-    },
-
-    "jump": {
-      "type": "palladium:attribute_modifier",
-      "hidden": true,
-      "attribute": "palladium:jump_power",
-      "amount": 0.4,
-      "operation": 1,
-      "uuid": "41118ed1-025d-47a5-9365-e2f6aa7eabe0",
-      "conditions": {
-        "enabling": {
-          "type": "palladium:sprinting"
-        }
-      }
-    },
-
     "hardening_particles": {
       "type": "palladium:particles",
       "hidden": true,
@@ -604,6 +604,36 @@
       "hidden": true,
       "emitter": "subjects_of_ymir:berserk_flame",
       "particle_type": "minecraft:flame",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_integer_property",
+          "ability": "berserk_unlock",
+          "property": "timer",
+          "min": 1,
+          "max": 1200
+        }
+      }
+    },
+    "berserk_particles_steam": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "emitter": "subjects_of_ymir:steam_healing_titan",
+      "particle_type": "subjects_of_ymir:large_steam",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_integer_property",
+          "ability": "berserk_unlock",
+          "property": "timer",
+          "min": 1,
+          "max": 1200
+        }
+      }
+    },
+    "berserk_particles_ember": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "emitter": "subjects_of_ymir:steam_healing_titan",
+      "particle_type": "subjects_of_ymir:ember",
       "conditions": {
         "enabling": {
           "type": "palladium:ability_integer_property",

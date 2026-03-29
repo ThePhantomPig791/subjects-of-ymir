@@ -5,15 +5,28 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.EntityAccess;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.property.SoyProperties;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements Nameable, EntityAccess, CommandSource {
     @Inject(method = "canBeCollidedWith", at = @At("RETURN"), cancellable = true)
     public void soy$canBeCollidedWith(CallbackInfoReturnable<Boolean> cir) {
+        soy$returnTrueIfTitan(cir);
+    }
+
+    @Inject(method = "fireImmune", at = @At("RETURN"), cancellable = true)
+    public void soy$fireImmune(CallbackInfoReturnable<Boolean> cir) {
+        soy$returnTrueIfTitan(cir);
+    }
+
+    @Unique
+    public void soy$returnTrueIfTitan(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this instanceof SoyPlayerExtension extension && extension.getTitanInstance().getProgress() > 0) {
             cir.setReturnValue(true);
         }
