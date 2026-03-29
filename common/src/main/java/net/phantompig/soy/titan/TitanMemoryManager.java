@@ -50,7 +50,7 @@ public class TitanMemoryManager {
 
     public void tick(ServerPlayer player) {
         // roughly once every ten minutes
-        if (!this.historicalMessages.isEmpty() && Math.random() < 0.005 || Math.random() < (1f / 20 / 60 / 10)) {
+        if (!this.historicalMessages.isEmpty() && Math.random() < (1f / 20 / 60 / 10)) {
             player.sendSystemMessage(Component.literal(ListUtil.getRandom(this.historicalMessages.stream().toList())), false);
             PlayerUtil.playSound(player, player.getX(), player.getEyeY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 0.9f + (float) (0.1 * Math.random()));
         }
