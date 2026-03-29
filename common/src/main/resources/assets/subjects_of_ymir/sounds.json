@@ -98,5 +98,14 @@
         "attenuation_distance": 48
       }
     ]
+  },
+  "heartbeat": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.heartbeat",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:heartbeat"
+      }
+    ]
   }
 }

@@ -6,9 +6,13 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.util.ListUtil;
+import net.threetag.palladium.util.PlayerUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,8 +42,9 @@ public class TitanMemoryManager {
     }
 
     public void onChat(Player player, String raw) {
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.01 || (Math.random() < 0.2 && player instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0)) {
             this.currentHolderMessages.add("<" + player.getDisplayName().getString() + "> " + raw);
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS);
         }
     }
 
@@ -47,6 +52,7 @@ public class TitanMemoryManager {
         // roughly once every ten minutes
         if (!this.historicalMessages.isEmpty() && Math.random() < (1f / 20 / 60 / 10)) {
             player.sendSystemMessage(Component.literal(ListUtil.getRandom(this.historicalMessages.stream().toList())), false);
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 0.9f + (float) (0.1 * Math.random()));
         }
     }
 
