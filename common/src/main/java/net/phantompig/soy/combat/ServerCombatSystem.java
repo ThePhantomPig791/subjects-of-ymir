@@ -58,8 +58,11 @@ public class ServerCombatSystem {
     }
 
     public void attack() {
-        if (attackTimer > 0 || cooldown > 0 || extension == null || extension.getTitanInstance().titan == null || this.player.isSpectator()) {
+        if (extension.getTitanInstance().titan == null) return;
+        final int maxAttackTime = (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease());
+        if (attackTimer >= maxAttackTime * 12 / 20f || cooldown > 0 || extension == null || this.player.isSpectator()) {
             attackStage = 1;
+            sendUpdateAttackTicker(-(cooldown = maxAttackTime));
             return;
         }
 
@@ -97,9 +100,8 @@ public class ServerCombatSystem {
             if (e instanceof ServerPlayer pl) SoyNetwork.NETWORK.sendToPlayer(pl, new TitanAttackAnimationMessage(player, animationId));
         });
 
-        attackTimer = (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease());
         nextStageTimer = (int) (1.2 * attackTimer) + 20;
-        sendUpdateAttackTicker(-attackTimer);
+        sendUpdateAttackTicker(-(attackTimer = maxAttackTime));
         sendUpdateStageTimer(nextStageTimer);
     }
 

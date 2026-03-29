@@ -20,7 +20,7 @@ public class AnimationUtil {
 
         if (anim == null || animationContainer == null) return;
 
-        animationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(20, Ease.INOUTSINE),
+        animationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(6, Ease.INOUTSINE),
                 new KeyframeAnimationPlayer(anim)
                         .setFirstPersonMode(FirstPersonMode.NONE)
                         .setFirstPersonConfiguration(new FirstPersonConfiguration().setShowRightArm(true).setShowLeftArm(true))
