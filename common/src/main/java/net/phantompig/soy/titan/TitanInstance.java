@@ -74,6 +74,7 @@ public class TitanInstance {
     public void tick() {
         if (this.canShiftTicks > 0) this.canShiftTicks--;
         staminaTick();
+        marksTick();
 
         if (!Platform.isProduction() && entity instanceof ServerPlayer player) {
             player.displayClientMessage(Component.literal("Stamina: " + getStamina() + " / " + getMaxStamina() + ", Deaths: " + this.deaths), true);
@@ -179,6 +180,22 @@ public class TitanInstance {
         }
     }
 
+    public int getMarksTimer() {
+        return SoyProperties.MARKS_TIMER.get(this.entity);
+    }
+    public void setMarksTimer(int value) {
+        SoyProperties.MARKS_TIMER.set(this.entity, value);
+    }
+    public void marksTick() {
+        int marks = getMarksTimer();
+        if (this.getProgress() > 0) {
+            setMarksTimer(marks + (int) (0.002 * (6000 - marks)));
+        } else {
+            if (marks > 0) setMarksTimer(marks - (getStamina() == getMaxStamina() ? 3 : 1));
+            else if (marks < 0) setMarksTimer(0);
+        }
+    }
+
     @NotNull
     public TitanMemoryManager getMemoryManager() {
         if (this.memoryManager == null) return this.memoryManager = new TitanMemoryManager();
@@ -269,6 +286,7 @@ public class TitanInstance {
         playerExt.getTitanInstance().setProgress(0);
         playerExt.getTitanInstance().setCharge(0);
         playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
+        playerExt.getTitanInstance().setMarksTimer(0);
         SoyProperties.STAMINA.set(entity, titan.getA().defaultMaxStamina);
         SoyProperties.MAX_STAMINA.set(entity, titan.getA().defaultMaxStamina);
     }
@@ -279,6 +297,7 @@ public class TitanInstance {
         playerExt.setTitanInstance(new TitanInstance(entity));
         playerExt.getTitanInstance().setStamina(0);
         playerExt.getTitanInstance().setMaxStamina(0);
+        playerExt.getTitanInstance().setMarksTimer(0);
         SoyProperties.PATH_POINTS.set(entity, 0);
     }
 

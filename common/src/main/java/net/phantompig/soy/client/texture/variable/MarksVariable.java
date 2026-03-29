@@ -13,37 +13,38 @@ import net.threetag.palladium.util.context.DataContext;
 
 import java.util.List;
 
-public class StaminaVariable extends AbstractIntegerTextureVariable {
-    public StaminaVariable(List<Pair<Operation, Integer>> operations) {
+public class MarksVariable extends AbstractIntegerTextureVariable {
+    public MarksVariable(List<Pair<Operation, Integer>> operations) {
         super(operations);
     }
 
     @Override
     public int getNumber(DataContext context) {
         if (!(context.getEntity() instanceof SoyPlayerExtension ext)) return 0;
-        return (int) ((float) ext.getTitanInstance().getStamina() / ext.getTitanInstance().getMaxStamina() * 255);
+        int marks = ext.getTitanInstance().getMarksTimer();
+        return (int) (255f * marks / (marks + 2000));
     }
 
     public static class Serializer implements ITextureVariableSerializer {
 
         @Override
         public ITextureVariable parse(JsonObject json) {
-            return new StaminaVariable(AbstractIntegerTextureVariable.parseOperations(json));
+            return new MarksVariable(AbstractIntegerTextureVariable.parseOperations(json));
         }
 
         @Override
         public void addDocumentationFields(JsonDocumentationBuilder builder) {
-            builder.setTitle("Stamina");
+            builder.setTitle("Marks");
         }
 
         @Override
         public String getDocumentationDescription() {
-            return "Returns the entity's stamina out of their max stamina, ranging from 0 to 255. 0 means the entity is at zero stamina.";
+            return "Returns the entity's marks alpha value, ranging from 0 to 255. 0 means the entity has no marks.";
         }
 
         @Override
         public ResourceLocation getId() {
-            return SubjectsOfYmir.rsrc("stamina");
+            return SubjectsOfYmir.rsrc("marks");
         }
     }
 }

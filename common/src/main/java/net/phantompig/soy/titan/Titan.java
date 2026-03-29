@@ -118,12 +118,14 @@ public class Titan {
         ext.getTitanInstance().startScaleChange();
         ext.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
         ext.getTitanInstance().canShiftTicks = 0;
+        ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + charge * charge);
     }
 
     public void tickDuringShift(LivingEntity entity, int progress, int charge) {
         if (!(entity instanceof SoyPlayerExtension ext)) return;
         ext.getTitanInstance().setProgress(++progress);
         entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, Level.ExplosionInteraction.MOB, false).explode();
+        ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + 10);
     }
 
     public void completedShift(LivingEntity entity, int charge) {

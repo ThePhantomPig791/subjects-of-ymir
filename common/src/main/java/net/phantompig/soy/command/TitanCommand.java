@@ -332,6 +332,43 @@ public class TitanCommand {
                                         )
                                 )
                         )
+                        .then(Commands.literal("marks")
+                                .then(Commands.literal("get")
+                                        .executes(context -> {
+                                            var source = context.getSource();
+                                            var entity = EntityArgument.getPlayer(context, "entity");
+
+                                            if (entity instanceof SoyPlayerExtension playerExt) {
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.marks.get", entity.getDisplayName(), playerExt.getTitanInstance().getMarksTimer()), true);
+                                            } else {
+                                                source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                                return 0;
+                                            }
+
+                                            return 1;
+                                        })
+                                )
+                                .then(Commands.literal("set")
+                                        .then(Commands.argument("amount", IntegerArgumentType.integer())
+                                                .executes(context -> {
+                                                    var source = context.getSource();
+                                                    var entity = EntityArgument.getPlayer(context, "entity");
+                                                    var amount = IntegerArgumentType.getInteger(context, "amount");
+
+                                                    if (entity instanceof SoyPlayerExtension playerExt) {
+                                                        int old = playerExt.getTitanInstance().getMarksTimer();
+                                                        playerExt.getTitanInstance().setMarksTimer(amount);
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.marks.set", entity.getDisplayName(), amount, old), true);
+                                                    } else {
+                                                        source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
+                                                        return 0;
+                                                    }
+
+                                                    return 1;
+                                                })
+                                        )
+                                )
+                        )
                 )
         );
     }
