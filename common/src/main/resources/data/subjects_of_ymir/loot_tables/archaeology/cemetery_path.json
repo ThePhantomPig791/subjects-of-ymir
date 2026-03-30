@@ -21,13 +21,11 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:broken_spine",
-                    "weight": 1
+                    "name": "subjects_of_ymir:broken_spine"
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:skeleton_skull",
-                    "weight": 1
+                    "name": "minecraft:skeleton_skull"
                 },
                 {
                     "type": "minecraft:item",
@@ -56,8 +54,7 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:mourner_pottery_sherd",
-                    "weight": 1
+                    "name": "minecraft:mourner_pottery_sherd"
                 },
                 {
                     "type": "minecraft:item",
@@ -66,18 +63,15 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:poisonous_potato",
-                    "weight": 1
+                    "name": "minecraft:poisonous_potato"
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:poppy",
-                    "weight": 1
+                    "name": "minecraft:poppy"
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:cornflower",
-                    "weight": 1
+                    "name": "minecraft:cornflower"
                 }
             ],
             "rolls": 1.0
