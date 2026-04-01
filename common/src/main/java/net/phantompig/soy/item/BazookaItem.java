@@ -38,7 +38,7 @@ public class BazookaItem extends GasHoldingItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         boolean infinite = EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.INFINITY_ARROWS) || player.isCreative();
-        if (!level.isClientSide() && get(stack) <= 0 || infinite) {
+        if (!level.isClientSide() && get(stack) > 0 || infinite) {
             Vec3 pos = player.getEyePosition().add(player.getLookAngle().scale(0.25));
             ItemStack toFire = player.getItemInHand(usedHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
 
