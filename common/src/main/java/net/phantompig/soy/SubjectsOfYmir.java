@@ -27,8 +27,8 @@ public class SubjectsOfYmir {
         SoySounds.init();
         SoyBlockTags.init();
         SoyParticles.init();
-        SoyMenus.init();
         SoyRecipeTypes.init();
+        SoyMenus.init();
         SoyFeatures.init();
 
 
