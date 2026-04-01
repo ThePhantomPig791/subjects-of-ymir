@@ -1,69 +1,8 @@
 {
-  "shift": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.shift",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:shift",
-        "attenuation_distance": 128
-      }
-    ]
-  },
-  "shift_local": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.shift",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:shift_local"
-      }
-    ]
-  },
-
-  "electricity": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.electricity",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:electricity"
-      }
-    ]
-  },
-  "electricity_final": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.electricity",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:electricity_final"
-      }
-    ]
-  },
-
-  "steam": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.steam",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:steam_0",
-        "attenuation_distance": 32
-      },
-      {
-        "name": "subjects_of_ymir:steam_1",
-        "attenuation_distance": 32
-      },
-      {
-        "name": "subjects_of_ymir:steam_2",
-        "attenuation_distance": 32
-      }
-    ]
-  },
-
   "gas_burst": {
     "category": "player",
     "subtitle": "subtitle.subjects_of_ymir.gas_burst",
     "sounds": [
-      {
-        "name": "subjects_of_ymir:gas_burst_0"
-      },
       {
         "name": "subjects_of_ymir:gas_burst_1"
       },
@@ -75,36 +14,6 @@
       },
       {
         "name": "subjects_of_ymir:gas_burst_4"
-      }
-    ]
-  },
-
-  "short_harden": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.harden",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:short_harden",
-        "attenuation_distance": 48
-      }
-    ]
-  },
-  "quick_harden": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.harden",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:quick_harden",
-        "attenuation_distance": 48
-      }
-    ]
-  },
-  "heartbeat": {
-    "category": "player",
-    "subtitle": "subtitle.subjects_of_ymir.heartbeat",
-    "sounds": [
-      {
-        "name": "subjects_of_ymir:heartbeat"
       }
     ]
   }

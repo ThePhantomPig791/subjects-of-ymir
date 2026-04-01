@@ -1,85 +1,21 @@
 {
-  "commands.titan.success.set": "Set %s's Titan to %s with variant \"%s\"",
-  "commands.titan.success.randomize": "Randomized %s's Titan to %s with variant \"%s\"",
-  "commands.titan.success.remove": "Removed %s's Titan",
-  "commands.titan.success.remove_pop": "Removed %s's Titan and dropped their Spine as an item",
-  "commands.titan.success.color.set": "Set %s's Titan's eye color to #%s",
-  "commands.titan.success.color.randomize": "Randomized %s's Titan's eye color to #%s",
-  "commands.titan.success.unshift": "Force unshifted %s from their Titan form",
-  "commands.titan.success.points.get": "%s has %s Path Points",
-  "commands.titan.success.points.set": "Set %s's Path Points to %s (was %s)",
-  "commands.titan.success.points.add": "Gave %s Path Points to %s (now %s)",
-  "commands.titan.success.points.subtract": "Took %s Path Points from %s (now %s)",
-  "commands.titan.success.noTitan": "%s does not have a Titan",
-  "commands.titan.success.get": "%s has Titan %s with variant \"%s\"",
-  "commands.titan.success.stamina.get": "%s has %s stamina available out of %s max stamina",
-  "commands.titan.success.stamina.set_max": "Set %s's max stamina to %s (was %s)",
-  "commands.titan.success.stamina.set": "Set %s's stamina to %s (was %s)",
-  "commands.titan.success.stamina.add": "Added %s stamina to %s (now %s)",
-  "commands.titan.success.deaths.get": "%s has %s deaths (they will lose their Titan upon reaching 13)",
-  "commands.titan.success.deaths.set": "Set %s's deaths to %s (was %s)",
-  "commands.titan.success.marks.get": "%s's marks timer is at %s",
-  "commands.titan.success.marks.set": "Set %s's marks timer to %s (was %s)",
-
-  "commands.titan.error.notPlayer": "Targeted entity must be a player",
-  "commands.titan.error.shifted": "Cannot modify %s's Titan while they are shifted",
-  "commands.titan.error.notShifted": "%s is not in Titan form",
-  "commands.titan.error.noSuchTitan": "Could not find Titan %s",
-  "commands.titan.error.noSuchVariant": "Could not find variant \"%s\" for Titan %s",
-  "commands.titan.error.noTitan": "%s does not have a Titan",
-  "commands.titan.error.maxStamina": "%s is already at full stamina",
+  "commands.titan": "%s is not a Subject of Ymir",
 
 
-  "subtitle.subjects_of_ymir.shift": "Titan shifts",
-  "subtitle.subjects_of_ymir.electricity": "Electricity crackles",
-  "subtitle.subjects_of_ymir.steam": "Steam hisses",
   "subtitle.subjects_of_ymir.gas_burst": "Gas bursts",
-  "subtitle.subjects_of_ymir.short_harden": "Titan hardens",
-  "subtitle.subjects_of_ymir.heartbeat": "Heart beats",
 
 
-  "death.attack.selfBite": "%s bit their own hand off",
-  "death.attack.selfStab": "%s stabbed themselves to death",
-
-  
   "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",
 
 
-  "entity.subjects_of_ymir.titan_corpse": "Titan Corpse",
-
-
-  "palladium.tailoring_recipe.category.subjects_of_ymir.uniforms": "AOT Uniforms",
-
-  
-  "item.subjects_of_ymir.spine": "Spine",
-  "item.subjects_of_ymir.ribcage": "Ribcage",
-  "item.subjects_of_ymir.broken_spine": "Broken Spine",
-  
-  "item.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo",
   "item.subjects_of_ymir.raw_iceburst": "Raw Iceburst",
-  "item.subjects_of_ymir.raw_ultrahard_steel": "Raw Ultrahard Steel",
-  "item.subjects_of_ymir.ultrahard_steel_ingot": "Ultrahard Steel Ingot",
 
+  "item.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo",
   "item.subjects_of_ymir.iron_bamboo_leaf": "Iron-Weave Bamboo Leaf",
-  "item.subjects_of_ymir.iron_bamboo_sword": "Iron-Weave Bamboo Sword",
-  "item.subjects_of_ymir.iron_bamboo_dagger": "Iron-Weave Bamboo Dagger",
-  "item.subjects_of_ymir.blade": "Blade",
-
-  "item.subjects_of_ymir.cloak": "Cloak",
-  "item.subjects_of_ymir.uniform_jacket": "Uniform Jacket",
-  "item.subjects_of_ymir.uniform_leggings": "Uniform Leggings",
-  "item.subjects_of_ymir.uniform_boots": "Uniform Boots",
-  "item.subjects_of_ymir.survey_corps_cloak": "Cloak",
-  "item.subjects_of_ymir.survey_corps_jacket": "Uniform Jacket",
-  "item.subjects_of_ymir.garrison_cloak": "Cloak",
-  "item.subjects_of_ymir.garrison_jacket": "Uniform Jacket",
-  "item.subjects_of_ymir.military_police_cloak": "Cloak",
-  "item.subjects_of_ymir.military_police_jacket": "Uniform Jacket",
 
   "item.subjects_of_ymir.injection": "Injection",
 
-
-  "tooltip.subjects_of_ymir.spine": "%s's spine",
+  "item.subjects_of_ymir.bazooka": "Iceburst Bazooka",
 
 
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",
@@ -89,73 +25,9 @@
 
   "block.subjects_of_ymir.compression_table": "Compression Table",
 
-  "block.subjects_of_ymir.hardening_block": "Hardening Block",
-
-
   "container.subjects_of_ymir.compression": "Compression Table",
 
 
-  "advancements.subjects_of_ymir.eldian_village.title": "Ragako",
-  "advancements.subjects_of_ymir.eldian_village.description": "Discover an ancient Eldian Village",
-  "advancements.subjects_of_ymir.titan_bones.title": "Tomb Raider",
-  "advancements.subjects_of_ymir.titan_bones.description": "Dig up ancient bones from an Eldian Graveyard",
-  "advancements.subjects_of_ymir.titan_shift.title": "Island Devil",
-  "advancements.subjects_of_ymir.titan_shift.description": "§dS§kub§r§dj§kect of §r§dYmir§k§r§d, D§ke§r§dvil§k of §r§dPa§kra§r§ddi§ks§r§d, Mo§kns§r§dt§ke§r§dr",
-  "advancements.subjects_of_ymir.iron_bamboo.title": "Ferrocalamus",
-  "advancements.subjects_of_ymir.iron_bamboo.description": "Discover Iron Bamboo",
-  "advancements.subjects_of_ymir.craft_uniform.title": "Dedicate Your Heart",
-  "advancements.subjects_of_ymir.craft_uniform.description": "Tailor a Uniform",
-  "advancements.subjects_of_ymir.eat_spine.title": "Cannibal",
-  "advancements.subjects_of_ymir.eat_spine.description": "Consume another player's Spine",
-
-
-  "stat.subjects_of_ymir.times_shifted_into_titan": "Times Shifted Into Titan Form",
-  "stat.subjects_of_ymir.time_as_titan": "Time Spent in Titan Form",
-  "stat.subjects_of_ymir.path_points_gained": "Path Points Gained",
-  "stat.subjects_of_ymir.amount_steam_healed": "Health Regenerated with Steam Healing",
-
-
-  "titan.subjects_of_ymir.attack": "Attack Titan",
-  "titan.subjects_of_ymir.armored": "Armored Titan",
-
-
-  "power.subjects_of_ymir.shifter": "Power of the Titans",
-
-  "ability.subjects_of_ymir.titan_shift": "Titan Shift",
-  "ability.subjects_of_ymir.bite": "Bite Hand",
-  "ability.subjects_of_ymir.conceal": "Conceal",
-  "ability.subjects_of_ymir.steam_healing_overdrive": "Steam Overdrive",
-  "ability.subjects_of_ymir.titan_unshift": "Eject",
-  "ability.subjects_of_ymir.block": "Block",
-
-  "ability.text.subjects_of_ymir.path_points": "Path Points",
-
-  "ability.text.subjects_of_ymir.root.title": "Power of the Titans",
-  "ability.text.subjects_of_ymir.root.description": "Under certain conditions, you are capable of transforming into your Titan form. After spending enough time and practice with your Titan, extra abilities may become available to you.",
-  "ability.text.subjects_of_ymir.bite.title": "Bite        ",
-  "ability.text.subjects_of_ymir.bite.description": "Bite your hand, intentionally drawing blood, to allow for a Titan transformation.",
-  "ability.text.subjects_of_ymir.conceal.title": "Conceal      ",
-  "ability.text.subjects_of_ymir.conceal.description": "Intentionally inhibit your Titan abilities, removing any visual giveaways of your power.",
-  "ability.text.subjects_of_ymir.steam_healing_overdrive.title": "Steam Overdrive",
-  "ability.text.subjects_of_ymir.steam_healing_overdrive.description": "Kick your steam healing into high gear, rapidly closing any wounds.",
-  "ability.text.subjects_of_ymir.block.title": "Block     ",
-  "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage.",
-  "ability.text.subjects_of_ymir.failsafe.title": "Failsafe    ",
-  "ability.text.subjects_of_ymir.failsafe.description": "After shifting into a Titan enough times, it can become enough of a habit that you subconsciously transform to save yourself from death.",
-
-  "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
-  "ability.text.subjects_of_ymir.attack.root.description": "Your Titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 8",
-  "ability.text.subjects_of_ymir.attack.crystal_eject.title": "Crystal Ejection",
-  "ability.text.subjects_of_ymir.attack.crystal_eject.description": "Apply hardening to every inch of your skin, forming a tough, solid crystal before ejecting from Titan form §7(held keybind)§r.",
-  "ability.text.subjects_of_ymir.attack.infinite_crystal.title": "Crystal Domain",
-  "ability.text.subjects_of_ymir.attack.infinite_crystal.description": "With practice and extra Titan serum, you can continue to grow your hardened crystal forever up until ejection.",
-  "ability.text.subjects_of_ymir.attack.hardening_knuckles.title": "Hardened Knuckles",
-  "ability.text.subjects_of_ymir.attack.hardening_knuckles.description": "You can harden the skin of just your fingers, lethally augmenting your punches at the cost of attack speed.",
-  "ability.text.subjects_of_ymir.attack.hardening_hands.title": "Hardening Hands",
-  "ability.text.subjects_of_ymir.attack.hardening_hands.description": "You can harden the rest of your hands, dealing even more damage.",
-  "ability.text.subjects_of_ymir.attack.berserk.title": "Berserk",
-  "ability.text.subjects_of_ymir.attack.berserk.description": "Gain a violent, fiery second wind upon death that lasts for up to sixty seconds.",
-
-  "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
-  "ability.text.subjects_of_ymir.armored.root.description": "Your Titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 30"
+  "advancements.subjects_of_ymir.fail_inject.title": "Placebo",
+  "advancements.subjects_of_ymir.fail_inject.description": "Discover that Titan Serum only affects Subjects of Ymir"
 }

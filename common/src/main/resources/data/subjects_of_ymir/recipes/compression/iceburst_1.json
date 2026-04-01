@@ -1,0 +1,14 @@
+{
+  "type": "subjects_of_ymir:compression",
+  "ingredients": [
+    {
+      "item": "subjects_of_ymir:raw_iceburst"
+    }
+  ],
+  "result": {
+    "item": "minecraft:light_blue_dye"
+  },
+  "byproduct_type": "gas",
+  "byproduct_chance": 0.8,
+  "byproduct_amount": 1
+}

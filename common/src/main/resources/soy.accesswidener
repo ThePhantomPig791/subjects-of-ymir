@@ -14,3 +14,5 @@ accessible  field   net/minecraft/world/entity/Mob  goalSelector    Lnet/minecra
 accessible  method  net/minecraft/client/gui/GuiGraphics    innerBlit   (Lnet/minecraft/resources/ResourceLocation;IIIIIFFFFFFFF)V
 
 accessible  method  net/minecraft/world/damagesource/DamageSource    <init>  (Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V
+
+accessible  method  net/minecraft/world/entity/item/FallingBlockEntity  <init>  (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V

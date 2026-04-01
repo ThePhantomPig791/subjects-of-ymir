@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "subjects_of_ymir:injection"
+    },
+    "title": {
+      "translate": "advancements.subjects_of_ymir.fail_inject.title"
+    },
+    "description": {
+      "translate": "advancements.subjects_of_ymir.fail_inject.description"
+    },
+    "frame": "challenge"
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "inject": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "subjects_of_ymir:injection"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "inject"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  }
+}

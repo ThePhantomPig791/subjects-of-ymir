@@ -3,24 +3,9 @@
   "package": "net.phantompig.soy.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "client.GuiMixin",
-    "client.LivingEntityRendererMixin",
-    "client.MinecraftMixin",
-    "client.MouseHandlerMixin",
-    "client.PlayerRendererMixin",
-    "client.StuckInBodyLayerMixin"
   ],
   "mixins": [
-    "BlockBehaviourMixin",
-    "BlockMixin",
-    "EntityMixin",
-    "ExplosionMixin",
-    "FoodDataMixin",
-    "ItemEntityMixin",
-    "LivingEntityMixin",
-    "PlayerMixin",
-    "ServerPlayerMixin",
-    "VillagerMixin"
+    "WatcherRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

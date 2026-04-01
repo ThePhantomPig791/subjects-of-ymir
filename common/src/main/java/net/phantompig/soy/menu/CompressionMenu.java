@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.item.DataHoldingItem;
+import net.phantompig.soy.item.GasHoldingItem;
 import net.phantompig.soy.item.SpinalFluidHoldingItem;
 import net.phantompig.soy.recipe.CompressionRecipe;
 import net.phantompig.soy.recipe.SoyRecipeTypes;
@@ -267,6 +268,11 @@ public class CompressionMenu extends AbstractContainerMenu {
                             }
                             break;
                         case GAS:
+                            if (compressionResult.getItem(1).getItem() instanceof GasHoldingItem ghi) {
+                                if (Math.random() < compressionRecipe.byproductChance) {
+                                    ghi.add(compressionResult.getItem(1), compressionRecipe.byproductAmount);
+                                }
+                            }
                             break;
                     }
                 }

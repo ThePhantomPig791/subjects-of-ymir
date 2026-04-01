@@ -1,6 +1,0 @@
-{
-	"parent": "minecraft:item/generated",
-	"textures": {
-		"layer0": "subjects_of_ymir:item/uniform_leggings"
-	}
-}
