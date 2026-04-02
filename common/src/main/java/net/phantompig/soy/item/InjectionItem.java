@@ -82,6 +82,12 @@ public class InjectionItem extends SpinalFluidHoldingItem {
             case "Robertm6" -> messages.add("Long time no see, Robert.");
             case "JolyRatio" -> messages.add("Ratio... so brave of you to show your face.");
             case "user__NULL" -> messages.add("Null. We've been awaiting your return. Welcome back.");
+            case "Bobfish4th" -> {
+                messages.add("What ever happened to the third, the second, and the first?");
+                messages.add("The Gods smile upon thee, Bob Fish 4th. They told me personally.");
+                messages.add("You, Bob Fish, are the one and only star in my night sky.");
+                messages.add("Are you a Bob, or are you a Fish? These enigmatic questions keep me up at night.");
+            }
             default -> {}
         }
         return messages;
