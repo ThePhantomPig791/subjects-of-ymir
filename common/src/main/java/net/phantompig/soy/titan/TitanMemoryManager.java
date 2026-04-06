@@ -68,7 +68,6 @@ public class TitanMemoryManager {
     }
 
     public static TitanMemoryManager fromTag(CompoundTag tag) {
-        SubjectsOfYmir.LOGGER.info(tag.toString());
         return new TitanMemoryManager(
                 new HashSet<>(getStringList(tag, "CurrentHolderMessages")),
                 new HashSet<>(getStringList(tag, "HistoricalMessages"))

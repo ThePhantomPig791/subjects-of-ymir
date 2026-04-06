@@ -48,6 +48,9 @@ public class RunFromTitanGoal extends Goal {
 
     @Override
     public void start() {
+        if (this.mob.isSleeping()) {
+            this.mob.stopSleeping();
+        }
         if (runningTo == null || this.mob.getNavigation().isDone() || this.mob.position().distanceToSqr(runningTo) < 25) {
             this.runningFrom = getClosestTitan();
             if (runningFrom == null) return;
