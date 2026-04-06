@@ -46,6 +46,11 @@
       "hidden": true,
       "render_layer": "subjects_of_ymir:hardening"
     },
+    "armor_renderer": {
+      "type": "palladium:render_layer",
+      "hidden": true,
+      "render_layer": "subjects_of_ymir:armored/armor"
+    },
 
     "name": {
       "type": "palladium:name_change",
@@ -167,6 +172,27 @@
         "enabling": {
           "type": "palladium:ability_enabled",
           "ability": "block"
+        }
+      }
+    },
+
+    "shed": {
+      "type": "subjects_of_ymir:shed",
+      "list_index": 0,
+      "hidden": true,
+      "hidden_in_bar": false,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        }
+      }
+    },
+    "sprint_charge": {
+      "type": "subjects_of_ymir:sprint_charge",
+      "shed_ability": "shed",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:sprinting"
         }
       }
     }

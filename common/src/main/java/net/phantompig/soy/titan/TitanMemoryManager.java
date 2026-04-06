@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.util.ListUtil;

@@ -1,0 +1,46 @@
+{
+  "type": "geckolib:default",
+  "model": {
+    "base": "subjects_of_ymir:geo/titan/armored/#VAR/skin.geo.json",
+    "variables": {
+      "VAR": {
+        "type": "subjects_of_ymir:titan_variant"
+      }
+    }
+  },
+  "texture": {
+    "base": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor.png",
+    "variables": {
+      "VAR": {
+        "type": "subjects_of_ymir:titan_variant"
+      },
+      "SHED": {
+        "type": "palladium:ability_integer_property",
+        "power": "subjects_of_ymir:titan/armored",
+        "ability": "shed",
+        "property": "value",
+        "multiply": 255,
+        "divide": 15,
+        "min": 0,
+        "max": 255
+      },
+      "DECAY": {
+        "type": "subjects_of_ymir:titan_decay",
+        "subtract": 300,
+        "min": 0,
+        "max": 255
+      }
+    },
+    "transformers": [
+      {
+        "type": "palladium:alpha_mask",
+        "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#SHED.png"
+      },
+      {
+        "type": "palladium:alpha_mask",
+        "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
+      }
+    ],
+    "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor_#SHED_#DECAY"
+  }
+}

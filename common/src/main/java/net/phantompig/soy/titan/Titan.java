@@ -190,6 +190,7 @@ public class Titan {
 
     public void unshift(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
         if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh)) return;
+        ext.getTitanInstance().strengthIncreases.clear();
 
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);

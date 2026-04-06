@@ -41,6 +41,19 @@ public class ServerCombatSystem {
         return null;
     }
 
+
+    private float getExtraStrength() {
+        float sum = 0;
+        var effect = this.player.getEffect(MobEffects.DAMAGE_BOOST);
+        if (effect != null) sum += 0.5f * effect.getAmplifier();
+        sum += extension.getTitanInstance().strengthIncreases.values().stream().reduce(Float::sum).orElse(0f);
+        return sum;
+    }
+    private int getMaxAttackTime() {
+        if (extension.getTitanInstance().titan == null) return 0;
+        return extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease();
+    }
+
     public enum AttackType {
         PUNCH(3),
         GROUND(3),
@@ -59,7 +72,7 @@ public class ServerCombatSystem {
 
     public void attack() {
         if (extension.getTitanInstance().titan == null) return;
-        final int maxAttackTime = (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease());
+        final int maxAttackTime = getMaxAttackTime();
         if (attackTimer >= maxAttackTime * 12 / 20f || cooldown > 0 || extension == null || this.player.isSpectator()) {
             attackStage = 1;
             sendUpdateAttackTicker(-(cooldown = maxAttackTime));
@@ -72,7 +85,7 @@ public class ServerCombatSystem {
             attackType = AttackType.KICK;
             player.addEffect(new MobEffectInstance(
                     MobEffects.MOVEMENT_SLOWDOWN,
-                    (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease()),
+                    getMaxAttackTime(),
                     4,
                     false,
                     false
@@ -81,7 +94,7 @@ public class ServerCombatSystem {
             attackType = AttackType.GROUND;
             player.addEffect(new MobEffectInstance(
                     MobEffects.MOVEMENT_SLOWDOWN,
-                    (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease()) / 2,
+                    getMaxAttackTime() / 2,
                     0,
                     false,
                     false
@@ -112,7 +125,7 @@ public class ServerCombatSystem {
             return;
         }
         if (attackTimer > 0) attackTimer--;
-        if (attackTimer == Mth.lerpInt(12 / 20f, 0, (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease()))) {
+        if (attackTimer == Mth.lerpInt(12 / 20f, 0, getMaxAttackTime())) {
             attackEffect();
         }
         if (nextStageTimer > 0) nextStageTimer--;
@@ -131,7 +144,7 @@ public class ServerCombatSystem {
             } else {
                 explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
-                cooldown = (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease()) * 3 / 2;
+                cooldown = getMaxAttackTime() * 3 / 2;
                 nextStageTimer = 0;
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
@@ -145,7 +158,7 @@ public class ServerCombatSystem {
             } else {
                 explodeInFrontPartialLooking(2.5f, 7, 0.1f, -0.7f);
 
-                cooldown = (extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease()) * 2;
+                cooldown = getMaxAttackTime() * 2;
                 nextStageTimer = 0;
                 sendUpdateAttackTicker(-cooldown);
                 sendUpdateStageTimer(nextStageTimer);
@@ -156,7 +169,7 @@ public class ServerCombatSystem {
         if (attackType == AttackType.KICK) {
             explodeInFrontFlat(1.5f, 4, -0.85f, 0);
 
-            cooldown = (int) ((extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease()) * 1.5f);
+            cooldown = (int) (getMaxAttackTime() * 1.5f);
             nextStageTimer += nextStageTimer / 2;
             sendUpdateAttackTicker(-cooldown);
             sendUpdateStageTimer(nextStageTimer);
@@ -178,7 +191,7 @@ public class ServerCombatSystem {
 
     public void explodeInFrontPartialLooking(float strength, float distance, float startHeightOffset, float endHeightOffset) {
         strength *= (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 5;
-        strength += 0.5f * getStrengthEffectBoost();
+        strength += getExtraStrength();
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
         var end = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
@@ -189,18 +202,12 @@ public class ServerCombatSystem {
 
     public void explodeInFrontFlat(float strength, float distance, float startHeightOffset, float endHeightOffset) {
         strength *= (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 5;
-        strength += 0.5f * getStrengthEffectBoost();
+        strength += getExtraStrength();
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
         var end = player.getLookAngle().multiply(1, 0, 1).normalize().scale(distance);
         Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
 
         player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, Level.ExplosionInteraction.TNT);
-    }
-
-    private int getStrengthEffectBoost() {
-        var effect = this.player.getEffect(MobEffects.DAMAGE_BOOST);
-        if (effect == null) return 0;
-        return effect.getAmplifier();
     }
 }

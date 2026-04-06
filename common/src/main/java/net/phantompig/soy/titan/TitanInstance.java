@@ -12,6 +12,7 @@ import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.item.SpineItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.threetag.palladium.power.PowerManager;
 import net.threetag.palladiumcore.util.Platform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +20,7 @@ import virtuoel.pehkui.api.ScaleTypes;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TitanInstance {
@@ -49,6 +51,8 @@ public class TitanInstance {
 
     public int deaths = 0;
 
+    public HashMap<String, Float> strengthIncreases;
+
 
     public TitanInstance(LivingEntity entity) {
         this(entity, null);
@@ -64,6 +68,8 @@ public class TitanInstance {
         this.variant = variant;
 
         this.updateProperties();
+
+        this.strengthIncreases = new HashMap<>();
     }
 
     public TitanInstance(LivingEntity entity, @Nullable Titan titan, String variant, List<Titan> stacks) {
@@ -344,6 +350,7 @@ public class TitanInstance {
         SoyProperties.CHARGE.set(to, SoyProperties.CHARGE.get(from));
         SoyProperties.EYE_COLOR.set(to, SoyProperties.EYE_COLOR.get(from));
         SoyProperties.ATTACK_TIME.set(to, SoyProperties.ATTACK_TIME.get(from));
+        PowerManager.getPowerHandler(to).get().fromNBT(PowerManager.getPowerHandler(from).get().toNBT());
     }
 
     public static void copyTo(TitanInstance from, TitanInstance to) {
@@ -354,6 +361,7 @@ public class TitanInstance {
         to.playerInventory = from.playerInventory;
         to.deaths = from.deaths;
         to.memoryManager = from.memoryManager;
+        to.strengthIncreases = from.strengthIncreases;
     }
 
     public static TitanInstance fromTag(LivingEntity entity, CompoundTag tag) {
@@ -372,6 +380,10 @@ public class TitanInstance {
         }
         inst.deaths = tag.contains("Deaths") ? tag.getInt("Deaths") : 0;
         inst.memoryManager = tag.contains("MemoryManager") ? TitanMemoryManager.fromTag(tag.getCompound("MemoryManager")) : null;
+        if (tag.contains("StrengthIncreases")) {
+            CompoundTag si = tag.getCompound("StrengthIncreases");
+            si.getAllKeys().forEach(key -> inst.strengthIncreases.put(key, si.getFloat(key)));
+        }
         inst.updateProperties();
         return inst;
     }
@@ -388,6 +400,11 @@ public class TitanInstance {
         if (this.playerInventory != null) tag.put("PlayerInventory", this.playerInventory);
         tag.putInt("Deaths", this.deaths);
         if (this.memoryManager != null) tag.put("MemoryManager", this.memoryManager.toTag());
+        if (!this.strengthIncreases.isEmpty()) {
+            CompoundTag siTag = new CompoundTag();
+            this.strengthIncreases.forEach((key, value) -> siTag.put(key, FloatTag.valueOf(value)));
+            tag.put("StrengthIncreases", siTag);
+        }
         return tag;
     }
 
