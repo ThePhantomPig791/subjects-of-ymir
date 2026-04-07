@@ -21,6 +21,7 @@ public class InjectionItem extends SpinalFluidHoldingItem {
         super(properties, 100);
     }
 
+    @NotNull
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
@@ -56,6 +57,7 @@ public class InjectionItem extends SpinalFluidHoldingItem {
                 SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + inj.get(stack));
                 player.awardStat(SoyStats.PATH_POINTS_GAINED, inj.get(stack));
                 inj.set(stack, 0);
+                PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.1f);
                 return true;
             }
         }
