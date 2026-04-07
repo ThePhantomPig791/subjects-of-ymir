@@ -80,6 +80,9 @@
 
 
   "tooltip.subjects_of_ymir.spine": "%s's spine",
+  "tooltip.subjects_of_ymir.emblem.survey_corps": "Survey Corps Emblem",
+  "tooltip.subjects_of_ymir.emblem.military_police": "Military Police Emblem",
+  "tooltip.subjects_of_ymir.emblem.garrison": "Garrison Emblem",
 
 
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",

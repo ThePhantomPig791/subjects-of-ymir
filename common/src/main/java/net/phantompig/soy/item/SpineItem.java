@@ -84,7 +84,7 @@ public class SpineItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
         String name = getPreviousInheritorName(stack);
         if (!name.isEmpty()) {
-            tooltipComponents.add(Component.translatable("tooltip.subjects_of_ymir.spine", name).withStyle(ChatFormatting.LIGHT_PURPLE));
+            tooltipComponents.add(Component.translatable("tooltip.subjects_of_ymir.spine", name).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
         }
     }
 }

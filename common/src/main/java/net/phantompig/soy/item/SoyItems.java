@@ -48,7 +48,7 @@ public class SoyItems {
 
 
 
-    private static final String[] UNIFORM_EMBLEMS = {"garrison_", "military_police_", "survey_corps_"};
+    private static final String[] UNIFORM_EMBLEMS = {"garrison", "military_police", "survey_corps"};
     private static final List<RegistrySupplier<Item>> UNIFORMS = new ArrayList<>();
 
 
@@ -105,8 +105,8 @@ public class SoyItems {
 
         // these are only AddonArmorItems because i already had the armor renderers made and didn't feel like re-doing it with the vanilla system
         for (String emblem : UNIFORM_EMBLEMS) {
-            UNIFORMS.add(ITEMS.register(emblem + "cloak", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
-            UNIFORMS.add(ITEMS.register(emblem + "jacket", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
+            UNIFORMS.add(ITEMS.register(emblem + "_cloak", () -> new TooltippedAddonArmorItem("tooltip.subjects_of_ymir.emblem." + emblem, ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
+            UNIFORMS.add(ITEMS.register(emblem + "_jacket", () -> new TooltippedAddonArmorItem("tooltip.subjects_of_ymir.emblem." + emblem, ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
         }
         UNIFORMS.add(ITEMS.register("cloak", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
         UNIFORMS.add(ITEMS.register("uniform_jacket", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
