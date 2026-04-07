@@ -27,6 +27,8 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
     public TitanCorpseEntity(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
         this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40);
+        this.heal(40);
     }
 
     @Override
