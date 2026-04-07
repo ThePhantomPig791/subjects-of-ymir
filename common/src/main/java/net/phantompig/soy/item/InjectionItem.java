@@ -14,6 +14,7 @@ import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.util.PlayerUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class InjectionItem extends SpinalFluidHoldingItem {
     public InjectionItem(Properties properties) {
@@ -29,6 +30,14 @@ public class InjectionItem extends SpinalFluidHoldingItem {
         }
         // TODO injecting others
         return InteractionResultHolder.pass(stack);
+    }
+
+    @NotNull
+    @Override
+    public ItemStack getDefaultInstance() {
+        ItemStack stack = super.getDefaultInstance();
+        set(stack, 100);
+        return stack;
     }
 
     private static boolean inject(ItemStack stack, Player player) {

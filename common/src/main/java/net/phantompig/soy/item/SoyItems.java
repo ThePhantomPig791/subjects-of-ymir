@@ -115,6 +115,7 @@ public class SoyItems {
 
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
             entries.add(INJECTION.get());
+            entries.add(INJECTION.get().getDefaultInstance());
             entries.add(SPINE.get());
             entries.add(RIBCAGE.get());
             entries.add(BROKEN_SPINE.get());
