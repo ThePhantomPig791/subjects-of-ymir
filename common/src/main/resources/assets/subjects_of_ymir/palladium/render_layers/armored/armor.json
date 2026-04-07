@@ -14,11 +14,18 @@
       "VAR": {
         "type": "subjects_of_ymir:titan_variant"
       },
+      "PROGRESS": {
+        "type": "subjects_of_ymir:titan_progress",
+        "subtract": 2,
+        "min": 0,
+        "max": 9
+      },
       "SHED": {
         "type": "palladium:ability_integer_property",
         "power": "subjects_of_ymir:titan/armored",
         "ability": "shed",
         "property": "value",
+        "fallback_value": 0,
         "multiply": 255,
         "divide": 15,
         "min": 0,
@@ -34,6 +41,10 @@
     "transformers": [
       {
         "type": "palladium:alpha_mask",
+        "mask": "subjects_of_ymir:textures/models/alpha_masks/shift/#PROGRESS.png"
+      },
+      {
+        "type": "palladium:alpha_mask",
         "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#SHED.png"
       },
       {
@@ -41,6 +52,6 @@
         "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
       }
     ],
-    "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor_#SHED_#DECAY"
+    "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor_#PROGRESS_#SHED_#DECAY"
   }
 }

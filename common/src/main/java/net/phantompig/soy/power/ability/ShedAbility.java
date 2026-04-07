@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.Titan;
 import net.threetag.palladium.power.IPowerHolder;
@@ -23,7 +24,7 @@ public class ShedAbility extends Ability {
 
     @Override
     public void firstTick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (!entity.level().isClientSide() && entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && ext.getTitanInstance().getProgress() < ext.getTitanInstance().titan.maxProgress) {
+        if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() <= 1) {
             entry.setUniqueProperty(VALUE, 15);
         }
     }
@@ -53,6 +54,10 @@ public class ShedAbility extends Ability {
                         (float) (0.1 * Math.random() + 1.8 - value / 45f)
                 );
             }
+        }
+
+        if (entity instanceof TitanCorpseEntity en && en.tickCount < 2) {
+            entry.setUniqueProperty(VALUE, entry.getProperty(VALUE)); // don't even ask
         }
     }
 }

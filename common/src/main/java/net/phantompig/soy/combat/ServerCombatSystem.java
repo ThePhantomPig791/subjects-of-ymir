@@ -75,7 +75,7 @@ public class ServerCombatSystem {
         final int maxAttackTime = getMaxAttackTime();
         if (attackTimer >= maxAttackTime * 12 / 20f || cooldown > 0 || extension == null || this.player.isSpectator()) {
             attackStage = 1;
-            sendUpdateAttackTicker(-(cooldown = maxAttackTime));
+            if (cooldown == 0) sendUpdateAttackTicker(-(cooldown = maxAttackTime));
             return;
         }
 

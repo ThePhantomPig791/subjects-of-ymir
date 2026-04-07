@@ -1,15 +1,19 @@
 package net.phantompig.soy.power.ability;
 
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.phantompig.soy.particle.SoyParticles;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.threetag.palladium.power.IPowerHolder;
 import net.threetag.palladium.power.Power;
 import net.threetag.palladium.power.PowerManager;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
+import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.property.*;
 
 import java.util.UUID;
@@ -27,19 +31,72 @@ public class SprintChargeAbility extends Ability {
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (enabled && entry.getEnabledTicks() % 20 == 0) {
-            Power power = entry.getProperty(SHED_POWER) == null ? holder.getPower() : PowerManager.getInstance(entity.level()).getPower(entry.getProperty(SHED_POWER));
-            if (PowerManager.getPowerHandler(entity).isEmpty()) return;
-            double max = 0.2 * (1 - PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE) / 15d);
-
+        if (enabled) {
             UUID uuid = entry.getProperty(ATTRIBUTE_UUID);
-            if (entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) == null) {
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", max / 10, AttributeModifier.Operation.ADDITION));
-            } else {
-                double value = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid).getAmount();
-                if (value >= max) return;
+            boolean blocking = holder.getAbilities().get("block") != null && holder.getAbilities().get("block").getProperty(BlockAbility.TIMER) > 0;
+            if (entity.isSprinting()) {
+                if (!blocking) {
+                    if (entry.getEnabledTicks() % 20 == 0) {
+                        Power power = entry.getProperty(SHED_POWER) == null ? holder.getPower() : PowerManager.getInstance(entity.level()).getPower(entry.getProperty(SHED_POWER));
+                        if (PowerManager.getPowerHandler(entity).isEmpty()) return;
+                        double max = 0.2 * (1 - PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE) / 15d);
+
+                        if (entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) == null) {
+                            entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", max / 10, AttributeModifier.Operation.ADDITION));
+                        } else {
+                            double value = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid).getAmount();
+                            if (value >= max) return;
+                            entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(uuid);
+                            entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", value + max / 10, AttributeModifier.Operation.ADDITION));
+                        }
+                    }
+                }
+                PlayerUtil.spawnParticleForAll(
+                        entity.level(),
+                        128,
+                        (SimpleParticleType) SoyParticles.LARGE_STEAM.get(),
+                        true,
+                        entity.getX(),
+                        entity.getY() + entity.getBoundingBox().getYsize() / 3,
+                        entity.getZ(),
+                        (float) (Math.random() * entity.getBoundingBox().getXsize() / 3),
+                        (float) (Math.random() * entity.getBoundingBox().getYsize() / 3),
+                        (float) (Math.random() * entity.getBoundingBox().getZsize() / 3),
+                        0.08f,
+                        3
+                );
+                if (entity instanceof SoyPlayerExtension ext) {
+                    if (entry.getEnabledTicks() % 10 == 0) {
+                        ext.getTitanInstance().exhaust(ext.getTitanInstance().getMaxStamina() / 70);
+                    }
+                    ext.getTitanInstance().regainStaminaCooldown = 30;
+                }
+            } else if (!blocking && entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null) {
                 entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(uuid);
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", value + max / 10, AttributeModifier.Operation.ADDITION));
+            }
+            if (blocking && !entity.level().isClientSide() && entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null && !entity.isInWater() && !entity.isInLava() && !entity.isInPowderSnow) {
+                double value = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid).getAmount();
+                if (entry.getEnabledTicks() % 2 == 0 && value > 0.02) {
+                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight() / 2, entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
+                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
+                    PlayerUtil.spawnParticleForAll(
+                            entity.level(),
+                            128,
+                            (SimpleParticleType) SoyParticles.DIRT_CLOUD.get(),
+                            true,
+                            entity.getX(),
+                            entity.getY() + entity.getBoundingBox().getYsize() / 5,
+                            entity.getZ(),
+                            (float) (Math.random() * entity.getBoundingBox().getXsize() / 3),
+                            (float) (Math.random() * entity.getBoundingBox().getYsize() / 4),
+                            (float) (Math.random() * entity.getBoundingBox().getZsize() / 3),
+                            0.2f,
+                            4
+                    );
+                    if (entity instanceof SoyPlayerExtension ext) {
+                        ext.getTitanInstance().exhaust(1);
+                    }
+                }
             }
         }
     }
@@ -48,13 +105,6 @@ public class SprintChargeAbility extends Ability {
     public void lastTick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
         UUID uuid = entry.getProperty(ATTRIBUTE_UUID);
         if (entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null) {
-            if (!entity.level().isClientSide() && !entity.isInWater() && !entity.isInLava() && !entity.isInPowderSnow) {
-                double value = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid).getAmount();
-                if (value > 0.02) {
-                    entity.level().explode(entity, entity.getX(), entity.getY() + entity.getEyeHeight() / 2, entity.getZ(), (float) value * 40, Level.ExplosionInteraction.BLOCK);
-                    entity.level().explode(entity, entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), (float) value * 40, Level.ExplosionInteraction.BLOCK);
-                }
-            }
             entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(uuid);
         }
     }

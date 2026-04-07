@@ -161,20 +161,6 @@
         }
       }
     },
-    "block_slow": {
-      "type": "palladium:attribute_modifier",
-      "hidden": true,
-      "attribute": "minecraft:generic.movement_speed",
-      "amount": -0.5,
-      "operation": 1,
-      "uuid": "09ed062a-73c1-7777-1103-3331114aa03e",
-      "conditions": {
-        "enabling": {
-          "type": "palladium:ability_enabled",
-          "ability": "block"
-        }
-      }
-    },
 
     "shed": {
       "type": "subjects_of_ymir:shed",
@@ -189,12 +175,7 @@
     },
     "sprint_charge": {
       "type": "subjects_of_ymir:sprint_charge",
-      "shed_ability": "shed",
-      "conditions": {
-        "enabling": {
-          "type": "palladium:sprinting"
-        }
-      }
+      "shed_ability": "shed"
     }
   }
 }
