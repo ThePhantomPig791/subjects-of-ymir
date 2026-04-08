@@ -10,10 +10,13 @@
         },
         "P": {
             "tag": "minecraft:planks"
+        },
+        "I": {
+            "item": "subjects_of_ymir:iron_bamboo"
         }
     },
     "pattern": [
-        "PRP",
+        "IRI",
         "P P",
         "PSP"
     ],
