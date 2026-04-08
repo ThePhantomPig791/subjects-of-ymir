@@ -76,15 +76,18 @@
   "item.subjects_of_ymir.garrison_jacket": "Uniform Jacket",
   "item.subjects_of_ymir.military_police_cloak": "Cloak",
   "item.subjects_of_ymir.military_police_jacket": "Uniform Jacket",
+  "item.subjects_of_ymir.cadet_cloak": "Cloak",
+  "item.subjects_of_ymir.cadet_jacket": "Uniform Jacket",
 
   "item.subjects_of_ymir.injection": "Injection",
   "item.subjects_of_ymir.vial": "Vial",
 
 
   "tooltip.subjects_of_ymir.spine": "%s's spine",
-  "tooltip.subjects_of_ymir.emblem.survey_corps": "§o§bSurvey Corps§7 Emblem",
-  "tooltip.subjects_of_ymir.emblem.military_police": "§o§4Military Police§7 Emblem",
-  "tooltip.subjects_of_ymir.emblem.garrison": "§o§2Garrison§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.survey_corps": "§bSurvey Corps§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.military_police": "§4Military Police§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.garrison": "§2Garrison§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.cadet": "§8Cadet§7 Emblem",
 
 
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",

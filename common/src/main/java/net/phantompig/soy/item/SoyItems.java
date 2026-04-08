@@ -52,7 +52,7 @@ public class SoyItems {
 
 
 
-    private static final String[] UNIFORM_EMBLEMS = {"garrison", "military_police", "survey_corps"};
+    private static final String[] UNIFORM_EMBLEMS = {"survey_corps", "military_police", "garrison", "cadet"};
     private static final List<RegistrySupplier<Item>> UNIFORMS = new ArrayList<>();
 
 
