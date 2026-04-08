@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.threetag.palladium.util.PlayerUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -16,6 +17,7 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
         super(properties, "SpinalFluid", max, new Color(131, 89, 255));
     }
 
+    @NotNull
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
@@ -23,12 +25,20 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
         if (level.isClientSide()) return InteractionResultHolder.pass(stack);
         ItemStack offhandStack = player.getItemInHand(InteractionHand.OFF_HAND);
         if (offhandStack.getItem() instanceof SpinalFluidHoldingItem osfhi && stack.getItem() instanceof SpinalFluidHoldingItem msfhi) {
-            int extra = move(offhandStack, osfhi.get(offhandStack), stack, msfhi.max);
-            if (extra > -1) {
-                osfhi.set(offhandStack, extra);
-                handleUnstackableness(stack);
+            if (player.isCrouching()) {
+                int extra = msfhi.move(osfhi.get(offhandStack), stack);
+                if (extra > -1) {
+                    osfhi.set(offhandStack, extra);
+                    handleUnstackableness(stack);
+                    transferSound(player.level(), player.getX(), player.getY(), player.getZ());
+                    return InteractionResultHolder.success(stack);
+                }
+            } else if (msfhi.moveOne(osfhi.get(offhandStack), stack)) {
+                msfhi.handleUnstackableness(stack);
+                osfhi.add(offhandStack, -1);
+                osfhi.handleUnstackableness(offhandStack);
                 transferSound(player.level(), player.getX(), player.getY(), player.getZ());
-                return InteractionResultHolder.success(stack);
+                return InteractionResultHolder.pass(stack);
             }
         }
         return InteractionResultHolder.pass(stack);

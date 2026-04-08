@@ -43,12 +43,18 @@ public abstract class DataHoldingItem extends Item {
     }
 
     // to.getItem() should be an instance of this. aka if the "this" object is an InjectionItem, then "to" should be an injection item
-    public int move(ItemStack from, int fromAmount, ItemStack to, int toMax) {
-        if (get(to) >= toMax) return -1;
+    public int move(int fromAmount, ItemStack to) {
+        if (get(to) >= max) return -1;
         int newAmount = fromAmount + get(to);
         if (newAmount == get(to)) return -1;
-        set(to, Math.min(newAmount, toMax));
-        return newAmount > toMax ? newAmount - toMax : 0;
+        set(to, Math.min(newAmount, max));
+        return newAmount > max ? newAmount - max : 0;
+    }
+    public boolean moveOne(int fromAmount, ItemStack to) {
+        if (fromAmount == 0) return false;
+        if (get(to) >= max) return false;
+        add(to, 1);
+        return true;
     }
 
     @Override
