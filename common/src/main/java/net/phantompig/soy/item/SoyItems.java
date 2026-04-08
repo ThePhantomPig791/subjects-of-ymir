@@ -37,7 +37,9 @@ public class SoyItems {
     public static final RegistrySupplier<Item> IRON_BAMBOO_DAGGER = ITEMS.register("iron_bamboo_dagger", () -> new SwordItem(ToolTiers.IRON_BAMBOO, 1, -0.5f, new Item.Properties()));
 
     public static final RegistrySupplier<Item> COMPRESSION_TABLE = ITEMS.register("compression_table", () -> new BlockItem(SoyBlocks.COMPRESSION_TABLE.get(), new Item.Properties()));
+
     public static final RegistrySupplier<Item> INJECTION = ITEMS.register("injection", () -> new InjectionItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistrySupplier<Item> VIAL = ITEMS.register("vial", () -> new SpinalFluidHoldingItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON), 300));
 
     public static final RegistrySupplier<Item> HARDENING_BLOCK = ITEMS.register("hardening_block", () -> new BlockItem(SoyBlocks.HARDENING_BLOCK.get(), new Item.Properties()));
 
@@ -118,6 +120,8 @@ public class SoyItems {
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
             entries.add(INJECTION.get());
             entries.add(INJECTION.get().getDefaultInstance());
+            entries.add(VIAL.get());
+            entries.add(VIAL.get().getDefaultInstance());
             entries.add(SPINE.get());
             entries.add(RIBCAGE.get());
             entries.add(BROKEN_SPINE.get());

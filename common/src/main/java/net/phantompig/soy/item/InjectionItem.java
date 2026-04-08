@@ -5,7 +5,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.player.SoyPlayerExtension;
@@ -30,7 +33,7 @@ public class InjectionItem extends SpinalFluidHoldingItem {
             if (inject(stack, player)) return InteractionResultHolder.consume(stack);
         }
         // TODO injecting others
-        return InteractionResultHolder.pass(stack);
+        return super.use(level, player, usedHand);
     }
 
     private static boolean inject(ItemStack stack, Player player) {

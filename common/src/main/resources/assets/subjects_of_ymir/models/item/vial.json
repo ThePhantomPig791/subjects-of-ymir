@@ -6,19 +6,19 @@
     "overrides": [
         {
             "predicate": {
-                "custom_model_data": 1
+                "subjects_of_ymir:spinal_fluid": 0.33
             },
             "model": "subjects_of_ymir:item/vial_1"
         },
         {
             "predicate": {
-                "custom_model_data": 2
+                "subjects_of_ymir:spinal_fluid": 0.66
             },
             "model": "subjects_of_ymir:item/vial_2"
         },
         {
             "predicate": {
-                "custom_model_data": 3
+                "subjects_of_ymir:spinal_fluid": 1
             },
             "model": "subjects_of_ymir:item/vial_3"
         }

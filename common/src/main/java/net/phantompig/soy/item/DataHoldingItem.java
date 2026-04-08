@@ -42,6 +42,15 @@ public abstract class DataHoldingItem extends Item {
         return stack.getOrCreateTag().getInt(this.dataTag);
     }
 
+    // to.getItem() should be an instance of this. aka if the "this" object is an InjectionItem, then "to" should be an injection item
+    public int move(ItemStack from, int fromAmount, ItemStack to, int toMax) {
+        if (get(to) >= toMax) return -1;
+        int newAmount = fromAmount + get(to);
+        if (newAmount == get(to)) return -1;
+        set(to, Math.min(newAmount, toMax));
+        return newAmount > toMax ? newAmount - toMax : 0;
+    }
+
     @Override
     public boolean isBarVisible(ItemStack stack) {
         return (showBarAtMax || get(stack) != max) && (showBarAtZero || get(stack) != 0);

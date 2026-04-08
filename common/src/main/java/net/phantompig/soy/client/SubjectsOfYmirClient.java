@@ -3,7 +3,10 @@ package net.phantompig.soy.client;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.client.animation.BiteAnimation;
 import net.phantompig.soy.client.animation.BlockAnimation;
@@ -57,12 +60,8 @@ public class SubjectsOfYmirClient {
         ParticleProviderRegistry.register(SoyParticles.EMBER, EmberParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.DIRT_CLOUD, DirtCloudParticleType.Provider::new);
 
-        ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), (itemStack, clientLevel, livingEntity, i) -> {
-            if (itemStack.getItem() instanceof DataHoldingItem item) {
-                return (float) item.get(itemStack) / item.max;
-            }
-            return 0.0f;
-        });
+        ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
+        ItemProperties.register(SoyItems.VIAL.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
 
         PlayerAnimationAccess.REGISTER_ANIMATION_EVENT.register((player, animationStack) -> {
             ModifierLayer<IAnimation> layer = new ModifierLayer<>();
@@ -77,5 +76,12 @@ public class SubjectsOfYmirClient {
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/all_hardening", SoyOverlays::renderAllHardeningOverlay);
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");
+    }
+
+    private static float getModelProgressForDataItem(ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) {
+        if (itemStack.getItem() instanceof DataHoldingItem item) {
+            return (float) item.get(itemStack) / item.max;
+        }
+        return 0.0f;
     }
 }
