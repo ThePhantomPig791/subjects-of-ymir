@@ -50,7 +50,8 @@
       "subjects_of_ymir:raw_ultrahard_steel",
       "subjects_of_ymir:ultrahard_steel_ingot_from_raw",
       "subjects_of_ymir:ultrahard_steel_ingot_from_raw_blasting",
-      "subjects_of_ymir:gas_canister"
+      "subjects_of_ymir:gas_canister",
+      "subjects_of_ymir:vial"
     ]
   }
 }

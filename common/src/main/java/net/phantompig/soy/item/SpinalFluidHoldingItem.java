@@ -14,7 +14,7 @@ import java.awt.*;
 
 public class SpinalFluidHoldingItem extends DataHoldingItem {
     public SpinalFluidHoldingItem(Properties properties, int max) {
-        super(properties, "SpinalFluid", max, new Color(131, 89, 255));
+        super(properties.stacksTo(1), "SpinalFluid", max, new Color(131, 89, 255));
     }
 
     @NotNull
@@ -29,14 +29,11 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
                 int extra = msfhi.move(osfhi.get(offhandStack), stack);
                 if (extra > -1) {
                     osfhi.set(offhandStack, extra);
-                    handleUnstackableness(stack);
                     transferSound(player.level(), player.getX(), player.getY(), player.getZ());
                     return InteractionResultHolder.success(stack);
                 }
             } else if (msfhi.moveOne(osfhi.get(offhandStack), stack)) {
-                msfhi.handleUnstackableness(stack);
                 osfhi.add(offhandStack, -1);
-                osfhi.handleUnstackableness(offhandStack);
                 transferSound(player.level(), player.getX(), player.getY(), player.getZ());
                 return InteractionResultHolder.pass(stack);
             }
@@ -47,14 +44,5 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
     private static void transferSound(Level level, double x, double y, double z) {
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.HONEY_BLOCK_STEP, SoundSource.PLAYERS, 0.5f, 1.4f);
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 0.5f, 1.8f);
-    }
-
-    private void handleUnstackableness(ItemStack stack) {
-        if (stack.getMaxStackSize() == 1) return;
-        if (get(stack) == 0) {
-            if (stack.getOrCreateTag().contains("UnstackableTag")) stack.getOrCreateTag().remove("UnstackableTag");
-        } else {
-            stack.getOrCreateTag().putInt("UnstackableTag", (int) (100000 * Math.random()));
-        }
     }
 }

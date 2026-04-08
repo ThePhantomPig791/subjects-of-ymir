@@ -38,8 +38,8 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> COMPRESSION_TABLE = ITEMS.register("compression_table", () -> new BlockItem(SoyBlocks.COMPRESSION_TABLE.get(), new Item.Properties()));
 
-    public static final RegistrySupplier<Item> INJECTION = ITEMS.register("injection", () -> new InjectionItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistrySupplier<Item> VIAL = ITEMS.register("vial", () -> new SpinalFluidHoldingItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON), 300));
+    public static final RegistrySupplier<Item> INJECTION = ITEMS.register("injection", () -> new InjectionItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistrySupplier<Item> VIAL = ITEMS.register("vial", () -> new SpinalFluidHoldingItem(new Item.Properties(), 300));
 
     public static final RegistrySupplier<Item> HARDENING_BLOCK = ITEMS.register("hardening_block", () -> new BlockItem(SoyBlocks.HARDENING_BLOCK.get(), new Item.Properties()));
 

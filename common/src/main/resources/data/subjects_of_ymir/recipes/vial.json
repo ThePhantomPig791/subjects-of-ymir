@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "L": {
+            "item": "subjects_of_ymir:iron_bamboo_leaf"
+        },
+        "G": {
+            "item": "minecraft:glass"
+        }
+    },
+    "pattern": [
+        " L ",
+        "G G",
+        "GGG"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:vial",
+        "count": 4
+    }
+}
