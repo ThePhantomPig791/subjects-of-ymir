@@ -6,13 +6,13 @@
             "item": "subjects_of_ymir:iron_bamboo"
         },
         "N": {
-            "tag": "c:iron_nuggets"
+            "item": "minecraft:iron_nugget"
         }
     },
     "pattern": [
-        " BB",
+        " BN",
         "B B",
-        "NB "
+        "BB "
     ],
     "result": {
         "item": "subjects_of_ymir:gas_canister"

@@ -64,6 +64,7 @@
   "item.subjects_of_ymir.iron_bamboo_sword": "Iron-Weave Bamboo Sword",
   "item.subjects_of_ymir.iron_bamboo_dagger": "Iron-Weave Bamboo Dagger",
   "item.subjects_of_ymir.blade": "Blade",
+  "item.subjects_of_ymir.gas_canister": "Gas Canister",
 
   "item.subjects_of_ymir.cloak": "Cloak",
   "item.subjects_of_ymir.uniform_jacket": "Uniform Jacket",
@@ -80,9 +81,9 @@
 
 
   "tooltip.subjects_of_ymir.spine": "%s's spine",
-  "tooltip.subjects_of_ymir.emblem.survey_corps": "Survey Corps Emblem",
-  "tooltip.subjects_of_ymir.emblem.military_police": "Military Police Emblem",
-  "tooltip.subjects_of_ymir.emblem.garrison": "Garrison Emblem",
+  "tooltip.subjects_of_ymir.emblem.survey_corps": "§o§bSurvey Corps§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.military_police": "§o§4Military Police§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.garrison": "§o§2Garrison§7 Emblem",
 
 
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",

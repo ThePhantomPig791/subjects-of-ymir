@@ -46,6 +46,8 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> BLADE = ITEMS.register("blade", () -> new BladeItem(new Item.Properties().stacksTo(16)));
 
+    public static final RegistrySupplier<Item> GAS_CANISTER = ITEMS.register("gas_canister", () -> new GasHoldingItem(new Item.Properties().stacksTo(1), 500));
+
 
 
     private static final String[] UNIFORM_EMBLEMS = {"garrison", "military_police", "survey_corps"};
@@ -129,6 +131,8 @@ public class SoyItems {
             entries.add(IRON_BAMBOO_SWORD.get());
             entries.add(IRON_BAMBOO_DAGGER.get());
             entries.add(BLADE.get());
+            entries.add(GAS_CANISTER.get());
+            entries.add(GAS_CANISTER.get().getDefaultInstance());
             entries.add(COMPRESSION_TABLE.get());
             entries.add(HARDENING_BLOCK.get());
 

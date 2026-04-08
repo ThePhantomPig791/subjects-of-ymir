@@ -2,6 +2,7 @@ package net.phantompig.soy.item;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -9,12 +10,21 @@ public abstract class DataHoldingItem extends Item {
     public final String dataTag;
     public final int max;
     public final Color barColor;
+    public boolean showBarAtMax, showBarAtZero;
 
     public DataHoldingItem(Properties properties, String dataTag, int max, Color barColor) {
         super(properties);
         this.dataTag = dataTag;
         this.max = max;
         this.barColor = barColor;
+    }
+
+    @NotNull
+    @Override
+    public ItemStack getDefaultInstance() {
+        ItemStack stack = super.getDefaultInstance();
+        set(stack, this.max);
+        return stack;
     }
 
     public void set(ItemStack stack, int amount) {
@@ -34,7 +44,7 @@ public abstract class DataHoldingItem extends Item {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        return get(stack) != max && get(stack) != 0;
+        return (showBarAtMax || get(stack) != max) && (showBarAtZero || get(stack) != 0);
     }
     @Override
     public int getBarColor(ItemStack stack) {

@@ -19,7 +19,7 @@ public class TooltippedAddonArmorItem extends AddonArmorItem {
         this.tooltip = tooltip;
     }
     public TooltippedAddonArmorItem(String tooltip, ArmorMaterial armorMaterial, Type type, Properties properties) {
-        this(Component.translatable(tooltip).withStyle(ChatFormatting.ITALIC), armorMaterial, type, properties);
+        this(Component.translatable(tooltip).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC), armorMaterial, type, properties);
     }
 
     @Override

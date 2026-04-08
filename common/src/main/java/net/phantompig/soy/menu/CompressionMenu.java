@@ -5,11 +5,14 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -17,9 +20,11 @@ import net.minecraft.world.level.Level;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.item.DataHoldingItem;
+import net.phantompig.soy.item.GasHoldingItem;
 import net.phantompig.soy.item.SpinalFluidHoldingItem;
 import net.phantompig.soy.recipe.CompressionRecipe;
 import net.phantompig.soy.recipe.SoyRecipeTypes;
+import net.threetag.palladium.util.PlayerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -256,18 +261,19 @@ public class CompressionMenu extends AbstractContainerMenu {
                 }
 
                 if (compressionResult.recipeUsed instanceof CompressionRecipe compressionRecipe) {
+                    Item resultItem = compressionResult.getItem(1).getItem();
                     switch (compressionRecipe.byproduct) {
-                        case NONE:
-                            break;
-                        case SPINAL_FLUID:
-                            if (compressionResult.getItem(1).getItem() instanceof SpinalFluidHoldingItem spfhi) {
-                                if (Math.random() < compressionRecipe.byproductChance) {
-                                    spfhi.add(compressionResult.getItem(1), compressionRecipe.byproductAmount);
-                                }
+                        case NONE -> {}
+                        case SPINAL_FLUID -> {
+                            if (resultItem instanceof SpinalFluidHoldingItem spfhi) {
+                                addByproduct(spfhi, compressionRecipe, compressionResult);
                             }
-                            break;
-                        case GAS:
-                            break;
+                        }
+                        case GAS -> {
+                            if (resultItem instanceof GasHoldingItem ghi) {
+                                addByproduct(ghi, compressionRecipe, compressionResult);
+                            }
+                        }
                     }
                 }
             }
@@ -282,6 +288,15 @@ public class CompressionMenu extends AbstractContainerMenu {
             });
 
             this.menu.slotsChanged(this.container);
+
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.6f, 1.9f);
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.6f, 1.3f);
+        }
+    }
+
+    private static void addByproduct(DataHoldingItem dhi, CompressionRecipe compressionRecipe, CompressionResultContainer compressionResult) {
+        if (Math.random() < compressionRecipe.byproductChance) {
+            dhi.add(compressionResult.getItem(1), compressionRecipe.byproductAmount);
         }
     }
 

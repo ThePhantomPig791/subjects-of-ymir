@@ -33,14 +33,6 @@ public class InjectionItem extends SpinalFluidHoldingItem {
         return InteractionResultHolder.pass(stack);
     }
 
-    @NotNull
-    @Override
-    public ItemStack getDefaultInstance() {
-        ItemStack stack = super.getDefaultInstance();
-        set(stack, 100);
-        return stack;
-    }
-
     private static boolean inject(ItemStack stack, Player player) {
         if (stack.getItem() instanceof InjectionItem inj && player instanceof SoyPlayerExtension ext) {
             if (ext.getTitanInstance().titan == null) {

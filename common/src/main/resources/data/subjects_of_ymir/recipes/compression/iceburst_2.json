@@ -1,0 +1,18 @@
+{
+  "type": "subjects_of_ymir:compression",
+  "ingredients": [
+    {
+      "item": "subjects_of_ymir:raw_iceburst"
+    },
+    {
+      "item": "subjects_of_ymir:raw_iceburst"
+    }
+  ],
+  "result": {
+    "item": "minecraft:ice",
+    "count": 2
+  },
+  "byproduct_type": "gas",
+  "byproduct_chance": 0.9,
+  "byproduct_amount": 40
+}
