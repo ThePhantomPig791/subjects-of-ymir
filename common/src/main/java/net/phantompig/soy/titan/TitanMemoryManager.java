@@ -260,12 +260,19 @@ public class TitanMemoryManager {
         ANCIENT_MESSAGES.add("Titan food");
     }
 
-    public void populateWithAncientMessages(String name) {
+    public boolean populateWithAncientMessages(String name) {
+        return populateWithAncientMessages(name, 15, 5);
+    }
+
+    public boolean populateWithAncientMessages(String name, int max, int min) { // exclusive max, inclusive min
         name = name.substring(0, 1).toUpperCase().concat(name.substring(1));
         ArrayList<String> available = new ArrayList<>(ANCIENT_MESSAGES);
-        int count = (int) (10 * Math.random() + 5);
-        for (int i = 0; i < count && !available.isEmpty(); i++) {
+        available.removeIf(this.historicalMessages::contains);
+        int count = (int) ((max - min) * Math.random() + min);
+        boolean willAdd = count > 0 && !available.isEmpty();
+        if (willAdd) for (int i = 0; i < count && !available.isEmpty(); i++) {
             this.historicalMessages.add("<" + name + "> " + available.remove((int) (available.size() * Math.random())));
         }
+        return willAdd;
     }
 }

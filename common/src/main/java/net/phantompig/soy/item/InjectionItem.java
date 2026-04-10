@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
@@ -38,7 +39,9 @@ public class InjectionItem extends SpinalFluidHoldingItem {
             if (ext.getTitanInstance().titan == null) {
                 if (inj.get(stack) == inj.max) {
                     Tuple<Titan, String> titan = TitanInstance.sequentialRandomizeFor(player);
-                    ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(titan.getB());
+                    if (ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(titan.getB())) {
+                        PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 1.1f + (float) (0.1 * Math.random()));
+                    }
                     injectSound(player.level(), player.getX(), player.getY(), player.getZ());
                     inj.set(stack, 0);
                     return true;
@@ -48,6 +51,9 @@ public class InjectionItem extends SpinalFluidHoldingItem {
             } else if (inj.get(stack) > 0) {
                 SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + inj.get(stack));
                 player.awardStat(SoyStats.PATH_POINTS_GAINED, inj.get(stack));
+                if (ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(ext.getTitanInstance().variant, 3, -2)) {
+                    PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 0.8f, 1.2f + (float) (0.1 * Math.random()));
+                }
                 inj.set(stack, 0);
                 PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.1f);
                 return true;
