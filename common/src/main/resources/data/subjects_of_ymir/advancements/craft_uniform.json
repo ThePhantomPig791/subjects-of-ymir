@@ -13,6 +13,128 @@
   },
   "parent": "subjects_of_ymir:iron_bamboo",
   "criteria": {
+    "cloak": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:cloak"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "survey_corps_cloak": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:survey_corps_cloak"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "military_police_cloak": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:military_police_cloak"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "garrison_cloak": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:garrison_cloak"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cadet_cloak": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:cadet_cloak"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+
+    "jacket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:uniform_jacket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "survey_corps_jacket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:survey_corps_jacket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "garrison_jacket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:garrison_jacket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "military_police_jacket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:military_police_jacket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cadet_jacket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:cadet_jacket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+
     "leggings": {
       "conditions": {
         "items": [
@@ -24,11 +146,40 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "subjects_of_ymir:uniform_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
+      "cloak",
+      "survey_corps_cloak",
+      "military_police_cloak",
+      "garrison_cloak",
+      "cadet_cloak"
+    ],
+    [
+      "jacket",
+      "survey_corps_jacket",
+      "military_police_jacket",
+      "garrison_jacket",
+      "cadet_jacket"
+    ],
+    [
       "leggings"
+    ],
+    [
+      "boots"
     ]
   ],
   "rewards": {
