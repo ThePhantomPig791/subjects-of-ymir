@@ -3,6 +3,8 @@ package net.phantompig.soy.titan;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,6 +24,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.block.SoyBlockTags;
+import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.particle.SoyParticles;
@@ -34,6 +38,7 @@ import net.threetag.palladium.power.SuperpowerUtil;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.json.GsonUtil;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import oshi.annotation.concurrent.Immutable;
 
 import java.awt.*;
@@ -151,6 +156,9 @@ public class Titan {
     }
     public void unshiftWithAdverseEffects(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
         unshift(entity, spawnCorpse, shouldCorpseDecay);
+        applyAdverseEffects(entity);
+    }
+    private void applyAdverseEffects(LivingEntity entity) {
         entity.addEffect(new MobEffectInstance(
                 MobEffects.WEAKNESS,
                 1200,
@@ -208,7 +216,54 @@ public class Titan {
         }
 
 
-        // corpse
+        if (hardh.soy$getHardeningSystem().getAllHardening() >= 0.9f) {
+            spawnCorpse = false;
+
+            double radius = hardh.soy$getHardeningSystem().getAllHardening();
+            radius = (radius / (radius + 0.1)) * (0.2 * radius / (radius + 1) + 1.5);
+            double yCoeff = radius * entity.getBoundingBox().getYsize() * 0.15;
+            //yCoeff *= yCoeff;
+            radius *= entity.getBoundingBox().getXsize();
+            double radiusSqr = radius * radius;
+            for (double dx = -radius; dx <= radius; dx++) {
+                for (double dy = -2 * radius; dy <= 2 * radius; dy++) {
+                    for (double dz = -radius; dz <= radius; dz++) {
+                        if ((dx * dx) + (dy * dy) / yCoeff + (dz * dz) > radiusSqr) continue;
+                        BlockPos pos = BlockPos.containing(entity.getX() + dx, entity.getY() + dy, entity.getZ() + dz);
+                        if (entity.level().getBlockState(pos).is(SoyBlockTags.HARDENING_CAN_REPLACE)) {
+                            entity.level().setBlockAndUpdate(pos, SoyBlocks.HARDENING_BLOCK.get().defaultBlockState());
+                        }
+                    }
+                }
+            }
+            PlayerUtil.playSoundToAll(entity.level(),
+                    entity.getX(),
+                    entity.getEyeY(),
+                    entity.getZ(),
+                    48,
+                    SoySounds.SHORT_HARDEN.get(),
+                    SoundSource.BLOCKS,
+                    2f,
+                    (float) (0.1 * Math.random() + 0.7)
+            );
+            PlayerUtil.spawnParticleForAll(
+                    entity.level(),
+                    48,
+                    new DustParticleOptions(new Vector3f(0.8f, 0.95f, 1), 2),
+                    false,
+                    entity.getX(),
+                    entity.getEyeY(),
+                    entity.getZ(),
+                    6,
+                    10,
+                    6,
+                    2,
+                    80
+            );
+            //applyAdverseEffects(entity);
+        }
+
+
         if (spawnCorpse) {
             TitanCorpseEntity corpse = new TitanCorpseEntity(SoyEntities.TITAN_CORPSE.get(), entity.level());
             corpse.setPos(entity.getPosition(0));
