@@ -122,13 +122,13 @@
     "block_dummy": {
       "type": "palladium:dummy",
       "title": {
-        "translate": "ability.text.subjects_of_ymir.block.title"
+        "translate": "ability.text.subjects_of_ymir.armored.block.title"
       },
       "description": {
-        "translate": "ability.text.subjects_of_ymir.block.description"
+        "translate": "ability.text.subjects_of_ymir.armored.block.description"
       },
       "gui_position": [0, -1],
-      "icon": "subjects_of_ymir:textures/icon/block.png",
+      "icon": "subjects_of_ymir:textures/icon/armored_block.png",
       "conditions": {
         "unlocking": {
           "type": "palladium:ability_unlocked",
