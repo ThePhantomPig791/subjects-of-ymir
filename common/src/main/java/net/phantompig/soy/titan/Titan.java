@@ -222,7 +222,6 @@ public class Titan {
             double radius = hardh.soy$getHardeningSystem().getAllHardening();
             radius = (radius / (radius + 0.1)) * (0.2 * radius / (radius + 1) + 1.5);
             double yCoeff = radius * entity.getBoundingBox().getYsize() * 0.15;
-            //yCoeff *= yCoeff;
             radius *= entity.getBoundingBox().getXsize();
             double radiusSqr = radius * radius;
             for (double dx = -radius; dx <= radius; dx++) {
