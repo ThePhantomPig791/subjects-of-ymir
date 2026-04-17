@@ -5,6 +5,8 @@
   "background": "minecraft:textures/block/bone_block_side.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/titan.png",
   "gui_display_type": "tree",
+  "primary_color": [255, 165, 0],
+  "secondary_color": [50, 32, 0],
   "persistent_data": true,
   "icon": {
     "type": "palladium:compound",
@@ -162,20 +164,396 @@
       }
     },
 
+    "sprint_charge": {
+      "type": "subjects_of_ymir:sprint_charge",
+      "shed_ability": "shed"
+    },
+
+    "attribute_speed_1": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/speed.png",
+      "title": "+0.05 SPD",
+      "hidden": false,
+      "gui_position": [1, -1.5],
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.005,
+      "operation": 0,
+      "uuid": "0e5865bc-6265-41a7-acc5-3291d9b1a76a",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 75,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_speed_2": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/speed.png",
+      "title": "+0.05 SPD",
+      "hidden": false,
+      "gui_position": [1.75, -2],
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.005,
+      "operation": 0,
+      "uuid": "e84adcb2-06b5-4049-917b-3d09ee0644b6",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_speed_1"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 100,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_speed_3": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/speed.png",
+      "title": "+0.05 SPD",
+      "hidden": false,
+      "gui_position": [1, -2.5],
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.005,
+      "operation": 0,
+      "uuid": "1e5865bc-6265-41a7-acc5-3291d9b1a76a",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_speed_2"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 150,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "shed_dummy": {
+      "type": "palladium:dummy",
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.armored.shed.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.armored.shed.description"
+      },
+      "gui_position": [1.5, -3],
+      "hidden": false,
+      "hidden_in_bar": true,
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_speed_3"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 10000
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 13
+          }
+        ]
+      }
+    },
+
+    "attribute_attack_damage_1": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/strength.png",
+      "title": "+0.5 ATK",
+      "gui_position": [0, -2.25],
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 0.5,
+      "operation": 0,
+      "uuid": "31415926-c9fe-4a9a-afb2-b3c6dee2c1a5",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "block_dummy"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 200,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_attack_damage_2": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/strength.png",
+      "title": "+1 ATK",
+      "gui_position": [0, -3],
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 1,
+      "operation": 0,
+      "uuid": "31415926-d1fe-3a9a-afb2-b3c6dee2c1a2",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_attack_damage_1"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 300,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "hardening_dummy": {
+      "type": "palladium:dummy",
+      "icon": "subjects_of_ymir:textures/icon/hardening_knuckles.png",
+      "gui_position": [0, -3.75],
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.armored.hardening.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.armored.hardening.description"
+      },
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_attack_damage_2"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 20000
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:amount_steam_healed",
+            "min": 8000
+          }
+        ]
+      }
+    },
+
+    "attribute_toughness_1": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/absorption.png",
+      "title": "+4 TOUGH",
+      "hidden": false,
+      "gui_position": [-1, -1.5],
+      "attribute": "minecraft:generic.armor_toughness",
+      "amount": 4,
+      "operation": 0,
+      "uuid": "a42bc305-1aed-41fd-b60e-95ca8d3719fd",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 75,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_toughness_2": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/absorption.png",
+      "title": "+4 TOUGH",
+      "hidden": false,
+      "gui_position": [-1.75, -2],
+      "attribute": "minecraft:generic.armor_toughness",
+      "amount": 4,
+      "operation": 0,
+      "uuid": "a42bc305-2aed-41fd-b60e-95ca8d3719fd",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_toughness_1"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 100,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_toughness_3": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/absorption.png",
+      "title": "+4 TOUGH",
+      "hidden": false,
+      "gui_position": [-1, -2.5],
+      "attribute": "minecraft:generic.armor_toughness",
+      "amount": 4,
+      "operation": 0,
+      "uuid": "a42bc305-3aed-41fd-b60e-95ca8d3719fd",
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_toughness_2"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 125,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+    "attribute_toughness_4": {
+      "type": "palladium:attribute_modifier",
+      "icon": "minecraft:textures/mob_effect/absorption.png",
+      "title": "+4 TOUGH",
+      "hidden": false,
+      "gui_position": [-1.5, -3],
+      "attribute": "minecraft:generic.armor_toughness",
+      "amount": 4,
+      "operation": 0,
+      "uuid": "a42bc305-4aed-41fd-b60e-95ca8d3719fd",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        },
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "attribute_toughness_3"
+          },
+          {
+            "type": "palladium:property_buyable",
+            "property": "subjects_of_ymir/path_points",
+            "score": 150,
+            "icon": "subjects_of_ymir:textures/icon/path_points.png",
+            "description": {
+              "translate": "ability.text.subjects_of_ymir.path_points"
+            }
+          }
+        ]
+      }
+    },
+
+
     "shed": {
       "type": "subjects_of_ymir:shed",
       "list_index": 0,
+      "title": {
+        "translate": "ability.subjects_of_ymir.shed"
+      },
       "hidden": true,
       "hidden_in_bar": false,
       "conditions": {
         "enabling": {
           "type": "palladium:held"
-        }
+        },
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "shed_dummy"
+          },
+          {
+            "type": "palladium:ability_integer_property",
+            "ability": "shed",
+            "property": "value",
+            "min": 1,
+            "max": 9999
+          }
+        ]
       }
     },
-    "sprint_charge": {
-      "type": "subjects_of_ymir:sprint_charge",
-      "shed_ability": "shed"
+    "hardening": {
+      "type": "subjects_of_ymir:hardening_knuckles",
+      "icon": "subjects_of_ymir:textures/icon/hardening_knuckles.png",
+      "hidden": true,
+      "hidden_in_bar": false,
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.armored.hardening_knuckles.title"
+      },
+      "list_index": 1,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held"
+        },
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "hardening_dummy"
+          },
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "subjects_of_ymir:hardening",
+              "hardening_type": "knuckles",
+              "min": 1,
+              "max": 1
+            }
+          }
+        ]
+      }
+    },
+    "hardening_particles": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "emitter": "subjects_of_ymir:hardening_hands",
+      "particle_type": "minecraft:dust",
+      "options": "0.8 0.95 1 1.5",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "hardening"
+        }
+      }
     }
   }
 }

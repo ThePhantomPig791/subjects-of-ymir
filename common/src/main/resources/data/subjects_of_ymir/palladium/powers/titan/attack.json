@@ -5,6 +5,8 @@
   "background": "minecraft:textures/block/bone_block_side.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/titan.png",
   "gui_display_type": "tree",
+  "primary_color": [238, 247, 62],
+  "secondary_color": [47, 48, 12],
   "persistent_data": true,
   "icon": {
     "type": "palladium:compound",
