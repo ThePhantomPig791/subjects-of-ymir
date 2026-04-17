@@ -76,6 +76,11 @@
           {
             "type": "palladium:ability_unlocked",
             "ability": "root"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 2400
           }
         ]
       }
@@ -463,9 +468,6 @@
       "operation": 0,
       "uuid": "a42bc305-4aed-41fd-b60e-95ca8d3719fd",
       "conditions": {
-        "enabling": {
-          "type": "palladium:held"
-        },
         "unlocking": [
           {
             "type": "palladium:ability_unlocked",
@@ -518,7 +520,7 @@
       "hidden": true,
       "hidden_in_bar": false,
       "title": {
-        "translate": "ability.text.subjects_of_ymir.armored.hardening_knuckles.title"
+        "translate": "ability.text.subjects_of_ymir.armored.hardening.title"
       },
       "list_index": 1,
       "conditions": {
