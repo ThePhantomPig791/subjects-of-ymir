@@ -17,6 +17,7 @@ import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.phantompig.soy.power.TitanPowerProvider;
+import net.phantompig.soy.power.ability.ShedAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.power.condition.SoyConditionSerializers;
 import net.phantompig.soy.property.SoyProperties;
@@ -25,6 +26,9 @@ import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
+import net.threetag.palladium.power.Power;
+import net.threetag.palladium.power.PowerManager;
+import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladiumcore.event.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,8 +75,20 @@ public class SubjectsOfYmir {
                 return EventResult.pass();
             }
             var titanInstance = soy.getTitanInstance();
-            if (titanInstance.titan == null || titanInstance.getProgress() != 0) return EventResult.pass();
-            titanInstance.canShiftTicks += (int) (amount.get() * 15);
+            if (titanInstance.getProgress() != 0) {
+                // hardcoded armored titan behavior for losing armor on shed
+                if (titanInstance.titan != null && titanInstance.titan.id.equals(rsrc("armored"))) {
+                    Power power = PowerManager.getInstance(entity.level()).getPower(rsrc("titan/armored"));
+                    AbilityInstance ability = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get("shed");
+                    int subAmount = (int) Math.max(0, amount.get() / 120 * (30 - entity.getHealth()));
+                    if (subAmount >= 1) {
+                        ability.setUniqueProperty(ShedAbility.VALUE, ability.getProperty(ShedAbility.VALUE) - subAmount);
+                        ShedAbility.update(entity, ability);
+                    }
+                }
+            } else {
+                titanInstance.canShiftTicks += (int) (amount.get() * 15);
+            }
             return EventResult.pass();
         }));
 

@@ -166,11 +166,11 @@
   "ability.text.subjects_of_ymir.attack.berserk.description": "Gain a violent, fiery second wind upon death that lasts for up to sixty seconds.",
 
   "ability.text.subjects_of_ymir.armored.root.title": "Armored Titan",
-  "ability.text.subjects_of_ymir.armored.root.description": "Your Titan form is a lumbering, defensive powerhouse with striking offensive capability.\n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 30",
+  "ability.text.subjects_of_ymir.armored.root.description": "Your Titan form is a lumbering, defensive powerhouse with striking offensive capability. Be careful, because even though your armor can take a beating, it is not indestructible. \n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 30",
   "ability.text.subjects_of_ymir.armored.block.title": "Block       ",
   "ability.text.subjects_of_ymir.armored.block.description": "Shield yourself with your arms to reduce incoming damage. While moving at high speeds, blocking will cleave a path of destruction in front of you.",
   "ability.text.subjects_of_ymir.armored.shed.title": "Shed       ",
-  "ability.text.subjects_of_ymir.armored.shed.description": "Gradually shed your armor, increasing your Titan's movement speed at the cost of your attack damage and defense.",
+  "ability.text.subjects_of_ymir.armored.shed.description": "Intentionally shed your armor, increasing your Titan's movement speed at the cost of your attack damage and defense.",
   "ability.text.subjects_of_ymir.armored.hardening.title": "Hardening",
   "ability.text.subjects_of_ymir.armored.hardening.description": "With enough practice, you can harden the skin around your Titan's knuckles to really pack your punches."
 
