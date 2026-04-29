@@ -91,21 +91,13 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
                         PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 1.1f + (float) (0.1 * Math.random()));
                     }
                     injectSound(player.level(), player.getX(), player.getY(), player.getZ());
-                    spfhi.set(stack, 0);
+                    spfhi.set(stack, Math.max(0, spfhi.get(stack) - InjectionItem.MAX));
+                    givePathPointsFrom(stack, spfhi, player);
                     return true;
                 } else {
                     return false; // TODO pure titan if injection is not full
                 }
-            } else if (spfhi.get(stack) > 0) {
-                SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + spfhi.get(stack));
-                player.awardStat(SoyStats.PATH_POINTS_GAINED, spfhi.get(stack));
-                if (ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(ext.getTitanInstance().variant, 3, -2)) {
-                    PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 0.8f, 1.2f + (float) (0.1 * Math.random()));
-                }
-                spfhi.set(stack, 0);
-                PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.1f);
-                return true;
-            }
+            } else return givePathPointsFrom(stack, spfhi, player);
         }
         return false;
     }
@@ -113,6 +105,18 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
         // TODO better sound effect
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.HONEY_BLOCK_STEP, SoundSource.PLAYERS, 0.5f, 2);
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 0.5f, 1.9f);
+    }
+    private static boolean givePathPointsFrom(ItemStack stack, SpinalFluidHoldingItem spfhi, Player player) {
+        if (!(player instanceof SoyPlayerExtension ext)) return false;
+        if (spfhi.get(stack) == 0) return false;
+        SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + spfhi.get(stack));
+        player.awardStat(SoyStats.PATH_POINTS_GAINED, spfhi.get(stack));
+        if (ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(ext.getTitanInstance().variant, 3, -2)) {
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 0.8f, 1.2f + (float) (0.1 * Math.random()));
+        }
+        spfhi.set(stack, 0);
+        PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.1f);
+        return true;
     }
 
     public int getUseDuration(ItemStack stack) {
