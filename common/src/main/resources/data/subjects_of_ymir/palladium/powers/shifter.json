@@ -163,6 +163,9 @@
               {
                 "type": "subjects_of_ymir:gamemode",
                 "gamemode": "creative"
+              },
+              {
+                "type": "subjects_of_ymir:wearing_ring"
               }
             ]
           },

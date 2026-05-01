@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "I": {
+            "item": "minecraft:iron_nugget"
+        },
+        "L": {
+            "item": "subjects_of_ymir:iron_bamboo_leaf"
+        }
+    },
+    "pattern": [
+        "I",
+        "L"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:iron_bamboo_ring"
+    }
+}

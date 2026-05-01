@@ -7,6 +7,7 @@ import net.phantompig.soy.SubjectsOfYmir;
 
 public class SoyItemTags {
     public static final TagKey<Item> CAN_BE_USED_TO_SELF_STAB = create("can_be_used_to_self_stab");
+    public static final TagKey<Item> RINGS = create("rings");
 
     private static TagKey<Item> create(String name) {
         return TagKey.create(Registries.ITEM, SubjectsOfYmir.rsrc(name));
