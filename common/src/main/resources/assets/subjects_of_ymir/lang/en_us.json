@@ -113,6 +113,10 @@
   "recipe.compression.byproduct.gas": "§bCompressed Gas§r",
 
 
+  "info.item.iron_bamboo": "Iron-Weave Bamboo can be grown by planting bamboo above iron ore or blocks of raw iron. The roots of the bamboo will absorb the iron, creating a lightweight but tough material.",
+  "info.item.iron_bamboo_leaf": "If any bamboo leaves were present on the stalk, each leaf will be shed into an Iron-Weave Bamboo Leaf upon the bamboo's transformation.",
+
+
   "advancements.subjects_of_ymir.eldian_village.title": "Ragako",
   "advancements.subjects_of_ymir.eldian_village.description": "Discover an ancient Eldian Village",
   "advancements.subjects_of_ymir.titan_bones.title": "Tomb Raider",
