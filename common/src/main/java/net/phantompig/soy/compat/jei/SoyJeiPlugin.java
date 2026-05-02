@@ -36,7 +36,6 @@ public class SoyJeiPlugin implements IModPlugin {
         RecipeManager recipeManager = level.getRecipeManager();
 
         registration.addRecipes(CompressionCategory.RECIPE_TYPE, recipeManager.getAllRecipesFor(SoyRecipeTypes.COMPRESSION.get()));
-        SubjectsOfYmir.LOGGER.info("comp recipes: {}", recipeManager.getAllRecipesFor(SoyRecipeTypes.COMPRESSION.get()));
     }
 
     @Override
