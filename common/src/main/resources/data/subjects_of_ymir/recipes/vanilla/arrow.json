@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "I": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        },
+        "F": {
+            "item": "minecraft:feather"
+        }
+    },
+    "pattern": [
+        "I",
+        "F"
+    ],
+    "result": {
+        "item": "minecraft:arrow",
+        "count": 4
+    }
+}

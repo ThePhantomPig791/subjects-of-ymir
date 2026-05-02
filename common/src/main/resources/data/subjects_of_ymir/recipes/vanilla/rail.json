@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "I": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        },
+        "S": {
+            "tag": "palladium:connector/wooden_sticks"
+        }
+    },
+    "pattern": [
+        "ISI",
+        "ISI"
+    ],
+    "result": {
+        "item": "minecraft:rail",
+        "count": 16
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "I": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        },
+        "S": {
+            "tag": "palladium:connector/strings"
+        },
+        "K": {
+            "tag": "palladium:connector/wooden_sticks"
+        },
+        "T": {
+            "item": "minecraft:tripwire_hook"
+        }
+    },
+    "pattern": [
+        "K K",
+        "STS",
+        " I "
+    ],
+    "result": {
+        "item": "minecraft:crossbow"
+    }
+}
