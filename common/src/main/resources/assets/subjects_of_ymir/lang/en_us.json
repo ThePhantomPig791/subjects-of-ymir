@@ -103,6 +103,15 @@
 
   "container.subjects_of_ymir.compression": "Compression Table",
 
+  "gui.subjects_of_ymir.category.compression": "Compression",
+
+  "recipe.compression.byproduct": "Byproduct:",
+  "recipe.compression.byproduct_chance": "%s chance",
+  "recipe.compression.byproduct_amount": "+%s",
+  "recipe.compression.byproduct.none": "§7None§r",
+  "recipe.compression.byproduct.spinal_fluid": "§dSpinal Fluid§r",
+  "recipe.compression.byproduct.gas": "§bCompressed Gas§r",
+
 
   "advancements.subjects_of_ymir.eldian_village.title": "Ragako",
   "advancements.subjects_of_ymir.eldian_village.description": "Discover an ancient Eldian Village",

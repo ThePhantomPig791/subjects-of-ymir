@@ -27,6 +27,8 @@ subprojects {
 
         implementation("dev.kosmx.player-anim:anim-core:${project.player_anim_version}")
         modImplementation("dev.kosmx.player-anim:player-animation-lib:${project.player_anim_version}")
+
+        modImplementation "mezz.jei:jei-${rootProject.minecraft_version}-common-api:${project.jei_version}"
     }
 }
 
@@ -115,11 +117,6 @@ allprojects {
         maven { url 'https://jitpack.io' }
 
         // JEI
-        maven {
-            name = "Progwml6 maven"
-            url = "https://dvs1.progwml6.com/files/maven/"
-            content { excludeGroup("net.fabricmc.fabric-api") }
-        }
         maven {
             // location of a maven mirror for JEI files, as a fallback
             name = "ModMaven"
