@@ -5,12 +5,15 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.menu.CompressionMenu;
+import net.phantompig.soy.menu.SoyMenus;
 import net.phantompig.soy.recipe.SoyRecipeTypes;
 
 import java.util.Objects;
@@ -39,5 +42,10 @@ public class SoyJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(SoyItems.COMPRESSION_TABLE.get().getDefaultInstance(), CompressionCategory.RECIPE_TYPE);
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(CompressionMenu.class, SoyMenus.COMPRESSION.get(), CompressionCategory.RECIPE_TYPE, 0, 3, 5, 36);
     }
 }

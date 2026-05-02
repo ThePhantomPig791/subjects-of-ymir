@@ -12,8 +12,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:ice",
-    "count": 3
+    "item": "minecraft:packed_ice"
   },
   "byproduct_type": "gas",
   "byproduct_amount": 60

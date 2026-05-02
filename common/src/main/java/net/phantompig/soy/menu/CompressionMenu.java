@@ -290,7 +290,8 @@ public class CompressionMenu extends AbstractContainerMenu {
             this.menu.slotsChanged(this.container);
 
             PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.6f, 1.9f);
-            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.6f, 1.3f);
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.4f, 1.3f);
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BRUSH_SAND_COMPLETED, SoundSource.BLOCKS, 1f, 1.3f);
         }
     }
 
