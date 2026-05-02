@@ -215,10 +215,12 @@ public class TitanInstance {
     }
 
 
-    public boolean canShift() {
-        return (this.canShiftTicks > 0 || wearingRing()) && getStamina() > 0.7 * getMaxStamina();
+    public boolean canShiftFromDamage() {
+        return this.canShiftTicks > 0;
     }
-
+    public boolean canShiftFromStamina() {
+        return getStamina() > 0.7 * getMaxStamina();
+    }
     public boolean wearingRing() {
         List<ItemStack> rings = CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "ring");
         rings.addAll(CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "hand/ring"));

@@ -60,7 +60,8 @@
   "rewards": {
     "recipes": [
       "subjects_of_ymir:compression_table",
-      "subjects_of_ymir:injection"
+      "subjects_of_ymir:injection",
+      "subjects_of_ymir:vial"
     ]
   }
 }
