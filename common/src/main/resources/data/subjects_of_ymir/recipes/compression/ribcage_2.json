@@ -13,6 +13,6 @@
     "count": 4
   },
   "byproduct_type": "spinal_fluid",
-  "byproduct_chance": 0.8,
+  "byproduct_chance": 0.95,
   "byproduct_amount": 20
 }

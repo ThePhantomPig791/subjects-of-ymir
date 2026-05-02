@@ -12,8 +12,8 @@
     }
   ],
   "result": {
-    "item": "minecraft:bone_meal",
-    "count": 24
+    "item": "subjects_of_ymir:broken_spine",
+    "count": 3
   },
   "byproduct_type": "spinal_fluid",
   "byproduct_amount": 270
