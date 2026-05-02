@@ -12,7 +12,7 @@
     "pattern": [
         " L ",
         "G G",
-        "GGG"
+        " G "
     ],
     "result": {
         "item": "subjects_of_ymir:vial",
