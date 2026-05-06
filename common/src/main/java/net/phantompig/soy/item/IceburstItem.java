@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.util.IceburstUtil;
 import net.threetag.palladium.util.EntityUtil;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,7 @@ public class IceburstItem extends Item {
     public static final DispenseItemBehavior DISPENSE_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior() {
         @NotNull
         protected ItemStack execute(BlockSource source, ItemStack stack) {
+            if (!SoyConfig.Server.canDispenseIceburst()) return stack;
             Position dPos = DispenserBlock.getDispensePosition(source);
             Vec3 pos = new Vec3(dPos.x(), dPos.y(), dPos.z());
             IceburstUtil.explode(pos, source.getLevel(), 3, AABB.ofSize(pos, 7, 7, 7));
@@ -34,7 +36,8 @@ public class IceburstItem extends Item {
 
     public IceburstItem(Properties properties) {
         super(properties);
-        DispenserBlock.registerBehavior(this, DISPENSE_ITEM_BEHAVIOR);
+        // TODO this may be run before the config is initialized. idk though it needs to be tested
+        if (SoyConfig.Server.canDispenseIceburst()) DispenserBlock.registerBehavior(this, DISPENSE_ITEM_BEHAVIOR);
     }
 
     @NotNull
