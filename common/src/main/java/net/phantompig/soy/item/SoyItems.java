@@ -53,7 +53,7 @@ public class SoyItems {
 
 
     private static final String[] UNIFORM_EMBLEMS = {"survey_corps", "military_police", "garrison", "cadet"};
-    private static final List<RegistrySupplier<Item>> UNIFORMS = new ArrayList<>();
+    private static final HashMap<ResourceLocation, RegistrySupplier<Item>> UNIFORMS = new HashMap<>();
 
 
 
@@ -108,14 +108,16 @@ public class SoyItems {
         CreativeModeTabs.TABS.register();
 
         // these are only AddonArmorItems because i already had the armor renderers made and didn't feel like re-doing it with the vanilla system
+        String name;
         for (String emblem : UNIFORM_EMBLEMS) {
-            UNIFORMS.add(ITEMS.register(emblem + "_cloak", () -> new TooltippedAddonArmorItem("tooltip.subjects_of_ymir.emblem." + emblem, ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
-            UNIFORMS.add(ITEMS.register(emblem + "_jacket", () -> new TooltippedAddonArmorItem("tooltip.subjects_of_ymir.emblem." + emblem, ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
+            name = emblem + "_cloak";
+            UNIFORMS.put(SubjectsOfYmir.rsrc(name), ITEMS.register(name, () -> new TooltippedAddonArmorItem("tooltip.subjects_of_ymir.emblem." + emblem, ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
+            UNIFORMS.put(SubjectsOfYmir.rsrc(name = emblem + "_jacket"), ITEMS.register(name, () -> new TooltippedAddonArmorItem("tooltip.subjects_of_ymir.emblem." + emblem, ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
         }
-        UNIFORMS.add(ITEMS.register("cloak", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
-        UNIFORMS.add(ITEMS.register("uniform_jacket", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
-        UNIFORMS.add(ITEMS.register("uniform_leggings", () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.LEGGINGS, new Item.Properties())));
-        UNIFORMS.add(ITEMS.register("uniform_boots", () -> new FallDamageResistantAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties(), 2)));
+        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "cloak"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
+        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_jacket"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
+        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_leggings"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.LEGGINGS, new Item.Properties())));
+        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_boots"), ITEMS.register(name, () -> new FallDamageResistantAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties(), 2)));
 
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
             entries.add(INJECTION.get());
@@ -140,7 +142,7 @@ public class SoyItems {
             entries.add(COMPRESSION_TABLE.get());
             entries.add(HARDENING_BLOCK.get());
 
-            for (RegistrySupplier<Item> s : UNIFORMS) {
+            for (RegistrySupplier<Item> s : UNIFORMS.values()) {
                 entries.add(s.get());
             }
         });
