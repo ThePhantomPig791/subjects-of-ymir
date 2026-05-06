@@ -25,7 +25,8 @@
   ],
   "rewards": {
     "recipes": [
-      "subjects_of_ymir:dagger"
+      "subjects_of_ymir:iron_bamboo_dagger",
+      "subjects_of_ymir:iron_bamboo_ring"
     ],
     "experience": 100
   }

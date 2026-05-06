@@ -11,10 +11,12 @@ public class SoyConditionSerializers {
     public static final RegistrySupplier<ConditionSerializer> SHIFT_PROGRESS = CONDITION_SERIALIZERS.register("shift_progress", ShiftProgressCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_SHIFTING = CONDITION_SERIALIZERS.register("is_shifting", IsShiftingCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_CORPSE = CONDITION_SERIALIZERS.register("is_corpse", IsCorpseCondition.Serializer::new);
-    public static final RegistrySupplier<ConditionSerializer> CAN_SHIFT = CONDITION_SERIALIZERS.register("can_shift", CanShiftCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> CAN_SHIFT_FROM_DAMAGE = CONDITION_SERIALIZERS.register("can_shift_from_damage", CanShiftFromDamageCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> CAN_SHIFT_FROM_STAMINA = CONDITION_SERIALIZERS.register("can_shift_from_stamina", CanShiftFromStaminaCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> GAMEMODE = CONDITION_SERIALIZERS.register("gamemode", GamemodeCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> AT_FULL_HEALTH = CONDITION_SERIALIZERS.register("at_full_health", AtFullHealthCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> STATISTIC = CONDITION_SERIALIZERS.register("statistic", StatisticCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_UNSHIFTING = CONDITION_SERIALIZERS.register("is_unshifting", IsUnshiftingCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> HARDENING = CONDITION_SERIALIZERS.register("hardening", HardeningCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> WEARING_RING = CONDITION_SERIALIZERS.register("wearing_ring", WearingRingCondition.Serializer::new);
 }

@@ -10,6 +10,6 @@
     "count": 2
   },
   "byproduct_type": "spinal_fluid",
-  "byproduct_chance": 1,
+  "byproduct_chance": 0.9,
   "byproduct_amount": 10
 }

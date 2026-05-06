@@ -20,6 +20,9 @@
     ],
     "client": [
       "net.phantompig.soy.fabric.client.SubjectsOfYmirFabricClient"
+    ],
+    "jei_mod_plugin": [
+      "net.phantompig.soy.compat.jei.SoyJeiPlugin"
     ]
   },
   "mixins": [

@@ -8,10 +8,12 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.phantompig.soy.item.SoyItemTags;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.item.SpineItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.threetag.palladium.compat.curiostinkets.CuriosTrinketsUtil;
 import net.threetag.palladium.power.PowerManager;
 import net.threetag.palladiumcore.util.Platform;
 import org.jetbrains.annotations.NotNull;
@@ -213,8 +215,20 @@ public class TitanInstance {
     }
 
 
-    public boolean canShift() {
-        return this.canShiftTicks > 0 && getStamina() > 0.7 * getMaxStamina();
+    public boolean canShiftFromDamage() {
+        return this.canShiftTicks > 0;
+    }
+    public boolean canShiftFromStamina() {
+        return getStamina() > 0.7 * getMaxStamina();
+    }
+    public boolean wearingRing() {
+        List<ItemStack> rings = CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "ring");
+        rings.addAll(CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "hand/ring"));
+        rings.addAll(CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "offhand/ring"));
+        for (ItemStack stack : rings) {
+            if (stack.is(SoyItemTags.RINGS)) return true;
+        }
+        return false;
     }
 
 

@@ -157,7 +157,7 @@ public class TitanMemoryManager {
         ANCIENT_MESSAGES.add("To keep pushing on");
         ANCIENT_MESSAGES.add("Be yourself!");
         ANCIENT_MESSAGES.add("Who am I?");
-        ANCIENT_MESSAGES.add("Life a life you can be proud of");
+        ANCIENT_MESSAGES.add("Live a life you can be proud of");
         ANCIENT_MESSAGES.add("See you later");
         ANCIENT_MESSAGES.add("You are free");
         ANCIENT_MESSAGES.add("Complete your mission");

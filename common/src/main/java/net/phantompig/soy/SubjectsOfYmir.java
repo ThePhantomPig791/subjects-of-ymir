@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
+import net.phantompig.soy.command.OdmCommand;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.entity.SoyDamageTypeTags;
@@ -66,6 +67,7 @@ public class SubjectsOfYmir {
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
             TitanCommand.register(dispatcher);
+            OdmCommand.register(dispatcher);
         });
 
         LivingEntityEvents.HURT.register(((entity, damageSource, amount) -> {

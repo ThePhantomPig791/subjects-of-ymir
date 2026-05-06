@@ -6,7 +6,7 @@
             "item": "subjects_of_ymir:ultrahard_steel_ingot"
         },
         "N": {
-            "tag": "c:iron_nuggets"
+            "item": "minecraft:iron_nugget"
         }
     },
     "pattern": [

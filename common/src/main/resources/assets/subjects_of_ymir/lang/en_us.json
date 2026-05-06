@@ -63,6 +63,7 @@
   "item.subjects_of_ymir.iron_bamboo_leaf": "Iron-Weave Bamboo Leaf",
   "item.subjects_of_ymir.iron_bamboo_sword": "Iron-Weave Bamboo Sword",
   "item.subjects_of_ymir.iron_bamboo_dagger": "Iron-Weave Bamboo Dagger",
+  "item.subjects_of_ymir.iron_bamboo_ring": "Iron-Weave Bamboo Ring",
   "item.subjects_of_ymir.blade": "Blade",
   "item.subjects_of_ymir.gas_canister": "Gas Canister",
 
@@ -82,12 +83,23 @@
   "item.subjects_of_ymir.injection": "Injection",
   "item.subjects_of_ymir.vial": "Vial",
 
+  "item.subjects_of_ymir.blade_sheath": "Blade Sheath",
+  "item.subjects_of_ymir.blade_sheath_with_canister": "Blade Sheath With Canister",
+  "item.subjects_of_ymir.canister_sheath": "Canister Sheath",
+  "item.subjects_of_ymir.prototype_turbine": "Prototype Turbine",
+  "item.subjects_of_ymir.turbine_v2": "Turbine V2",
+
 
   "tooltip.subjects_of_ymir.spine": "%s's spine",
   "tooltip.subjects_of_ymir.emblem.survey_corps": "§bSurvey Corps§7 Emblem",
   "tooltip.subjects_of_ymir.emblem.military_police": "§4Military Police§7 Emblem",
   "tooltip.subjects_of_ymir.emblem.garrison": "§2Garrison§7 Emblem",
   "tooltip.subjects_of_ymir.emblem.cadet": "§8Cadet§7 Emblem",
+
+  "tooltip.subjects_of_ymir.odm_attachable": "§dAllows for the attaching of Omni-Directional Mobility Gear components§r",
+  "tooltip.subjects_of_ymir.odm_attachable.turbine": "§nTurbine:§r %s",
+  "tooltip.subjects_of_ymir.odm_attachable.right_sheath": "§nRight Sheath:§r %s",
+  "tooltip.subjects_of_ymir.odm_attachable.left_sheath": "§nLeft Sheath:§r %s",
 
 
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",
@@ -101,6 +113,19 @@
 
 
   "container.subjects_of_ymir.compression": "Compression Table",
+
+  "gui.subjects_of_ymir.category.compression": "Compression",
+
+  "recipe.compression.byproduct": "§nByproduct:§r",
+  "recipe.compression.byproduct_chance": "%s chance",
+  "recipe.compression.byproduct_amount": "+%s",
+  "recipe.compression.byproduct.none": "§7None§r",
+  "recipe.compression.byproduct.spinal_fluid": "§dSpinal Fluid§r",
+  "recipe.compression.byproduct.gas": "§bCompressed Gas§r",
+
+
+  "info.item.iron_bamboo": "Iron-Weave Bamboo can be grown by planting bamboo above iron ore or blocks of raw iron. The roots of the bamboo will absorb the iron, creating a lightweight but tough material.",
+  "info.item.iron_bamboo_leaf": "If any bamboo leaves were present on the stalk, each leaf will be shed into an Iron-Weave Bamboo Leaf upon the bamboo's transformation.",
 
 
   "advancements.subjects_of_ymir.eldian_village.title": "Ragako",

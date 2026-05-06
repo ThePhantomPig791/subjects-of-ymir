@@ -154,7 +154,23 @@
             "type": "palladium:or",
             "conditions": [
               {
-                "type": "subjects_of_ymir:can_shift"
+                "type": "palladium:and",
+                "conditions": [
+                  {
+                    "type": "palladium:or",
+                    "conditions": [
+                      {
+                        "type": "subjects_of_ymir:can_shift_from_damage"
+                      },
+                      {
+                        "type": "subjects_of_ymir:wearing_ring"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "subjects_of_ymir:can_shift_from_stamina"
+                  }
+                ]
               },
               {
                 "type": "palladium:ability_enabled",
@@ -416,9 +432,14 @@
       "hidden": true,
       "render_layer": "subjects_of_ymir:small_lightning",
       "conditions": {
-        "enabling": {
-          "type": "subjects_of_ymir:can_shift"
-        },
+        "enabling": [
+          {
+            "type": "subjects_of_ymir:can_shift_from_damage"
+          },
+          {
+            "type": "subjects_of_ymir:can_shift_from_stamina"
+          }
+        ],
         "unlocking": {
           "type": "palladium:not",
           "conditions": {
@@ -461,9 +482,14 @@
       "pitch": 1.1,
       "looping": true,
       "conditions": {
-        "enabling": {
-          "type": "subjects_of_ymir:can_shift"
-        },
+        "enabling": [
+          {
+            "type": "subjects_of_ymir:can_shift_from_damage"
+          },
+          {
+            "type": "subjects_of_ymir:can_shift_from_stamina"
+          }
+        ],
         "unlocking": {
           "type": "palladium:not",
           "conditions": {

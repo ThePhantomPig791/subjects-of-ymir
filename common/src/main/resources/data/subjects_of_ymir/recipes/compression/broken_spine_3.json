@@ -12,9 +12,10 @@
     }
   ],
   "result": {
-    "item": "minecraft:bone_meal"
+    "item": "minecraft:bone_meal",
+    "count": 3
   },
   "byproduct_type": "spinal_fluid",
   "byproduct_chance": 0.3,
-  "byproduct_amount": 5
+  "byproduct_amount": 15
 }

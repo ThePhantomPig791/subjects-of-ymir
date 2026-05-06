@@ -9,7 +9,7 @@ import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.menu.CompressionMenu;
 
 public class CompressionScreen extends AbstractContainerScreen<CompressionMenu> {
-    private static final ResourceLocation BACKGROUND_LOCATION = SubjectsOfYmir.rsrc("textures/gui/container/compression_screen.png");
+    public static final ResourceLocation BACKGROUND_LOCATION = SubjectsOfYmir.rsrc("textures/gui/container/compression_screen.png");
 
     public CompressionScreen(CompressionMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);

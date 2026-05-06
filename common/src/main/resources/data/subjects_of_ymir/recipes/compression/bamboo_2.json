@@ -1,0 +1,15 @@
+{
+  "type": "subjects_of_ymir:compression",
+  "ingredients": [
+    {
+      "item": "subjects_of_ymir:iron_bamboo"
+    },
+    {
+      "item": "subjects_of_ymir:iron_bamboo"
+    }
+  ],
+  "result": {
+    "item": "minecraft:iron_nugget",
+    "count": 11
+  }
+}

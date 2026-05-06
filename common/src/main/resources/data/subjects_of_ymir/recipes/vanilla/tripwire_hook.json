@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "redstone",
+    "key": {
+        "L": {
+            "item": "subjects_of_ymir:iron_bamboo_leaf"
+        },
+        "P": {
+            "tag": "minecraft:planks"
+        }
+    },
+    "pattern": [
+        "L",
+        "P"
+    ],
+    "result": {
+        "item": "minecraft:tripwire_hook",
+        "count": 2
+    }
+}
