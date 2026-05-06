@@ -19,6 +19,8 @@ public class SoyRecipeTypes {
     });
     public static final RegistrySupplier<RecipeSerializer<CompressionRecipe>> COMPRESSION_SERIALIZER = RECIPE_SERIALIZERS.register("compression", CompressionRecipe.Serializer::new);
 
+    public static final RegistrySupplier<RecipeSerializer<ShapedRecipeWithGasHoldingItems>> SHAPED_RECIPE_WITH_GAS_HOLDING_ITEMS = RECIPE_SERIALIZERS.register("crafting_shaped_with_gas_holding_item", ShapedRecipeWithGasHoldingItems.Serializer::new);
+
     public static void init() {
         RECIPE_TYPES.register();
         RECIPE_SERIALIZERS.register();

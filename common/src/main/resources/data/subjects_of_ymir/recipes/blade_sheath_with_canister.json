@@ -1,0 +1,22 @@
+{
+    "type": "subjects_of_ymir:crafting_shaped_with_gas_holding_item",
+    "category": "equipment",
+    "key": {
+        "S": {
+            "item": "subjects_of_ymir:blade_sheath"
+        },
+        "C": {
+            "item": "subjects_of_ymir:gas_canister"
+        },
+        "F": {
+            "item": "subjects_of_ymir:iron_bamboo_leaf"
+        }
+    },
+    "pattern": [
+        "CFC",
+        " S "
+    ],
+    "result": {
+        "item": "subjects_of_ymir:blade_sheath_with_canister"
+    }
+}

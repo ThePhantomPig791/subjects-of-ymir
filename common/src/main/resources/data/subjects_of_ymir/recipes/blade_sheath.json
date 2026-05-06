@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "C": {
+            "item": "subjects_of_ymir:gas_canister"
+        },
+        "F": {
+            "item": "subjects_of_ymir:iron_bamboo_leaf"
+        },
+        "L": {
+            "item": "minecraft:leather"
+        }
+    },
+    "pattern": [
+        "PLP",
+        "PFP"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:blade_sheath"
+    }
+}

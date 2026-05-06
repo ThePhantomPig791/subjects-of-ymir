@@ -47,7 +47,7 @@ public class OdmComponents {
         private float north, east, south, west, up, down;
 
         public StrafeStrengthBuilder(float def) {
-            north = east= south = west = up = down = def;
+            north = east = south = west = up = down = def;
         }
         public StrafeStrengthBuilder() {
             this(0);
