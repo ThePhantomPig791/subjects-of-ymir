@@ -10,22 +10,23 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class OdmHookNode extends OdmNode {
-    public OdmHookNode(OdmServerLevel odmLevel, UUID uuid, @Nullable Player owner, Vec3 position, Vec3 velocity) {
+public class OdmPlayerNode extends OdmNode {
+    public OdmPlayerNode(OdmServerLevel odmLevel, UUID uuid, @Nullable Player owner, Vec3 position, Vec3 velocity) {
         super(odmLevel, uuid, owner, position, velocity);
-        this.type = "hook";
+        this.type = "player";
     }
-    public OdmHookNode(OdmServerLevel odmLevel, @Nullable Player owner, Vec3 position, Vec3 velocity) {
+    public OdmPlayerNode(OdmServerLevel odmLevel, @Nullable Player owner, Vec3 position, Vec3 velocity) {
         this(odmLevel, UUID.randomUUID(), owner, position, velocity);
     }
 
+    @Override
     public void tick() {
-        super.tick();
+        if (this.owner != null) this.position = this.owner.position().add(0, 1, 0);
 
         PlayerUtil.spawnParticleForAll(
                 this.odmLevel.level,
                 32,
-                ParticleTypes.HEART,
+                ParticleTypes.GLOW,
                 true,
                 this.position.x,
                 this.position.y,
@@ -38,17 +39,10 @@ public class OdmHookNode extends OdmNode {
         );
     }
 
-    @Override
-    public void applySpringPhysics() {
-        if (!this.stuck) super.applySpringPhysics();
-    }
-
-    public static OdmHookNode fromTag(OdmServerLevel level, CompoundTag tag) {
-        // i do hate to repeat this code but whatever. i can't really think of another way to do this type system
-        // because this method needs to
+    public static OdmPlayerNode fromTag(OdmServerLevel level, CompoundTag tag) {
         CompoundTag position = tag.getCompound("Position");
         CompoundTag velocity = tag.getCompound("Velocity");
-        OdmHookNode node = new OdmHookNode(
+        OdmPlayerNode node = new OdmPlayerNode(
                 level,
                 tag.getUUID("UUID"),
                 tag.contains("OwnerUUID") ? level.level.getPlayerByUUID(tag.getUUID("OwnerUUID")) : null,

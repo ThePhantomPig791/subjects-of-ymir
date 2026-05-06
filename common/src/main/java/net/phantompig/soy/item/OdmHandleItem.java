@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.odm.OdmLevelHelper;
 import net.phantompig.soy.odm.physics.OdmHookNode;
+import net.phantompig.soy.odm.physics.OdmPlayerNode;
 
 import java.util.UUID;
 
@@ -26,18 +27,16 @@ public class OdmHandleItem extends Item {
         if (leggings.getItem() instanceof OdmAttachableAddonArmorItem odm) {
             UUID hook;
             if ((hook = rightHand ? odm.getRightHook(leggings) : odm.getLeftHook(leggings)) != null) {
-                if (player.isCrouching()) {
-                    OdmLevelHelper.removeNode(level, hook);
-                    if (rightHand) odm.removeRightHook(leggings);
-                    else odm.removeLeftHook(leggings);
-                } else {
-                    if (OdmLevelHelper.getNode(level, hook) instanceof OdmHookNode hookNode) {
-                        hookNode.addToEndOfRope(OdmLevelHelper.addNodeAt(level, player));
-                    }
-                }
+                OdmLevelHelper.removeNode(level, hook);
+                if (rightHand) odm.removeRightHook(leggings);
+                else odm.removeLeftHook(leggings);
             } else {
-                if (rightHand) odm.setRightHook(leggings, OdmLevelHelper.shootHook(level, player).uuid);
-                else odm.setLeftHook(leggings, OdmLevelHelper.shootHook(level, player).uuid);
+                OdmHookNode node = OdmLevelHelper.shootHook(level, player);
+                if (rightHand) odm.setRightHook(leggings, node.uuid);
+                else odm.setLeftHook(leggings, node.uuid);
+                OdmPlayerNode playerNode = OdmLevelHelper.createPlayerNode(level, player);
+                node.lastNode = playerNode;
+                playerNode.nextNode = node;
             }
         }
         return InteractionResultHolder.consume(player.getItemInHand(usedHand));

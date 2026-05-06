@@ -2,8 +2,10 @@ package net.phantompig.soy.odm;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.odm.physics.OdmHookNode;
 import net.phantompig.soy.odm.physics.OdmNode;
+import net.phantompig.soy.odm.physics.OdmPlayerNode;
 
 import java.util.UUID;
 
@@ -13,7 +15,7 @@ public class OdmLevelHelper {
             holder.soy$getOdmServerLevel().addNode(hook);
         }
     }
-    public static OdmNode shootHook(Level level, Player player, double strength) {
+    public static OdmHookNode shootHook(Level level, Player player, double strength) {
         if (level instanceof OdmServerLevelHolder holder) {
             OdmHookNode hook = new OdmHookNode(holder.soy$getOdmServerLevel(), player, player.getEyePosition(), player.getLookAngle().scale(strength).add(player.getDeltaMovement()));
             addNode(level, hook);
@@ -21,13 +23,25 @@ public class OdmLevelHelper {
         }
         return null;
     }
-    public static OdmNode shootHook(Level level, Player player) {
+    public static OdmHookNode shootHook(Level level, Player player) {
         return shootHook(level, player, 10);
     }
 
     public static OdmNode addNodeAt(Level level, Player player) {
+        return addNodeAt(level, player, player.position().add(0, 1, 0));
+    }
+    public static OdmNode addNodeAt(Level level, Player player, Vec3 position) {
         if (level instanceof OdmServerLevelHolder holder) {
-            OdmNode node = new OdmNode(holder.soy$getOdmServerLevel(), player, player.position().add(0, 1, 0), player.getDeltaMovement());
+            OdmNode node = new OdmNode(holder.soy$getOdmServerLevel(), player, position, player != null ? player.getDeltaMovement() : Vec3.ZERO);
+            addNode(level, node);
+            return node;
+        }
+        return null;
+    }
+
+    public static OdmPlayerNode createPlayerNode(Level level, Player player) {
+        if (level instanceof OdmServerLevelHolder holder) {
+            OdmPlayerNode node = new OdmPlayerNode(holder.soy$getOdmServerLevel(), player, player.position().add(0, 1, 0), Vec3.ZERO);
             addNode(level, node);
             return node;
         }

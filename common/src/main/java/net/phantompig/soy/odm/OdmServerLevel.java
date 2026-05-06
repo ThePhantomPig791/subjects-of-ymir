@@ -24,8 +24,9 @@ public class OdmServerLevel {
     }
 
     public void tick() {
-        this.getData().nodes.values().forEach(OdmNode::tick);
-        forRemoval.forEach(this.odmData::removeNode);
+        this.getData().nodes.values().stream().toList().forEach(OdmNode::tick);
+        SubjectsOfYmir.LOGGER.info("node count: {}", this.getData().nodes.size());
+        forRemoval.stream().toList().forEach(this.odmData::removeNode);
         forRemoval.clear();
     }
 

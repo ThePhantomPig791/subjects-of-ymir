@@ -10,7 +10,7 @@ import net.minecraft.world.level.BlockCollisions;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.odm.OdmLevelHelper;
 import net.phantompig.soy.odm.OdmServerLevel;
 import net.threetag.palladium.util.PlayerUtil;
 import org.jetbrains.annotations.Nullable;
@@ -81,10 +81,45 @@ public class OdmNode {
             this.velocity = this.velocity.add(OdmServerLevel.GRAVITY);
         }
 
+        if (this.lastNode != null) {
+            final double distance = this.position.distanceTo(this.lastNode.position);
+            steps = distance / this.size;
+            final Vec3 delta = this.position.subtract(this.lastNode.position).normalize().scale(-this.size);
+            newPosition = this.position;
+            for (int i = 0; i <= steps; i++) {
+                newPosition = newPosition.add(delta);
+
+                PlayerUtil.spawnParticleForAll(
+                        this.odmLevel.level,
+                        32,
+                        ParticleTypes.FLAME,
+                        true,
+                        newPosition.x,
+                        newPosition.y,
+                        newPosition.z,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1
+                );
+
+                if (new BlockCollisions<>(this.odmLevel.level, owner, this.getCollisionBox(newPosition), false, Tuple::new).hasNext()) {
+                    if (newPosition.closerThan(this.position, 1.5) || newPosition.closerThan(this.lastNode.position, 1.5)) continue;
+                    OdmNode newNode = OdmLevelHelper.addNodeAt(this.odmLevel.level, this.owner, newPosition);
+                    OdmNode oldLast = this.lastNode;
+                    oldLast.nextNode = newNode;
+                    this.lastNode = newNode;
+                    newNode.nextNode = this;
+                    newNode.lastNode = oldLast;
+                }
+            }
+        }
+
         PlayerUtil.spawnParticleForAll(
                 this.odmLevel.level,
                 32,
-                ParticleTypes.GLOW,
+                ParticleTypes.ELECTRIC_SPARK,
                 true,
                 this.position.x,
                 this.position.y,
@@ -167,6 +202,9 @@ public class OdmNode {
         switch (tag.getString("Type")) {
             case "hook" -> {
                 return OdmHookNode.fromTag(level, tag);
+            }
+            case "player" -> {
+                return OdmPlayerNode.fromTag(level, tag);
             }
         }
 
