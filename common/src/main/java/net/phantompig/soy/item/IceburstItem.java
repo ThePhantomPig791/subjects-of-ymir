@@ -36,8 +36,7 @@ public class IceburstItem extends Item {
 
     public IceburstItem(Properties properties) {
         super(properties);
-        // TODO this may be run before the config is initialized. idk though it needs to be tested
-        if (SoyConfig.Server.canDispenseIceburst()) DispenserBlock.registerBehavior(this, DISPENSE_ITEM_BEHAVIOR);
+        DispenserBlock.registerBehavior(this, DISPENSE_ITEM_BEHAVIOR);
     }
 
     @NotNull
