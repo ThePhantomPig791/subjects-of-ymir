@@ -10,6 +10,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlocks;
+import net.phantompig.soy.odm.component.OdmComponents;
 import net.threetag.palladium.item.AddonArmorItem;
 import net.threetag.palladiumcore.item.SimpleArmorMaterial;
 import net.threetag.palladiumcore.item.SimpleToolTier;
@@ -50,6 +51,8 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> GAS_CANISTER = ITEMS.register("gas_canister", () -> new GasHoldingItem(new Item.Properties().stacksTo(1), 500));
 
+
+    public static final RegistrySupplier<Item> ODM_HANDLE = ITEMS.register("odm_handle", () -> new OdmHandleItem(new Item.Properties().stacksTo(1)));
 
 
     private static final String[] UNIFORM_EMBLEMS = {"survey_corps", "military_police", "garrison", "cadet"};
@@ -104,6 +107,8 @@ public class SoyItems {
 
 
     public static void init() {
+        OdmComponents.init(ITEMS);
+
         ITEMS.register();
         CreativeModeTabs.TABS.register();
 
@@ -116,7 +121,7 @@ public class SoyItems {
         }
         UNIFORMS.put(SubjectsOfYmir.rsrc(name = "cloak"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
         UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_jacket"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
-        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_leggings"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.LEGGINGS, new Item.Properties())));
+        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_leggings"), ITEMS.register(name, () -> new OdmAttachableAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.LEGGINGS, new Item.Properties())));
         UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_boots"), ITEMS.register(name, () -> new FallDamageResistantAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties(), 2)));
 
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
@@ -141,11 +146,13 @@ public class SoyItems {
             entries.add(GAS_CANISTER.get().getDefaultInstance());
             entries.add(COMPRESSION_TABLE.get());
             entries.add(HARDENING_BLOCK.get());
+            entries.add(ODM_HANDLE.get());
 
             for (RegistrySupplier<Item> s : UNIFORMS.values()) {
                 entries.add(s.get());
             }
         });
+        OdmComponents.initCreativeMenu();
 
         SoyItemTags.init();
     }
