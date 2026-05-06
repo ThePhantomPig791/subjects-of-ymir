@@ -1,5 +1,61 @@
 {
     "textures": "subjects_of_ymir:textures/models/armor/uniform/layer_2.png",
     "model_layers": "palladium:tight_suit/humanoid",
-    "hide_second_layer": true
+    "hide_second_layer": true,
+    "render_layers": [
+        {
+            "model_layer": {
+                "base": "subjects_of_ymir:odm/turbine/#TURBINE",
+                "variables": {
+                    "TURBINE": {
+                        "type": "subjects_of_ymir:odm_turbine"
+                    }
+                }
+            },
+            "texture": {
+                "base": "subjects_of_ymir:textures/models/odm/turbine/#TURBINE.png",
+                "variables": {
+                    "TURBINE": {
+                        "type": "subjects_of_ymir:odm_turbine"
+                    }
+                }
+            }
+        },
+        {
+            "model_layer": {
+                "base": "subjects_of_ymir:odm/sheath_right/#SHEATH",
+                "variables": {
+                    "SHEATH": {
+                        "type": "subjects_of_ymir:odm_sheath_right"
+                    }
+                }
+            },
+            "texture": {
+                "base": "subjects_of_ymir:textures/models/odm/sheath/#SHEATH.png",
+                "variables": {
+                    "SHEATH": {
+                        "type": "subjects_of_ymir:odm_sheath_right"
+                    }
+                }
+            }
+        },
+        {
+            "model_layer": {
+                "base": "subjects_of_ymir:odm/sheath_left/#SHEATH",
+                "variables": {
+                    "SHEATH": {
+                        "type": "subjects_of_ymir:odm_sheath_left"
+                    }
+                }
+            },
+            "texture": {
+                "base": "subjects_of_ymir:textures/models/odm/sheath/#SHEATH.png",
+                "variables": {
+                    "SHEATH": {
+                        "type": "subjects_of_ymir:odm_sheath_left"
+                    }
+                }
+            }
+        }
+    ]
 }
