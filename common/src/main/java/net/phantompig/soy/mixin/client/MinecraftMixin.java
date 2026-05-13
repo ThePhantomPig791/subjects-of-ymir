@@ -1,13 +1,19 @@
 package net.phantompig.soy.mixin.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.combat.ClientCombatSystem;
+import net.phantompig.soy.item.OdmHandleItem;
+import net.phantompig.soy.network.OdmHandlePressMessage;
+import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -20,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MinecraftMixin implements ClientCombatHolder {
     @Shadow @Nullable public LocalPlayer player;
 
+    @Shadow @Final public Options options;
     @Unique
     public ClientCombatSystem soy$combatSystem;
 
@@ -69,6 +76,24 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
     public void soy$cancelCallbackIfTitan(CallbackInfo ci) {
         if (this.player != null && SoyProperties.PROGRESS.get(this.player) > 0) {
             ci.cancel();
+        }
+    }
+
+
+    @Inject(method = "handleKeybinds", at = @At(value = "HEAD"))
+    public void soy$handleOdmKeybinds(CallbackInfo ci) {
+        if (this.player == null) return;
+        ItemStack itemStack = player.getMainHandItem();
+        if (itemStack.getItem() instanceof OdmHandleItem) {
+            while (this.options.keyInventory.consumeClick()) {
+                SoyNetwork.NETWORK.sendToServer(new OdmHandlePressMessage(true));
+            }
+        }
+        itemStack = player.getOffhandItem();
+        if (itemStack.getItem() instanceof OdmHandleItem) {
+            while (this.options.keyDrop.consumeClick()) {
+                SoyNetwork.NETWORK.sendToServer(new OdmHandlePressMessage(false));
+            }
         }
     }
 }

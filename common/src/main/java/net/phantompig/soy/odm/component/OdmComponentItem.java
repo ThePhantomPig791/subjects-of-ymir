@@ -17,10 +17,11 @@ public class OdmComponentItem extends GasHoldingItem {
         return this.odmComponent.gasCapacity() != 0 && super.isBarVisible(stack);
     }
 
-    public boolean consume(ItemStack stack, int amount) {
-        int remaining;
-        this.set(stack, remaining = Math.max(get(stack) - amount, 0));
-        return remaining > 0;
+    public int consume(ItemStack stack, int amount) {
+        int remaining = get(stack);
+        int newAmount = remaining - amount;
+        this.set(stack, Math.max(newAmount, 0));
+        return Math.max(0, -newAmount);
     }
 
     public boolean canStrafe(Direction direction) {

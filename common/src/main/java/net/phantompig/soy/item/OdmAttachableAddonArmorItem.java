@@ -116,10 +116,11 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
     public boolean consumeGas(ItemStack stack, int amount) {
         for (ItemStack item : this.getComponents(stack).toList()) {
             if (item.getItem() instanceof OdmComponentItem component) {
-                if (component.consume(item, amount)) return true;
+                amount = component.consume(item, amount);
+                if (amount == 0) break;
             }
         }
-        return false;
+        return amount == 0;
     }
 
     @Override

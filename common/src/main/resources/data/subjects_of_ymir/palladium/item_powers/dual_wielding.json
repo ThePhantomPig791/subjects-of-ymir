@@ -1,7 +1,8 @@
 {
   "item": [
     "subjects_of_ymir:iron_bamboo_sword",
-    "subjects_of_ymir:iron_bamboo_dagger"
+    "subjects_of_ymir:iron_bamboo_dagger",
+    "subjects_of_ymir:odm_handle"
   ],
   "slot": "offhand",
   "power": [

@@ -36,6 +36,7 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> IRON_BAMBOO_SWORD = ITEMS.register("iron_bamboo_sword", () -> new SwordItem(ToolTiers.IRON_BAMBOO, 3, -1.5f, new Item.Properties()));
     public static final RegistrySupplier<Item> IRON_BAMBOO_DAGGER = ITEMS.register("iron_bamboo_dagger", () -> new SwordItem(ToolTiers.IRON_BAMBOO, 1, -0.5f, new Item.Properties()));
+    public static final RegistrySupplier<Item> IRON_BAMBOO_RING = ITEMS.register("iron_bamboo_ring", () -> new Item(new Item.Properties().stacksTo(1)));
 
     public static final RegistrySupplier<Item> COMPRESSION_TABLE = ITEMS.register("compression_table", () -> new BlockItem(SoyBlocks.COMPRESSION_TABLE.get(), new Item.Properties()));
 
@@ -141,6 +142,7 @@ public class SoyItems {
             entries.add(IRON_BAMBOO_LEAF.get());
             entries.add(IRON_BAMBOO_SWORD.get());
             entries.add(IRON_BAMBOO_DAGGER.get());
+            entries.add(IRON_BAMBOO_RING.get());
             entries.add(BLADE.get());
             entries.add(GAS_CANISTER.get());
             entries.add(GAS_CANISTER.get().getDefaultInstance());
