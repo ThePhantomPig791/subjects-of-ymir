@@ -6,6 +6,7 @@ public class SoyConfig {
     public static class Server {
         public static ForgeConfigSpec.BooleanValue CAN_INJECT_OTHERS;
         public static ForgeConfigSpec.BooleanValue CAN_DISPENSE_ICEBURST;
+        public static ForgeConfigSpec.BooleanValue ODM_ROPES;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -13,6 +14,8 @@ public class SoyConfig {
             CAN_INJECT_OTHERS = builder.define("general.canInjectOthers", true);
             builder.comment("Enables/disables dispensing raw iceburst from a dispenser.");
             CAN_DISPENSE_ICEBURST = builder.define("general.canDispenseIceburst", true);
+            builder.comment("Enables/disables experimental rope physics for ODM hooks.");
+            ODM_ROPES = builder.define("experimental.odmRopes", false);
             return builder.build();
         }
 
@@ -22,6 +25,10 @@ public class SoyConfig {
 
         public static boolean canDispenseIceburst() {
             return CAN_DISPENSE_ICEBURST.get();
+        }
+
+        public static boolean ropePhysicsEnabled() {
+            return ODM_ROPES.get();
         }
     }
 }

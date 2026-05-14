@@ -18,6 +18,7 @@ public class SoySounds {
     public static final RegistrySupplier<SoundEvent> SHORT_HARDEN = make("short_harden", 48);
     public static final RegistrySupplier<SoundEvent> QUICK_HARDEN = make("quick_harden", 48);
     public static final RegistrySupplier<SoundEvent> HEARTBEAT = make("heartbeat", 16);
+    public static final RegistrySupplier<SoundEvent> CLICK = make("click", 16);
 
     public static RegistrySupplier<SoundEvent> make(String name, float range) {
         return SOUNDS.register(name, () -> new SoundEvent(SubjectsOfYmir.rsrc(name), range, false));

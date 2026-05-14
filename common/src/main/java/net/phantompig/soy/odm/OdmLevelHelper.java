@@ -24,7 +24,7 @@ public class OdmLevelHelper {
         return null;
     }
     public static OdmHookNode shootHook(Level level, Player player) {
-        return shootHook(level, player, 10);
+        return shootHook(level, player, 20);
     }
 
     public static OdmNode addNodeAt(Level level, Player player) {

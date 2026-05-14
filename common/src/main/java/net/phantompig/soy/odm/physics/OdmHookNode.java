@@ -18,6 +18,9 @@ public class OdmHookNode extends OdmNode {
     public OdmHookNode(OdmServerLevel odmLevel, @Nullable Player owner, Vec3 position, Vec3 velocity) {
         this(odmLevel, UUID.randomUUID(), owner, position, velocity);
     }
+    public OdmHookNode(OdmNode node) {
+        this(node.odmLevel, node.uuid, node.owner, node.position, node.velocity);
+    }
 
     public void tick() {
         super.tick();
@@ -40,27 +43,20 @@ public class OdmHookNode extends OdmNode {
 
     @Override
     public void applySpringPhysics() {
-        if (!this.stuck) super.applySpringPhysics();
+
+    }
+
+    @Override
+    public void onRemove() {
+        OdmNode next = this.lastNode;
+        while (next != null) {
+            OdmNode after = next.lastNode;
+            next.remove();
+            next = after;
+        }
     }
 
     public static OdmHookNode fromTag(OdmServerLevel level, CompoundTag tag) {
-        // i do hate to repeat this code but whatever. i can't really think of another way to do this type system
-        // because this method needs to
-        CompoundTag position = tag.getCompound("Position");
-        CompoundTag velocity = tag.getCompound("Velocity");
-        OdmHookNode node = new OdmHookNode(
-                level,
-                tag.getUUID("UUID"),
-                tag.contains("OwnerUUID") ? level.level.getPlayerByUUID(tag.getUUID("OwnerUUID")) : null,
-                new Vec3(position.getFloat("x"), position.getFloat("y"), position.getFloat("z")),
-                new Vec3(velocity.getFloat("x"), velocity.getFloat("y"), velocity.getFloat("z"))
-        );
-        if (tag.contains("NextNode")) {
-            node.nextNode = level.getNode(tag.getUUID("NextNode"));
-        }
-        if (tag.contains("LastNode")) {
-            node.lastNode = level.getNode(tag.getUUID("LastNode"));
-        }
-        return node;
+        return new OdmHookNode(OdmNode.fromTag(level, tag));
     }
 }

@@ -4,13 +4,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.odm.physics.OdmNode;
 
 import java.util.*;
 
 public class OdmServerLevel {
     public static final Vec3 GRAVITY = new Vec3(0, -0.1, 0);
+    public static final float AIR_RESISTANCE = 1f; // a multiplier (0, 1]. 1 means no air resistance
+    public static final float SPRING_CONSTANT = 0.0006f;
 
     public ServerLevel level;
 
@@ -24,10 +25,16 @@ public class OdmServerLevel {
     }
 
     public void tick() {
-        this.getData().nodes.values().stream().toList().forEach(OdmNode::tick);
-        SubjectsOfYmir.LOGGER.info("node count: {}", this.getData().nodes.size());
-        forRemoval.stream().toList().forEach(this.odmData::removeNode);
-        forRemoval.clear();
+        List.copyOf(this.getData().nodes.values()).forEach(node -> {
+            node.insertedNewNodeThisTick = false;
+            if (!forRemoval.contains(node.uuid)) node.tick();
+        });
+        while (!forRemoval.isEmpty()) {
+            new HashSet<>(forRemoval).forEach(uuid -> {
+                forRemoval.remove(uuid);
+                this.odmData.removeNode(uuid);
+            });
+        }
     }
 
     public void addNode(OdmNode hook) {
@@ -85,9 +92,10 @@ public class OdmServerLevel {
         }
 
         public void removeNode(UUID uuid) {
-            OdmNode node = nodes.remove(uuid);
+            OdmNode node = nodes.get(uuid);
             if (node != null) {
                 node.onRemove();
+                nodes.remove(uuid);
                 setDirty();
             }
         }
@@ -111,7 +119,7 @@ public class OdmServerLevel {
             CompoundTag nodesTag = this.nbt.getCompound("Nodes");
             Set<String> keys = nodesTag.getAllKeys();
             keys.iterator().forEachRemaining(string -> {
-                nodes.put(UUID.fromString(string), OdmNode.fromTag(this.odmLevel, nodesTag.getCompound(string)));
+                nodes.put(UUID.fromString(string), OdmNode.typedFromTag(this.odmLevel, nodesTag.getCompound(string)));
             });
         }
 

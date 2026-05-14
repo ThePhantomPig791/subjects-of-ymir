@@ -99,12 +99,23 @@
       }
     ]
   },
+
   "heartbeat": {
     "category": "player",
     "subtitle": "subtitle.subjects_of_ymir.heartbeat",
     "sounds": [
       {
         "name": "subjects_of_ymir:heartbeat"
+      }
+    ]
+  },
+
+  "click": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.click",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:click"
       }
     ]
   }

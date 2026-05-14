@@ -123,7 +123,7 @@ public class SoyItems {
         UNIFORMS.put(SubjectsOfYmir.rsrc(name = "cloak"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, net.minecraft.world.item.ArmorItem.Type.HELMET, new Item.Properties()).enableOpenable(true, 0, new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"), new ResourceLocation("item.armor.equip_leather"))));
         UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_jacket"), ITEMS.register(name, () -> new AddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.CHESTPLATE, new Item.Properties())));
         UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_leggings"), ITEMS.register(name, () -> new OdmAttachableAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.LEGGINGS, new Item.Properties())));
-        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_boots"), ITEMS.register(name, () -> new FallDamageResistantAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties(), 2)));
+        UNIFORMS.put(SubjectsOfYmir.rsrc(name = "uniform_boots"), ITEMS.register(name, () -> new FallDamageResistantAddonArmorItem(ArmorMaterials.UNIFORM, ArmorItem.Type.BOOTS, new Item.Properties(), 5)));
 
         CreativeModeTabRegistry.addToTab(CreativeModeTabs.SOY, entries -> {
             entries.add(INJECTION.get());

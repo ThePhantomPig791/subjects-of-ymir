@@ -10,6 +10,7 @@ import net.minecraft.world.level.BlockCollisions;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.odm.OdmLevelHelper;
 import net.phantompig.soy.odm.OdmServerLevel;
 import net.threetag.palladium.util.PlayerUtil;
@@ -35,6 +36,10 @@ public class OdmNode {
 
     public String type = "node";
 
+    public double distanceToNextNode = 0, distanceToLastNode = 0;
+
+    public boolean insertedNewNodeThisTick = false;
+
     public OdmNode(OdmServerLevel odmLevel, UUID uuid, @Nullable Player owner, Vec3 position, Vec3 velocity) {
         this.odmLevel = odmLevel;
         this.owner = owner;
@@ -53,6 +58,7 @@ public class OdmNode {
     public void tick() {
         applySpringPhysics();
 
+        // projectile motion logic
         this.velocity = this.velocity.scale(0.9);
         final double vsqr = this.velocity.lengthSqr();
         double steps = vsqr == 0 ? 1 : Math.sqrt(vsqr) / this.size;
@@ -75,13 +81,20 @@ public class OdmNode {
             if (odmLevel.level.isFluidAtPosition(this.getBlockPos(), (fluidState) -> fluidState.is(FluidTags.LAVA))) {
                 this.remove();
             } else if (odmLevel.level.isFluidAtPosition(this.getBlockPos(), (fluidState) -> fluidState.is(FluidTags.WATER))) {
-                this.velocity = this.velocity.scale(0.75f);
+                this.velocity = this.velocity.scale(OdmServerLevel.AIR_RESISTANCE * 0.5);
             }
             this.position = newPosition;
-            this.velocity = this.velocity.add(OdmServerLevel.GRAVITY);
+            this.velocity = this.velocity.scale(OdmServerLevel.AIR_RESISTANCE).add(OdmServerLevel.GRAVITY);
+
+            if (this.nextNode != null && this.lastNode != null) {
+                if (this.position.subtract(this.nextNode.position).normalize().dot(this.position.subtract(this.lastNode.position).normalize()) <= -0.9) {
+                    this.remove();
+                }
+            }
         }
 
-        if (this.lastNode != null) {
+        // raycast to last node and add another node if the raycast is stuck on a block
+        if (!this.insertedNewNodeThisTick && this.lastNode != null) {
             final double distance = this.position.distanceTo(this.lastNode.position);
             steps = distance / this.size;
             final Vec3 delta = this.position.subtract(this.lastNode.position).normalize().scale(-this.size);
@@ -104,15 +117,41 @@ public class OdmNode {
                         1
                 );
 
-                if (new BlockCollisions<>(this.odmLevel.level, owner, this.getCollisionBox(newPosition), false, Tuple::new).hasNext()) {
-                    if (newPosition.closerThan(this.position, 1.5) || newPosition.closerThan(this.lastNode.position, 1.5)) continue;
-                    OdmNode newNode = OdmLevelHelper.addNodeAt(this.odmLevel.level, this.owner, newPosition);
-                    OdmNode oldLast = this.lastNode;
-                    oldLast.nextNode = newNode;
-                    this.lastNode = newNode;
-                    newNode.nextNode = this;
-                    newNode.lastNode = oldLast;
+                if (SoyConfig.Server.ropePhysicsEnabled()) {
+                    if (new BlockCollisions<>(this.odmLevel.level, owner, this.getCollisionBox(newPosition), false, Tuple::new).hasNext()) {
+                        if (newPosition.closerThan(this.position, 1.5) || newPosition.closerThan(this.lastNode.position, 1.5)) continue;
+                        if (this.nextNode != null && newPosition.closerThan(this.nextNode.position, 1.5)) continue;
+
+                        OdmNode newNode = OdmLevelHelper.addNodeAt(this.odmLevel.level, this.owner, newPosition);
+                        OdmNode oldLast = this.lastNode;
+                        oldLast.nextNode = newNode;
+                        oldLast.distanceToNextNode = newNode.position.distanceTo(oldLast.position);
+                        this.lastNode = newNode;
+                        newNode.nextNode = this;
+                        newNode.distanceToNextNode = this.position.distanceTo(newNode.position);
+                        newNode.distanceToLastNode = newNode.position.distanceTo(oldLast.position);
+                        newNode.lastNode = oldLast;
+                        break;
+                    }
                 }
+            }
+
+            if (this.position.closerThan(this.lastNode.position, 0.9)) {
+                this.remove();
+            }
+        }
+
+        if (this.nextNode != null) {
+            if (this.position.closerThan(this.nextNode.position, 0.9)) {
+                this.remove();
+            }
+            if (Math.pow(this.distanceToNextNode, 2) < this.position.distanceToSqr(this.nextNode.position)) {
+                this.distanceToNextNode = this.position.distanceTo(this.nextNode.position);
+            }
+        }
+        if (this.lastNode != null) {
+            if (Math.pow(this.distanceToLastNode, 2) < this.position.distanceToSqr(this.lastNode.position)) {
+                this.distanceToLastNode = this.position.distanceTo(this.lastNode.position);
             }
         }
 
@@ -134,10 +173,10 @@ public class OdmNode {
 
     public void applySpringPhysics() {
         if (this.nextNode != null) {
-            this.velocity = this.velocity.add(this.nextNode.position.subtract(this.position).scale(0.06));
+            this.velocity = this.velocity.add(this.nextNode.position.subtract(this.position).scale(OdmServerLevel.SPRING_CONSTANT * (this.position.distanceTo(this.nextNode.position) - this.distanceToNextNode)));
         }
-        if (this.lastNode != null) {
-            this.velocity = this.velocity.add(this.lastNode.position.subtract(this.position).scale(0.06));
+        if (this.lastNode != null && !this.lastNode.type.equals("player")) {
+            this.velocity = this.velocity.add(this.lastNode.position.subtract(this.position).scale(OdmServerLevel.SPRING_CONSTANT * (this.position.distanceTo(this.lastNode.position) - this.distanceToLastNode)));
         }
     }
 
@@ -159,10 +198,12 @@ public class OdmNode {
     public void onAdd() { // it will already exist within the level node list when this method is called
 
     }
-    public void onRemove() { // it will not exist within the level node list when this method is called
+    public void onRemove() { // it will still exist within the level node list when this method is called
         if (this.nextNode != null && this.lastNode != null) {
             this.nextNode.lastNode = this.lastNode;
             this.lastNode.nextNode = this.nextNode;
+            this.lastNode.distanceToNextNode = this.nextNode.position.distanceTo(this.lastNode.position);
+            this.nextNode.distanceToLastNode = this.lastNode.position.distanceTo(this.nextNode.position);
         } else {
             if (this.nextNode != null) {
                 this.nextNode.lastNode = null;
@@ -198,7 +239,7 @@ public class OdmNode {
 
         return tag;
     }
-    public static OdmNode fromTag(OdmServerLevel level, CompoundTag tag) {
+    public static OdmNode typedFromTag(OdmServerLevel level, CompoundTag tag) {
         switch (tag.getString("Type")) {
             case "hook" -> {
                 return OdmHookNode.fromTag(level, tag);
@@ -206,8 +247,12 @@ public class OdmNode {
             case "player" -> {
                 return OdmPlayerNode.fromTag(level, tag);
             }
+            default -> {
+                return fromTag(level, tag);
+            }
         }
-
+    }
+    public static OdmNode fromTag(OdmServerLevel level, CompoundTag tag) {
         CompoundTag position = tag.getCompound("Position");
         CompoundTag velocity = tag.getCompound("Velocity");
         OdmNode node = new OdmNode(
