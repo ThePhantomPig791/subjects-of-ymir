@@ -145,13 +145,15 @@ public class OdmNode {
             if (this.position.closerThan(this.nextNode.position, 0.9)) {
                 this.remove();
             }
-            if (Math.pow(this.distanceToNextNode, 2) < this.position.distanceToSqr(this.nextNode.position)) {
-                this.distanceToNextNode = this.position.distanceTo(this.nextNode.position);
+            if (Math.pow(this.distanceToNextNode, 2) > this.position.distanceToSqr(this.nextNode.position)) {
+                this.distanceToNextNode = this.position.distanceTo(this.nextNode.position) * 0.95;
+                this.nextNode.distanceToLastNode = this.distanceToNextNode;
             }
         }
         if (this.lastNode != null) {
-            if (Math.pow(this.distanceToLastNode, 2) < this.position.distanceToSqr(this.lastNode.position)) {
-                this.distanceToLastNode = this.position.distanceTo(this.lastNode.position);
+            if (Math.pow(this.distanceToLastNode, 2) > this.position.distanceToSqr(this.lastNode.position)) {
+                this.distanceToLastNode = this.position.distanceTo(this.lastNode.position) * 0.95;
+                this.lastNode.distanceToNextNode = this.distanceToLastNode;
             }
         }
 

@@ -11,9 +11,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public class OdmHookNode extends OdmNode {
+    public boolean hasLanded = true;
+
     public OdmHookNode(OdmServerLevel odmLevel, UUID uuid, @Nullable Player owner, Vec3 position, Vec3 velocity) {
         super(odmLevel, uuid, owner, position, velocity);
         this.type = "hook";
+        this.distanceToLastNode = 99;
     }
     public OdmHookNode(OdmServerLevel odmLevel, @Nullable Player owner, Vec3 position, Vec3 velocity) {
         this(odmLevel, UUID.randomUUID(), owner, position, velocity);
@@ -24,6 +27,12 @@ public class OdmHookNode extends OdmNode {
 
     public void tick() {
         super.tick();
+
+        if (!this.hasLanded && this.stuck && this.lastNode != null) {
+            this.hasLanded = true;
+            this.distanceToLastNode = this.position.distanceTo(this.lastNode.position);
+            this.lastNode.distanceToNextNode = this.distanceToLastNode;
+        }
 
         PlayerUtil.spawnParticleForAll(
                 this.odmLevel.level,
@@ -44,6 +53,12 @@ public class OdmHookNode extends OdmNode {
     @Override
     public void applySpringPhysics() {
 
+    }
+
+    @Override
+    public void onAdd() {
+        super.onAdd();
+        this.hasLanded = false;
     }
 
     @Override

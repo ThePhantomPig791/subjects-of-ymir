@@ -25,12 +25,12 @@ public class OdmPlayerNode extends OdmNode {
     }
 
     @Override
-    public void tick() {
+    public void tick() { // TODO see if i can reduce the player's air resistance and also unlock the camera ? so you can go upside down idk it could feel cool. maybe these would take effect when you wear the uniform leggings
         if (this.owner != null) {
             this.position = this.owner.position().add(0, 1, 0);
 
             if (hookStuck()) {
-                this.owner.addDeltaMovement(this.nextNode.position.subtract(this.position).scale(0.5 * OdmServerLevel.SPRING_CONSTANT * (this.position.distanceTo(this.nextNode.position) - this.distanceToNextNode)));
+                this.owner.addDeltaMovement(this.nextNode.position.subtract(this.position).scale(OdmServerLevel.SPRING_CONSTANT * (this.position.distanceTo(this.nextNode.position) - this.distanceToNextNode)));
                 this.owner.setDeltaMovement(this.owner.getDeltaMovement().scale(OdmServerLevel.AIR_RESISTANCE));
                 if (this.owner instanceof ServerPlayer sp) {
                     sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
