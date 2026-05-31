@@ -19,7 +19,6 @@
     "ItemEntityMixin",
     "LivingEntityMixin",
     "PlayerMixin",
-    "ServerLevelMixin",
     "ServerPlayerMixin",
     "VillagerMixin"
   ],

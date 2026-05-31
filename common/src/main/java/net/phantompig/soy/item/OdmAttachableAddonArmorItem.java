@@ -235,17 +235,6 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
 
     public void hooksTick(ItemStack stack, Level level, Player player) {
         validateHooks(stack, level);
-
-        /*OdmNode[] hooks = {OdmLevelHelper.getHook(level, getRightHook(stack)), OdmLevelHelper.getHook(level, getLeftHook(stack))};
-        Vec3 netMotion = Vec3.ZERO;
-        for (OdmNode hook : hooks) {
-            if (hook == null || !hook.stuck) continue;
-            netMotion = netMotion.add(hook.position.subtract(player.position()).scale(0.02));
-        }
-        if (!netMotion.equals(Vec3.ZERO)) {
-            player.addDeltaMovement(netMotion);
-            sendMotionPacket(player);
-        }*/
     }
 
     public void validateHooks(ItemStack stack, Level level) {
