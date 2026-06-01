@@ -21,7 +21,7 @@ public class OdmHandleItem extends Item {
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         if (leggings.getItem() instanceof OdmAttachableAddonArmorItem odm) {
             UUID hook;
-            if ((hook = rightHand ? odm.getRightHook(leggings) : odm.getLeftHook(leggings)) != null) {
+            if ((hook = rightHand ? odm.getRightHook(leggings) : odm.getLeftHook(leggings)) != null && OdmLevelHelper.getNode(player.level(), hook).isPresent()) {
                 OdmLevelHelper.removeNode(player.level(), hook);
 
                 if (rightHand) odm.removeRightHook(leggings);
@@ -34,6 +34,8 @@ public class OdmHandleItem extends Item {
 
                 if (rightHand) odm.setRightHook(leggings, node.getUUID());
                 else odm.setLeftHook(leggings, node.getUUID());
+
+                PlayerUtil.playSoundToAll(player.level(), player.getX(), player.getY(), player.getZ(), 64, SoySounds.HOOK_LAUNCH.get(), SoundSource.PLAYERS, 1, (float) (0.95 + 0.1 * Math.random()));
             }
         }
         PlayerUtil.playSoundToAll(player.level(), player.getX(), player.getY(), player.getZ(), 16, SoySounds.CLICK.get(), SoundSource.PLAYERS, 0.6f, (float) (0.9 + 0.2 * Math.random()));

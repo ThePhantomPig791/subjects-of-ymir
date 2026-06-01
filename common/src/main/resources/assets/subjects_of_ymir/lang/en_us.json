@@ -37,6 +37,8 @@
   "subtitle.subjects_of_ymir.short_harden": "Titan hardens",
   "subtitle.subjects_of_ymir.heartbeat": "Heart beats",
   "subtitle.subjects_of_ymir.click": "Metal clicks",
+  "subtitle.subjects_of_ymir.hook_launch": "Hook launches",
+  "subtitle.subjects_of_ymir.hook_land": "Hook lands",
 
 
   "death.attack.selfBite": "%s bit their own hand off",

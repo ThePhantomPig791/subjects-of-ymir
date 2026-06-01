@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.phantompig.soy.entity.OdmNodeEntity;
 import net.phantompig.soy.entity.SoyEntities;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class OdmLevelHelper {
@@ -22,6 +23,12 @@ public class OdmLevelHelper {
     }
     public static OdmNodeEntity shootHook(Level level, Player player) {
         return shootHook(level, player, 8);
+    }
+    public static Optional<OdmNodeEntity> getNode(Level level, UUID uuid) {
+        if (level instanceof ServerLevel sl && sl.getEntity(uuid) instanceof OdmNodeEntity e) {
+            return Optional.of(e);
+        }
+        return Optional.empty();
     }
     public static void removeNode(Level level, UUID uuid) {
         if (level instanceof ServerLevel sl) {
