@@ -2,7 +2,9 @@ package net.phantompig.soy;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
@@ -10,9 +12,11 @@ import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.entity.SoyDamageTypeTags;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.feature.SoyFeatures;
+import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.menu.SoyMenus;
 import net.phantompig.soy.network.SoyNetwork;
+import net.phantompig.soy.odm.OdmLevelHelper;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.player.SoyServerPlayerExtension;
@@ -109,6 +113,13 @@ public class SubjectsOfYmir {
                     player.drop(TitanInstance.toSpineIem(ext.getTitanInstance()), true, true);
                     TitanInstance.clearTitanFor(livingEntity);
                 }
+            }
+            ItemStack leggings = livingEntity.getItemBySlot(EquipmentSlot.LEGS);
+            if (leggings.getItem() instanceof OdmAttachableAddonArmorItem odm) {
+                OdmLevelHelper.removeNode(livingEntity.level(), odm.getLeftHook(leggings));
+                OdmLevelHelper.removeNode(livingEntity.level(), odm.getRightHook(leggings));
+                odm.removeLeftHook(leggings);
+                odm.removeRightHook(leggings);
             }
             return EventResult.pass();
         }));

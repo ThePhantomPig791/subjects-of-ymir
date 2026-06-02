@@ -9,6 +9,8 @@ import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -55,6 +57,11 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
         boolean up = PalladiumProperties.JUMP_KEY_DOWN.get(player);
         boolean down = player.isCrouching();
         if (!forward && !backward && !left && !right && !up && !down) return;
+        boolean rightHandle = player.getItemBySlot(player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND).getItem() instanceof OdmHandleItem;
+        boolean leftHandle = player.getItemBySlot(player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND).getItem() instanceof OdmHandleItem;
+        boolean eitherHandles = rightHandle || leftHandle;
+        if (!eitherHandles) return;
+        boolean bothHandles = rightHandle && leftHandle;
         this.getComponents(stack).forEach(item -> {
             if (item.getItem() instanceof OdmComponentItem component) {
                 boolean moved = false;
@@ -64,23 +71,27 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
                 if (backward && component.canStrafe(Direction.SOUTH) && consumeGas(stack, 1)) {
                     moved = gasStrafe(player, deIntensifyPitch(player.getXRot() - 20), player.getYRot() + 180, component.odmComponent.gasStrafeStrength().get(Direction.SOUTH));
                 }
-                if (left && component.canStrafe(Direction.WEST) && consumeGas(stack, 1)) {
+                // the reason why right handle can strafe left (and vice versa) is it feels nicer to press E+A than it does to press E+D
+                if (rightHandle && left && component.canStrafe(Direction.WEST) && consumeGas(stack, 1)) {
                     moved = gasStrafe(player, 0, player.getYRot() - 90, component.odmComponent.gasStrafeStrength().get(Direction.WEST));
                 }
-                if (right && component.canStrafe(Direction.EAST) && consumeGas(stack, 1)) {
+                if (leftHandle && right && component.canStrafe(Direction.EAST) && consumeGas(stack, 1)) {
                     moved = gasStrafe(player, 0, player.getYRot() + 90, component.odmComponent.gasStrafeStrength().get(Direction.EAST));
                 }
-                if (up && component.canStrafe(Direction.UP) && consumeGas(stack, 1)) {
-                    moved = gasStrafe(player, -90, 0, component.odmComponent.gasStrafeStrength().get(Direction.UP));
-                }
-                if (down && component.canStrafe(Direction.DOWN) && consumeGas(stack, 1)) {
-                    moved = gasStrafe(player, 90, 0, component.odmComponent.gasStrafeStrength().get(Direction.DOWN));
+                if (bothHandles) {
+                    if (up && component.canStrafe(Direction.UP) && consumeGas(stack, 1)) {
+                        moved = gasStrafe(player, -90, 0, component.odmComponent.gasStrafeStrength().get(Direction.UP));
+                    }
+                    if (down && component.canStrafe(Direction.DOWN) && consumeGas(stack, 1)) {
+                        moved = gasStrafe(player, 90, 0, component.odmComponent.gasStrafeStrength().get(Direction.DOWN));
+                    }
                 }
                 if (moved) sendMotionPacket(player);
             }
         });
     }
     private boolean gasStrafe(Player player, float pitch, float yaw, float strength) {
+        if (strength == 0) return false;
         Vec3 direction = Vec3.directionFromRotation(pitch, yaw).scale(strength);
         player.addDeltaMovement(direction);
         PlayerUtil.spawnParticleForAll(

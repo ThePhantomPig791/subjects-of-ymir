@@ -30,7 +30,7 @@ public class OdmHandleItem extends Item {
                 OdmNodeEntity node = OdmLevelHelper.shootHook(player.level(), player);
 
                 node.setRight(rightHand);
-                node.setPos(node.position().add(node.getRightOrLeftOffset(player.getXRot(), player.yBodyRot, rightHand)));
+                node.setPos(node.position().add(node.getRightOrLeftOffset(player.yBodyRot, rightHand)));
 
                 if (rightHand) odm.setRightHook(leggings, node.getUUID());
                 else odm.setLeftHook(leggings, node.getUUID());

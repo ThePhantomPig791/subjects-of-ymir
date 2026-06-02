@@ -69,12 +69,6 @@
       },
       {
         "name": "subjects_of_ymir:gas_burst_2"
-      },
-      {
-        "name": "subjects_of_ymir:gas_burst_3"
-      },
-      {
-        "name": "subjects_of_ymir:gas_burst_4"
       }
     ]
   },
@@ -125,15 +119,15 @@
     "subtitle": "subtitle.subjects_of_ymir.hook_launch",
     "sounds": [
       {
+        "name": "subjects_of_ymir:hook_launch_0",
+        "attenuation_distance": 64
+      },
+      {
         "name": "subjects_of_ymir:hook_launch_1",
         "attenuation_distance": 64
       },
       {
         "name": "subjects_of_ymir:hook_launch_2",
-        "attenuation_distance": 64
-      },
-      {
-        "name": "subjects_of_ymir:hook_launch_3",
         "attenuation_distance": 64
       }
     ]

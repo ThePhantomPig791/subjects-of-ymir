@@ -8,16 +8,20 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
 import net.threetag.palladium.util.PlayerUtil;
@@ -46,15 +50,13 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         if (stuck) {
             // pull player
             Entity owner = this.getOwner();
-            if (owner != null) {
-                if (SoyProperties.PROGRESS.get(owner) > 0) {
-                    this.discard();
-                } else {
-                    double distanceScale = this.position().distanceTo(owner.position());
-                    distanceScale = distanceScale / (distanceScale + 10);
-                    owner.addDeltaMovement(this.position().subtract(owner.position()).normalize().scale(0.7 * distanceScale));
-                }
+            if (owner == null || SoyProperties.PROGRESS.get(owner) > 0 || owner instanceof LivingEntity living && !belongsTo(living)) {
+                this.discard();
+                return;
             }
+            double distanceScale = this.position().distanceTo(owner.position());
+            distanceScale = distanceScale / (distanceScale + 10);
+            owner.addDeltaMovement(this.position().subtract(owner.position()).normalize().scale(0.7 * distanceScale));
 
             // stay stuck to entity
             this.getStuckEntity().ifPresent(e -> {
@@ -80,6 +82,30 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         }
     }
 
+    private boolean belongsTo(LivingEntity entity) {
+        ItemStack leggings = entity.getItemBySlot(EquipmentSlot.LEGS);
+        return (leggings.getItem() instanceof OdmAttachableAddonArmorItem odm) && (this.uuid.equals(odm.getLeftHook(leggings)) || this.uuid.equals(odm.getRightHook(leggings)));
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (amount < 4) return false;
+        Entity direct = source.getDirectEntity();
+        if (direct == null) return false;
+        Entity owner = this.getOwner();
+        if (direct.equals(owner)) return false;
+        this.discard();
+        if (owner instanceof LivingEntity living) {
+            ItemStack leggings = living.getItemBySlot(EquipmentSlot.LEGS);
+            if (leggings.getItem() instanceof OdmAttachableAddonArmorItem odm) {
+                odm.removeLeftHook(leggings);
+                odm.removeRightHook(leggings);
+            }
+        }
+        PlayerUtil.spawnParticleForAll(this.level(), 32, ParticleTypes.CRIT, false, this.getX(), this.getY(), this.getZ(), 0.2f, 0.2f, 0.2f, 0, 8);
+        return true;
+    }
+
     @Override
     protected void onHit(HitResult result) {
         final float v = (float) (0.5 * this.getDeltaMovement().lengthSqr()), p = (float) (0.9 + 0.2 * Math.random());
@@ -89,11 +115,13 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         this.stuck = true;
         this.setDeltaMovement(0, 0, 0);
         this.setPos(result.getLocation());
-        super.onHit(result);}
+        super.onHit(result);
+    }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
+        if (result.getEntity().equals(this.getOwner())) return;
         this.setStuckEntity(result.getEntity());
     }
 
