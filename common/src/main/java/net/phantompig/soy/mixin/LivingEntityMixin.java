@@ -1,9 +1,15 @@
 package net.phantompig.soy.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.BerserkAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
@@ -15,10 +21,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
+public abstract class LivingEntityMixin extends Entity {
+    private LivingEntityMixin(EntityType<?> entityType, Level level) {
+        super(entityType, level);
+    }
+
     @Shadow public abstract void setHealth(float health);
 
-    @Shadow public abstract boolean addEffect(MobEffectInstance effectInstance);
+    @Shadow public abstract ItemStack getItemBySlot(EquipmentSlot slot);
 
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
     public void soy$isPushable(CallbackInfoReturnable<Boolean> cir) {
@@ -49,5 +59,13 @@ public abstract class LivingEntityMixin {
                 cir.setReturnValue(true);
             }
         }
+    }
+
+    @ModifyExpressionValue(method = "travel", at = @At(value = "CONSTANT", args = "floatValue=0.91", ordinal = 1))
+    private float soy$reduceFrictionConstant(float original) {
+        if (this.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof OdmAttachableAddonArmorItem) {
+            return 0.96f;
+        }
+        return original;
     }
 }

@@ -8,8 +8,8 @@
   ],
   "scale": 7.5,
   "stats": {
-    "speed": 2,
-    "jump": 1.4,
+    "speed": 2.25,
+    "jump": 1.3,
     "extra_health": 20,
     "extra_armor": 30,
     "extra_attack_damage": 8,

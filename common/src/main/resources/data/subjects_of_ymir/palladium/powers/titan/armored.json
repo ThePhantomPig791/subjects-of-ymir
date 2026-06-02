@@ -121,7 +121,7 @@
       "type": "palladium:attribute_modifier",
       "hidden": true,
       "attribute": "palladium:fall_resistance",
-      "amount": 2.5,
+      "amount": 8,
       "operation": 1,
       "uuid": "03ed062a-73c1-2345-5367-abf1114aa03e"
     },
@@ -462,10 +462,10 @@
       "type": "subjects_of_ymir:climbing",
       "icon": "subjects_of_ymir:textures/icon/climbing.png",
       "title": {
-        "translate": "ability.text.subjects_of_ymir.climbing.title"
+        "translate": "ability.text.subjects_of_ymir.armored.climbing.title"
       },
       "description": {
-        "translate": "ability.text.subjects_of_ymir.climbing.description"
+        "translate": "ability.text.subjects_of_ymir.armored.climbing.description"
       },
       "hidden": false,
       "gui_position": [-1.5, -3],

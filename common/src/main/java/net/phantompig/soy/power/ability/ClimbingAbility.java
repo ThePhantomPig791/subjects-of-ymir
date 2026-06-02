@@ -38,7 +38,7 @@ public class ClimbingAbility extends Ability {
             } else if (entry.getProperty(WAS_CROUCHING)) {
                 entry.setUniqueProperty(WAS_CROUCHING, false);
                 setMovement(entity, entity.getLookAngle().lerp(new Vec3(0, 1, 0), 0.5).scale(entry.getProperty(STRENGTH)));
-                PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getEyeY(), entity.getZ(), 32, SoundEvents.BAT_TAKEOFF, SoundSource.PLAYERS, 2, (float) (0.7 + 0.2 * Math.random()));
+                PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getY(), entity.getZ(), 32, SoundEvents.BAT_TAKEOFF, SoundSource.PLAYERS, 2, (float) (0.7 + 0.2 * Math.random()));
             }
         }
     }

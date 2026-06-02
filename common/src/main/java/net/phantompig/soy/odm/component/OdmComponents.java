@@ -17,8 +17,8 @@ public class OdmComponents {
         register("blade_sheath", OdmSlot.SHEATH, 0, 6);
         register("blade_sheath_with_canister", OdmSlot.SHEATH, 1000, 6); // two gas canisters
         register("canister_sheath", OdmSlot.SHEATH, 2000, 0); // total four gas canisters
-        register("prototype_turbine", OdmSlot.TURBINE, 500, 0, new StrafeStrengthBuilder().forward(0.1f).up(0.05f).build()); // one canister
-        register("turbine_v2", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.2f).up(0.1f).backward(0).build());
+        register("prototype_turbine", OdmSlot.TURBINE, 500, 0, new StrafeStrengthBuilder().forward(0.02f).up(0.04f).build()); // one canister
+        register("turbine_v2", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.125f).forward(0.1f).backward(0.08f).up(0.11f).build());
     }
 
     public static void register(String name, OdmSlot slot, int gasCapacity, int bladeCapacity) {
