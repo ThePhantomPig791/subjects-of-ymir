@@ -39,6 +39,9 @@ public class OdmComponents {
         CreativeModeTabRegistry.addToTab(SoyItems.CreativeModeTabs.SOY, entries -> {
             ODM_ITEMS.forEach((str, item) -> {
                 entries.add(item.get());
+                if (item.get().max > 0) {
+                    entries.add(item.get().getDefaultInstance());
+                }
             });
         });
     }

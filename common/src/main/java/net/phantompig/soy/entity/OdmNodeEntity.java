@@ -63,14 +63,16 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             });
 
             // check still stuck
-            boolean newStuck = false;
-            for (VoxelShape shape : level().getCollisions(this, this.getBoundingBox().inflate(1))) {
-                if (!shape.isEmpty()) {
-                    newStuck = true;
-                    break;
+            if (!this.level().isClientSide()) {
+                boolean newStuck = false;
+                for (VoxelShape shape : level().getCollisions(this, this.getBoundingBox().inflate(1))) {
+                    if (!shape.isEmpty()) {
+                        newStuck = true;
+                        break;
+                    }
                 }
+                this.stuck = newStuck;
             }
-            this.stuck = newStuck;
         } else {
             if (!this.isNoGravity()) {
                 this.addDeltaMovement(new Vec3(0, -this.getGravity(), 0));
@@ -155,9 +157,8 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     public Vec3 getOwnerPosition(float partialTick) {
         var owner = this.getOwner();
         if (owner == null) return Vec3.ZERO;
-        float xRot = owner.getXRot();
         float yRot = owner instanceof LivingEntity living ? living.yBodyRot : owner.getYRot();
-        return owner.getPosition(partialTick).add(getRightOrLeftOffset(xRot, yRot, this.getRight()));
+        return owner.getPosition(partialTick).add(getRightOrLeftOffset(yRot, this.getRight()));
     }
 
     @Override
@@ -179,9 +180,9 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         compound.putBoolean("stuck", this.stuck);
     }
 
-    public Vec3 getRightOrLeftOffset(float xRot, float yRot, boolean rightHand) {
-        Vec3 offset = this.calculateViewVector(xRot, yRot); // only using this#calculateViewVector because it's private
-        offset = new Vec3(offset.z * (rightHand ? -1 : 1), 0, offset.x * (rightHand ? 1 : -1));
+    public Vec3 getRightOrLeftOffset(float yRot, boolean rightHand) {
+        Vec3 offset = this.calculateViewVector(0, yRot); // only using this#calculateViewVector because it's private
+        offset = new Vec3(offset.z * (rightHand ? -1 : 1), 0, offset.x * (rightHand ? 1 : -1)).normalize();
         return offset.scale(0.25).add(0, 0.65, 0);
     }
 }
