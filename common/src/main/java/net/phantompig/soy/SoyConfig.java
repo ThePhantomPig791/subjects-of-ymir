@@ -13,7 +13,6 @@ public class SoyConfig {
             CAN_INJECT_OTHERS = builder.define("general.canInjectOthers", true);
             builder.comment("Enables/disables dispensing raw iceburst from a dispenser.");
             CAN_DISPENSE_ICEBURST = builder.define("general.canDispenseIceburst", true);
-            builder.comment("Enables/disables experimental rope physics for ODM hooks.");
             return builder.build();
         }
 

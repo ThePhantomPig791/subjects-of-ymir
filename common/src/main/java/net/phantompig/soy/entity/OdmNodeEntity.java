@@ -65,7 +65,10 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             // check still stuck
             boolean newStuck = false;
             for (VoxelShape shape : level().getCollisions(this, this.getBoundingBox().inflate(1))) {
-                if (!shape.isEmpty()) newStuck = true;
+                if (!shape.isEmpty()) {
+                    newStuck = true;
+                    break;
+                }
             }
             this.stuck = newStuck;
         } else {
