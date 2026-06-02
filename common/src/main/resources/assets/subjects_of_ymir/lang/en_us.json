@@ -95,8 +95,8 @@
 
   "tooltip.subjects_of_ymir.spine": "%s's spine",
   "tooltip.subjects_of_ymir.emblem.survey_corps": "§bSurvey Corps§7 Emblem",
-  "tooltip.subjects_of_ymir.emblem.military_police": "§4Military Police§7 Emblem",
-  "tooltip.subjects_of_ymir.emblem.garrison": "§2Garrison§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.military_police": "§2Military Police§7 Emblem",
+  "tooltip.subjects_of_ymir.emblem.garrison": "§4Garrison§7 Emblem",
   "tooltip.subjects_of_ymir.emblem.cadet": "§8Cadet§7 Emblem",
 
   "tooltip.subjects_of_ymir.odm_attachable": "§dAllows for the attaching of Omni-Directional Mobility Gear components§r",
