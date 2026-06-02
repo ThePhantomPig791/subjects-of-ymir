@@ -18,6 +18,7 @@ public class SoyAbilities {
     public static final RegistrySupplier<Ability> HARDENING_ALL = ABILITIES.register("hardening_all", HardeningAllAbility::new);
     public static final RegistrySupplier<Ability> HARDENING_KNUCKLES = ABILITIES.register("hardening_knuckles", HardeningKnucklesAbility::new);
     public static final RegistrySupplier<Ability> HARDENING_HANDS = ABILITIES.register("hardening_hands", HardeningHandsAbility::new);
+    public static final RegistrySupplier<Ability> CLIMBING = ABILITIES.register("climbing", ClimbingAbility::new);
 
     public static final RegistrySupplier<Ability> BERSERK = ABILITIES.register("berserk", BerserkAbility::new);
 

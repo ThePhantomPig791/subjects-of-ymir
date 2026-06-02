@@ -200,6 +200,7 @@
   "ability.text.subjects_of_ymir.armored.shed.title": "Shed       ",
   "ability.text.subjects_of_ymir.armored.shed.description": "Intentionally shed your armor, increasing your Titan's movement speed at the cost of your attack damage and defense.",
   "ability.text.subjects_of_ymir.armored.hardening.title": "Hardening",
-  "ability.text.subjects_of_ymir.armored.hardening.description": "With enough practice, you can harden the skin around your Titan's knuckles to really pack your punches."
-
+  "ability.text.subjects_of_ymir.armored.hardening.description": "With enough practice, you can harden the skin around your Titan's knuckles to really pack your punches.",
+  "ability.text.subjects_of_ymir.armored.climbing.title": "Climbing",
+  "ability.text.subjects_of_ymir.armored.climbing.description": "You can claw into walls to hold on and jump off of them."
 }

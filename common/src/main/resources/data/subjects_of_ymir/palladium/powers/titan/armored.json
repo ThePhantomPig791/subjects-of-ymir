@@ -260,6 +260,7 @@
     },
     "shed_dummy": {
       "type": "palladium:dummy",
+      "icon": "subjects_of_ymir:textures/icon/shed.png",
       "title": {
         "translate": "ability.text.subjects_of_ymir.armored.shed.title"
       },
@@ -404,11 +405,11 @@
     "attribute_toughness_2": {
       "type": "palladium:attribute_modifier",
       "icon": "minecraft:textures/mob_effect/absorption.png",
-      "title": "+4 TOUGH",
+      "title": "+6 TOUGH",
       "hidden": false,
       "gui_position": [-1.75, -2],
       "attribute": "minecraft:generic.armor_toughness",
-      "amount": 4,
+      "amount": 6,
       "operation": 0,
       "uuid": "a42bc305-2aed-41fd-b60e-95ca8d3719fd",
       "conditions": {
@@ -432,11 +433,11 @@
     "attribute_toughness_3": {
       "type": "palladium:attribute_modifier",
       "icon": "minecraft:textures/mob_effect/absorption.png",
-      "title": "+4 TOUGH",
+      "title": "+8 TOUGH",
       "hidden": false,
       "gui_position": [-1, -2.5],
       "attribute": "minecraft:generic.armor_toughness",
-      "amount": 4,
+      "amount": 8,
       "operation": 0,
       "uuid": "a42bc305-3aed-41fd-b60e-95ca8d3719fd",
       "conditions": {
@@ -457,17 +458,23 @@
         ]
       }
     },
-    "attribute_toughness_4": {
-      "type": "palladium:attribute_modifier",
-      "icon": "minecraft:textures/mob_effect/absorption.png",
-      "title": "+4 TOUGH",
+    "climbing": {
+      "type": "subjects_of_ymir:climbing",
+      "icon": "subjects_of_ymir:textures/icon/climbing.png",
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.climbing.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.climbing.description"
+      },
       "hidden": false,
       "gui_position": [-1.5, -3],
-      "attribute": "minecraft:generic.armor_toughness",
-      "amount": 4,
-      "operation": 0,
-      "uuid": "a42bc305-4aed-41fd-b60e-95ca8d3719fd",
+      "list_index": 2,
+      "strength": 1.5,
       "conditions": {
+        "enabling": {
+          "type": "palladium:toggle"
+        },
         "unlocking": [
           {
             "type": "palladium:ability_unlocked",
