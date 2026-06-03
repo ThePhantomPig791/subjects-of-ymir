@@ -225,6 +225,41 @@
                     ]
 				}
 			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "minecraft:painting",
+					"weight": 1,
+					"functions": [
+						{
+							"function": "minecraft:set_nbt",
+							"tag": "{EntityTag:{variant:\"subjects_of_ymir:dina\"}}",
+							"conditions": []
+						}
+					]
+				},
+				{
+					"type": "minecraft:item",
+					"name": "minecraft:painting",
+					"weight": 1,
+					"functions": [
+						{
+							"function": "minecraft:set_nbt",
+							"tag": "{EntityTag:{variant:\"subjects_of_ymir:beginning\"}}",
+							"conditions": []
+						}
+					]
+				}
+			],
+			"conditions": [
+				{
+					"condition": "minecraft:random_chance",
+					"chance": 0.04
+				}
+			]
 		}
 	]
 }

@@ -11,6 +11,7 @@ import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.entity.SoyDamageTypeTags;
 import net.phantompig.soy.entity.SoyEntities;
+import net.phantompig.soy.entity.SoyPaintingVariants;
 import net.phantompig.soy.feature.SoyFeatures;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.item.SoyItems;
@@ -66,6 +67,7 @@ public class SubjectsOfYmir {
         SoyStats.init();
         SoyNetwork.init();
         SoyDamageSources.init();
+        SoyPaintingVariants.init();
 
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {

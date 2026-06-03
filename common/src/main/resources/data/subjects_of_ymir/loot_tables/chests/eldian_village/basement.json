@@ -136,6 +136,23 @@
             ]
         },
         {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:painting",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{EntityTag:{variant:\"subjects_of_ymir:devil\"}}",
+                            "conditions": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "rolls": 3,
             "entries": [
                 {
