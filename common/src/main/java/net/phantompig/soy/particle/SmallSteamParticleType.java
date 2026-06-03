@@ -1,24 +1,14 @@
 package net.phantompig.soy.particle;
 
-import com.mojang.blaze3d.vertex.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 
-public class SmallSteamParticleType extends TextureSheetParticle {
-    private final SpriteSet sprites;
-    private float deltaRoll;
-
+public class SmallSteamParticleType extends RollingParticle {
     SmallSteamParticleType(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
-        super(level, x, y, z);
-        this.sprites = sprites;
-        this.xd = xSpeed;
-        this.yd = ySpeed;
-        this.zd = zSpeed;
-        this.hasPhysics = true;
+        super(level, x, y, z, xSpeed, ySpeed, zSpeed, 1.02f, 0.8f, sprites);
         this.friction = 0.8f;
         this.gravity = -0.6f;
         this.lifetime = 24;
@@ -28,31 +18,6 @@ public class SmallSteamParticleType extends TextureSheetParticle {
         this.roll = 0.03f * direction;
         this.quadSize = 0.2f;
         this.scale(1.5f);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (!this.removed) {
-            this.setSpriteFromAge(sprites);
-
-            float t = (float) this.age / this.lifetime;
-            this.scale(1.02f);
-            this.setAlpha(1 - t);
-            this.oRoll = this.roll;
-            this.roll += deltaRoll;
-            deltaRoll *= 0.8f;
-        }
-    }
-
-    @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
-    }
-
-    @Override
-    public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
-        super.render(buffer, renderInfo, partialTicks);
     }
 
     @Environment(EnvType.CLIENT)

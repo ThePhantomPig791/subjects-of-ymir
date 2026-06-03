@@ -1,24 +1,14 @@
 package net.phantompig.soy.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 
-public class EmberParticleType extends TextureSheetParticle {
-    private final SpriteSet sprites;
-    private float deltaRoll;
-
+public class EmberParticleType extends RollingParticle {
     EmberParticleType(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
-        super(level, x, y, z);
-        this.sprites = sprites;
-        this.xd = xSpeed;
-        this.yd = ySpeed;
-        this.zd = zSpeed;
-        this.hasPhysics = true;
+        super(level, x, y, z, xSpeed, ySpeed, zSpeed, 0.99f, 0.95f, sprites);
         this.friction = 0.8f;
         this.gravity = -1;
         this.lifetime = 120;
@@ -55,11 +45,6 @@ public class EmberParticleType extends TextureSheetParticle {
     @Override
     protected int getLightColor(float partialTick) {
         return 15728880;
-    }
-
-    @Override
-    public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
-        super.render(buffer, renderInfo, partialTicks);
     }
 
     @Environment(EnvType.CLIENT)

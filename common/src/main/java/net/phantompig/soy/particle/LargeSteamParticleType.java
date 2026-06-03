@@ -8,17 +8,9 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 
-public class LargeSteamParticleType extends TextureSheetParticle {
-    private final SpriteSet sprites;
-    private float deltaRoll;
-
+public class LargeSteamParticleType extends RollingParticle {
     LargeSteamParticleType(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
-        super(level, x, y, z);
-        this.sprites = sprites;
-        this.xd = xSpeed;
-        this.yd = ySpeed;
-        this.zd = zSpeed;
-        this.hasPhysics = true;
+        super(level, x, y, z, xSpeed, ySpeed, zSpeed, 1.002f, 0.9f, sprites);
         this.friction = 0.99f;
         this.gravity = -0.4f;
         this.lifetime = 36;
@@ -26,34 +18,8 @@ public class LargeSteamParticleType extends TextureSheetParticle {
         final int direction = (this.random.nextBoolean() ? 1 : -1);
         this.deltaRoll = (float) (0.01 + this.random.nextFloat() * 0.01) * direction;
         this.roll = 0.02f * direction;
-        //this.quadSize = 10 * (this.random.nextFloat() * 2 + 0.5F) * 5 + 200;
         this.quadSize = 0.2f;
         this.scale(10f);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (!this.removed) {
-            this.setSpriteFromAge(sprites);
-
-            float t = (float) this.age / this.lifetime;
-            this.scale(1.002f);
-            this.setAlpha(1 - t);
-            this.oRoll = this.roll;
-            this.roll += deltaRoll;
-            deltaRoll *= 0.9f;
-        }
-    }
-
-    @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
-    }
-
-    @Override
-    public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
-        super.render(buffer, renderInfo, partialTicks);
     }
 
     @Environment(EnvType.CLIENT)
