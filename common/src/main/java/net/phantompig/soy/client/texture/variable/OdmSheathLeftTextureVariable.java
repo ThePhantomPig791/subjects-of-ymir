@@ -3,7 +3,7 @@ package net.phantompig.soy.client.texture.variable;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
@@ -16,8 +16,8 @@ import net.threetag.palladium.util.context.DataContext;
 public class OdmSheathLeftTextureVariable implements ITextureVariable {
     @Override
     public Object get(DataContext context) {
-        if (context.getEntity() instanceof Player player) {
-            ItemStack stack = player.getItemBySlot(EquipmentSlot.LEGS);
+        if (context.getEntity() instanceof LivingEntity living) {
+            ItemStack stack = living.getItemBySlot(EquipmentSlot.LEGS);
             if (stack.getItem() instanceof OdmAttachableAddonArmorItem item) {
                 if (item.getLeftSheath(stack).getItem() instanceof OdmComponentItem componentItem) {
                     return componentItem.odmComponent.name();

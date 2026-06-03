@@ -12,6 +12,7 @@ import net.phantompig.soy.client.animation.BiteAnimation;
 import net.phantompig.soy.client.animation.BlockAnimation;
 import net.phantompig.soy.client.animation.DaggerAnimation;
 import net.phantompig.soy.client.animation.modifier.TitanAttackSpeedModifier;
+import net.phantompig.soy.client.entity.FlareEntityRenderer;
 import net.phantompig.soy.client.entity.OdmNodeEntityRenderer;
 import net.phantompig.soy.client.entity.TitanCorpseEntityRenderer;
 import net.phantompig.soy.client.model.TitanCorpseModelLayer;
@@ -59,6 +60,7 @@ public class SubjectsOfYmirClient {
         EntityRendererRegistry.register(SoyEntities.TITAN_CORPSE, TitanCorpseEntityRenderer::new);
         EntityRendererRegistry.registerModelLayer(TitanCorpseModelLayer.TITAN_CORPSE_MODEL_LAYER_LOCATION, TitanCorpseModelLayer::createBodyLayer);
         EntityRendererRegistry.register(SoyEntities.ODM_NODE, OdmNodeEntityRenderer::new);
+        EntityRendererRegistry.register(SoyEntities.FLARE, FlareEntityRenderer::new);
 
         ParticleProviderRegistry.register(SoyParticles.SMALL_STEAM, SmallSteamParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.LARGE_STEAM, LargeSteamParticleType.Provider::new);

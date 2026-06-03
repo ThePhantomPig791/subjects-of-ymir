@@ -1,15 +1,21 @@
 package net.phantompig.soy.item;
 
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.decoration.Painting;
+import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlocks;
+import net.phantompig.soy.entity.SoyPaintingVariants;
 import net.phantompig.soy.odm.component.OdmComponents;
 import net.phantompig.soy.sound.SoySounds;
 import net.threetag.palladium.item.AddonArmorItem;
@@ -48,7 +54,7 @@ public class SoyItems {
     public static final RegistrySupplier<Item> HARDENING_BLOCK = ITEMS.register("hardening_block", () -> new BlockItem(SoyBlocks.HARDENING_BLOCK.get(), new Item.Properties()));
 
     public static final RegistrySupplier<Item> RAW_ULTRAHARD_STEEL = ITEMS.register("raw_ultrahard_steel", () -> new Item(new Item.Properties()));
-    public static final RegistrySupplier<Item> ULTRAHARD_STEEL_INGOT = ITEMS.register("ultrahard_steel_ingot", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistrySupplier<Item> ULTRAHARD_STEEL_INGOT = ITEMS.register("ultrahard_steel_ingot", () -> new Item(new Item.Properties()));
 
     public static final RegistrySupplier<Item> BLADE = ITEMS.register("blade", () -> new BladeItem(new Item.Properties().stacksTo(16)));
     public static final RegistrySupplier<Item> GAS_CANISTER = ITEMS.register("gas_canister", () -> new GasHoldingItem(new Item.Properties().stacksTo(1), 500));
@@ -162,6 +168,13 @@ public class SoyItems {
             entries.add(MUSIC_DISC_COUNTER_ATTACK_MANKIND.get());
             entries.add(MUSIC_DISC_CALL_OF_SILENCE.get());
             entries.add(MUSIC_DISC_BAUKLOTZE.get());
+            for (RegistrySupplier<PaintingVariant> reference : SoyPaintingVariants.PAINTING_VARIANTS.getEntries()) {
+                // ripped from the Painting / CreativeModeTabs classes
+                ItemStack itemStack = new ItemStack(Items.PAINTING);
+                CompoundTag compoundTag = itemStack.getOrCreateTagElement("EntityTag");
+                compoundTag.putString("variant", reference.getId().toString());
+                entries.add(itemStack);
+            }
         });
         OdmComponents.initCreativeMenu();
 
