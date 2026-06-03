@@ -54,10 +54,10 @@ public class SubjectsOfYmir {
         TitanPowerProvider.init();
         SoyProperties.init();
 
+        SoySounds.init();
         SoyBlocks.init();
         SoyItems.init();
         SoyEntities.init();
-        SoySounds.init();
         SoyBlockTags.init();
         SoyParticles.init();
         SoyMenus.init();

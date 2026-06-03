@@ -11,7 +11,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.odm.component.OdmComponents;
+import net.phantompig.soy.sound.SoySounds;
 import net.threetag.palladium.item.AddonArmorItem;
+import net.threetag.palladiumcore.item.PalladiumRecordItem;
 import net.threetag.palladiumcore.item.SimpleArmorMaterial;
 import net.threetag.palladiumcore.item.SimpleToolTier;
 import net.threetag.palladiumcore.registry.CreativeModeTabRegistry;
@@ -49,15 +51,18 @@ public class SoyItems {
     public static final RegistrySupplier<Item> ULTRAHARD_STEEL_INGOT = ITEMS.register("ultrahard_steel_ingot", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     public static final RegistrySupplier<Item> BLADE = ITEMS.register("blade", () -> new BladeItem(new Item.Properties().stacksTo(16)));
-
     public static final RegistrySupplier<Item> GAS_CANISTER = ITEMS.register("gas_canister", () -> new GasHoldingItem(new Item.Properties().stacksTo(1), 500));
-
 
     public static final RegistrySupplier<Item> ODM_HANDLE = ITEMS.register("odm_handle", () -> new OdmHandleItem(new Item.Properties().stacksTo(1)));
 
+    public static final RegistrySupplier<Item> MUSIC_DISC_YOUSEEBIGGIRL = ITEMS.register("music_disc_youseebiggirl", () -> new PalladiumRecordItem(5, SoySounds.MUSIC_DISC_YOUSEEBIGGIRL, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 359));
+    public static final RegistrySupplier<Item> MUSIC_DISC_TKT = ITEMS.register("music_disc_tkt", () -> new PalladiumRecordItem(5, SoySounds.MUSIC_DISC_TKT, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 175));
+    public static final RegistrySupplier<Item> MUSIC_DISC_COUNTER_ATTACK_MANKIND = ITEMS.register("music_disc_counter_attack_mankind", () -> new PalladiumRecordItem(5, SoySounds.MUSIC_DISC_COUNTER_ATTACK_MANKIND, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 366));
+    public static final RegistrySupplier<Item> MUSIC_DISC_CALL_OF_SILENCE = ITEMS.register("music_disc_call_of_silence", () -> new PalladiumRecordItem(5, SoySounds.MUSIC_DISC_CALL_OF_SILENCE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 178));
+    public static final RegistrySupplier<Item> MUSIC_DISC_BAUKLOTZE = ITEMS.register("music_disc_bauklotze", () -> new PalladiumRecordItem(5, SoySounds.MUSIC_DISC_BAUKLOTZE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 236));
 
-    private static final String[] UNIFORM_EMBLEMS = {"survey_corps", "military_police", "garrison", "cadet"};
-    private static final HashMap<ResourceLocation, RegistrySupplier<Item>> UNIFORMS = new HashMap<>();
+    public static final String[] UNIFORM_EMBLEMS = {"survey_corps", "military_police", "garrison", "cadet"};
+    public static final LinkedHashMap<ResourceLocation, RegistrySupplier<Item>> UNIFORMS = new LinkedHashMap<>();
 
 
 
@@ -133,6 +138,7 @@ public class SoyItems {
             entries.add(SPINE.get());
             entries.add(RIBCAGE.get());
             entries.add(BROKEN_SPINE.get());
+            entries.add(HARDENING_BLOCK.get());
             entries.add(RAW_ICEBURST.get());
             entries.add(ICEBURST_ORE.get());
             entries.add(DEEPSLATE_ICEBURST_ORE.get());
@@ -143,16 +149,19 @@ public class SoyItems {
             entries.add(IRON_BAMBOO_SWORD.get());
             entries.add(IRON_BAMBOO_DAGGER.get());
             entries.add(IRON_BAMBOO_RING.get());
+            entries.add(COMPRESSION_TABLE.get());
             entries.add(BLADE.get());
             entries.add(GAS_CANISTER.get());
             entries.add(GAS_CANISTER.get().getDefaultInstance());
-            entries.add(COMPRESSION_TABLE.get());
-            entries.add(HARDENING_BLOCK.get());
             entries.add(ODM_HANDLE.get());
-
             for (RegistrySupplier<Item> s : UNIFORMS.values()) {
                 entries.add(s.get());
             }
+            entries.add(MUSIC_DISC_YOUSEEBIGGIRL.get());
+            entries.add(MUSIC_DISC_TKT.get());
+            entries.add(MUSIC_DISC_COUNTER_ATTACK_MANKIND.get());
+            entries.add(MUSIC_DISC_CALL_OF_SILENCE.get());
+            entries.add(MUSIC_DISC_BAUKLOTZE.get());
         });
         OdmComponents.initCreativeMenu();
 

@@ -22,6 +22,12 @@ public class SoySounds {
     public static final RegistrySupplier<SoundEvent> HOOK_LAUNCH = make("hook_launch", 64);
     public static final RegistrySupplier<SoundEvent> HOOK_LAND = make("hook_land", 256);
 
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISC_YOUSEEBIGGIRL = make("music_disc.youseebiggirl", 256);
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISC_TKT = make("music_disc.tkt", 256);
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISC_COUNTER_ATTACK_MANKIND = make("music_disc.counter_attack_mankind", 256);
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISC_CALL_OF_SILENCE = make("music_disc.call_of_silence", 256);
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISC_BAUKLOTZE = make("music_disc.bauklotze", 256);
+
     public static RegistrySupplier<SoundEvent> make(String name, float range) {
         return SOUNDS.register(name, () -> new SoundEvent(SubjectsOfYmir.rsrc(name), range, false));
     }

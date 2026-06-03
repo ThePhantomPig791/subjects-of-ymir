@@ -1,0 +1,251 @@
+{
+    "type": "minecraft:chest",
+    "pools": [
+        {
+            "rolls": 4,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:iron_ingot",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1,
+                                "max": 5
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 3,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:diamond",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 2,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:gunpowder",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.6
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 2,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:experience_bottle",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 2,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:raw_ultrahard_steel",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:injection",
+                    "weight": 1
+                }
+            ]
+        },
+        {
+            "rolls": 3,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:vial",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{SpinalFluid:220}",
+                            "conditions": []
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:vial",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{SpinalFluid:200}",
+                            "conditions": []
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:vial",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{SpinalFluid:180}",
+                            "conditions": []
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:vial",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{SpinalFluid:140}",
+                            "conditions": []
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:vial",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{SpinalFluid:120}",
+                            "conditions": []
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:vial",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{SpinalFluid:50}",
+                            "conditions": []
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:vial"
+                }
+            ],
+            "functions": [
+                {
+                    "function": "minecraft:set_count",
+                    "count": {
+                        "type": "minecraft:uniform",
+                        "min": -2,
+                        "max": 1
+                    }
+                }
+            ],
+            "conditions": []
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:music_disc_youseebiggirl"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:music_disc_tkt"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:music_disc_counter_attack_mankind"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:music_disc_call_of_silence"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:music_disc_bauklotze"
+                }
+            ],
+            "conditions": []
+        }
+    ]
+}

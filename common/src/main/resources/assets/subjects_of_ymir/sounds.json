@@ -141,5 +141,46 @@
         "attenuation_distance": 256
       }
     ]
+  },
+
+  "music_disc.youseebiggirl": {
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:records/youseebiggirl",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.tkt": {
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:records/tkt",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.counter_attack_mankind": {
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:records/counter_attack_mankind",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.call_of_silence": {
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:records/call_of_silence",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.bauklotze": {
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:records/bauklotze",
+        "stream": true
+      }
+    ]
   }
 }

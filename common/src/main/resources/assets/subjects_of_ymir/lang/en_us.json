@@ -92,6 +92,17 @@
   "item.subjects_of_ymir.prototype_turbine": "Prototype Turbine",
   "item.subjects_of_ymir.turbine_v2": "Turbine V2",
 
+  "item.subjects_of_ymir.music_disc_youseebiggirl": "Music Disc",
+  "item.subjects_of_ymir.music_disc_youseebiggirl.desc": "Hiroyuki Sawano, Gemie - YouSeeBIGGIRL/T:T",
+  "item.subjects_of_ymir.music_disc_tkt": "Music Disc",
+  "item.subjects_of_ymir.music_disc_tkt.desc": "Hiroyuki Sawano - T-KT",
+  "item.subjects_of_ymir.music_disc_counter_attack_mankind": "Music Disc",
+  "item.subjects_of_ymir.music_disc_counter_attack_mankind.desc": "Hiroyuki Sawano - cóunter・attàck-mˈænkάɪnd",
+  "item.subjects_of_ymir.music_disc_call_of_silence": "Music Disc",
+  "item.subjects_of_ymir.music_disc_call_of_silence.desc": "Hiroyuki Sawano, Gemie - Call of Silence",
+  "item.subjects_of_ymir.music_disc_bauklotze": "Music Disc",
+  "item.subjects_of_ymir.music_disc_bauklotze.desc": "Hiroyuki Sawano, Mika Kobayashi - Bauklötze",
+
 
   "tooltip.subjects_of_ymir.spine": "%s's spine",
   "tooltip.subjects_of_ymir.emblem.survey_corps": "§bSurvey Corps§7 Emblem",

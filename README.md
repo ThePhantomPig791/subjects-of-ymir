@@ -16,3 +16,9 @@ Textures and Models: Mostly sugar04k (discord) (the good-looking ones are his)
 - The Electricity Sound That Comes Before The Transformation: https://www.youtube.com/watch?v=9X45Wu3ccMg
 - ODM Click Sound: https://www.youtube.com/watch?v=dBJUIYv52Xw
 - ODM Hook Sounds: https://www.youtube.com/watch?v=__53poQEaPo and https://www.youtube.com/watch?v=RuGmLsFmKWI
+
+- YouSeeBIGGIRL/T:T Music Disc: https://www.youtube.com/watch?v=vy63u2hKoPE
+- T-KT Music Disc: https://www.youtube.com/watch?v=vp8tjpLAEfA
+- cóunter・attàck-mˈænkάɪnd Music Disc: https://www.youtube.com/watch?v=icSrzREkNJM
+- Call of Silence Music Disc: https://www.youtube.com/watch?v=B-1ZzOp0UUA
+- Bauklötze Music Disc: https://www.youtube.com/watch?v=qKK-GVTxqow
