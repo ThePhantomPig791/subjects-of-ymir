@@ -21,6 +21,11 @@ public class SoyEntities {
             () -> EntityType.Builder.of(OdmNodeEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).updateInterval(1).clientTrackingRange(64).build("odm_node")
     );
 
+    public static RegistrySupplier<EntityType<FlareEntity>> FLARE = ENTITY_TYPES.register(
+            "flare",
+            () -> EntityType.Builder.of(FlareEntity::new, MobCategory.MISC).sized(1, 1).updateInterval(10).clientTrackingRange(512).build("flare")
+    );
+
     public static void init() {
         ENTITY_TYPES.register();
 
