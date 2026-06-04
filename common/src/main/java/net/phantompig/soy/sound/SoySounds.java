@@ -25,6 +25,7 @@ public class SoySounds {
     public static final RegistrySupplier<SoundEvent> FLARE_SCREECH = make("flare_screech", 512);
 
     public static final RegistrySupplier<SoundEvent> MUSIC_DISC_YOUSEEBIGGIRL = make("music_disc.youseebiggirl", 256);
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISC_SPLINTER_WOLF = make("music_disc.splinter_wolf", 256);
     public static final RegistrySupplier<SoundEvent> MUSIC_DISC_TKT = make("music_disc.tkt", 256);
     public static final RegistrySupplier<SoundEvent> MUSIC_DISC_COUNTER_ATTACK_MANKIND = make("music_disc.counter_attack_mankind", 256);
     public static final RegistrySupplier<SoundEvent> MUSIC_DISC_CALL_OF_SILENCE = make("music_disc.call_of_silence", 256);

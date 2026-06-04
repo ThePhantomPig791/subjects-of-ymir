@@ -23,6 +23,7 @@ Textures and Models: Mostly sugar04k (discord) (anything that looks good and isn
 - Flare Sounds: https://www.youtube.com/watch?v=Q_vggboHDwE
 
 - YouSeeBIGGIRL/T:T Music Disc: https://www.youtube.com/watch?v=vy63u2hKoPE
+- Splinter Wolf Music Disc: https://www.youtube.com/watch?v=p3MivL4Fyk8
 - T-KT Music Disc: https://www.youtube.com/watch?v=vp8tjpLAEfA
 - cóunter・attàck-mˈænkάɪnd Music Disc: https://www.youtube.com/watch?v=icSrzREkNJM
 - Call of Silence Music Disc: https://www.youtube.com/watch?v=B-1ZzOp0UUA

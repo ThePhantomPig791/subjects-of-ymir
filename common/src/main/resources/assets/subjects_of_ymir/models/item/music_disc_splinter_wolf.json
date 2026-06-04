@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "subjects_of_ymir:item/music_disc_splinter_wolf"
+	}
+}

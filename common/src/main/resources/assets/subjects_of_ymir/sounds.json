@@ -171,6 +171,14 @@
       }
     ]
   },
+  "music_disc.splinter_wolf": {
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:records/splinter_wolf",
+        "stream": true
+      }
+    ]
+  },
   "music_disc.tkt": {
     "sounds": [
       {

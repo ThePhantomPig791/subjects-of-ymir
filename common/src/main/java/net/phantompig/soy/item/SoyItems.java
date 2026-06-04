@@ -59,6 +59,7 @@ public class SoyItems {
     public static final RegistrySupplier<Item> ODM_HANDLE = ITEMS.register("odm_handle", () -> new OdmHandleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistrySupplier<Item> MUSIC_DISC_YOUSEEBIGGIRL = ITEMS.register("music_disc_youseebiggirl", () -> new PalladiumRecordItem(5, SoySounds.MUSIC_DISC_YOUSEEBIGGIRL, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 359));
+    public static final RegistrySupplier<Item> MUSIC_DISC_SPLINTER_WOLF = ITEMS.register("music_disc_splinter_wolf", () -> new PalladiumRecordItem(3, SoySounds.MUSIC_DISC_SPLINTER_WOLF, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 321));
     public static final RegistrySupplier<Item> MUSIC_DISC_TKT = ITEMS.register("music_disc_tkt", () -> new PalladiumRecordItem(7, SoySounds.MUSIC_DISC_TKT, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 175));
     public static final RegistrySupplier<Item> MUSIC_DISC_COUNTER_ATTACK_MANKIND = ITEMS.register("music_disc_counter_attack_mankind", () -> new PalladiumRecordItem(15, SoySounds.MUSIC_DISC_COUNTER_ATTACK_MANKIND, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 366));
     public static final RegistrySupplier<Item> MUSIC_DISC_CALL_OF_SILENCE = ITEMS.register("music_disc_call_of_silence", () -> new PalladiumRecordItem(1, SoySounds.MUSIC_DISC_CALL_OF_SILENCE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 178));
@@ -167,6 +168,7 @@ public class SoyItems {
             entries.add(FLARE_GUN.get());
             entries.add(FLARE_CARTRIDGE.get());
             entries.add(MUSIC_DISC_YOUSEEBIGGIRL.get());
+            entries.add(MUSIC_DISC_SPLINTER_WOLF.get());
             entries.add(MUSIC_DISC_TKT.get());
             entries.add(MUSIC_DISC_COUNTER_ATTACK_MANKIND.get());
             entries.add(MUSIC_DISC_CALL_OF_SILENCE.get());

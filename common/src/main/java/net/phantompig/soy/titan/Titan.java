@@ -101,6 +101,7 @@ public class Titan {
 
         entity.extinguishFire();
         entity.removeAllEffects();
+        entity.resetFallDistance();
 
         if (entity instanceof Player player) {
             ext.getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
