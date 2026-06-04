@@ -56,20 +56,6 @@ public class CompressionRecipe implements Recipe<CompressionMenu.CompressionInpu
         }
 
         return unaccountedStacks.isEmpty() && unaccountedIngredients.isEmpty();
-
-
-        /* StackedContents stackedContents = new StackedContents();
-        for (int j = 0; j < container.getContainerSize(); ++j) {
-            ItemStack itemStack = container.getItem(j);
-            if (!itemStack.isEmpty()) {
-                for (Ingredient ingredient : ingredients) {
-                    if (!ingredient.isEmpty() && !ingredient.test(itemStack)) return false;
-                }
-                stackedContents.accountStack(itemStack, 1);
-            }
-        }
-
-        return stackedContents.canCraft(this, null);*/
     }
 
     @Override
