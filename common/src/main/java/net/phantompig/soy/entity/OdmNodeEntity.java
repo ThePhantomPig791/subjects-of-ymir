@@ -56,18 +56,17 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             }
             double distanceScale = this.position().distanceTo(owner.position());
             distanceScale = distanceScale / (distanceScale + 10);
-            owner.addDeltaMovement(this.position().subtract(owner.position()).normalize().scale(0.7 * distanceScale));
-
-            // stay stuck to entity
-            this.getStuckEntity().ifPresent(e -> {
-                if (e.isRemoved()) this.setStuckEntity(null);
-                else this.setPos(e.position().add(this.getStuckOffset()));
-            });
+            Optional<Entity> stuckEntity = this.getStuckEntity();
+            if (stuckEntity.isPresent() && owner.isCrouching() && owner.onGround() && !stuckEntity.get().isCrouching()) {
+                stuckEntity.get().addDeltaMovement(owner.position().subtract(stuckEntity.get().position()).normalize().scale(distanceScale / stuckEntity.get().getBoundingBox().getYsize()));
+            } else {
+                owner.addDeltaMovement(this.position().subtract(owner.position()).normalize().scale(0.7 * distanceScale));
+            }
 
             // check still stuck
             if (!this.level().isClientSide()) {
                 boolean newStuck = false;
-                for (VoxelShape shape : level().getCollisions(this, this.getBoundingBox().inflate(1))) {
+                for (VoxelShape shape : level().getBlockCollisions(this, this.getBoundingBox().inflate(1))) {
                     if (!shape.isEmpty()) {
                         newStuck = true;
                         break;
@@ -75,6 +74,17 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
                 }
                 this.stuck = newStuck;
             }
+
+            // stay stuck to entity
+            this.getStuckEntity().ifPresent(e -> {
+                if (e.isRemoved()) {
+                    this.setStuckEntity(null);
+                    this.stuck = false;
+                } else {
+                    this.setPos(e.position().add(this.getStuckOffset()));
+                    this.stuck = true;
+                }
+            });
         } else {
             if (!this.isNoGravity()) {
                 this.addDeltaMovement(new Vec3(0, -this.getGravity(), 0));

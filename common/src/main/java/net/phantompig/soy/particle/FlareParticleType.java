@@ -12,7 +12,7 @@ public class FlareParticleType extends RollingParticle {
     FlareParticleType(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, Vector3f color, float scale, SpriteSet sprites) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed, 1.0005f, 0.92f, sprites);
         this.friction = 0.99f;
-        this.gravity = 0;
+        this.gravity = -0.001f;
         this.lifetime = 3600;
         this.setSpriteFromAge(sprites);
         final int direction = (this.random.nextBoolean() ? 1 : -1);

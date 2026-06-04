@@ -25,12 +25,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.entity.FlareEntity;
 import net.phantompig.soy.entity.SoyEntities;
+import net.phantompig.soy.particle.FlareParticleOptions;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.sound.SoySounds;
 import net.threetag.palladium.util.PlayerUtil;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
-import java.awt.*;
 import java.util.List;
 
 public class FlareGunItem extends Item {
@@ -46,20 +47,35 @@ public class FlareGunItem extends Item {
         final float pitch = (float) (0.85 + 0.15 * Math.random());
         PlayerUtil.playSoundToAll(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 512, SoySounds.FLARE_SHOOT.get(), SoundSource.PLAYERS, 2, pitch);
 
-        ItemStack flareStack = this.getFlareCartridge(stack);
-        if (flareStack.isEmpty()) return;
+        ItemStack cartridgeStack = this.getFlareCartridge(stack);
+        if (cartridgeStack.isEmpty()) return;
 
-        if (flareStack.getItem() instanceof FlareCartridgeItem cartridgeItem && cartridgeItem.hasColor(flareStack)) {
+        if (cartridgeStack.getItem() instanceof FlareCartridgeItem cartridgeItem && cartridgeItem.hasColor(cartridgeStack)) {
             FlareEntity flareEntity = new FlareEntity(SoyEntities.FLARE.get(), level);
             flareEntity.setPos(livingEntity.getEyePosition());
             flareEntity.shootFromRotation(livingEntity, livingEntity.getXRot(), livingEntity.getYRot(), 0, 12, 15 - Math.min(15, 0.25f * (this.getUseDuration(stack) - timeCharged)));
-            flareEntity.setColor(new Color(cartridgeItem.getColor(flareStack)));
+            int color = cartridgeItem.getColor(cartridgeStack);
+            flareEntity.setColor(color);
             level.addFreshEntity(flareEntity);
 
             Vec3 out = livingEntity.position().add(lookAngle.scale(45));
             PlayerUtil.playSoundToAll(level, out.x, out.y, out.z, 512, SoySounds.FLARE_SCREECH.get(), SoundSource.PLAYERS, 2, pitch);
             out = out.add(lookAngle.scale(30));
             PlayerUtil.playSoundToAll(level, out.x, out.y, out.z, 512, SoySounds.FLARE_SCREECH.get(), SoundSource.PLAYERS, 2, pitch);
+
+            PlayerUtil.spawnParticleForAll(level,
+                    64,
+                    new FlareParticleOptions(new Vector3f((color >> 16) & 0xFF, (color >> 8) & 0xFF, (color) & 0xFF).mul(255), 0.05f),
+                    false,
+                    livingEntity.getX(),
+                    livingEntity.getEyeY(),
+                    livingEntity.getZ(),
+                    0.1f,
+                    0.05f,
+                    0.1f,
+                    0.02f,
+                    8
+            );
         }
 
         livingEntity.addDeltaMovement(lookAngle.scale(-0.1));
