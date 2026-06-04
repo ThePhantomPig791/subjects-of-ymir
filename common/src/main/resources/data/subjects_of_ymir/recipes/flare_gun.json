@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "L": {
+            "item": "minecraft:leather"
+        },
+        "B": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        },
+        "N": {
+            "item": "minecraft:iron_nugget"
+        }
+    },
+    "pattern": [
+        "BN",
+        " L"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:flare_gun"
+    }
+}

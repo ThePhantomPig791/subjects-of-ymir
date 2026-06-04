@@ -1,0 +1,38 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "subjects_of_ymir:item/flare_gun_loaded_overlay",
+        "layer1": "subjects_of_ymir:item/flare_gun_loaded"
+    },
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [0, -90, 0],
+            "translation": [0, 0.5, -0.25],
+            "scale": [0.5, 0.5, 0.5]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [0, 90, 0],
+            "translation": [0, 0.5, -0.25],
+            "scale": [0.5, 0.5, 0.5]
+        },
+        "firstperson_righthand": {
+            "rotation": [0, -90, 0],
+            "translation": [0, 2, 1.25]
+        },
+        "firstperson_lefthand": {
+            "rotation": [0, 90, 0],
+            "translation": [0, 2, 1.25]
+        },
+        "ground": {
+            "rotation": [90, 0, 0],
+            "translation": [0, -2.75, 0]
+        },
+        "head": {
+            "rotation": [0, -90, 0],
+            "translation": [1.5, 3.5, -6.5]
+        },
+        "fixed": {
+            "rotation": [0, 180, 0]
+        }
+    }
+}

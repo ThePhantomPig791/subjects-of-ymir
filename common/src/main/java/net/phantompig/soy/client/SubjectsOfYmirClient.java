@@ -22,12 +22,15 @@ import net.phantompig.soy.client.screen.overlay.SoyOverlays;
 import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.DataHoldingItem;
+import net.phantompig.soy.item.FlareCartridgeItem;
+import net.phantompig.soy.item.FlareGunItem;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.particle.*;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
 import net.threetag.palladium.event.PalladiumClientEvents;
 import net.threetag.palladium.util.SplashTextUtil;
+import net.threetag.palladiumcore.registry.client.ColorHandlerRegistry;
 import net.threetag.palladiumcore.registry.client.EntityRendererRegistry;
 import net.threetag.palladiumcore.registry.client.OverlayRegistry;
 import net.threetag.palladiumcore.registry.client.ParticleProviderRegistry;
@@ -66,9 +69,21 @@ public class SubjectsOfYmirClient {
         ParticleProviderRegistry.register(SoyParticles.LARGE_STEAM, LargeSteamParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.EMBER, EmberParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.DIRT_CLOUD, DirtCloudParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.FLARE, FlareParticleType.Provider::new);
 
         ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
         ItemProperties.register(SoyItems.VIAL.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
+        ItemProperties.register(SoyItems.FLARE_GUN.get(), SubjectsOfYmir.rsrc("flare_gun"), (itemStack, clientLevel, livingEntity, i) -> itemStack.getItem() instanceof FlareGunItem flareGunItem && !flareGunItem.getFlareCartridge(itemStack).isEmpty() ? 1 : 0);
+
+        ColorHandlerRegistry.registerItemColors((stack, i) -> {
+            if (i > 0) return -1;
+            else {
+                ItemStack cartridge = ((FlareGunItem) stack.getItem()).getFlareCartridge(stack);
+                if (cartridge.isEmpty()) return -1;
+                return ((FlareCartridgeItem) cartridge.getItem()).getColor(cartridge);
+            }
+        }, SoyItems.FLARE_GUN);
+        ColorHandlerRegistry.registerItemColors((stack, i) -> i > 0 ? -1 : ((FlareCartridgeItem) stack.getItem()).getColor(stack), SoyItems.FLARE_CARTRIDGE);
 
         PlayerAnimationAccess.REGISTER_ANIMATION_EVENT.register((player, animationStack) -> {
             ModifierLayer<IAnimation> layer = new ModifierLayer<>();

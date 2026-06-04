@@ -143,6 +143,26 @@
     ]
   },
 
+  "flare_shoot": {
+    "category": "player",
+    "subtitle": "subtitle.subjects_of_ymir.flare_shoot",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:flare_shoot",
+        "attenuation_distance": 512
+      }
+    ]
+  },
+  "flare_screech": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:flare_screech",
+        "attenuation_distance": 512
+      }
+    ]
+  },
+
   "music_disc.youseebiggirl": {
     "sounds": [
       {

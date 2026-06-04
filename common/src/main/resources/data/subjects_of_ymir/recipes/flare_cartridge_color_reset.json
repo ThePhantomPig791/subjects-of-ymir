@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "subjects_of_ymir:flare_cartridge"
+        }
+    ],
+    "result": {
+        "item": "subjects_of_ymir:flare_cartridge"
+    }
+}

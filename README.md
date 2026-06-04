@@ -9,15 +9,18 @@ Please also look at the example pack!!!
 5. Create `<variant>.png`, `<variant>_hair.png` and `<variant>_eyes.png` in `assets/<namespace>/textures/icon/titan_face/<titan>/` for each variant.
 
 ## Credits:
-Textures and Models: Mostly sugar04k (discord) (the good-looking ones are his)
+Textures and Models: Mostly sugar04k (discord) (anything that looks good and isn't listed below is from him)
 
 - Devil Painting: https://attackontitan.fandom.com/wiki/Devil_of_All_Earth_(Anime)?file=Ymir_Fritz_and_the_Devil_of_All_Earth.png
+- Dina Painting: https://attackontitan.fandom.com/wiki/Devil_of_All_Earth_(Anime)?file=Dina_Fritz_%28Anime%29_character_image_%28Titan%29.png
+- Beginning (tree) Painting: https://www.reddit.com/r/attackontitan/comments/18v73ej/comment/kfrtjmb/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 
 
 - Transformation Sound: https://www.youtube.com/watch?v=LOEVrye7QDA
 - The Electricity Sound That Comes Before The Transformation: https://www.youtube.com/watch?v=9X45Wu3ccMg
 - ODM Click Sound: https://www.youtube.com/watch?v=dBJUIYv52Xw
 - ODM Hook Sounds: https://www.youtube.com/watch?v=__53poQEaPo and https://www.youtube.com/watch?v=RuGmLsFmKWI
+- Flare Sounds: https://www.youtube.com/watch?v=Q_vggboHDwE
 
 - YouSeeBIGGIRL/T:T Music Disc: https://www.youtube.com/watch?v=vy63u2hKoPE
 - T-KT Music Disc: https://www.youtube.com/watch?v=vp8tjpLAEfA

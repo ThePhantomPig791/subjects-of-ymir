@@ -1,5 +1,6 @@
 package net.phantompig.soy.particle;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
@@ -14,6 +15,12 @@ public class SoyParticles {
     public static final RegistrySupplier<ParticleType<SimpleParticleType>> LARGE_STEAM = PARTICLE_TYPES.register("large_steam", () -> new SimpleParticleType(false));
     public static final RegistrySupplier<ParticleType<SimpleParticleType>> EMBER = PARTICLE_TYPES.register("ember", () -> new SimpleParticleType(false));
     public static final RegistrySupplier<ParticleType<SimpleParticleType>> DIRT_CLOUD = PARTICLE_TYPES.register("dirt_cloud", () -> new SimpleParticleType(false));
+    public static final RegistrySupplier<ParticleType<FlareParticleOptions>> FLARE = PARTICLE_TYPES.register("flare", () -> new ParticleType<FlareParticleOptions>(true, FlareParticleOptions.DESERIALIZER) {
+        @Override
+        public Codec<FlareParticleOptions> codec() {
+            return FlareParticleOptions.CODEC;
+        }
+    });
 
     public static void init() {
         PARTICLE_TYPES.register();

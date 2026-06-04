@@ -64,6 +64,9 @@ public class SoyItems {
     public static final RegistrySupplier<Item> MUSIC_DISC_CALL_OF_SILENCE = ITEMS.register("music_disc_call_of_silence", () -> new PalladiumRecordItem(1, SoySounds.MUSIC_DISC_CALL_OF_SILENCE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 178));
     public static final RegistrySupplier<Item> MUSIC_DISC_BAUKLOTZE = ITEMS.register("music_disc_bauklotze", () -> new PalladiumRecordItem(13, SoySounds.MUSIC_DISC_BAUKLOTZE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 236));
 
+    public static final RegistrySupplier<Item> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Item.Properties().durability(256)));
+    public static final RegistrySupplier<Item> FLARE_CARTRIDGE = ITEMS.register("flare_cartridge", () -> new FlareCartridgeItem(new Item.Properties().stacksTo(16)));
+
     public static final String[] UNIFORM_EMBLEMS = {"survey_corps", "military_police", "garrison", "cadet"};
     public static final LinkedHashMap<ResourceLocation, RegistrySupplier<Item>> UNIFORMS = new LinkedHashMap<>();
 
@@ -157,23 +160,24 @@ public class SoyItems {
             entries.add(GAS_CANISTER.get());
             entries.add(GAS_CANISTER.get().getDefaultInstance());
             entries.add(ODM_HANDLE.get());
+            OdmComponents.initCreativeMenu(entries);
             for (RegistrySupplier<Item> s : UNIFORMS.values()) {
                 entries.add(s.get());
             }
+            entries.add(FLARE_GUN.get());
+            entries.add(FLARE_CARTRIDGE.get());
             entries.add(MUSIC_DISC_YOUSEEBIGGIRL.get());
             entries.add(MUSIC_DISC_TKT.get());
             entries.add(MUSIC_DISC_COUNTER_ATTACK_MANKIND.get());
             entries.add(MUSIC_DISC_CALL_OF_SILENCE.get());
             entries.add(MUSIC_DISC_BAUKLOTZE.get());
             for (RegistrySupplier<PaintingVariant> reference : SoyPaintingVariants.PAINTING_VARIANTS.getEntries()) {
-                // ripped from the Painting / CreativeModeTabs classes
                 ItemStack itemStack = new ItemStack(Items.PAINTING);
                 CompoundTag compoundTag = itemStack.getOrCreateTagElement("EntityTag");
                 compoundTag.putString("variant", reference.getId().toString());
                 entries.add(itemStack);
             }
         });
-        OdmComponents.initCreativeMenu();
 
         SoyItemTags.init();
     }

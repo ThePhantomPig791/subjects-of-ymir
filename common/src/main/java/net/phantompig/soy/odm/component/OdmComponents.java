@@ -2,7 +2,6 @@ package net.phantompig.soy.odm.component;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
-import net.phantompig.soy.item.SoyItems;
 import net.threetag.palladiumcore.registry.CreativeModeTabRegistry;
 import net.threetag.palladiumcore.registry.DeferredRegister;
 import net.threetag.palladiumcore.registry.RegistrySupplier;
@@ -36,14 +35,12 @@ public class OdmComponents {
         });
     }
 
-    public static void initCreativeMenu() {
-        CreativeModeTabRegistry.addToTab(SoyItems.CreativeModeTabs.SOY, entries -> {
-            ODM_ITEMS.forEach((str, item) -> {
-                entries.add(item.get());
-                if (item.get().max > 0) {
-                    entries.add(item.get().getDefaultInstance());
-                }
-            });
+    public static void initCreativeMenu(CreativeModeTabRegistry.ItemGroupEntries entries) {
+        ODM_ITEMS.forEach((str, item) -> {
+            entries.add(item.get());
+            if (item.get().max > 0) {
+                entries.add(item.get().getDefaultInstance());
+            }
         });
     }
 

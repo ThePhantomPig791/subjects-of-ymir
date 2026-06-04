@@ -183,6 +183,10 @@
     ]
   ],
   "rewards": {
-    "experience": 30
+    "experience": 30,
+    "recipes": [
+      "subjects_of_ymir:flare_gun",
+      "subjects_of_ymir:flare_cartridge"
+    ]
   }
 }
