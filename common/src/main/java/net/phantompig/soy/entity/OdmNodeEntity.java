@@ -210,14 +210,14 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.stuck = compound.getBoolean("Stuck");
-        this.stuckEntityUuid = compound.getUUID("StuckEntityUuid");
+        if (compound.contains("StuckEntityUuid")) this.stuckEntityUuid = compound.getUUID("StuckEntityUuid");
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("Stuck", this.stuck);
-        compound.putUUID("StuckEntityUuid", this.stuckEntityUuid);
+        if (this.stuckEntityUuid != null) compound.putUUID("StuckEntityUuid", this.stuckEntityUuid);
     }
 
     public Vec3 getRightOrLeftOffset(float yRot, boolean rightHand) {
