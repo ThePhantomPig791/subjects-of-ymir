@@ -1,0 +1,41 @@
+package net.phantompig.soy.mixin.client;
+
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(GameRenderer.class)
+public abstract class GameRendererMixin {
+    @Unique private static final Vec3 soy$UP = new Vec3(0, 1, 0);
+
+    @Shadow @Final private Minecraft minecraft;
+
+    @Unique
+    private double soy$cameraTilt = 0;
+
+    @Inject(method = "renderLevel", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
+    public void renderLevel(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo ci, @Local(ordinal = 1) PoseStack poseStack2) {
+        if (this.minecraft.player != null && !this.minecraft.player.onGround() && this.minecraft.player.getDeltaMovement().lengthSqr() > 0.01 && this.minecraft.player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof OdmAttachableAddonArmorItem) {
+            this.soy$cameraTilt += this.minecraft.player.getDeltaMovement().dot(this.minecraft.player.getLookAngle().cross(soy$UP));
+            this.soy$cameraTilt /= 1.4;
+        } else if (this.soy$cameraTilt != 0) {
+            this.soy$cameraTilt *= 0.99;
+            if (this.soy$cameraTilt < 0.001) this.soy$cameraTilt = 0;
+        }
+        if (this.soy$cameraTilt != 0) {
+            poseStack2.mulPose(Axis.ZP.rotationDegrees((float) this.soy$cameraTilt));
+        }
+    }
+}
