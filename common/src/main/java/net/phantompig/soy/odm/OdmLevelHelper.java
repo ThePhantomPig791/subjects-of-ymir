@@ -31,6 +31,7 @@ public class OdmLevelHelper {
         return Optional.empty();
     }
     public static void removeNode(Level level, UUID uuid) {
+        if (uuid == null) return;
         if (level instanceof ServerLevel sl) {
             var entity = sl.getEntity(uuid);
             if (entity != null) entity.discard();

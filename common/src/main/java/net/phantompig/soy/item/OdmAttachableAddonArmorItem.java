@@ -258,27 +258,27 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
     }
 
     public boolean hasShotLeftHook(ItemStack stack) {
-        return !stack.getOrCreateTag().contains("LeftHookUUID");
+        return stack.getOrCreateTag().contains("LeftHookUUID");
     }
     public UUID getLeftHook(ItemStack stack) {
-        if (hasShotLeftHook(stack)) return null;
+        if (!hasShotLeftHook(stack)) return null;
         return stack.getOrCreateTag().getUUID("LeftHookUUID");
     }
     public void setLeftHook(ItemStack stack, UUID uuid) {
-        stack.getOrCreateTag().putUUID("LeftHookUUID", uuid);
+        if (uuid != null) stack.getOrCreateTag().putUUID("LeftHookUUID", uuid);
     }
     public void removeLeftHook(ItemStack stack) {
         stack.getOrCreateTag().remove("LeftHookUUID");
     }
     public boolean hasShotRightHook(ItemStack stack) {
-        return !stack.getOrCreateTag().contains("RightHookUUID");
+        return stack.getOrCreateTag().contains("RightHookUUID");
     }
     public UUID getRightHook(ItemStack stack) {
-        if (hasShotRightHook(stack)) return null;
+        if (!hasShotRightHook(stack)) return null;
         return stack.getOrCreateTag().getUUID("RightHookUUID");
     }
     public void setRightHook(ItemStack stack, UUID uuid) {
-        stack.getOrCreateTag().putUUID("RightHookUUID", uuid);
+        if (uuid != null) stack.getOrCreateTag().putUUID("RightHookUUID", uuid);
     }
     public void removeRightHook(ItemStack stack) {
         stack.getOrCreateTag().remove("RightHookUUID");
