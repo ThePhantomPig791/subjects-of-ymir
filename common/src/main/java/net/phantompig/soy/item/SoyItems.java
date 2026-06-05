@@ -103,7 +103,7 @@ public class SoyItems {
     public static class ArmorMaterials {
         public static final ArmorMaterial UNIFORM = new SimpleArmorMaterial(
             "uniform",
-            8,
+            12,
             Util.make(new EnumMap(ArmorItem.Type.class), (enumMap) -> {
                 enumMap.put(ArmorItem.Type.BOOTS, 3);
                 enumMap.put(ArmorItem.Type.LEGGINGS, 4);

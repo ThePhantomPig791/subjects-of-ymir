@@ -18,6 +18,7 @@
     "ExplosionMixin",
     "FoodDataMixin",
     "ItemEntityMixin",
+    "ItemStackMixin",
     "LivingEntityMixin",
     "PlayerMixin",
     "ServerPlayerMixin",
