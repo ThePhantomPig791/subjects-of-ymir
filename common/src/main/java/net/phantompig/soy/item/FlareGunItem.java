@@ -94,6 +94,13 @@ public class FlareGunItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack itemStack = player.getItemInHand(usedHand);
         if (this.getFlareCartridge(itemStack).isEmpty()) {
+            ItemStack otherStack = player.getItemInHand(usedHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+            if (otherStack.getItem() instanceof FlareCartridgeItem) {
+                insertFlare(itemStack, otherStack, player);
+                return InteractionResultHolder.consume(itemStack);
+            }
+        }
+        if (this.getFlareCartridge(itemStack).isEmpty()) {
             return InteractionResultHolder.fail(itemStack);
         } else {
             player.startUsingItem(usedHand);
@@ -114,14 +121,18 @@ public class FlareGunItem extends Item {
                 }
             } else {
                 if (other.getItem() instanceof FlareCartridgeItem && storedCartridge.isEmpty()) {
-                    this.setFlareCartridge(stack, other.copyWithCount(1));
-                    other.shrink(1);
-                    playInsertSound(player, 1.6f);
+                    insertFlare(stack, other, player);
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private void insertFlare(ItemStack gunStack, ItemStack flareStack, Player player) {
+        this.setFlareCartridge(gunStack, flareStack.copyWithCount(1));
+        flareStack.shrink(1);
+        playInsertSound(player, 1.6f);
     }
 
     @Override
