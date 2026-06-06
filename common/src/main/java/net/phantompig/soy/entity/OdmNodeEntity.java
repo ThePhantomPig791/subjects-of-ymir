@@ -58,8 +58,10 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             distanceScale = distanceScale / (distanceScale + 10);
             Optional<Entity> stuckEntity = this.getStuckEntity();
             if (stuckEntity.isPresent() && owner.isCrouching() && owner.onGround() && !stuckEntity.get().isCrouching()) {
+                stuckEntity.get().stopRiding();
                 stuckEntity.get().addDeltaMovement(owner.position().subtract(stuckEntity.get().position()).normalize().scale(distanceScale / stuckEntity.get().getBoundingBox().getYsize()));
             } else {
+                owner.stopRiding();
                 owner.addDeltaMovement(this.position().subtract(owner.position()).normalize().scale(0.7 * distanceScale));
             }
 
