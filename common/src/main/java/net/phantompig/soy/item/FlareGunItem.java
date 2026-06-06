@@ -2,7 +2,6 @@ package net.phantompig.soy.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -12,12 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.SlotAccess;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickAction;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
@@ -34,9 +28,9 @@ import org.joml.Vector3f;
 
 import java.util.List;
 
-public class FlareGunItem extends Item {
+public class FlareGunItem extends ItemStackHoldingItem {
     public FlareGunItem(Properties properties) {
-        super(properties);
+        super(stack -> stack.getItem() instanceof FlareCartridgeItem, SoundEvents.ARMOR_EQUIP_IRON, properties);
     }
 
     @Override
@@ -47,7 +41,7 @@ public class FlareGunItem extends Item {
         final float pitch = (float) (0.85 + 0.15 * Math.random());
         PlayerUtil.playSoundToAll(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 512, SoySounds.FLARE_SHOOT.get(), SoundSource.PLAYERS, 2, pitch);
 
-        ItemStack cartridgeStack = this.getFlareCartridge(stack);
+        ItemStack cartridgeStack = this.getStack(stack);
         if (cartridgeStack.isEmpty()) return;
 
         if (cartridgeStack.getItem() instanceof FlareCartridgeItem cartridgeItem && cartridgeItem.hasColor(cartridgeStack)) {
@@ -86,69 +80,28 @@ public class FlareGunItem extends Item {
         PlayerUtil.spawnParticleForAll(level, 64, (ParticleOptions) SoyParticles.EMBER.get(), false, livingEntity.getX(), livingEntity.getEyeY(), livingEntity.getZ(), 1, 1, 1, 1.2f, 24);
 
         if (!(livingEntity instanceof Player player && player.getAbilities().instabuild)) {
-            this.setFlareCartridge(stack, ItemStack.EMPTY);
+            this.setStack(stack, ItemStack.EMPTY);
             stack.hurtAndBreak(1, livingEntity, e -> e.broadcastBreakEvent(livingEntity.getUsedItemHand()));
         }
     }
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        ItemStack itemStack = player.getItemInHand(usedHand);
-        if (this.getFlareCartridge(itemStack).isEmpty()) {
-            ItemStack otherStack = player.getItemInHand(usedHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-            if (otherStack.getItem() instanceof FlareCartridgeItem) {
-                insertFlare(itemStack, otherStack, player);
-                return InteractionResultHolder.consume(itemStack);
-            }
-        }
-        if (this.getFlareCartridge(itemStack).isEmpty()) {
-            return InteractionResultHolder.fail(itemStack);
+        ItemStack stack = player.getItemInHand(usedHand);
+        if (this.getStack(stack).isEmpty()) {
+            return super.use(level, player, usedHand);
         } else {
             player.startUsingItem(usedHand);
-            return InteractionResultHolder.consume(itemStack);
+            return InteractionResultHolder.consume(stack);
         }
-    }
-
-    @Override
-    public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
-        if (action == ClickAction.SECONDARY) {
-            ItemStack storedCartridge = getFlareCartridge(stack);
-            if (other.isEmpty() || ItemEntity.areMergable(storedCartridge, other)) {
-                if (!storedCartridge.isEmpty()) {
-                    access.set(ItemEntity.merge(storedCartridge, other, storedCartridge.getCount() + other.getCount()));
-                    this.setFlareCartridge(stack, ItemStack.EMPTY);
-                    playInsertSound(player, 1.2f);
-                    return true;
-                }
-            } else {
-                if (other.getItem() instanceof FlareCartridgeItem && storedCartridge.isEmpty()) {
-                    insertFlare(stack, other, player);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void insertFlare(ItemStack gunStack, ItemStack flareStack, Player player) {
-        this.setFlareCartridge(gunStack, flareStack.copyWithCount(1));
-        flareStack.shrink(1);
-        playInsertSound(player, 1.6f);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced);
-        ItemStack flare = this.getFlareCartridge(stack);
+        ItemStack flare = this.getStack(stack);
         if (flare.getItem() instanceof FlareCartridgeItem flareCartridgeItem) {
             tooltipComponents.add(Component.translatable("tooltip.subjects_of_ymir.flare_cartridge_color", flareCartridgeItem.getColorString(flare)).withStyle(ChatFormatting.GRAY));
         }
-    }
-
-    public ItemStack getFlareCartridge(ItemStack stack) {
-        return stack.getOrCreateTagElement("FlareCartridge").isEmpty() ? ItemStack.EMPTY : ItemStack.of(stack.getTagElement("FlareCartridge"));
-    }
-    public void setFlareCartridge(ItemStack stack, ItemStack flare) {
-        stack.getOrCreateTag().put("FlareCartridge", flare.save(new CompoundTag()));
     }
 
     @Override
@@ -159,9 +112,5 @@ public class FlareGunItem extends Item {
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.BOW;
-    }
-
-    private static void playInsertSound(Player player, float pitch) {
-        player.playSound(SoundEvents.ARMOR_EQUIP_IRON,0.6f, pitch);
     }
 }

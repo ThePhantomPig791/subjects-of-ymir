@@ -56,7 +56,7 @@ public class SoyItems {
     public static final RegistrySupplier<Item> BLADE = ITEMS.register("blade", () -> new BladeItem(new Item.Properties().stacksTo(16)));
     public static final RegistrySupplier<Item> GAS_CANISTER = ITEMS.register("gas_canister", () -> new GasHoldingItem(new Item.Properties().stacksTo(1), 500));
 
-    public static final RegistrySupplier<Item> ODM_HANDLE = ITEMS.register("odm_handle", () -> new OdmHandleItem(new Item.Properties().stacksTo(1)));
+    public static final RegistrySupplier<Item> BLADE_HANDLE = ITEMS.register("blade_handle", () -> new BladeHandleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistrySupplier<Item> MUSIC_DISC_YOUSEEBIGGIRL = ITEMS.register("music_disc_youseebiggirl", () -> new PalladiumRecordItem(5, SoySounds.MUSIC_DISC_YOUSEEBIGGIRL, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 359));
     public static final RegistrySupplier<Item> MUSIC_DISC_SPLINTER_WOLF = ITEMS.register("music_disc_splinter_wolf", () -> new PalladiumRecordItem(3, SoySounds.MUSIC_DISC_SPLINTER_WOLF, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 321));
@@ -160,7 +160,7 @@ public class SoyItems {
             entries.add(BLADE.get());
             entries.add(GAS_CANISTER.get());
             entries.add(GAS_CANISTER.get().getDefaultInstance());
-            entries.add(ODM_HANDLE.get());
+            entries.add(BLADE_HANDLE.get());
             OdmComponents.initCreativeMenu(entries);
             for (RegistrySupplier<Item> s : UNIFORMS.values()) {
                 entries.add(s.get());

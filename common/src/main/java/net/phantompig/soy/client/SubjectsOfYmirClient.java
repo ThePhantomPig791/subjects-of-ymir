@@ -7,6 +7,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.client.animation.BiteAnimation;
 import net.phantompig.soy.client.animation.BlockAnimation;
@@ -21,10 +22,7 @@ import net.phantompig.soy.client.renderer.LightningSphereRenderLayer;
 import net.phantompig.soy.client.screen.overlay.SoyOverlays;
 import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
-import net.phantompig.soy.item.DataHoldingItem;
-import net.phantompig.soy.item.FlareCartridgeItem;
-import net.phantompig.soy.item.FlareGunItem;
-import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.item.*;
 import net.phantompig.soy.particle.*;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
@@ -73,12 +71,13 @@ public class SubjectsOfYmirClient {
 
         ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
         ItemProperties.register(SoyItems.VIAL.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
-        ItemProperties.register(SoyItems.FLARE_GUN.get(), SubjectsOfYmir.rsrc("flare_gun"), (itemStack, clientLevel, livingEntity, i) -> itemStack.getItem() instanceof FlareGunItem flareGunItem && !flareGunItem.getFlareCartridge(itemStack).isEmpty() ? 1 : 0);
+        ItemProperties.register(SoyItems.FLARE_GUN.get(), SubjectsOfYmir.rsrc("flare_gun"), (itemStack, clientLevel, livingEntity, i) -> itemStack.getItem() instanceof FlareGunItem flareGunItem && !flareGunItem.getStack(itemStack).isEmpty() ? 1 : 0);
+        ItemProperties.register(SoyItems.BLADE_HANDLE.get(), SubjectsOfYmir.rsrc("blade"), SubjectsOfYmirClient::getBladeForHandleItem);
 
         ColorHandlerRegistry.registerItemColors((stack, i) -> {
             if (i > 0) return -1;
             else {
-                ItemStack cartridge = ((FlareGunItem) stack.getItem()).getFlareCartridge(stack);
+                ItemStack cartridge = ((FlareGunItem) stack.getItem()).getStack(stack);
                 if (cartridge.isEmpty()) return -1;
                 return ((FlareCartridgeItem) cartridge.getItem()).getColor(cartridge);
             }
@@ -93,6 +92,7 @@ public class SubjectsOfYmirClient {
         });
 
         SplashTextUtil.addRandom(250, "Dedicate your heart!");
+        SplashTextUtil.addRandom(250, "Eren!");
 
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/titan_exhaustion", SoyOverlays::renderExhaustionOverlay);
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/all_hardening", SoyOverlays::renderAllHardeningOverlay);
@@ -104,6 +104,14 @@ public class SubjectsOfYmirClient {
         if (itemStack.getItem() instanceof DataHoldingItem item) {
             return (float) item.get(itemStack) / item.max;
         }
-        return 0.0f;
+        return 0;
+    }
+
+    private static float getBladeForHandleItem(ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) {
+        if (itemStack.getItem() instanceof BladeHandleItem item) {
+            if (item.getStack(itemStack).getItem() instanceof BladeItem) return 1;
+            if (item.getStack(itemStack).is(Items.IRON_NUGGET)) return 0.5f;
+        }
+        return 0;
     }
 }

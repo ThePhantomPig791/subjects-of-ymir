@@ -3,7 +3,6 @@ package net.phantompig.soy.item;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.entity.OdmNodeEntity;
 import net.phantompig.soy.odm.OdmLevelHelper;
@@ -12,12 +11,8 @@ import net.threetag.palladium.util.PlayerUtil;
 
 import java.util.UUID;
 
-public class OdmHandleItem extends Item {
-    public OdmHandleItem(Properties properties) {
-        super(properties);
-    }
-
-    public void handlePress(Player player, ItemStack itemStack, boolean rightHand) {
+public interface OdmHandleItem {
+    public default void handlePress(Player player, ItemStack itemStack, boolean rightHand) {
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         if (leggings.getItem() instanceof OdmAttachableAddonArmorItem odm) {
             UUID hook;

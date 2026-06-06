@@ -3,9 +3,23 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "subjects_of_ymir:item/odm_handle",
-		"particle": "subjects_of_ymir:item/odm_handle"
+		"0": "subjects_of_ymir:item/blade_handle",
+		"particle": "subjects_of_ymir:item/blade_handle"
 	},
+	"overrides": [
+		{
+			"predicate": {
+				"subjects_of_ymir:blade": 0.5
+			},
+			"model": "subjects_of_ymir:item/blade_handle_broken"
+		},
+		{
+			"predicate": {
+				"subjects_of_ymir:blade": 1
+			},
+			"model": "subjects_of_ymir:item/blade_handle_full"
+		}
+	],
 	"elements": [
 		{
 			"from": [7.5, 2, 8],

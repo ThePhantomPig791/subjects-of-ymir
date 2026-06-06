@@ -12,6 +12,7 @@ import net.phantompig.soy.SubjectsOfYmir;
 public class SoyDamageSources {
     public static final ResourceKey<DamageType> SELF_BITE = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("self_bite"));
     public static final ResourceKey<DamageType> SELF_STAB = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("self_stab"));
+    public static final ResourceKey<DamageType> SLICE = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("slice"));
 
     public static DamageSource selfBite(Level level, Entity direct, Entity causing, Vec3 damageSourcePosition) {
         return new DamageSource(
@@ -32,6 +33,15 @@ public class SoyDamageSources {
                 direct,
                 causing,
                 damageSourcePosition
+        );
+    }
+
+    public static DamageSource slice(Level level, Entity attacker) {
+        return new DamageSource(
+                level.registryAccess()
+                        .lookupOrThrow(Registries.DAMAGE_TYPE)
+                        .get(SLICE).get(),
+                attacker
         );
     }
 

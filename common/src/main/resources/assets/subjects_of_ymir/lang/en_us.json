@@ -43,6 +43,7 @@
 
   "death.attack.selfBite": "%s bit their own hand off",
   "death.attack.selfStab": "%s stabbed themselves to death",
+  "death.attack.slice": "%s was sliced by %s",
 
   
   "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",
@@ -100,7 +101,7 @@
   "item.subjects_of_ymir.prototype_turbine": "Prototype Turbine",
   "item.subjects_of_ymir.turbine_v2": "Turbine V2",
 
-  "item.subjects_of_ymir.odm_handle": "ODM Handle",
+  "item.subjects_of_ymir.blade_handle": "Blade Handle",
 
   "item.subjects_of_ymir.flare_gun": "Flare Gun",
   "item.subjects_of_ymir.flare_cartridge": "Flare Cartridge",
