@@ -142,6 +142,22 @@
       }
     ]
   },
+  "reel": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:reel"
+      }
+    ]
+  },
+  "reel_local": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:reel_local"
+      }
+    ]
+  },
 
   "flare_shoot": {
     "category": "player",

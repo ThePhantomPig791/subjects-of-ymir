@@ -116,7 +116,7 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
                 64,
                 SoySounds.GAS_BURST.get().getLocation(),
                 SoundSource.PLAYERS,
-                0.4f,
+                0.1f,
                 (float) (Math.random() * 0.2 + 1.4 / (0.2 * strength))
         );
         return true;

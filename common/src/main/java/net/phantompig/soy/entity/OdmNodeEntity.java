@@ -1,5 +1,6 @@
 package net.phantompig.soy.entity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -38,6 +39,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
 
     public UUID stuckEntityUuid;
     public boolean stuck;
+    public int stuckTicks;
 
     public OdmNodeEntity(EntityType<? extends AbstractHurtingProjectile> entityType, Level level) {
         super(entityType, level);
@@ -57,12 +59,23 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             double distanceScale = this.position().distanceTo(owner.position());
             distanceScale = distanceScale / (distanceScale + 10);
             Optional<Entity> stuckEntity = this.getStuckEntity();
+            float reelVolume;
             if (stuckEntity.isPresent() && owner.isCrouching() && owner.onGround() && !stuckEntity.get().isCrouching()) {
                 stuckEntity.get().stopRiding();
                 stuckEntity.get().addDeltaMovement(owner.position().subtract(stuckEntity.get().position()).normalize().scale(distanceScale / stuckEntity.get().getBoundingBox().getYsize()));
+                reelVolume = 2 * (float) stuckEntity.get().getDeltaMovement().lengthSqr();
             } else {
                 owner.stopRiding();
                 owner.addDeltaMovement(this.position().subtract(owner.position()).normalize().scale(0.7 * distanceScale));
+                reelVolume = 2 * (float) owner.getDeltaMovement().lengthSqr();
+            }
+
+            if (this.level().isClientSide() && this.stuckTicks % 17 == 0) {
+                if (reelVolume > 0.35) {
+                    float pitch = (float) (0.95 + 0.1 * Math.random());
+                    if (owner.equals(Minecraft.getInstance().player)) owner.playSound(SoySounds.REEL_LOCAL.get(), reelVolume, pitch); // TODO that genuinely might crash on a server but like i'm checking Level#isClientSide so it's probably fine??
+                    else this.level().playLocalSound(owner.getX(), owner.getY(), owner.getZ(), SoySounds.REEL.get(), SoundSource.PLAYERS, reelVolume, pitch, false);
+                }
             }
 
             // check still stuck
@@ -87,6 +100,8 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
                     this.stuck = true;
                 }
             });
+
+            stuckTicks++;
         } else {
             if (!this.isNoGravity()) {
                 this.addDeltaMovement(new Vec3(0, -this.getGravity(), 0));
