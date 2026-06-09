@@ -266,6 +266,11 @@
         ],
         "unlocking": [
           {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 1
+          },
+          {
             "type": "palladium:not",
             "conditions": {
               "type": "palladium:ability_enabled",

@@ -84,7 +84,7 @@ public class TitanInstance {
         staminaTick();
         marksTick();
 
-        if (!Platform.isProduction() && entity instanceof ServerPlayer player) {
+        if (!Platform.isProduction() && entity instanceof ServerPlayer player && player.isCreative()) {
             player.displayClientMessage(Component.literal("Stamina: " + getStamina() + " / " + getMaxStamina() + ", Deaths: " + this.deaths), true);
         }
     }
