@@ -91,6 +91,11 @@ allprojects {
             url "https://maven.terraformersmc.com/releases/"
         }
 
+        // Curios
+        maven {
+            url = "https://maven.theillusivec4.top/"
+        }
+
         // KubeJS / Rhino
         maven {
             url = 'https://maven.latvian.dev/releases'
@@ -107,6 +112,7 @@ allprojects {
 
         // Porting Lib
         maven { url = "https://mvn.devos.one/snapshots/" }
+        maven { url = "https://mvn.devos.one/releases/" }
 
         // ReachEntityAttributes
         maven {
@@ -132,8 +138,8 @@ allprojects {
             url 'https://maven.kosmx.dev/'
         }
 
-        // porting lib
-        maven { url = "https://mvn.devos.one/releases/" }
+        // Simple Voice Chat
+        maven { url = 'https://maven.maxhenkel.de/repository/public' }
     }
 
     tasks.withType(JavaCompile) {

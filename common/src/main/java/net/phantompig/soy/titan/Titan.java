@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -34,6 +35,7 @@ import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
+import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
 import net.threetag.palladium.power.SuperpowerUtil;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.json.GsonUtil;
@@ -106,6 +108,11 @@ public class Titan {
         if (entity instanceof Player player) {
             ext.getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
             player.getInventory().clearContent();
+            if (SoyCuriosTrinketsUtil.INSTANCE.isLoaded()) {
+                if (ext.getTitanInstance().curiosTrinketsInventory == null) ext.getTitanInstance().curiosTrinketsInventory = new CompoundTag();
+                SoyCuriosTrinketsUtil.INSTANCE.write(player, ext.getTitanInstance().curiosTrinketsInventory);
+                SoyCuriosTrinketsUtil.INSTANCE.clear(player);
+            }
 
             player.awardStat(SoyStats.TIMES_SHIFTED, 1);
 
@@ -304,10 +311,15 @@ public class Titan {
         hardening.setHands(0);
 
 
-        if (entity instanceof Player player && ext.getTitanInstance().playerInventory != null) {
+        if (entity instanceof Player player) {
             player.getInventory().dropAll();
-            player.getInventory().load(ext.getTitanInstance().playerInventory);
-            ext.getTitanInstance().playerInventory = null;
+            if (ext.getTitanInstance().playerInventory != null) {
+                player.getInventory().load(ext.getTitanInstance().playerInventory);
+                ext.getTitanInstance().playerInventory = null;
+            }
+            if (SoyCuriosTrinketsUtil.INSTANCE.isLoaded() && ext.getTitanInstance().curiosTrinketsInventory != null) {
+                SoyCuriosTrinketsUtil.INSTANCE.read(player, ext.getTitanInstance().curiosTrinketsInventory);
+            }
         }
     }
 

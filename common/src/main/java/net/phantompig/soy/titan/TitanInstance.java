@@ -49,6 +49,9 @@ public class TitanInstance {
     @Nullable
     public ListTag playerInventory;
 
+    @Nullable
+    public CompoundTag curiosTrinketsInventory;
+
     public int regainStaminaCooldown = 0;
 
     public int deaths = 0;
@@ -373,6 +376,7 @@ public class TitanInstance {
         to.variant = from.variant;
         to.stacks = new ArrayList<>(from.stacks);
         to.playerInventory = from.playerInventory;
+        to.curiosTrinketsInventory = from.curiosTrinketsInventory;
         to.deaths = from.deaths;
         to.memoryManager = from.memoryManager;
         to.strengthIncreases = from.strengthIncreases;
@@ -391,6 +395,7 @@ public class TitanInstance {
         inst.isCorpse = tag.contains("IsCorpse") && tag.getBoolean("IsCorpse");
         if (entity instanceof Player) {
             inst.playerInventory = tag.contains("PlayerInventory", Tag.TAG_LIST) ? tag.getList("PlayerInventory", Tag.TAG_COMPOUND) : null;
+            inst.curiosTrinketsInventory = tag.contains("CuriosTrinketsInventory", Tag.TAG_LIST) ? tag.getCompound("CuriosTrinketsInventory") : null;
         }
         inst.deaths = tag.contains("Deaths") ? tag.getInt("Deaths") : 0;
         inst.memoryManager = tag.contains("MemoryManager") ? TitanMemoryManager.fromTag(tag.getCompound("MemoryManager")) : null;
@@ -412,6 +417,7 @@ public class TitanInstance {
         tag.put("Stacks", stacks);
         tag.putBoolean("IsCorpse", this.isCorpse);
         if (this.playerInventory != null) tag.put("PlayerInventory", this.playerInventory);
+        if (this.curiosTrinketsInventory != null) tag.put("CuriosTrinketsInventory", this.curiosTrinketsInventory);
         tag.putInt("Deaths", this.deaths);
         if (this.memoryManager != null) tag.put("MemoryManager", this.memoryManager.toTag());
         if (!this.strengthIncreases.isEmpty()) {

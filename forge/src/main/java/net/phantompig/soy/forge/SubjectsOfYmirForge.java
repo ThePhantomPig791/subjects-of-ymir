@@ -9,7 +9,9 @@ import net.phantompig.soy.SubjectsOfYmir;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.phantompig.soy.client.SubjectsOfYmirClient;
+import net.phantompig.soy.forge.compat.curios.SoyCuriosUtil;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
 import net.threetag.palladiumcore.forge.PalladiumCoreForge;
 import net.threetag.palladiumcore.util.Platform;
 
@@ -25,6 +27,10 @@ public class SubjectsOfYmirForge {
 
         if (Platform.isClient()) {
             SubjectsOfYmirClient.init();
+        }
+
+        if (Platform.isModLoaded("curios")) {
+            SoyCuriosTrinketsUtil.INSTANCE = new SoyCuriosUtil();
         }
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Forge!");

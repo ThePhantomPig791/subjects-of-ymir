@@ -12,7 +12,10 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.fabricmc.api.ModInitializer;
+import net.phantompig.soy.fabric.compat.trinkets.SoyTrinketsUtil;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
+import net.threetag.palladiumcore.util.Platform;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -31,6 +34,10 @@ public class SubjectsOfYmirFabric implements ModInitializer {
             }
             return CompletableFuture.completedFuture(message);
         });
+
+        if (Platform.isModLoaded("trinkets")) {
+            SoyCuriosTrinketsUtil.INSTANCE = new SoyTrinketsUtil();
+        }
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Fabric!");
     }
