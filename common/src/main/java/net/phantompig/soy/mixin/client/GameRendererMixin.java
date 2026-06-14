@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.client.renderer.ScreenShakeManager;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,6 +39,8 @@ public abstract class GameRendererMixin {
         if (this.soy$cameraRoll.get() != 0) {
             poseStack2.mulPose(Axis.ZP.rotationDegrees(this.soy$cameraRoll.floatValue()));
         }
+
+        ScreenShakeManager.update(poseStack2);
     }
 
     @Unique

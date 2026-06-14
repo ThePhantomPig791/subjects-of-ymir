@@ -29,6 +29,9 @@ import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.TitanCorpseEntity;
+import net.phantompig.soy.network.ScreenShakeMessage;
+import net.phantompig.soy.network.SetAttackTickerMessage;
+import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.sound.SoySounds;
@@ -37,6 +40,7 @@ import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
 import net.threetag.palladium.power.SuperpowerUtil;
+import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.json.GsonUtil;
 import org.jetbrains.annotations.Nullable;
@@ -132,6 +136,13 @@ public class Titan {
         ext.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
         ext.getTitanInstance().canShiftTicks = 0;
         ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + charge * charge);
+
+        entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(charge))).forEach(e -> {
+            if (e instanceof ServerPlayer player) {
+                double strength = charge / Math.max(player.distanceToSqr(entity), 1);
+                SoyNetwork.NETWORK.sendToPlayer(player, new ScreenShakeMessage(3500, new Vector3f((float) (5 + strength) / 100), Easing.OUTCUBIC));
+            }
+        });
     }
 
     public void tickDuringShift(LivingEntity entity, int progress, int charge) {
@@ -319,6 +330,7 @@ public class Titan {
             }
             if (SoyCuriosTrinketsUtil.INSTANCE.isLoaded() && ext.getTitanInstance().curiosTrinketsInventory != null) {
                 SoyCuriosTrinketsUtil.INSTANCE.read(player, ext.getTitanInstance().curiosTrinketsInventory);
+                ext.getTitanInstance().curiosTrinketsInventory = null;
             }
         }
     }
