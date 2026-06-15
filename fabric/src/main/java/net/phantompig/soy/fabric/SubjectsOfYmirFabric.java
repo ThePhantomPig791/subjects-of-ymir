@@ -15,6 +15,7 @@ import net.fabricmc.api.ModInitializer;
 import net.phantompig.soy.fabric.compat.trinkets.SoyTrinketsUtil;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
+import net.phantompig.soy.util.ChatUtil;
 import net.threetag.palladiumcore.util.Platform;
 
 import java.util.concurrent.CompletableFuture;
@@ -30,7 +31,7 @@ public class SubjectsOfYmirFabric implements ModInitializer {
 
         ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.STYLING_PHASE, (entity, message) -> {
             if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
-                return CompletableFuture.completedFuture(message.copy().withStyle(style -> style.withObfuscated(true)));
+                return CompletableFuture.completedFuture(ChatUtil.gibberishify(message));
             }
             return CompletableFuture.completedFuture(message);
         });
