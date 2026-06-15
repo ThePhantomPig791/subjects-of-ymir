@@ -31,7 +31,7 @@ public class ActivatedSpineItem extends Item {
 
         TitanInstance.sequentialRandomizeFor(livingEntity);
         if (livingEntity instanceof SoyPlayerExtension ext) {
-            ext.getTitanInstance().setCharge(260);
+            ext.getTitanInstance().setCharge(520);
         }
 
         itemStack.shrink(1);

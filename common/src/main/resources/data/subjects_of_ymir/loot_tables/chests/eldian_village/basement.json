@@ -247,10 +247,6 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:music_disc_splinter_wolf"
-                },
-                {
-                    "type": "minecraft:item",
                     "name": "subjects_of_ymir:music_disc_tkt"
                 },
                 {

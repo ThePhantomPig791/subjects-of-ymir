@@ -228,7 +228,7 @@ public class TitanMemoryManager {
         ANCIENT_MESSAGES.add("Why am I going through this?");
         ANCIENT_MESSAGES.add("Can you help me?");
         ANCIENT_MESSAGES.add("Help yourself.");
-        ANCIENT_MESSAGES.add("Mother");
+        ANCIENT_MESSAGES.add("Mother...");
         ANCIENT_MESSAGES.add("Where is my family?");
         ANCIENT_MESSAGES.add("My Power of the Titans...");
         ANCIENT_MESSAGES.add("For all humanity");
@@ -258,6 +258,12 @@ public class TitanMemoryManager {
         ANCIENT_MESSAGES.add("You can hear me?");
         ANCIENT_MESSAGES.add("We were gifted with a great power");
         ANCIENT_MESSAGES.add("The Founder has been lost.");
+    }
+
+    public void populateWithAncientMessages(Player player, String name, int max, int min) {
+        if (this.populateWithAncientMessages(name, max, min)) {
+            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 1.1f + (float) (0.1 * Math.random()));
+        }
     }
 
     public boolean populateWithAncientMessages(String name) {

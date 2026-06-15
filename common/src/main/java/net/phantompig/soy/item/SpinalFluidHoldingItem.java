@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,10 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
-import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
-import net.phantompig.soy.titan.Titan;
-import net.phantompig.soy.titan.TitanInstance;
 import net.threetag.palladium.util.PlayerUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -85,24 +81,12 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
     public static boolean inject(ItemStack stack, Player player) {
         if (stack.getItem() instanceof SpinalFluidHoldingItem spfhi && player instanceof SoyPlayerExtension ext) {
             if (ext.getTitanInstance().titan == null) {
-                if (spfhi.get(stack) >= InjectionItem.MAX) {
-                    Tuple<Titan, String> titan = TitanInstance.sequentialRandomizeFor(player);
-                    if (ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(titan.getB())) {
-                        PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 1, 1.1f + (float) (0.1 * Math.random()));
-                    }
-                    injectSound(player.level(), player.getX(), player.getY(), player.getZ());
-                    spfhi.set(stack, Math.max(0, spfhi.get(stack) - InjectionItem.MAX));
-                    givePathPointsFrom(stack, spfhi, player);
-                    return true;
-                } else {
-                    return false; // TODO pure titan if injection is not full
-                }
+                return false; // TODO pure titans
             } else return givePathPointsFrom(stack, spfhi, player);
         }
         return false;
     }
     private static void injectSound(Level level, double x, double y, double z) {
-        // TODO better sound effect
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.HONEY_BLOCK_STEP, SoundSource.PLAYERS, 0.5f, 2);
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 0.5f, 1.9f);
     }
@@ -111,9 +95,7 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
         if (spfhi.get(stack) == 0) return false;
         SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + spfhi.get(stack));
         player.awardStat(SoyStats.PATH_POINTS_GAINED, spfhi.get(stack));
-        if (ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(ext.getTitanInstance().variant, 3, -2)) {
-            PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS, 0.8f, 1.2f + (float) (0.1 * Math.random()));
-        }
+        ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(player, ext.getTitanInstance().variant, 3, -2);
         spfhi.set(stack, 0);
         PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.1f);
         return true;

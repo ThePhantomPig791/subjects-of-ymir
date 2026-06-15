@@ -6,7 +6,6 @@ public class SoyConfig {
     public static class Server {
         public static ForgeConfigSpec.BooleanValue CAN_INJECT_OTHERS;
         public static ForgeConfigSpec.BooleanValue CAN_DISPENSE_ICEBURST;
-
         public static ForgeConfigSpec.BooleanValue EXPLODE_ON_SHIFT, EXPLODE_ON_FALL, EXPLODE_ON_ATTACK;
 
         public static ForgeConfigSpec generateConfig() {
@@ -15,7 +14,7 @@ public class SoyConfig {
             CAN_INJECT_OTHERS = builder.define("general.canInjectOthers", true);
             builder.comment("Enables/disables dispensing raw iceburst from a dispenser.");
             CAN_DISPENSE_ICEBURST = builder.define("general.canDispenseIceburst", true);
-            builder.comment("Enables/disables titans exploding blocks upon shifting");
+            builder.comment("Enables/disables titans exploding blocks upon shifting. Be warned, disabling this may lead to shifters suffocating in the ceiling immediately after shifting");
             EXPLODE_ON_SHIFT = builder.define("titan.explodeBlocksOnShift", true);
             builder.comment("Enables/disables titans exploding blocks upon falling from a height");
             EXPLODE_ON_FALL = builder.define("titan.explodeBlocksOnFall", true);

@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlockTags;
@@ -139,10 +140,25 @@ public class Titan {
 
         entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(charge))).forEach(e -> {
             if (e instanceof ServerPlayer player) {
-                double strength = charge / Math.max(player.distanceToSqr(entity), 1);
+                double strength = charge / Math.max(Math.sqrt(player.distanceTo(entity)), 1);
                 SoyNetwork.NETWORK.sendToPlayer(player, new ScreenShakeMessage(3500, new Vector3f((float) (5 + strength) / 100), Easing.OUTCUBIC));
             }
         });
+
+        if (SoyConfig.Server.shouldTitansExplodeBlocksOnShift()) {
+            final int evaporationRange = 3 + (int) Math.sqrt(charge);
+            final int evaporationRangeSqr = evaporationRange * evaporationRange;
+            for (int dx = -evaporationRange; dx <= evaporationRange; dx++) {
+                for (int dy = -evaporationRange; dy <= evaporationRange; dy++) {
+                    for (int dz = -evaporationRange; dz <= evaporationRange; dz++) {
+                        if (dx * dx + dy * dy + dz * dz > evaporationRangeSqr) continue;
+                        BlockPos pos = entity.blockPosition().offset(dx, dy, dz);
+                        if (entity.level().getBlockState(pos).is(Blocks.WATER)) entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                        if (entity.level().getBlockState(pos).is(Blocks.WATER_CAULDRON)) entity.level().setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
+                    }
+                }
+            }
+        }
     }
 
     public void tickDuringShift(LivingEntity entity, int progress, int charge) {
