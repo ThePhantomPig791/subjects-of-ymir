@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:jigsaw",
+    "biomes": "#subjects_of_ymir:has_founding_tree",
+    "step": "surface_structures",
+    "spawn_overrides": {},
+    "terrain_adaptation": "bury",
+    "start_pool": "subjects_of_ymir:founding_tree/bottom",
+    "size": 5,
+    "start_height": {
+        "absolute": -19
+    },
+    "project_start_to_heightmap": "WORLD_SURFACE_WG",
+    "max_distance_from_center": 116,
+    "use_expansion_hack": true
+}

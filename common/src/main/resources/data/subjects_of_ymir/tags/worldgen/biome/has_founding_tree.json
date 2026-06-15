@@ -1,0 +1,30 @@
+{
+    "replace": false,
+    "values": [
+        "#minecraft:has_structure/village_plains",
+        "minecraft:forest",
+        "minecraft:flower_forest",
+        "minecraft:sunflower_plains",
+        "minecraft:meadow",
+        "minecraft:snowy_plains",
+        {
+            "id": "#c:plains",
+            "required": false
+        },
+        {
+            "id": "#c:forest",
+            "required": false
+        },
+        "minecraft:taiga",
+        "minecraft:old_growth_pine_taiga",
+        "minecraft:old_growth_spruce_taiga",
+        {
+            "id": "#c:taiga",
+            "required": false
+        },
+        "minecraft:windswept_hills",
+        "minecraft:sparse_jungle",
+        "minecraft:jungle",
+        "minecraft:bamboo_jungle"
+    ]
+}

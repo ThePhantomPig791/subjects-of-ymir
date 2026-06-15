@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "subjects_of_ymir:broken_spine",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "subjects_of_ymir:spine"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:oak_log",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick",
+          "weight": 3
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "subjects_of_ymir:archaeology/founding_tree"
+}

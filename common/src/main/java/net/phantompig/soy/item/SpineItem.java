@@ -51,9 +51,9 @@ public class SpineItem extends Item {
         ItemStack itemStack = super.finishUsingItem(stack, level, livingEntity);
         if (level.isClientSide()) return itemStack;
 
-        Player player = livingEntity instanceof Player ? (Player)livingEntity : null;
+        Player player = livingEntity instanceof Player ? (Player) livingEntity : null;
         if (player instanceof ServerPlayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)player, stack);
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
         }
 
         TitanInstance.setFromSpineItem(livingEntity, itemStack);

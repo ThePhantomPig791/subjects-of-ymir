@@ -30,7 +30,6 @@ import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.network.ScreenShakeMessage;
-import net.phantompig.soy.network.SetAttackTickerMessage;
 import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;

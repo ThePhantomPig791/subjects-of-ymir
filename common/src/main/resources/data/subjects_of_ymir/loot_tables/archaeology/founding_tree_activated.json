@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "subjects_of_ymir:activated_spine"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "subjects_of_ymir:archaeology/founding_tree_activated"
+}

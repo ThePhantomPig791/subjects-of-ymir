@@ -1,0 +1,20 @@
+{
+    "structures": [
+        {
+            "structure": "subjects_of_ymir:founding_tree",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "type": "minecraft:random_spread",
+        "salt": 1202,
+        "spacing": 300,
+        "separation": 100,
+        "spread_type": "triangular",
+        "frequency": 0.6,
+        "exclusion_zone": {
+            "chunk_count": 4,
+            "other_set": "subjects_of_ymir:eldian_village"
+        }
+    }
+}
