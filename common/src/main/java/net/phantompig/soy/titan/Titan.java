@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
@@ -147,7 +148,7 @@ public class Titan {
     public void tickDuringShift(LivingEntity entity, int progress, int charge) {
         if (!(entity instanceof SoyPlayerExtension ext)) return;
         ext.getTitanInstance().setProgress(++progress);
-        entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, Level.ExplosionInteraction.MOB, false).explode();
+        entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, SoyConfig.Server.shouldTitansExplodeBlocksOnShift() ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false).explode();
         ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + 10);
     }
 
@@ -362,7 +363,7 @@ public class Titan {
         if (fallDistance > entity.getBoundingBox().getYsize() / 4) {
             var pos = entity.getPosition(0).add(0, -1, 0);
             float strength = (float) Math.pow(fallDistance, entity.getBoundingBox().getYsize() / 18) / 5;
-            entity.level().explode(entity,null, null,  pos.x, pos.y, pos.z, strength, false, Level.ExplosionInteraction.TNT, false);
+            entity.level().explode(entity,null, null,  pos.x, pos.y, pos.z, strength, false, SoyConfig.Server.shouldTitansExplodeBlocksOnFall() ? Level.ExplosionInteraction.TNT : Level.ExplosionInteraction.NONE, false);
 
             for (int count = 0; count <= Math.min(10 * strength, 50); count++) {
                 PlayerUtil.spawnParticleForAll(

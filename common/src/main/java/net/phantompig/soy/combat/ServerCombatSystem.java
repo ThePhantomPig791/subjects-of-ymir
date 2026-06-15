@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.network.SetAttackTickerMessage;
 import net.phantompig.soy.network.SetNextAttackStageTimerMessage;
 import net.phantompig.soy.network.SoyNetwork;
@@ -197,7 +198,7 @@ public class ServerCombatSystem {
         var end = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
         Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
 
-        player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, Level.ExplosionInteraction.TNT);
+        player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction());
     }
 
     public void explodeInFrontFlat(float strength, float distance, float startHeightOffset, float endHeightOffset) {
@@ -208,6 +209,10 @@ public class ServerCombatSystem {
         var end = player.getLookAngle().multiply(1, 0, 1).normalize().scale(distance);
         Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
 
-        player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, Level.ExplosionInteraction.TNT);
+        player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction());
+    }
+
+    private Level.ExplosionInteraction getExplosionInteraction() {
+        return SoyConfig.Server.shouldTitansExplodeBlocksOnAttack() ? Level.ExplosionInteraction.TNT : Level.ExplosionInteraction.NONE;
     }
 }
