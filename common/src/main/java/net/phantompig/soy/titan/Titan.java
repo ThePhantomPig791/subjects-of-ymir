@@ -13,6 +13,7 @@ import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.GsonHelper;
@@ -45,7 +46,6 @@ import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
 import net.threetag.palladium.power.SuperpowerUtil;
-import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.json.GsonUtil;
 import org.jetbrains.annotations.Nullable;
@@ -148,7 +148,7 @@ public class Titan {
         entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(charge))).forEach(e -> {
             if (e instanceof ServerPlayer player) {
                 double strength = charge / Math.max(Math.sqrt(player.distanceTo(entity)), 1);
-                SoyNetwork.NETWORK.sendToPlayer(player, new ScreenShakeMessage(3500, new Vector3f((float) (5 + strength) / 100), Easing.OUTCUBIC));
+                SoyNetwork.NETWORK.sendToPlayer(player, new ScreenShakeMessage(3500, (float) (5 + strength) / 100));
             }
         });
 
@@ -409,6 +409,14 @@ public class Titan {
                         1
                 );
             }
+
+            entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(strength))).forEach(e -> {
+                if (e instanceof ServerPlayer player) {
+                    double str = strength / Math.max(Math.sqrt(player.distanceTo(entity)), 1);
+                    SoyNetwork.NETWORK.sendToPlayer(player, new ScreenShakeMessage(1000, (float) (10 + str) / 200));
+                    PlayerUtil.playSound(player, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 2, 1 - strength / 50);
+                }
+            });
 
             if (entity instanceof SoyPlayerExtension ext) {
                 ext.getTitanInstance().exhaust((int) (fallDistance * 2));

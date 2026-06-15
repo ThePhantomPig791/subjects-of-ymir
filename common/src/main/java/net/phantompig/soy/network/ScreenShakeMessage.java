@@ -17,6 +17,12 @@ public class ScreenShakeMessage extends MessageS2C {
     @Nullable
     public Easing easing;
 
+    public ScreenShakeMessage(int durationMillis, float strength) {
+        this(durationMillis, new Vector3f(strength));
+    }
+    public ScreenShakeMessage(int durationMillis, Vector3f strength) {
+        this(durationMillis, strength, Easing.OUTCUBIC);
+    }
     public ScreenShakeMessage(int durationMillis, Vector3f strength, @Nullable Easing easing) {
         this.durationMillis = durationMillis;
         this.strength = strength;

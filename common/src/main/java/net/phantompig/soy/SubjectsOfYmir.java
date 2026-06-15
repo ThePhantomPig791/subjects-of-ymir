@@ -82,7 +82,7 @@ public class SubjectsOfYmir {
             }
             var titanInstance = soy.getTitanInstance();
             if (titanInstance.getProgress() != 0) {
-                // hardcoded armored titan behavior for losing armor on shed
+                // hardcoded armored titan behavior for losing armor on hurt
                 if (titanInstance.titan != null && titanInstance.titan.id.equals(rsrc("armored"))) {
                     Power power = PowerManager.getInstance(entity.level()).getPower(rsrc("titan/armored"));
                     AbilityInstance ability = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get("shed");
@@ -111,6 +111,8 @@ public class SubjectsOfYmir {
         LivingEntityEvents.DEATH.register(((livingEntity, damageSource) -> {
             if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && livingEntity instanceof Player player) {
                 ext.getTitanInstance().setMarksTimer(0);
+                ext.getTitanInstance().setCharge(0);
+                ext.getTitanInstance().setProgress(0);
                 if (++ext.getTitanInstance().deaths >= 13) {
                     player.drop(TitanInstance.toSpineIem(ext.getTitanInstance()), true, true);
                     TitanInstance.clearTitanFor(livingEntity);

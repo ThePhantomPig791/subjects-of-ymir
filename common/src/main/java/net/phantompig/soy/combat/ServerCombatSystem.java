@@ -16,10 +16,8 @@ import net.phantompig.soy.network.*;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
-import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.EntityUtil;
 import net.threetag.palladium.util.PlayerUtil;
-import org.joml.Vector3f;
 
 public class ServerCombatSystem {
     public final ServerPlayer player;
@@ -148,7 +146,7 @@ public class ServerCombatSystem {
             player.level().getEntities(null, player.getBoundingBox().inflate(64)).forEach(e -> {
                 if (e instanceof ServerPlayer p) {
                     double strength = 20 / Math.max(Math.sqrt(player.distanceTo(p)), 1) / p.getBoundingBox().getYsize();
-                    SoyNetwork.NETWORK.sendToPlayer(p, new ScreenShakeMessage(1200, new Vector3f((float) (5 + strength) / 200), Easing.OUTCUBIC));
+                    SoyNetwork.NETWORK.sendToPlayer(p, new ScreenShakeMessage(1200, (float) (5 + strength) / 200));
                 }
             });
         }
