@@ -19,9 +19,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.entity.FlareEntity;
 import net.phantompig.soy.entity.SoyEntities;
+import net.phantompig.soy.network.ScreenShakeMessage;
+import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.particle.FlareParticleOptions;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.sound.SoySounds;
+import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.PlayerUtil;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -70,6 +73,13 @@ public class FlareGunItem extends ItemStackHoldingItem {
                     0.02f,
                     8
             );
+
+            livingEntity.level().getEntities(null, livingEntity.getBoundingBox().inflate(32)).forEach(e -> {
+                if (e instanceof ServerPlayer p) {
+                    double strength = 10 / Math.max(Math.sqrt(livingEntity.distanceTo(p)), 1) / p.getBoundingBox().getYsize();
+                    SoyNetwork.NETWORK.sendToPlayer(p, new ScreenShakeMessage(300, new Vector3f((float) (2 + strength) / 60), Easing.OUTCUBIC));
+                }
+            });
         }
 
         livingEntity.addDeltaMovement(lookAngle.scale(-0.1));

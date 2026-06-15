@@ -1,6 +1,8 @@
 package net.phantompig.soy.combat;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -10,14 +12,14 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
-import net.phantompig.soy.network.SetAttackTickerMessage;
-import net.phantompig.soy.network.SetNextAttackStageTimerMessage;
-import net.phantompig.soy.network.SoyNetwork;
-import net.phantompig.soy.network.TitanAttackAnimationMessage;
+import net.phantompig.soy.network.*;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
+import net.threetag.palladium.util.Easing;
 import net.threetag.palladium.util.EntityUtil;
+import net.threetag.palladium.util.PlayerUtil;
+import org.joml.Vector3f;
 
 public class ServerCombatSystem {
     public final ServerPlayer player;
@@ -139,12 +141,22 @@ public class ServerCombatSystem {
         }
 
         double staminaToUse = player.getAttribute(Attributes.ATTACK_DAMAGE).getValue();
-        if (!player.level().getCollisions(player, player.getBoundingBox().inflate(-1, -2, -1).move(player.getLookAngle().scale(5))).iterator().hasNext()) staminaToUse = 0;
+        final boolean hit =
+                player.level().getBlockCollisions(player, player.getBoundingBox().inflate(-1, -2, -1).move(player.getLookAngle().scale(5))).iterator().hasNext()
+                || !player.level().getEntities(player, player.getBoundingBox().inflate(-1, -2, -1).move(player.getLookAngle().scale(5))).isEmpty();
+        if (hit) {
+            player.level().getEntities(null, player.getBoundingBox().inflate(64)).forEach(e -> {
+                if (e instanceof ServerPlayer p) {
+                    double strength = 20 / Math.max(Math.sqrt(player.distanceTo(p)), 1) / p.getBoundingBox().getYsize();
+                    SoyNetwork.NETWORK.sendToPlayer(p, new ScreenShakeMessage(1200, new Vector3f((float) (5 + strength) / 200), Easing.OUTCUBIC));
+                }
+            });
+        }
         if (attackType == AttackType.PUNCH) {
             if (attackStage < 3) {
-                explodeInFrontPartialLooking(1.5f, 5, 0, -0.2f);
+                if (hit) explodeInFrontPartialLooking(1.5f, 5, 0, -0.2f);
             } else {
-                explodeInFrontPartialLooking(2, 5, 0, -0.1f);
+                if (hit) explodeInFrontPartialLooking(2, 5, 0, -0.1f);
 
                 cooldown = getMaxAttackTime() * 3 / 2;
                 nextStageTimer = 0;
@@ -156,9 +168,9 @@ public class ServerCombatSystem {
         }
         if (attackType == AttackType.GROUND) {
             if (attackStage < 3) {
-                explodeInFrontPartialLooking(1.5f, 6, 0.1f, -0.7f);
+                if (hit) explodeInFrontPartialLooking(1.5f, 6, 0.1f, -0.7f);
             } else {
-                explodeInFrontPartialLooking(2.5f, 7, 0.1f, -0.7f);
+                if (hit) explodeInFrontPartialLooking(2.5f, 7, 0.1f, -0.7f);
 
                 cooldown = getMaxAttackTime() * 2;
                 nextStageTimer = 0;
@@ -169,7 +181,7 @@ public class ServerCombatSystem {
             }
         }
         if (attackType == AttackType.KICK) {
-            explodeInFrontFlat(1.5f, 4, -0.85f, 0);
+            if (hit) explodeInFrontFlat(1.5f, 4, -0.85f, 0);
 
             cooldown = (int) (getMaxAttackTime() * 1.5f);
             nextStageTimer += nextStageTimer / 2;
@@ -177,7 +189,8 @@ public class ServerCombatSystem {
             sendUpdateStageTimer(nextStageTimer);
         }
 
-        exhaust((int) staminaToUse);
+        if (hit) exhaust((int) staminaToUse);
+        PlayerUtil.playSoundToAll(player.level(), player.getX(), player.getEyeY(), player.getZ(), 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 3, (float) (1 - staminaToUse / 25));
     }
 
     public void exhaust(int stamina) {
