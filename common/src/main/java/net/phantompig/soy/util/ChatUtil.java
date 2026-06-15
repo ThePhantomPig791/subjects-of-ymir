@@ -25,10 +25,10 @@ public class ChatUtil {
     public static final List<List<Character>> CHARACTER_WIDTHS = List.of(EXTRA_WIDTH_CHARACTERS, WIDE_CHARACTERS, NORMAL_WIDTH_CHARACTERS, NARROW_WIDTH_CHARACTERS, EXTRA_NARROW_CHARACTERS);
 
     public static Component gibberishify(Component message) {
-        return Component.literal(gibbberishify(message.getString())).withStyle(ChatFormatting.OBFUSCATED);
+        return Component.literal(gibberishify(message.getString())).withStyle(ChatFormatting.OBFUSCATED);
     }
 
-    public static String gibbberishify(String string) {
+    public static String gibberishify(String string) {
         StringBuilder builder = new StringBuilder(string.length());
         for (int i = 0; i < string.length(); i++) {
             char c = string.charAt(i);
