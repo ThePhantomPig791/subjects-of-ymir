@@ -263,6 +263,38 @@
                 }
             ],
             "conditions": []
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:map",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:exploration_map",
+                            "destination": "subjects_of_ymir:on_founding_tree_explorer_maps",
+                            "decoration": "target_point",
+                            "zoom": 3,
+                            "search_radius": 80,
+                            "skip_existing_chunks": false
+                        },
+                        {
+                            "function": "minecraft:set_name",
+                            "name": {
+                                "translate": "filled_map.founding_tree"
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.25
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
