@@ -139,6 +139,7 @@ public class ServerCombatSystem {
         }
 
         double staminaToUse = player.getAttribute(Attributes.ATTACK_DAMAGE).getValue();
+        if (!player.level().getCollisions(player, player.getBoundingBox().inflate(-1, -2, -1).move(player.getLookAngle().scale(5))).iterator().hasNext()) staminaToUse = 0;
         if (attackType == AttackType.PUNCH) {
             if (attackStage < 3) {
                 explodeInFrontPartialLooking(1.5f, 5, 0, -0.2f);
