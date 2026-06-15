@@ -79,7 +79,9 @@ public class Titan {
 
     public final TitanStats stats;
 
-    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, Color baseEyeColor, TitanStats stats, double weight, int defaultMaxStamina) {
+    public final boolean canSpeak;
+
+    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, Color baseEyeColor, TitanStats stats, double weight, int defaultMaxStamina, boolean canSpeak) {
         this.id = id;
         this.variants = variants;
         this.resolution = resolution;
@@ -91,6 +93,7 @@ public class Titan {
         this.stats = stats;
         this.weight = weight;
         this.defaultMaxStamina = defaultMaxStamina;
+        this.canSpeak = canSpeak;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
     }
@@ -426,6 +429,7 @@ public class Titan {
         builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));
         builder.weight = GsonHelper.getAsDouble(json, "weight", 1);
         builder.defaultMaxStamina = GsonHelper.getAsInt(json, "default_max_stamina", 100);
+        builder.canSpeak = GsonHelper.getAsBoolean(json, "can_speak", false);
         return builder.create();
     }
 
@@ -450,11 +454,12 @@ public class Titan {
         public TitanStats stats;
         public double weight;
         public int defaultMaxStamina;
+        public boolean canSpeak;
 
         public TitanBuilder() {}
 
         public Titan create() {
-            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, baseEyeColor, stats, weight, defaultMaxStamina);
+            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, baseEyeColor, stats, weight, defaultMaxStamina, canSpeak);
         }
 
         public TitanBuilder withStats(TitanStats stats) {
@@ -523,7 +528,8 @@ public class Titan {
                 buf.readBoolean() ? new Color(buf.readInt(), buf.readInt(), buf.readInt()) : new Color(buf.readInt(), buf.readInt(), buf.readInt(), 0),
                 TitanStats.fromNetwork(buf),
                 buf.readDouble(),
-                buf.readInt()
+                buf.readInt(),
+                buf.readBoolean()
         );
     }
     public static void toNetwork(Titan titan, FriendlyByteBuf buf) {
@@ -540,5 +546,6 @@ public class Titan {
         TitanStats.toNetwork(titan.stats, buf);
         buf.writeDouble(titan.weight);
         buf.writeInt(titan.defaultMaxStamina);
+        buf.writeBoolean(titan.canSpeak);
     }
 }

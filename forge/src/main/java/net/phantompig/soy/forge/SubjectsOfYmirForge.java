@@ -39,7 +39,7 @@ public class SubjectsOfYmirForge {
 
     @SubscribeEvent
     public void obfuscateChatFromTitan(ServerChatEvent event) {
-        if (event.getPlayer() instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
+        if (event.getPlayer() instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0 && ext.getTitanInstance().titan != null && !ext.getTitanInstance().titan.canSpeak) {
             event.setMessage(ChatUtil.gibberishify(event.getMessage()));
         }
     }
