@@ -14,6 +14,7 @@ import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -25,6 +26,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlockTags;
@@ -153,8 +157,15 @@ public class Titan {
                     for (int dz = -evaporationRange; dz <= evaporationRange; dz++) {
                         if (dx * dx + dy * dy + dz * dz > evaporationRangeSqr) continue;
                         BlockPos pos = entity.blockPosition().offset(dx, dy, dz);
-                        if (entity.level().getBlockState(pos).is(Blocks.WATER)) entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                        if (entity.level().getBlockState(pos).is(Blocks.WATER_CAULDRON)) entity.level().setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
+                        if (entity.level().getFluidState(pos).is(FluidTags.WATER)) {
+                            final BlockState state = entity.level().getBlockState(pos);
+                            if (state.getBlock() instanceof BucketPickup bucketPickup) {
+                                bucketPickup.pickupBlock(entity.level(), pos, state);
+                            } else if (state.getBlock() instanceof LiquidBlock || state.is(Blocks.KELP) || state.is(Blocks.KELP_PLANT) || state.is(Blocks.SEAGRASS) || state.is(Blocks.TALL_SEAGRASS) || state.is(Blocks.SEA_PICKLE)) {
+                                entity.level().destroyBlock(pos, true);
+                                entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                            }
+                        }
                     }
                 }
             }
