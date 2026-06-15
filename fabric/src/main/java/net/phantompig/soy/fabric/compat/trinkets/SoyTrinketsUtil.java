@@ -28,6 +28,8 @@ public class SoyTrinketsUtil extends SoyCuriosTrinketsUtil {
 
     @Override
     public void clear(LivingEntity entity) {
-        this.read(entity, new CompoundTag());
+        if (Platform.isModLoaded("trinkets")) {
+            TrinketsApi.getTrinketComponent(entity).ifPresent(com -> com.getAllEquipped().forEach(tuple -> tuple.getA().inventory().clearContent()));
+        }
     }
 }

@@ -325,14 +325,14 @@ public class Titan {
             HardeningSystem.copyTo(hardh.soy$getHardeningSystem(), corpse.hardeningSystem);
             if (corpse.titanInstance.titan == null) {
                 corpse.discard();
-                return;
-            }
-            if (shouldCorpseDecay) corpse.titanInstance.isCorpse = true;
-            corpse.titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
-            corpse.titanInstance.setScaleImmediate();
-            SuperpowerUtil.addSuperpower(corpse, corpse.titanInstance.titan.powerPath);
+            } else {
+                if (shouldCorpseDecay) corpse.titanInstance.isCorpse = true;
+                corpse.titanInstance.setDecay(TitanInstance.START_CORPSE_DECAY);
+                corpse.titanInstance.setScaleImmediate();
+                SuperpowerUtil.addSuperpower(corpse, corpse.titanInstance.titan.powerPath);
 
-            entity.level().addFreshEntity(corpse);
+                entity.level().addFreshEntity(corpse);
+            }
         }
 
 
