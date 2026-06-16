@@ -23,6 +23,9 @@
     ],
     "jei_mod_plugin": [
       "net.phantompig.soy.compat.jei.SoyJeiPlugin"
+    ],
+    "voicechat": [
+      "net.phantompig.soy.compat.voicechat.SoyVoicechatPlugin"
     ]
   },
   "mixins": [
