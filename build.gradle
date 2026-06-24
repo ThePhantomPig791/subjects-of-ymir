@@ -28,7 +28,7 @@ subprojects {
         }
 
         implementation("dev.kosmx.player-anim:anim-core:${project.player_anim_version}")
-        modImplementation("dev.kosmx.player-anim:player-animation-lib:${project.player_anim_version}")
+        modCompileOnly "dev.kosmx.player-anim:player-animation-lib:${project.player_anim_version}"
 
         modImplementation "mezz.jei:jei-${rootProject.minecraft_version}-common-api:${project.jei_version}"
         modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
