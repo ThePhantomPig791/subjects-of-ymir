@@ -14,7 +14,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.entity.FlareEntity;
@@ -49,7 +48,7 @@ public class FlareGunItem extends ItemStackHoldingItem {
         if (cartridgeStack.getItem() instanceof FlareCartridgeItem cartridgeItem && cartridgeItem.hasColor(cartridgeStack)) {
             FlareEntity flareEntity = new FlareEntity(SoyEntities.FLARE.get(), level);
             flareEntity.setPos(livingEntity.getEyePosition());
-            flareEntity.shootFromRotation(livingEntity, livingEntity.getXRot(), livingEntity.getYRot(), 0, 12, 15 - Math.min(15, 0.25f * (this.getUseDuration(stack) - timeCharged)));
+            flareEntity.shootFromRotation(livingEntity,  livingEntity.isCrouching() ? livingEntity.getXRot() : -90, livingEntity.getYRot(), 0, 12, 15 - Math.min(15, 0.25f * (this.getUseDuration(stack) - timeCharged)));
             int color = cartridgeItem.getColor(cartridgeStack);
             flareEntity.setColor(color);
             level.addFreshEntity(flareEntity);
@@ -61,7 +60,7 @@ public class FlareGunItem extends ItemStackHoldingItem {
 
             PlayerUtil.spawnParticleForAll(level,
                     64,
-                    new FlareParticleOptions(new Vector3f((color >> 16) & 0xFF, (color >> 8) & 0xFF, (color) & 0xFF).mul(255), 0.05f),
+                    new FlareParticleOptions(new Vector3f((color >> 16) & 0xFF, (color >> 8) & 0xFF, (color) & 0xFF).mul(255), 0.6f),
                     false,
                     livingEntity.getX(),
                     livingEntity.getEyeY(),
@@ -70,7 +69,7 @@ public class FlareGunItem extends ItemStackHoldingItem {
                     0.05f,
                     0.1f,
                     0.02f,
-                    8
+                    2
             );
 
             livingEntity.level().getEntities(null, livingEntity.getBoundingBox().inflate(32)).forEach(e -> {
@@ -116,10 +115,5 @@ public class FlareGunItem extends ItemStackHoldingItem {
     @Override
     public int getUseDuration(ItemStack stack) {
         return 72000;
-    }
-
-    @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-        return UseAnim.BOW;
     }
 }
