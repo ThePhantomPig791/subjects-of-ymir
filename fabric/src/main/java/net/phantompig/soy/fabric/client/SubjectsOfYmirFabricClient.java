@@ -7,5 +7,6 @@ public class SubjectsOfYmirFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         SubjectsOfYmirClient.init();
+        SubjectsOfYmirClient.setup();
     }
 }

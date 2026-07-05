@@ -3,9 +3,10 @@
   "id": "subjects_of_ymir",
   "version": "${version}",
   "name": "${mod_name}",
-  "description": "",
+  "description": "Attack on Titan in Minecraft - Titan Shifting, ODM Gear, and More!",
   "authors": [
-    "${mod_author}"
+    "${mod_author}",
+    "Sugar04k"
   ],
   "contact": {
     "sources": "https://github.com/ThePhantomPig791/subjects-of-ymir",

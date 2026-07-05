@@ -8,14 +8,16 @@ modId = "subjects_of_ymir"
 version = "${version}"
 displayName = "${mod_name}"
 authors = "${mod_author}"
+credits = "Sugar04k - Artist"
 description = '''
-Subjects of Ymir
+Attack on Titan in Minecraft - Titan Shifting, ODM Gear, and More!
 '''
-#logoFile = ""
+logoFile = "icon.png"
 
 [[dependencies.subjects_of_ymir]]
 modId = "forge"
 type = "required"
+mandatory = true
 versionRange = "[43,)"
 ordering = "NONE"
 side = "BOTH"
@@ -23,6 +25,7 @@ side = "BOTH"
 [[dependencies.subjects_of_ymir]]
 modId = "minecraft"
 type = "required"
+mandatory = true
 versionRange = "1.20.1"
 ordering = "NONE"
 side = "BOTH"
@@ -30,6 +33,7 @@ side = "BOTH"
 [[dependencies.subjects_of_ymir]]
 modId = "palladium"
 type = "required"
+mandatory = true
 versionRange = "[1.20.1-4.5.1,)"
 ordering = "AFTER"
 side = "BOTH"
@@ -37,6 +41,7 @@ side = "BOTH"
 [[dependencies.subjects_of_ymir]]
 modId = "geckolib"
 type = "required"
+mandatory = true
 versionRange = "[4.4.4,)"
 ordering = "AFTER"
 side = "CLIENT"
@@ -44,6 +49,7 @@ side = "CLIENT"
 [[dependencies.subjects_of_ymir]]
 modId = "pehkui"
 type = "required"
+mandatory = true
 versionRange = "[3.7.12,)"
 ordering = "AFTER"
 side = "BOTH"

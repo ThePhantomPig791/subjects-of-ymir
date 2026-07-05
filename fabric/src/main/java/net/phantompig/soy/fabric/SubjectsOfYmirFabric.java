@@ -24,6 +24,7 @@ public class SubjectsOfYmirFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         SubjectsOfYmir.init();
+        SubjectsOfYmir.setup();
 
         ForgeConfigRegistry.INSTANCE.register(SubjectsOfYmir.MOD_ID, ModConfig.Type.SERVER, SoyConfig.Server.generateConfig());
 

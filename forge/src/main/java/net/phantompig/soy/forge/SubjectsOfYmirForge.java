@@ -4,6 +4,8 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +37,16 @@ public class SubjectsOfYmirForge {
         }
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Forge!");
+    }
+
+    @SubscribeEvent
+    public void commonSetup(FMLCommonSetupEvent event) {
+        SubjectsOfYmir.setup();
+    }
+
+    @SubscribeEvent
+    public void clientSetup(FMLClientSetupEvent event) {
+        SubjectsOfYmirClient.setup();
     }
 
     @SubscribeEvent

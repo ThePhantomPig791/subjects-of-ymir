@@ -142,6 +142,10 @@ public class SubjectsOfYmir {
         });
     }
 
+    public static void setup() {
+        SoyStats.setup();
+    }
+
     public static ResourceLocation rsrc(String path) {
         return new ResourceLocation(MOD_ID, path);
     }

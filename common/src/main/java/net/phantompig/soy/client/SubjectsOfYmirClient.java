@@ -3,6 +3,7 @@ package net.phantompig.soy.client;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,10 +21,12 @@ import net.phantompig.soy.client.entity.TitanCorpseEntityRenderer;
 import net.phantompig.soy.client.model.TitanCorpseModelLayer;
 import net.phantompig.soy.client.renderer.PlayerInNapeRenderLayer;
 import net.phantompig.soy.client.renderer.LightningSphereRenderLayer;
+import net.phantompig.soy.client.screen.CompressionScreen;
 import net.phantompig.soy.client.screen.overlay.SoyOverlays;
 import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.*;
+import net.phantompig.soy.menu.SoyMenus;
 import net.phantompig.soy.particle.*;
 import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
@@ -71,11 +74,6 @@ public class SubjectsOfYmirClient {
         ParticleProviderRegistry.register(SoyParticles.DIRT_CLOUD, DirtCloudParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.FLARE, FlareParticleType.Provider::new);
 
-        ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
-        ItemProperties.register(SoyItems.VIAL.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
-        ItemProperties.register(SoyItems.FLARE_GUN.get(), SubjectsOfYmir.rsrc("flare_gun"), (itemStack, clientLevel, livingEntity, i) -> itemStack.getItem() instanceof FlareGunItem flareGunItem && !flareGunItem.getStack(itemStack).isEmpty() ? 1 : 0);
-        ItemProperties.register(SoyItems.BLADE_HANDLE.get(), SubjectsOfYmir.rsrc("blade"), SubjectsOfYmirClient::getBladeForHandleItem);
-
         ColorHandlerRegistry.registerItemColors((stack, i) -> {
             if (i > 0) return -1;
             else {
@@ -100,6 +98,15 @@ public class SubjectsOfYmirClient {
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/all_hardening", SoyOverlays::renderAllHardeningOverlay);
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");
+    }
+
+    public static void setup() {
+        ItemProperties.register(SoyItems.INJECTION.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
+        ItemProperties.register(SoyItems.VIAL.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
+        ItemProperties.register(SoyItems.FLARE_GUN.get(), SubjectsOfYmir.rsrc("flare_gun"), (itemStack, clientLevel, livingEntity, i) -> itemStack.getItem() instanceof FlareGunItem flareGunItem && !flareGunItem.getStack(itemStack).isEmpty() ? 1 : 0);
+        ItemProperties.register(SoyItems.BLADE_HANDLE.get(), SubjectsOfYmir.rsrc("blade"), SubjectsOfYmirClient::getBladeForHandleItem);
+
+        MenuScreens.register(SoyMenus.COMPRESSION.get(), CompressionScreen::new);
     }
 
     private static float getModelProgressForDataItem(ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) {
