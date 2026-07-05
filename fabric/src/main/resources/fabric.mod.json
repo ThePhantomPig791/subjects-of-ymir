@@ -8,8 +8,8 @@
     "${mod_author}"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/ThePhantomPig791/subjects-of-ymir",
+    "discord": "https://discord.gg/gwnfUCEXBx"
   },
   "license": "${mod_license}",
   "icon": "assets/subjects_of_ymir/icon.png",

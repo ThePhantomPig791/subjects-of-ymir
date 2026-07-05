@@ -45,7 +45,7 @@ dependencies {
 
     modCompileOnly "dev.emi:trinkets:${rootProject.trinkets_version}"
 
-    modImplementation "dev.kosmx.player-anim:player-animation-lib-fabric:${rootProject.player_anim_version}"
+    // modImplementation "dev.kosmx.player-anim:player-animation-lib-fabric:${rootProject.player_anim_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

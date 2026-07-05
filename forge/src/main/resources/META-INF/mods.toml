@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[43,)"
-#issueTrackerURL = ""
+issueTrackerURL = "https://github.com/ThePhantomPig791/subjects-of-ymir/issues"
 license = "${mod_license}"
 
 [[mods]]
