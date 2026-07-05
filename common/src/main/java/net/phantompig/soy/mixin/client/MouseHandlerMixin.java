@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.phantompig.soy.property.SoyProperties;
+import net.threetag.palladiumcore.util.Platform;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +25,7 @@ public abstract class MouseHandlerMixin {
     @ModifyVariable(method = "turnPlayer", at = @At(value = "STORE"), ordinal = 3)
     public double soy$adjustSmoothCameraFactor(double h, @Local(ordinal = 2) double g) {
         if (SoyProperties.PROGRESS.get(this.minecraft.player) == 0) return h;
-        return g * 160 / SoyProperties.ATTACK_TIME.get(this.minecraft.player);
+        int magicNumber = Platform.isForge() ? 25 : 1; // don't ask
+        return g * 160 / SoyProperties.ATTACK_TIME.get(this.minecraft.player) / magicNumber;
     }
 }
