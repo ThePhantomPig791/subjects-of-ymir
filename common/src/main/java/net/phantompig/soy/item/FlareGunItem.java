@@ -2,6 +2,7 @@ package net.phantompig.soy.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -85,7 +86,20 @@ public class FlareGunItem extends ItemStackHoldingItem {
             sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
         }
 
-        PlayerUtil.spawnParticleForAll(level, 64, (ParticleOptions) SoyParticles.EMBER.get(), false, livingEntity.getX(), livingEntity.getEyeY(), livingEntity.getZ(), 1, 1, 1, 1.2f, 24);
+        PlayerUtil.spawnParticleForAll(level, 64, (ParticleOptions) SoyParticles.EMBER.get(), false, livingEntity.getX(), livingEntity.getEyeY(), livingEntity.getZ(), 1, 1, 1, 1.2f, 12);
+        PlayerUtil.spawnParticleForAll(level,
+                64,
+                ParticleTypes.LARGE_SMOKE,
+                false,
+                livingEntity.getX(),
+                livingEntity.getEyeY(),
+                livingEntity.getZ(),
+                0.1f,
+                0.05f,
+                0.1f,
+                0.06f,
+                5
+        );
 
         if (!(livingEntity instanceof Player player && player.getAbilities().instabuild)) {
             this.setStack(stack, ItemStack.EMPTY);
