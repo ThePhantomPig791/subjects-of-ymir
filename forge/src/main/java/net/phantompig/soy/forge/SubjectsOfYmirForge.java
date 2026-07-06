@@ -19,6 +19,7 @@ import net.threetag.palladiumcore.forge.PalladiumCoreForge;
 import net.threetag.palladiumcore.util.Platform;
 
 @Mod(SubjectsOfYmir.MOD_ID)
+@Mod.EventBusSubscriber(modid = SubjectsOfYmir.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SubjectsOfYmirForge {
     @SuppressWarnings("removal")
     public SubjectsOfYmirForge() {
@@ -40,19 +41,22 @@ public class SubjectsOfYmirForge {
     }
 
     @SubscribeEvent
-    public void commonSetup(FMLCommonSetupEvent event) {
+    public static void commonSetup(FMLCommonSetupEvent event) {
         SubjectsOfYmir.setup();
     }
 
     @SubscribeEvent
-    public void clientSetup(FMLClientSetupEvent event) {
-        SubjectsOfYmirClient.setup();
+    public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(SubjectsOfYmirClient::setup);
     }
 
-    @SubscribeEvent
-    public void obfuscateChatFromTitan(ServerChatEvent event) {
-        if (event.getPlayer() instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0 && ext.getTitanInstance().titan != null && !ext.getTitanInstance().titan.canSpeak) {
-            event.setMessage(ChatUtil.gibberishify(event.getMessage()));
+    @Mod.EventBusSubscriber(modid = SubjectsOfYmir.MOD_ID)
+    public static class SubjectsOfYmirForgeEvents {
+        @SubscribeEvent
+        public static void obfuscateChatFromTitan(ServerChatEvent event) {
+            if (event.getPlayer() instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0 && ext.getTitanInstance().titan != null && !ext.getTitanInstance().titan.canSpeak) {
+                event.setMessage(ChatUtil.gibberishify(event.getMessage()));
+            }
         }
     }
 }

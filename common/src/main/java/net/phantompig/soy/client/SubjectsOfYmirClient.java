@@ -107,6 +107,8 @@ public class SubjectsOfYmirClient {
         ItemProperties.register(SoyItems.BLADE_HANDLE.get(), SubjectsOfYmir.rsrc("blade"), SubjectsOfYmirClient::getBladeForHandleItem);
 
         MenuScreens.register(SoyMenus.COMPRESSION.get(), CompressionScreen::new);
+
+        SubjectsOfYmir.LOGGER.info("Subjects of Ymir client setup complete");
     }
 
     private static float getModelProgressForDataItem(ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) {

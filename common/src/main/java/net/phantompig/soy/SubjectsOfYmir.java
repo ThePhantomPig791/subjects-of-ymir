@@ -144,6 +144,8 @@ public class SubjectsOfYmir {
 
     public static void setup() {
         SoyStats.setup();
+
+        SubjectsOfYmir.LOGGER.info("Subjects of Ymir setup complete");
     }
 
     public static ResourceLocation rsrc(String path) {
