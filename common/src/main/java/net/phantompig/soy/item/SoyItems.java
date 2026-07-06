@@ -159,9 +159,9 @@ public class SoyItems {
             entries.add(IRON_BAMBOO_DAGGER.get());
             entries.add(IRON_BAMBOO_RING.get());
             entries.add(COMPRESSION_TABLE.get());
-            entries.add(BLADE.get());
             entries.add(GAS_CANISTER.get());
             entries.add(GAS_CANISTER.get().getDefaultInstance());
+            entries.add(BLADE.get());
             entries.add(BLADE_HANDLE.get());
             OdmComponents.initCreativeMenu(entries);
             for (RegistrySupplier<Item> s : UNIFORMS.values()) {
