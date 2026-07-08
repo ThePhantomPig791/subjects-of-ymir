@@ -114,6 +114,23 @@
 					]
 				}
 			]
+		},
+		{
+			"rolls": 2,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:blade",
+					"weight": 1,
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.1
+						}
+					]
+				}
+			]
 		}
 	]
 }
