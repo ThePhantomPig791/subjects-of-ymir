@@ -1,9 +1,11 @@
 package net.phantompig.soy.mixin.client;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.phantompig.soy.client.SoyKeyMappings;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.combat.ClientCombatSystem;
 import net.phantompig.soy.item.OdmHandleItem;
@@ -25,9 +27,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin implements ClientCombatHolder {
-    @Shadow @Nullable public LocalPlayer player;
+    @Shadow
+    @Nullable
+    public LocalPlayer player;
 
-    @Shadow @Final public Options options;
+    @Shadow
+    @Final
+    public Options options;
     @Unique
     public ClientCombatSystem soy$combatSystem;
 
@@ -100,16 +106,37 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
     public void soy$handleOdmKeybinds(CallbackInfo ci) {
         if (this.player == null) return;
         ItemStack itemStack = player.getMainHandItem();
+        ItemStack itemStack1 = player.getOffhandItem();
+
         if (itemStack.getItem() instanceof OdmHandleItem) {
-            while (this.options.keyInventory.consumeClick()) {
+            while (this.soy$consumeClick(SoyKeyMappings.RIGHT_HOOK)) {
                 SoyNetwork.NETWORK.sendToServer(new OdmHandlePressMessage(true));
             }
         }
-        itemStack = player.getOffhandItem();
-        if (itemStack.getItem() instanceof OdmHandleItem) {
-            while (this.options.keyDrop.consumeClick()) {
+
+        if (itemStack1.getItem() instanceof OdmHandleItem) {
+            while (this.soy$consumeClick(SoyKeyMappings.LEFT_HOOK)) {
                 SoyNetwork.NETWORK.sendToServer(new OdmHandlePressMessage(false));
             }
         }
+    }
+
+    @Unique
+    private boolean soy$consumeClick(KeyMapping key) {
+        if (key.consumeClick()) {
+            return true;
+        }
+
+        if (this.options.keyMappings != null) {
+            for (KeyMapping keyMapping : this.options.keyMappings) {
+                if (keyMapping != key && keyMapping.same(key)) {
+                    while (keyMapping.consumeClick()) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
