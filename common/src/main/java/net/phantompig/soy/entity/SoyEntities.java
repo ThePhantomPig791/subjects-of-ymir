@@ -26,6 +26,11 @@ public class SoyEntities {
             () -> EntityType.Builder.of(FlareEntity::new, MobCategory.MISC).sized(1, 1).updateInterval(1).clientTrackingRange(512).build("flare")
     );
 
+    public static RegistrySupplier<EntityType<ThrownBladeEntity>> THROWN_BLADE = ENTITY_TYPES.register(
+            "thrown_blade",
+            () -> EntityType.Builder.of(ThrownBladeEntity::new, MobCategory.MISC).sized(1, 1).updateInterval(10).clientTrackingRange(64).build("thrown_blade")
+    );
+
     public static void init() {
         ENTITY_TYPES.register();
 

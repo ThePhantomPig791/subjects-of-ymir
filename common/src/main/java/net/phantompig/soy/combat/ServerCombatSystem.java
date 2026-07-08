@@ -11,11 +11,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.item.BladeHandleItem;
+import net.phantompig.soy.item.BladeItem;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.network.*;
 import net.phantompig.soy.player.SoyPlayerExtension;
@@ -134,15 +136,21 @@ public class ServerCombatSystem {
     public void stopHolding() {
         SoyProperties.ODM_HOLD_ATTACK_INCREASING.set(this.player, false);
 
+        ItemStack mainHandItem = this.player.getMainHandItem();
+        ItemStack offHandItem = this.player.getOffhandItem();
+        if (mainHandItem.getItem() instanceof BladeHandleItem handleMain && offHandItem.getItem() instanceof BladeHandleItem handleOff) {
+            if (!(handleMain.getStack(mainHandItem).getItem() instanceof BladeItem) || !(handleOff.getStack(offHandItem).getItem() instanceof BladeItem)) return;
+        }
+
         if (SoyProperties.ODM_HOLD_ATTACK.get(this.player) == 5) {
             List<Entity> entitiesInRange = getEntitiesInOdmRange();
             entitiesInRange.forEach(e -> {
                 if (e instanceof LivingEntity living) {
-                    if (this.player.getMainHandItem().getItem() instanceof BladeHandleItem handle) {
-                        handle.hurtEnemy(this.player.getMainHandItem(), living, this.player);
+                    if (mainHandItem.getItem() instanceof BladeHandleItem handle) {
+                        handle.hurtEnemy(mainHandItem, living, this.player);
                     }
-                    if (this.player.getOffhandItem().getItem() instanceof BladeHandleItem handle) {
-                        handle.hurtEnemy(this.player.getOffhandItem(), living, this.player);
+                    if (offHandItem.getItem() instanceof BladeHandleItem handle) {
+                        handle.hurtEnemy(offHandItem, living, this.player);
                     }
                 }
             });
@@ -173,7 +181,9 @@ public class ServerCombatSystem {
     }
 
     public List<Entity> getEntitiesInOdmRange() {
-        return this.player.level().getEntities(this.player, this.player.getBoundingBox().move(this.player.getLookAngle().scale(2)).inflate(2, 0, 2));
+        List<Entity> list = this.player.level().getEntities(this.player, this.player.getBoundingBox().move(this.player.getLookAngle().scale(2)).inflate(2, 0, 2));
+        list.removeIf(e -> !(e instanceof LivingEntity));
+        return list;
     }
 
     public void tick() {

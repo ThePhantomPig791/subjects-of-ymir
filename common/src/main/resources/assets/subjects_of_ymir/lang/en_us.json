@@ -50,6 +50,9 @@
 
 
   "entity.subjects_of_ymir.titan_corpse": "Titan Corpse",
+  "entity.subjects_of_ymir.odm_node": "ODM Hook",
+  "entity.subjects_of_ymir.flare": "Signal Flare",
+  "entity.subjects_of_ymir.thrown_blade": "Blade",
 
 
   "painting.subjects_of_ymir.devil.title": "Devil",
