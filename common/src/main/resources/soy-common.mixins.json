@@ -5,6 +5,7 @@
   "client": [
     "client.GameRendererMixin",
     "client.GuiMixin",
+    "client.KeyMappingMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
