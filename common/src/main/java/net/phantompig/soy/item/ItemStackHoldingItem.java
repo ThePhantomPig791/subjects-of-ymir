@@ -29,7 +29,7 @@ public abstract class ItemStackHoldingItem extends Item {
         ItemStack itemStack = player.getItemInHand(usedHand);
         if (this.getStack(itemStack).isEmpty()) {
             ItemStack otherStack = player.getItemInHand(usedHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-            if (otherStack.getItem() instanceof FlareCartridgeItem) {
+            if (this.canHold.test(otherStack)) {
                 this.insertStack(itemStack, otherStack, player);
                 return InteractionResultHolder.consume(itemStack);
             }
