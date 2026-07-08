@@ -32,7 +32,7 @@ public class ThrownBladeEntityRenderer extends EntityRenderer<ThrownBladeEntity>
         poseStack.pushPose();
         poseStack.scale(2, 2, 2);
         poseStack.translate(0, 0.25, 0);
-        poseStack.mulPose(Axis.YP.rotationDegrees(90 - entityYaw));
+        poseStack.mulPose(Axis.YP.rotationDegrees(entityYaw - 90));
         poseStack.mulPose(Axis.ZN.rotationDegrees((float) (10 * entity.getDeltaMovement().lengthSqr() * (entity.tickCount + partialTick))));
         this.itemRenderer.renderStatic(entity.getItem(), ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, entity.level(), entity.getId());
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
