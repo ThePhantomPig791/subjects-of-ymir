@@ -112,11 +112,31 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
             while (this.soy$consumeClick(SoyKeyMappings.RIGHT_HOOK)) {
                 SoyNetwork.NETWORK.sendToServer(new OdmHandlePressMessage(true));
             }
+        } else {
+            while (SoyKeyMappings.RIGHT_HOOK.consumeClick()) {
+            }
         }
 
         if (itemStack1.getItem() instanceof OdmHandleItem) {
             while (this.soy$consumeClick(SoyKeyMappings.LEFT_HOOK)) {
                 SoyNetwork.NETWORK.sendToServer(new OdmHandlePressMessage(false));
+            }
+        } else {
+            while (SoyKeyMappings.LEFT_HOOK.consumeClick()) {
+            }
+        }
+
+
+        if (this.options.keyMappings != null) {
+            for (KeyMapping keyMapping : this.options.keyMappings) {
+                if (itemStack.getItem() instanceof OdmHandleItem
+                        && keyMapping != SoyKeyMappings.RIGHT_HOOK && keyMapping.same(SoyKeyMappings.RIGHT_HOOK)) {
+                    keyMapping.setDown(false);
+                }
+                if (itemStack1.getItem() instanceof OdmHandleItem
+                        && keyMapping != SoyKeyMappings.LEFT_HOOK && keyMapping.same(SoyKeyMappings.LEFT_HOOK)) {
+                    keyMapping.setDown(false);
+                }
             }
         }
     }
