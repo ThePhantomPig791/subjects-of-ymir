@@ -14,6 +14,7 @@ import net.phantompig.soy.client.animation.*;
 import net.phantompig.soy.client.animation.modifier.TitanAttackSpeedModifier;
 import net.phantompig.soy.client.entity.FlareEntityRenderer;
 import net.phantompig.soy.client.entity.OdmNodeEntityRenderer;
+import net.phantompig.soy.client.entity.ThrownBladeEntityRenderer;
 import net.phantompig.soy.client.entity.TitanCorpseEntityRenderer;
 import net.phantompig.soy.client.model.TitanCorpseModelLayer;
 import net.phantompig.soy.client.renderer.PlayerInNapeRenderLayer;
@@ -58,13 +59,14 @@ public class SubjectsOfYmirClient {
             registry.accept(SubjectsOfYmir.rsrc("bite"), BiteAnimation.INSTANCE);
             registry.accept(SubjectsOfYmir.rsrc("dagger"), DaggerAnimation.INSTANCE);
             registry.accept(SubjectsOfYmir.rsrc("flare_gun"), FlareGunAnimation.INSTANCE);
-            registry.accept(SubjectsOfYmir.rsrc("odm_hold_attack"), OdmHoldAttackAnimation.INSTANCE);
+            registry.accept(SubjectsOfYmir.rsrc("odm"), OdmAnimation.INSTANCE);
         });
 
         EntityRendererRegistry.register(SoyEntities.TITAN_CORPSE, TitanCorpseEntityRenderer::new);
         EntityRendererRegistry.registerModelLayer(TitanCorpseModelLayer.TITAN_CORPSE_MODEL_LAYER_LOCATION, TitanCorpseModelLayer::createBodyLayer);
         EntityRendererRegistry.register(SoyEntities.ODM_NODE, OdmNodeEntityRenderer::new);
         EntityRendererRegistry.register(SoyEntities.FLARE, FlareEntityRenderer::new);
+        EntityRendererRegistry.register(SoyEntities.THROWN_BLADE, ThrownBladeEntityRenderer::new);
 
         ParticleProviderRegistry.register(SoyParticles.SMALL_STEAM, SmallSteamParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.LARGE_STEAM, LargeSteamParticleType.Provider::new);
@@ -94,6 +96,8 @@ public class SubjectsOfYmirClient {
 
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/titan_exhaustion", SoyOverlays::renderExhaustionOverlay);
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/all_hardening", SoyOverlays::renderAllHardeningOverlay);
+
+        // SoyKeyMappings.init();
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");
     }

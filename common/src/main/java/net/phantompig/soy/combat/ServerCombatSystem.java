@@ -139,7 +139,7 @@ public class ServerCombatSystem {
         ItemStack mainHandItem = this.player.getMainHandItem();
         ItemStack offHandItem = this.player.getOffhandItem();
         if (mainHandItem.getItem() instanceof BladeHandleItem handleMain && offHandItem.getItem() instanceof BladeHandleItem handleOff) {
-            if (!(handleMain.getStack(mainHandItem).getItem() instanceof BladeItem) || !(handleOff.getStack(offHandItem).getItem() instanceof BladeItem)) return;
+            if (!(handleMain.getStack(mainHandItem).getItem() instanceof BladeItem || handleOff.getStack(offHandItem).getItem() instanceof BladeItem)) return;
         }
 
         if (SoyProperties.ODM_HOLD_ATTACK.get(this.player) == 5) {

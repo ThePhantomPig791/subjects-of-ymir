@@ -87,7 +87,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
                         break;
                     }
                 }
-                this.stuck = newStuck;
+                this.stuck = newStuck; // if stuck to an entity, this will be set again (correctly) a few lines down
             }
 
             // stay stuck to entity
@@ -103,7 +103,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
 
             stuckTicks++;
         } else {
-            if (!this.isNoGravity()) {
+            if (!this.level().isClientSide() && !this.isNoGravity()) {
                 this.addDeltaMovement(new Vec3(0, -this.getGravity(), 0));
             }
         }
@@ -135,13 +135,15 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
 
     @Override
     protected void onHit(HitResult result) {
+        if (result instanceof EntityHitResult eHit && this.ownedBy(eHit.getEntity())) return;
+
         final float v = (float) (0.5 * this.getDeltaMovement().lengthSqr()), p = (float) (0.9 + 0.2 * Math.random());
         PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.HOOK_LAND.get(), SoundSource.PLAYERS, v, p);
         if (this.getOwner() instanceof Player pl) PlayerUtil.playSound(pl, this.getX(), this.getY(), this.getZ(), SoySounds.HOOK_LAND.get(), SoundSource.PLAYERS, v, p);
 
         this.stuck = true;
         this.setDeltaMovement(0, 0, 0);
-        this.setPos(result.getLocation());
+        if (result.getType() == HitResult.Type.BLOCK) this.setPos(result.getLocation());
         super.onHit(result);
     }
 
@@ -187,7 +189,9 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             return;
         }
         this.entityData.set(DATA_STUCK_ENTITY_ID, entity.getId());
-        this.entityData.set(DATA_STUCK_OFFSET, this.position().subtract(entity.position()).toVector3f());
+        Vec3 offset = this.position().subtract(entity.position());
+        offset = offset.subtract(offset.normalize().scale(entity.getBoundingBox().distanceToSqr(this.position()))).scale(0.9);
+        this.entityData.set(DATA_STUCK_OFFSET, offset.toVector3f());
         this.stuckEntityUuid = entity.getUUID();
     }
 

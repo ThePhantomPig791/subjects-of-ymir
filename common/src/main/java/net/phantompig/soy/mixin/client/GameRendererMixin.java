@@ -29,7 +29,7 @@ public abstract class GameRendererMixin {
 
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
     public void renderLevel(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo ci, @Local(ordinal = 1) PoseStack poseStack2) {
-        if (this.minecraft.player != null) {
+        if (this.minecraft.player != null && !this.minecraft.player.isPassenger()) {
             soy$adjustCameraAngle(soy$UP, soy$cameraPitch, 0.4);
             soy$adjustCameraAngle(this.minecraft.player.getLookAngle().cross(soy$UP), soy$cameraRoll, 0.715);
         }

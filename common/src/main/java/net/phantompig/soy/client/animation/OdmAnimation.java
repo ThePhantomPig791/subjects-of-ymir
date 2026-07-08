@@ -9,29 +9,46 @@ import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.model.animation.PalladiumAnimation;
 import net.threetag.palladium.util.Easing;
 
-public class OdmHoldAttackAnimation extends PalladiumAnimation {
+public class OdmAnimation extends PalladiumAnimation {
     private static final Vec3 RIGHT_ARM_HOLD = new Vec3(-140, -20, 20);
     private static final Vec3 LEFT_ARM_HOLD = new Vec3(-160, 5, 10);
     private static final Vec3 RIGHT_ARM_AIR = new Vec3(10, 15, 45);
     private static final Vec3 LEFT_ARM_AIR = new Vec3(10, -15, -45);
+    private static final Vec3 BODY_FALL = new Vec3(-75, 0, 0);
 
-    public static final OdmHoldAttackAnimation INSTANCE = new OdmHoldAttackAnimation();
-    public OdmHoldAttackAnimation() {
+    public static final OdmAnimation INSTANCE = new OdmAnimation();
+    public OdmAnimation() {
         super(0);
     }
 
     @Override
     public void animate(Builder builder, AbstractClientPlayer player, HumanoidModel<?> model, FirstPersonContext firstPersonContext, float partialTicks) {
+        if (player.isPassenger()) return;
+
         Vec3 rightArm = Vec3.ZERO;
         Vec3 leftArm = Vec3.ZERO;
+        Vec3 body = Vec3.ZERO;
 
-        double spd = player.getDeltaMovementLerped(partialTicks).multiply(1, 0.1, 1).lengthSqr();
+        double spd = player.getDeltaMovementLerped(partialTicks).lengthSqr();
         if (player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof OdmAttachableAddonArmorItem) {
-            float progress = (float) Math.cbrt(spd);
-            progress = 1.5f * progress / (progress + 0.5f);
-            if (progress > 0f) {
-                rightArm = rightArm.lerp(RIGHT_ARM_AIR, Easing.INCUBIC.apply(progress));
-                leftArm = leftArm.lerp(LEFT_ARM_AIR, Easing.INCUBIC.apply(progress));
+            if (!player.isVisuallySwimming()) {
+                Vec3 vert = player.getDeltaMovementLerped(partialTicks).multiply(0, 1, 0);
+                if (vert.y < -0.08) {
+                    float progress = (float) Math.cbrt(vert.lengthSqr());
+                    progress = 3 * progress / (progress + 5);
+                    if (progress > 0.1f) {
+                        body = body.lerp(BODY_FALL, Easing.INCIRC.apply(progress));
+                    }
+                }
+
+                if (!player.onGround()) {
+                    float progress = (float) Math.cbrt(spd);
+                    progress = 1.5f * progress / (progress + 0.5f);
+                    if (progress > 0f) {
+                        rightArm = rightArm.lerp(RIGHT_ARM_AIR, Easing.INCUBIC.apply(progress));
+                        leftArm = leftArm.lerp(LEFT_ARM_AIR, Easing.INCUBIC.apply(progress));
+                    }
+                }
             }
         }
 
@@ -48,13 +65,19 @@ public class OdmHoldAttackAnimation extends PalladiumAnimation {
         }
 
         spd = Math.cbrt(spd);
+        if (!body.equals(Vec3.ZERO)) {
+            builder.get(PlayerModelPart.BODY)
+                    .setXRotDegrees((float) body.x)
+                    .setYRotDegrees((float) body.y + 0.5f * (float) spd * (float) Math.sin(builder.getAgeInTicks()))
+                    .setZRotDegrees((float) body.z);
+        }
         if (!rightArm.equals(Vec3.ZERO)) {
             rightArm = rightArm.add(2 * spd * Math.sin(builder.getAgeInTicks()), spd * Math.sin(builder.getAgeInTicks() - 10), 0);
             builder.get(PlayerModelPart.RIGHT_ARM)
                     .setXRotDegrees((float) rightArm.x)
                     .setYRotDegrees((float) rightArm.y)
                     .setZRotDegrees((float) rightArm.z);
-            if (!player.onGround()) builder.get(PlayerModelPart.LEFT_LEG)
+            if (!player.onGround() && !player.isVisuallySwimming()) builder.get(PlayerModelPart.LEFT_LEG)
                     .setXRotDegrees((float) rightArm.x * -0.1f + (float) Math.sin(builder.getAgeInTicks()))
                     .setYRotDegrees((float) rightArm.y * 0.1f)
                     .setZRotDegrees((float) rightArm.z * -0.1f);
@@ -65,7 +88,7 @@ public class OdmHoldAttackAnimation extends PalladiumAnimation {
                     .setXRotDegrees((float) leftArm.x)
                     .setYRotDegrees((float) leftArm.y)
                     .setZRotDegrees((float) leftArm.z);
-            if (!player.onGround()) builder.get(PlayerModelPart.RIGHT_LEG)
+            if (!player.onGround() && !player.isVisuallySwimming()) builder.get(PlayerModelPart.RIGHT_LEG)
                     .setXRotDegrees((float) leftArm.x * -0.1f + (float) Math.cos(builder.getAgeInTicks()))
                     .setYRotDegrees((float) leftArm.y * 0.1f)
                     .setZRotDegrees((float) leftArm.z * -0.1f);

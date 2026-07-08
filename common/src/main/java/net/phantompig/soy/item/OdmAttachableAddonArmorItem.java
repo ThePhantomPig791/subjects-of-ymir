@@ -49,7 +49,7 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
     }
 
     private void gasStrafe(ItemStack stack, Player player) {
-        if (player.onGround()) return;
+        if (player.onGround() || player.isPassenger() || player.isUnderWater()) return;
         boolean forward = PalladiumProperties.FORWARD_KEY_DOWN.get(player);
         boolean backward = PalladiumProperties.BACKWARDS_KEY_DOWN.get(player);
         boolean left = PalladiumProperties.LEFT_KEY_DOWN.get(player);
