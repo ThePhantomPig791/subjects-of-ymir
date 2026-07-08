@@ -7,3 +7,4 @@ Beta
 - Added odm animation for falling
 - Fixes, mostly odm stuff
 - Fixed uniform jacket without an emblem having a blank emblem
+- New icon
