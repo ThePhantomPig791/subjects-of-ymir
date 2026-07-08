@@ -33,11 +33,11 @@ public class OdmAnimation extends PalladiumAnimation {
         if (player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof OdmAttachableAddonArmorItem) {
             if (!player.isVisuallySwimming()) {
                 Vec3 vert = player.getDeltaMovementLerped(partialTicks).multiply(0, 1, 0);
-                if (vert.y < -0.08) {
+                if (Math.abs(vert.y) > 0.08) {
                     float progress = (float) Math.cbrt(vert.lengthSqr());
                     progress = 3 * progress / (progress + 5);
                     if (progress > 0.1f) {
-                        body = body.lerp(BODY_FALL, Easing.INCIRC.apply(progress));
+                        body = body.lerp(BODY_FALL.scale(vert.y > 0 ? -0.5f : 1), Easing.INCIRC.apply(progress));
                     }
                 }
 
@@ -68,7 +68,7 @@ public class OdmAnimation extends PalladiumAnimation {
         if (!body.equals(Vec3.ZERO)) {
             builder.get(PlayerModelPart.BODY)
                     .setXRotDegrees((float) body.x)
-                    .setYRotDegrees((float) body.y + 0.5f * (float) spd * (float) Math.sin(builder.getAgeInTicks()))
+                    .setYRotDegrees((float) body.y + 2 * (float) spd * (float) Math.sin(builder.getAgeInTicks()))
                     .setZRotDegrees((float) body.z);
         }
         if (!rightArm.equals(Vec3.ZERO)) {

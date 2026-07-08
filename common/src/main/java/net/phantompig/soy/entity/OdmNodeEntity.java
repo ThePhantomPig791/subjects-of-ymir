@@ -4,10 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -63,10 +65,12 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             if (stuckEntity.isPresent() && owner.isCrouching() && owner.onGround() && !stuckEntity.get().isCrouching()) {
                 stuckEntity.get().stopRiding();
                 stuckEntity.get().addDeltaMovement(owner.position().subtract(stuckEntity.get().position()).normalize().scale(distanceScale / stuckEntity.get().getBoundingBox().getYsize()));
+                sendMotionPacket(stuckEntity.get());
                 reelVolume = 2 * (float) stuckEntity.get().getDeltaMovement().lengthSqr();
             } else {
                 owner.stopRiding();
                 owner.addDeltaMovement(this.position().subtract(owner.position()).normalize().scale(0.7 * distanceScale));
+                sendMotionPacket(owner);
                 reelVolume = 2 * (float) owner.getDeltaMovement().lengthSqr();
             }
 
@@ -106,6 +110,12 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             if (!this.level().isClientSide() && !this.isNoGravity()) {
                 this.addDeltaMovement(new Vec3(0, -this.getGravity(), 0));
             }
+        }
+    }
+
+    private void sendMotionPacket(Entity entity) {
+        if (entity instanceof ServerPlayer sp) {
+            sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
         }
     }
 
