@@ -33,6 +33,9 @@ public class SoyProperties {
 
     public static final PalladiumProperty<Integer> MARKS_TIMER = new IntegerProperty("subjects_of_ymir/marks_timer").sync(SyncType.EVERYONE);
 
+    public static final PalladiumProperty<Integer> ODM_HOLD_ATTACK = new IntegerProperty("subjects_of_ymir/odm_hold_attack").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Boolean> ODM_HOLD_ATTACK_INCREASING = new BooleanProperty("subjects_of_ymir/odm_hold_attack_increasing").sync(SyncType.EVERYONE);
+
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
             if (handler.getEntity() instanceof LivingEntity) {
@@ -51,6 +54,8 @@ public class SoyProperties {
                 handler.register(STAMINA, 0);
                 handler.register(MAX_STAMINA, 0);
                 handler.register(MARKS_TIMER, 0);
+                handler.register(ODM_HOLD_ATTACK, 0);
+                handler.register(ODM_HOLD_ATTACK_INCREASING, false);
             }
         });
     }

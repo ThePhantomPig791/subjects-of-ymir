@@ -1,23 +1,31 @@
 package net.phantompig.soy.combat;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
+import net.phantompig.soy.item.BladeHandleItem;
+import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.network.*;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.util.EntityUtil;
 import net.threetag.palladium.util.PlayerUtil;
+
+import java.util.List;
 
 public class ServerCombatSystem {
     public final ServerPlayer player;
@@ -119,7 +127,58 @@ public class ServerCombatSystem {
         sendUpdateStageTimer(nextStageTimer);
     }
 
+    public void startHolding() {
+        SoyProperties.ODM_HOLD_ATTACK_INCREASING.set(this.player, true);
+    }
+
+    public void stopHolding() {
+        SoyProperties.ODM_HOLD_ATTACK_INCREASING.set(this.player, false);
+
+        if (SoyProperties.ODM_HOLD_ATTACK.get(this.player) == 5) {
+            List<Entity> entitiesInRange = getEntitiesInOdmRange();
+            entitiesInRange.forEach(e -> {
+                if (e instanceof LivingEntity living) {
+                    if (this.player.getMainHandItem().getItem() instanceof BladeHandleItem handle) {
+                        handle.hurtEnemy(this.player.getMainHandItem(), living, this.player);
+                    }
+                    if (this.player.getOffhandItem().getItem() instanceof BladeHandleItem handle) {
+                        handle.hurtEnemy(this.player.getOffhandItem(), living, this.player);
+                    }
+                }
+            });
+
+            Vec3 sweepLocation = this.player.getEyePosition().add(this.player.getLookAngle().scale(2));
+            PlayerUtil.playSoundToAll(this.player.level(), sweepLocation.x, sweepLocation.y, sweepLocation.z, 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1, 1.6f);
+            PlayerUtil.spawnParticleForAll(this.player.level(), 32, ParticleTypes.SWEEP_ATTACK, false, sweepLocation.x, sweepLocation.y, sweepLocation.z, 0, 0, 0, 0, 1);
+        }
+    }
+
+    public void tickOdmHoldAttack() {
+        if (!this.player.getMainHandItem().is(SoyItems.BLADE_HANDLE.get()) || !this.player.getOffhandItem().is(SoyItems.BLADE_HANDLE.get())) {
+            stopHolding();
+        }
+        int odmHoldAttackProgress = SoyProperties.ODM_HOLD_ATTACK.get(this.player);
+        if (SoyProperties.ODM_HOLD_ATTACK_INCREASING.get(this.player)) {
+            if (odmHoldAttackProgress < 5) {
+                SoyProperties.ODM_HOLD_ATTACK.set(this.player, odmHoldAttackProgress + 1);
+            }
+            if (odmHoldAttackProgress == 5 && !getEntitiesInOdmRange().isEmpty()) {
+                this.stopHolding();
+            }
+        } else {
+            if (odmHoldAttackProgress > 0) {
+                SoyProperties.ODM_HOLD_ATTACK.set(this.player, odmHoldAttackProgress - 1);
+            }
+        }
+    }
+
+    public List<Entity> getEntitiesInOdmRange() {
+        return this.player.level().getEntities(this.player, this.player.getBoundingBox().move(this.player.getLookAngle().scale(2)).inflate(2, 0, 2));
+    }
+
     public void tick() {
+        tickOdmHoldAttack();
+
         if (extension.getTitanInstance().titan == null) return;
         if (extension.getTitanInstance().getProgress() == 0) {
             attackTimer = nextStageTimer = cooldown = 0;

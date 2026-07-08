@@ -9,6 +9,8 @@ public class SoyNetwork {
 
     public static final MessageType TITAN_ATTACK = NETWORK.registerC2S("titan_attack", TitanAttackMessage::new);
     public static final MessageType ODM_HANDLE_PRESS = NETWORK.registerC2S("odm_handle_press", OdmHandlePressMessage::new);
+    public static final MessageType ODM_START_ATTACK = NETWORK.registerC2S("odm_start_attack", OdmStartAttackMessage::new);
+    public static final MessageType ODM_STOP_ATTACK = NETWORK.registerC2S("odm_stop_attack", OdmStopAttackMessage::new);
 
     public static final MessageType TITAN_ATTACK_ANIMATION = NETWORK.registerS2C("titan_attack_animation", TitanAttackAnimationMessage::new);
     public static final MessageType SET_ATTACK_TICKER = NETWORK.registerS2C("set_attack_ticker", SetAttackTickerMessage::new);

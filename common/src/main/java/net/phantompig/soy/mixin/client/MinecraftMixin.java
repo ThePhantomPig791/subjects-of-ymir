@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.combat.ClientCombatSystem;
 import net.phantompig.soy.item.OdmHandleItem;
+import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.network.OdmHandlePressMessage;
 import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.power.ability.SoyAbilities;
@@ -50,11 +51,26 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
             if (this.player.attackStrengthTicker >= 0) player.setYBodyRot(player.getYHeadRot());
             ci.cancel();
         }
+        if (this.player != null && this.player.getMainHandItem().is(SoyItems.BLADE_HANDLE.get()) && this.player.getMainHandItem().is(SoyItems.BLADE_HANDLE.get())) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "continueAttack", at = @At("HEAD"), cancellable = true)
     public void soy$continueAttack(boolean leftClick, CallbackInfo ci) {
         soy$cancelCallbackIfTitan(ci);
+        if (this.soy$combatSystem != null && !ci.isCancelled()) {
+            if (leftClick) {
+                if (!this.soy$combatSystem.heldLeftClick) {
+                    this.soy$combatSystem.startHeldAttack();
+                }
+            } else if (this.soy$combatSystem.heldLeftClick) {
+                this.soy$combatSystem.stopHeldAttack();
+            }
+            if (this.soy$combatSystem.heldLeftClick) {
+                ci.cancel();
+            }
+        }
     }
 
     @Inject(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;useItemOn(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;"), cancellable = true)

@@ -10,10 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.phantompig.soy.SubjectsOfYmir;
-import net.phantompig.soy.client.animation.BiteAnimation;
-import net.phantompig.soy.client.animation.BlockAnimation;
-import net.phantompig.soy.client.animation.DaggerAnimation;
-import net.phantompig.soy.client.animation.FlareGunAnimation;
+import net.phantompig.soy.client.animation.*;
 import net.phantompig.soy.client.animation.modifier.TitanAttackSpeedModifier;
 import net.phantompig.soy.client.entity.FlareEntityRenderer;
 import net.phantompig.soy.client.entity.OdmNodeEntityRenderer;
@@ -61,6 +58,7 @@ public class SubjectsOfYmirClient {
             registry.accept(SubjectsOfYmir.rsrc("bite"), BiteAnimation.INSTANCE);
             registry.accept(SubjectsOfYmir.rsrc("dagger"), DaggerAnimation.INSTANCE);
             registry.accept(SubjectsOfYmir.rsrc("flare_gun"), FlareGunAnimation.INSTANCE);
+            registry.accept(SubjectsOfYmir.rsrc("odm_hold_attack"), OdmHoldAttackAnimation.INSTANCE);
         });
 
         EntityRendererRegistry.register(SoyEntities.TITAN_CORPSE, TitanCorpseEntityRenderer::new);

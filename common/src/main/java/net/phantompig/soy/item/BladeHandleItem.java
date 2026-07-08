@@ -19,7 +19,7 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
         if (this.getStack(stack).getItem() instanceof BladeItem) {
             float speedSqr = (float) attacker.getDeltaMovement().add(target.getDeltaMovement().reverse()).lengthSqr();
             target.hurt(SoyDamageSources.slice(attacker.level(), attacker), 6 + 10 * speedSqr / (speedSqr + 8));
-            if (Math.random() < 0.05) {
+            if (Math.random() < 0.02) {
                 this.setStack(stack, Items.IRON_NUGGET.getDefaultInstance());
                 attacker.broadcastBreakEvent(attacker.getItemBySlot(EquipmentSlot.MAINHAND).equals(stack) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             }
