@@ -229,6 +229,71 @@
 					]
 				}
 			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:prototype_turbine",
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.25
+						}
+					]
+				},
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:turbine_v2",
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.1
+						}
+					]
+				}
+			]
+		},
+		{
+			"rolls": 2,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:blade_sheath",
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.2
+						}
+					]
+				},
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:canister_sheath",
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.2
+						}
+					]
+				},
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:gas_canister",
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.4
+						}
+					]
+				}
+			]
 		}
 	]
 }
