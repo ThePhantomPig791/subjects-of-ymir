@@ -27,6 +27,7 @@ public class SubjectsOfYmirFabric implements ModInitializer {
         SubjectsOfYmir.setup();
 
         ForgeConfigRegistry.INSTANCE.register(SubjectsOfYmir.MOD_ID, ModConfig.Type.SERVER, SoyConfig.Server.generateConfig());
+        ForgeConfigRegistry.INSTANCE.register(SubjectsOfYmir.MOD_ID, ModConfig.Type.CLIENT, SoyConfig.Client.generateConfig());
 
         registerPlacedFeatures();
 

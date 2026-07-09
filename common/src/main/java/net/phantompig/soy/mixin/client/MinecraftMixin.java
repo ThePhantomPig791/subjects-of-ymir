@@ -1,7 +1,6 @@
 package net.phantompig.soy.mixin.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.combat.ClientCombatSystem;
@@ -10,7 +9,6 @@ import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -25,9 +23,6 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
     @Nullable
     public LocalPlayer player;
 
-    @Shadow
-    @Final
-    public Options options;
     @Unique
     public ClientCombatSystem soy$combatSystem;
 

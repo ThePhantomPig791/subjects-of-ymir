@@ -28,6 +28,7 @@ public class SubjectsOfYmirForge {
         SubjectsOfYmir.init();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SoyConfig.Server.generateConfig());
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SoyConfig.Client.generateConfig());
 
         if (Platform.isClient()) {
             SubjectsOfYmirClient.init();

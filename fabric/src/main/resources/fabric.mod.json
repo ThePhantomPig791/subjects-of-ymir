@@ -9,7 +9,9 @@
     "Sugar04k"
   ],
   "contact": {
+    "homepage": "https://discord.gg/gwnfUCEXBx",
     "sources": "https://github.com/ThePhantomPig791/subjects-of-ymir",
+    "issues": "https://github.com/ThePhantomPig791/subjects-of-ymir/issues",
     "discord": "https://discord.gg/gwnfUCEXBx"
   },
   "license": "${mod_license}",
