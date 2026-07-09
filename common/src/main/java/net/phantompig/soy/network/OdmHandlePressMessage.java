@@ -34,10 +34,8 @@ public class OdmHandlePressMessage extends MessageC2S {
     @Override
     public void handle(MessageContext context) {
         ServerPlayer player = context.getPlayer();
-        ItemStack stack = player.getMainHandItem();
-        if (!(stack.getItem() instanceof OdmHandleItem)) {
-            stack = player.getOffhandItem();
-        }
+        boolean mainhand = player.getMainArm() == HumanoidArm.RIGHT == right;
+        ItemStack stack = mainhand ? player.getMainHandItem() : player.getOffhandItem();
         if (stack.getItem() instanceof OdmHandleItem odm) {
             odm.handlePress(player, stack, right);
         }
