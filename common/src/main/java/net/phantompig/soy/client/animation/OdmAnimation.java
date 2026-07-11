@@ -15,6 +15,9 @@ public class OdmAnimation extends PalladiumAnimation {
     private static final Vec3 RIGHT_ARM_AIR = new Vec3(10, 15, 45);
     private static final Vec3 LEFT_ARM_AIR = new Vec3(10, -15, -45);
     private static final Vec3 BODY_FALL = new Vec3(-75, 0, 0);
+    private static final Vec3 BODY_TILT = new Vec3(0, 0, 45);
+
+    private static final Vec3 UP = new Vec3(0, 1, 0);
 
     public static final OdmAnimation INSTANCE = new OdmAnimation();
     public OdmAnimation() {
@@ -40,6 +43,15 @@ public class OdmAnimation extends PalladiumAnimation {
                         body = body.lerp(BODY_FALL.scale(vert.y > 0 ? -0.5f : 1), Easing.INCIRC.apply(progress));
                     }
                 }
+
+                double tilt = player.getDeltaMovement().dot(player.getLookAngle().cross(UP));
+                if (Math.abs(tilt) > 0.11) {
+                    boolean tiltLeft = tilt < 0;
+                    tilt = Math.abs(tilt);
+                    tilt = 0.75 * tilt / (tilt + 1);
+                    body = body.lerp(BODY_TILT.scale(tiltLeft ? -1 : 1), Easing.INCIRC.apply((float) tilt));
+                }
+
 
                 if (!player.onGround()) {
                     float progress = (float) Math.cbrt(spd);
