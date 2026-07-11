@@ -50,15 +50,19 @@ public class SoyConfig {
 
     public static class Client {
         public static ForgeConfigSpec.IntValue RIGHT_HOOK_KEYCODE, LEFT_HOOK_KEYCODE;
+        public static ForgeConfigSpec.DoubleValue ODM_SCREEN_TILT_STRENGTH;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
             builder.comment("The keycode for shooting the right ODM hook. If the keycode conflicts with a keybind (from the Controls menu), that keybind will be cancelled");
-            RIGHT_HOOK_KEYCODE = builder.defineInRange("client.rightHookKeycode", 69, 0, 127);
+            RIGHT_HOOK_KEYCODE = builder.defineInRange("client.keycodes.rightHookKeycode", 69, 0, 127);
 
             builder.comment("The keycode for shooting the left ODM hook. If the keycode conflicts with a keybind (from the Controls menu), that keybind will be cancelled");
-            LEFT_HOOK_KEYCODE = builder.defineInRange("client.leftHookKeycode", 81, 0, 127);
+            LEFT_HOOK_KEYCODE = builder.defineInRange("client.keycodes.leftHookKeycode", 81, 0, 127);
+
+            builder.comment("Determines the screen tilt intensity when using ODM gear");
+            ODM_SCREEN_TILT_STRENGTH = builder.defineInRange("client.screenTiltStrength", 1d, 0, 1);
 
             return builder.build();
         }
@@ -68,6 +72,10 @@ public class SoyConfig {
         }
         public static int getLeftHookKeycode() {
             return LEFT_HOOK_KEYCODE.get();
+        }
+
+        public static double getOdmScreenTiltStrength() {
+            return ODM_SCREEN_TILT_STRENGTH.get();
         }
     }
 }

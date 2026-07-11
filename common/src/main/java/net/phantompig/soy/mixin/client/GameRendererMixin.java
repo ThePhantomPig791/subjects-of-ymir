@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.client.renderer.ScreenShakeManager;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import org.spongepowered.asm.mixin.Final;
@@ -46,7 +47,7 @@ public abstract class GameRendererMixin {
     @Unique
     private void soy$adjustCameraAngle(Vec3 compareTo, AtomicDouble ref, double scale) {
         if (this.minecraft.player != null && !this.minecraft.player.onGround() && this.minecraft.player.getDeltaMovement().lengthSqr() > 0.01 && this.minecraft.player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof OdmAttachableAddonArmorItem) {
-            ref.set(scale * ref.addAndGet(this.minecraft.player.getDeltaMovement().dot(compareTo)));
+            ref.set(SoyConfig.Client.getOdmScreenTiltStrength() * scale * ref.addAndGet(this.minecraft.player.getDeltaMovement().dot(compareTo)));
         } else if (ref.get() != 0) {
             ref.set(ref.get() * 0.99);
             if (ref.get() < 0.001) ref.set(0);
