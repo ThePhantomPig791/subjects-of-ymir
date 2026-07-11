@@ -4,6 +4,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.model.animation.PalladiumAnimation;
@@ -26,6 +27,7 @@ public class OdmAnimation extends PalladiumAnimation {
 
     @Override
     public void animate(Builder builder, AbstractClientPlayer player, HumanoidModel<?> model, FirstPersonContext firstPersonContext, float partialTicks) {
+        if (!SoyConfig.Client.shouldAnimateOdm()) return;
         if (player.isPassenger()) return;
 
         Vec3 rightArm = Vec3.ZERO;

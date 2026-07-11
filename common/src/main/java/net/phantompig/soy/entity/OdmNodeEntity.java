@@ -160,7 +160,9 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
+        if (this.level().isClientSide()) return;
         if (result.getEntity().equals(this.getOwner())) return;
+        if (this.getStuckEntity().isPresent() && this.getStuckEntity().get().equals(result.getEntity())) return;
         this.setStuckEntity(result.getEntity());
     }
 
