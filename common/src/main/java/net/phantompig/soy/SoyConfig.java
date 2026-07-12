@@ -51,7 +51,7 @@ public class SoyConfig {
     public static class Client {
         public static ForgeConfigSpec.IntValue RIGHT_HOOK_KEYCODE, LEFT_HOOK_KEYCODE;
         public static ForgeConfigSpec.DoubleValue ODM_SCREEN_TILT_STRENGTH;
-        public static ForgeConfigSpec.BooleanValue SKY_TINT, ODM_ANIMATIONS;
+        public static ForgeConfigSpec.BooleanValue WORLD_TINT, ODM_ANIMATIONS;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -65,8 +65,8 @@ public class SoyConfig {
             builder.comment("Determines the screen tilt intensity when using ODM gear");
             ODM_SCREEN_TILT_STRENGTH = builder.defineInRange("client.screenTiltStrength", 1d, 0, 1);
 
-            builder.comment("Determines if the sky tints yellow when someone shifts into a Titan");
-            SKY_TINT = builder.define("client.skyTint", true);
+            builder.comment("Determines if the world tints yellow-green when someone shifts into a Titan");
+            WORLD_TINT = builder.define("client.worldTint", true);
 
             builder.comment("Determines if the player model is animated for players using ODM gear");
             ODM_ANIMATIONS = builder.define("client.ODMAnimations", true);
@@ -85,8 +85,8 @@ public class SoyConfig {
             return ODM_SCREEN_TILT_STRENGTH.get();
         }
 
-        public static boolean shouldSkyTintOnShift() {
-            return SKY_TINT.get();
+        public static boolean shouldWorldTintOnShift() {
+            return WORLD_TINT.get();
         }
 
         public static boolean shouldAnimateOdm() {

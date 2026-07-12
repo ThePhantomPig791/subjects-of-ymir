@@ -96,6 +96,7 @@ public class SubjectsOfYmirClient {
 
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/titan_exhaustion", SoyOverlays::renderExhaustionOverlay);
         OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/all_hardening", SoyOverlays::renderAllHardeningOverlay);
+        OverlayRegistry.registerOverlay(SubjectsOfYmir.MOD_ID + "/other_shifting", SoyOverlays::renderOtherShiftingOverlay);
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on the client");
     }

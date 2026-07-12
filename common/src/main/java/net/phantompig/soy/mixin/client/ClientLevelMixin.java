@@ -21,7 +21,7 @@ public abstract class ClientLevelMixin {
 
     @ModifyReturnValue(method = "getSkyColor", at = @At("RETURN"))
     public Vec3 soy$getSkyColor(Vec3 original, @Local(ordinal = 1) float partial) {
-        if (SoyConfig.Client.shouldSkyTintOnShift()) {
+        if (SoyConfig.Client.shouldWorldTintOnShift()) {
             int max = 0;
             for (Entity e : this.entitiesForRendering()) {
                 if (SoyProperties.PROGRESS.isRegistered(e)) {
@@ -32,7 +32,7 @@ public abstract class ClientLevelMixin {
                 }
             }
             if (max > 0) {
-                return original.lerp(YELLOW, ease(max + partial));
+                return original.lerp(YELLOW, 0.02 * ease(max + partial));
             }
         }
         return original;
