@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.combat.ClientCombatSystem;
-import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.item.BladeHandleItem;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.power.ability.AbilityUtil;
@@ -46,7 +46,7 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
             if (this.player.attackStrengthTicker >= 0) player.setYBodyRot(player.getYHeadRot());
             ci.cancel();
         }
-        if (this.player != null && this.player.getMainHandItem().is(SoyItems.BLADE_HANDLE.get()) && this.player.getMainHandItem().is(SoyItems.BLADE_HANDLE.get())) {
+        if (this.player != null && this.player.getMainHandItem().getItem() instanceof BladeHandleItem && this.player.getOffhandItem().getItem() instanceof BladeHandleItem) {
             ci.cancel();
         }
     }

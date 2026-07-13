@@ -4,9 +4,9 @@
     {
       "type": "palladium:lightning_sparks",
       "frequency": 1,
-      "amount": 5,
-      "core_color": "#ffffff",
-      "glow_color": "#Fffff00",
+      "amount": 7,
+      "core_color": "#ffff77",
+      "glow_color": "#CC3300",
       "core_opacity": 1.0,
       "glow_opacity": 1.0,
       "thickness": 1
@@ -14,9 +14,9 @@
     {
       "type": "palladium:lightning_sparks",
       "frequency": 1,
-      "amount": 2,
-      "core_color": "#ffff11",
-      "glow_color": "#Fffff00",
+      "amount": 1,
+      "core_color": "#ffffff",
+      "glow_color": "#CC3300",
       "core_opacity": 1.0,
       "glow_opacity": 1.0,
       "thickness": 0.75

@@ -73,6 +73,11 @@ public class SubjectsOfYmirClient {
         ParticleProviderRegistry.register(SoyParticles.EMBER, EmberParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.DIRT_CLOUD, DirtCloudParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.FLARE, FlareParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.TRANSFORM_SPARK, TransformSparkParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.TRANSFORM_ARC, TransformArcParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.TRANSFORM_ZAP, TransformArcParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.TRANSFORM_ZOP, TransformArcParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.TRANSFORM_CRACK, TransformArcParticleType.Provider::new);
 
         ColorHandlerRegistry.registerItemColors((stack, i) -> {
             if (i > 0) return -1;

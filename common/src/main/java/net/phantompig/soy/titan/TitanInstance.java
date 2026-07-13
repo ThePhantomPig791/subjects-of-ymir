@@ -237,7 +237,7 @@ public class TitanInstance {
 
     public void startScaleChange() {
         if (this.titan == null) return;
-        setScaleTime(15);
+        setScaleTime(this.titan.maxProgress / 20);
         scale(this.titan.scale);
     }
 

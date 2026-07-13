@@ -3,7 +3,7 @@ package net.phantompig.soy.combat;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.player.LocalPlayer;
-import net.phantompig.soy.item.SoyItems;
+import net.phantompig.soy.item.BladeHandleItem;
 import net.phantompig.soy.network.OdmStartAttackMessage;
 import net.phantompig.soy.network.OdmStopAttackMessage;
 import net.phantompig.soy.network.SoyNetwork;
@@ -27,7 +27,7 @@ public class ClientCombatSystem {
     }
 
     public void startHeldAttack() {
-        if (!this.player.getMainHandItem().is(SoyItems.BLADE_HANDLE.get()) || !this.player.getOffhandItem().is(SoyItems.BLADE_HANDLE.get())) return;
+        if (!(this.player.getMainHandItem().getItem() instanceof BladeHandleItem) && !(this.player.getOffhandItem().getItem() instanceof BladeHandleItem)) return;
         this.heldLeftClick = true;
         SoyNetwork.NETWORK.sendToServer(new OdmStartAttackMessage());
     }

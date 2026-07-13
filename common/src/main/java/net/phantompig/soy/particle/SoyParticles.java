@@ -21,6 +21,11 @@ public class SoyParticles {
             return FlareParticleOptions.CODEC;
         }
     });
+    public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_SPARK = PARTICLE_TYPES.register("transform_spark", () -> new SimpleParticleType(false));
+    public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_ARC = PARTICLE_TYPES.register("transform_arc", () -> new SimpleParticleType(false));
+    public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_ZAP = PARTICLE_TYPES.register("transform_zap", () -> new SimpleParticleType(false));
+    public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_ZOP = PARTICLE_TYPES.register("transform_zop", () -> new SimpleParticleType(false));
+    public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_CRACK = PARTICLE_TYPES.register("transform_crack", () -> new SimpleParticleType(false));
 
     public static void init() {
         PARTICLE_TYPES.register();

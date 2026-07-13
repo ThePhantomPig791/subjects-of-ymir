@@ -180,6 +180,77 @@ public class Titan {
         ext.getTitanInstance().setProgress(++progress);
         entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, SoyConfig.Server.shouldTitansExplodeBlocksOnShift() ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false).explode();
         ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + 10);
+
+        PlayerUtil.spawnParticleForAll(
+                entity.level(),
+                128,
+                (ParticleOptions) SoyParticles.TRANSFORM_SPARK.get(),
+                false,
+                entity.getX(),
+                entity.getEyeY(),
+                entity.getZ(),
+                3,
+                5,
+                3,
+                0.2f,
+                4
+        );
+        PlayerUtil.spawnParticleForAll(
+                entity.level(),
+                128,
+                (ParticleOptions) SoyParticles.TRANSFORM_ARC.get(),
+                false,
+                entity.getX(),
+                entity.getEyeY(),
+                entity.getZ(),
+                3,
+                5,
+                3,
+                0.2f,
+                6
+        );
+        PlayerUtil.spawnParticleForAll(
+                entity.level(),
+                128,
+                (ParticleOptions) SoyParticles.TRANSFORM_ZAP.get(),
+                false,
+                entity.getX(),
+                entity.getEyeY(),
+                entity.getZ(),
+                3,
+                5,
+                3,
+                0.2f,
+                6
+        );
+        PlayerUtil.spawnParticleForAll(
+                entity.level(),
+                128,
+                (ParticleOptions) SoyParticles.TRANSFORM_ZOP.get(),
+                false,
+                entity.getX(),
+                entity.getEyeY(),
+                entity.getZ(),
+                3,
+                5,
+                3,
+                0.2f,
+                6
+        );
+        PlayerUtil.spawnParticleForAll(
+                entity.level(),
+                128,
+                (ParticleOptions) SoyParticles.TRANSFORM_CRACK.get(),
+                false,
+                entity.getX(),
+                entity.getEyeY(),
+                entity.getZ(),
+                3,
+                5,
+                3,
+                0.2f,
+                6
+        );
     }
 
     public void completedShift(LivingEntity entity, int charge) {
@@ -431,7 +502,7 @@ public class Titan {
         builder.variants = GsonHelper.isArrayNode(json, "variants") ? GsonHelper.getAsJsonArray(json, "variants", new JsonArray()).asList().stream().map(JsonElement::getAsString).toList() : List.of("default");
         builder.resolution = GsonHelper.getAsInt(json, "resolution", 128);
         builder.scale = GsonHelper.getAsFloat(json, "scale", 1);
-        builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 15);
+        builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 40);
         builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 50);
         builder.baseEyeColor = GsonUtil.getAsColor(json, "base_eye_color", null);
         builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));

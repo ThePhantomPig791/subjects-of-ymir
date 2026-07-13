@@ -12,7 +12,7 @@
     },
     "PROGRESS": {
       "type": "subjects_of_ymir:titan_progress",
-      "subtract": 5,
+      "subtract": 28,
       "min": 0,
       "max": 9
     },

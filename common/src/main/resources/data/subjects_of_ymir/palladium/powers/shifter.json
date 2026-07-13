@@ -479,6 +479,22 @@
       }
     },
 
+    "charge_particles_spark": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "subjects_of_ymir:transform_spark",
+      "emitter": "subjects_of_ymir:steam_healing",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:integer_property",
+          "property": "subjects_of_ymir/charge",
+          "min": 1,
+          "max": 99999
+        }
+      }
+    },
+
+
     "quiet_electricity_sound": {
       "type": "palladium:play_sound",
       "hidden": true,

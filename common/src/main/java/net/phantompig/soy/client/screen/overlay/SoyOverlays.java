@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
-import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.util.Easing;
 
@@ -39,9 +38,9 @@ public class SoyOverlays {
         if (SoyConfig.Client.shouldWorldTintOnShift() && minecraft.level != null) {
             int max = 0;
             for (Entity e : minecraft.level.entitiesForRendering()) {
-                if (SoyProperties.PROGRESS.isRegistered(e)) {
-                    int progress = SoyProperties.PROGRESS.get(e);
-                    if (progress < 15 && progress > max) {
+                if (e instanceof SoyPlayerExtension ext) {
+                    int progress = ext.getTitanInstance().getProgress();
+                    if (progress < 20 && progress > max) {
                         max = progress;
                     }
                 }
