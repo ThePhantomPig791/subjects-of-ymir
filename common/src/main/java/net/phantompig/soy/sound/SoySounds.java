@@ -9,12 +9,12 @@ import net.threetag.palladiumcore.registry.RegistrySupplier;
 public class SoySounds {
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(SubjectsOfYmir.MOD_ID, Registries.SOUND_EVENT);
 
-    public static final RegistrySupplier<SoundEvent> SHIFT = make("shift", 128);
+    public static final RegistrySupplier<SoundEvent> SHIFT = make("shift", 512);
     public static final RegistrySupplier<SoundEvent> SHIFT_LOCAL = make("shift_local", 16);
-    public static final RegistrySupplier<SoundEvent> ELECTRICITY = make("electricity", 16);
-    public static final RegistrySupplier<SoundEvent> ELECTRICITY_FINAL = make("electricity_final", 16);
+    public static final RegistrySupplier<SoundEvent> ELECTRICITY = make("electricity", 32);
+    public static final RegistrySupplier<SoundEvent> ELECTRICITY_FINAL = make("electricity_final", 64);
     public static final RegistrySupplier<SoundEvent> STEAM = make("steam", 32);
-    public static final RegistrySupplier<SoundEvent> GAS_BURST = make("gas_burst", 16);
+    public static final RegistrySupplier<SoundEvent> GAS_BURST = make("gas_burst", 32);
     public static final RegistrySupplier<SoundEvent> SHORT_HARDEN = make("short_harden", 48);
     public static final RegistrySupplier<SoundEvent> QUICK_HARDEN = make("quick_harden", 48);
     public static final RegistrySupplier<SoundEvent> HEARTBEAT = make("heartbeat", 16);

@@ -7,6 +7,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.phantompig.soy.SoyConfig;
 
 public class TransformSparkParticleType extends RollingParticle {
     TransformSparkParticleType(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
@@ -19,7 +20,12 @@ public class TransformSparkParticleType extends RollingParticle {
         final int direction = (this.random.nextBoolean() ? 1 : -1);
         this.deltaRoll = (float) (0.01 + this.random.nextFloat() * 0.05) * direction;
         this.roll = 0.025f * direction;
-        this.scale(4 + (float) (3 * Math.random()));
+        this.scale((4 + (float) (3 * Math.random())) * (level.isClientSide() ? (float) SoyConfig.Client.getSparkParticleScale() : 1));
+    }
+
+    @Override
+    protected int getLightColor(float partialTick) {
+        return 240;
     }
 
     @Environment(EnvType.CLIENT)

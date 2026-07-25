@@ -50,8 +50,8 @@ public class SoyConfig {
 
     public static class Client {
         public static ForgeConfigSpec.IntValue RIGHT_HOOK_KEYCODE, LEFT_HOOK_KEYCODE;
-        public static ForgeConfigSpec.DoubleValue ODM_SCREEN_TILT_STRENGTH;
-        public static ForgeConfigSpec.BooleanValue WORLD_TINT, ODM_ANIMATIONS;
+        public static ForgeConfigSpec.DoubleValue ODM_SCREEN_TILT_STRENGTH, SPARK_PARTICLE_SCALE;
+        public static ForgeConfigSpec.BooleanValue WORLD_TINT, ODM_ANIMATIONS, SHIFTING_SPHERE;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -70,6 +70,12 @@ public class SoyConfig {
 
             builder.comment("Determines if the player model is animated for players using ODM gear");
             ODM_ANIMATIONS = builder.define("client.ODMAnimations", true);
+
+            builder.comment("Determines the scale for the particles that display when someone shifts into a Titan");
+            SPARK_PARTICLE_SCALE = builder.defineInRange("client.sparkParticleScale", 1d, 0, 2);
+
+            builder.comment("If false, the sphere around someone shifting into a Titan will not appear");
+            SHIFTING_SPHERE = builder.define("client.shiftSphere", true);
 
             return builder.build();
         }
@@ -91,6 +97,14 @@ public class SoyConfig {
 
         public static boolean shouldAnimateOdm() {
             return ODM_ANIMATIONS.get();
+        }
+
+        public static double getSparkParticleScale() {
+            return SPARK_PARTICLE_SCALE.get();
+        }
+
+        public static boolean shouldShiftRenderSphere() {
+            return SHIFTING_SPHERE.get();
         }
     }
 }

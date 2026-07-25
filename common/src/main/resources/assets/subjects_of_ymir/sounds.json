@@ -5,7 +5,7 @@
     "sounds": [
       {
         "name": "subjects_of_ymir:shift",
-        "attenuation_distance": 128
+        "attenuation_distance": 512
       }
     ]
   },
@@ -24,7 +24,8 @@
     "subtitle": "subtitle.subjects_of_ymir.electricity",
     "sounds": [
       {
-        "name": "subjects_of_ymir:electricity"
+        "name": "subjects_of_ymir:electricity",
+        "attenuation_distance": 32
       }
     ]
   },
@@ -33,7 +34,8 @@
     "subtitle": "subtitle.subjects_of_ymir.electricity",
     "sounds": [
       {
-        "name": "subjects_of_ymir:electricity_final"
+        "name": "subjects_of_ymir:electricity_final",
+        "attenuation_distance": 64
       }
     ]
   },
@@ -62,13 +64,16 @@
     "subtitle": "subtitle.subjects_of_ymir.gas_burst",
     "sounds": [
       {
-        "name": "subjects_of_ymir:gas_burst_0"
+        "name": "subjects_of_ymir:gas_burst_0",
+        "attenuation_distance": 32
       },
       {
-        "name": "subjects_of_ymir:gas_burst_1"
+        "name": "subjects_of_ymir:gas_burst_1",
+        "attenuation_distance": 32
       },
       {
-        "name": "subjects_of_ymir:gas_burst_2"
+        "name": "subjects_of_ymir:gas_burst_2",
+        "attenuation_distance": 32
       }
     ]
   },

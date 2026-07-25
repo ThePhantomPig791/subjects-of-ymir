@@ -74,7 +74,12 @@
           {
             "type": "subjects_of_ymir:statistic",
             "stat": "subjects_of_ymir:amount_steam_healed",
-            "min": 1000
+            "min": 500
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 15
           }
         ]
       }
@@ -97,8 +102,13 @@
           },
           {
             "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:amount_steam_healed",
+            "min": 300
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
             "stat": "subjects_of_ymir:time_as_titan",
-            "min": 12000
+            "min": 8000
           }
         ]
       }
@@ -118,6 +128,11 @@
           {
             "type": "palladium:ability_unlocked",
             "ability": "root"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:amount_steam_healed",
+            "min": 1000
           },
           {
             "type": "subjects_of_ymir:statistic",

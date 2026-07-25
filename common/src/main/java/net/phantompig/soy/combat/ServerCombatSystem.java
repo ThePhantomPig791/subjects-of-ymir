@@ -192,14 +192,16 @@ public class ServerCombatSystem {
         if (extension.getTitanInstance().titan == null) return;
         if (extension.getTitanInstance().getProgress() == 0) {
             attackTimer = nextStageTimer = cooldown = 0;
-            return;
+        } else {
+            if (attackTimer > 0) {
+                attackTimer--;
+            }
+            if (attackTimer == Mth.lerpInt(12 / 20f, 0, getMaxAttackTime())) {
+                attackEffect();
+            }
+            if (nextStageTimer > 0) nextStageTimer--;
+            if (cooldown > 0) cooldown--;
         }
-        if (attackTimer > 0) attackTimer--;
-        if (attackTimer == Mth.lerpInt(12 / 20f, 0, getMaxAttackTime())) {
-            attackEffect();
-        }
-        if (nextStageTimer > 0) nextStageTimer--;
-        if (cooldown > 0) cooldown--;
     }
 
     public void attackEffect() {

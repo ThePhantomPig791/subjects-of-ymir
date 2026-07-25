@@ -5,9 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.util.RenderingUtil;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
@@ -44,7 +46,14 @@ public class LightningSphereRenderLayer extends AbstractPackRenderLayer {
 
             float r = color.getRed() / 255f, g = color.getGreen() / 255f, b = color.getBlue() / 255f;
 
-            RenderingUtil.renderSphere(poseStack, bufferSource, radius, r, g, b, alpha, 25, 25);
+            if (SoyConfig.Client.shouldShiftRenderSphere()) {
+                RenderingUtil.renderSphere(poseStack, bufferSource, radius, r, g, b, alpha);
+            }
+            if (percentCharge > 0.75 || progress > 1) {
+                for (int i = (int) (((progress / 10f) + 8) * Math.random()); i > 4; i--) {
+                    RenderingUtil.renderTriangle(poseStack, bufferSource, (float) (3.1415 * Mth.sin(ageInTicks)), (float) (1.57 * Mth.cos(ageInTicks + 100)), 0.2f, 500 * radius, r, g, b, alpha);
+                }
+            }
         }
     }
 
