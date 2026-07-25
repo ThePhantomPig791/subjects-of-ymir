@@ -27,6 +27,7 @@ public class OdmAnimation extends PalladiumAnimation {
 
     @Override
     public void animate(Builder builder, AbstractClientPlayer player, HumanoidModel<?> model, FirstPersonContext firstPersonContext, float partialTicks) {
+        if (firstPersonContext.firstPerson()) return;
         if (!SoyConfig.Client.shouldAnimateOdm()) return;
         if (player.isPassenger()) return;
 

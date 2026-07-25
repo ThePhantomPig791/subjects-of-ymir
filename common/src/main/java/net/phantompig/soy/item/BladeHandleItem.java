@@ -24,7 +24,7 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
     public static Vec3 DOWN = new Vec3(0, -1, 0);
 
     public BladeHandleItem(Properties properties) {
-        super(stack -> stack.getItem() instanceof BladeItem, SoundEvents.ARMOR_EQUIP_CHAIN, properties);
+        super(stack -> stack.getItem() instanceof BladeItem || stack.is(Items.IRON_NUGGET), SoundEvents.ARMOR_EQUIP_CHAIN, properties);
     }
 
     @Override

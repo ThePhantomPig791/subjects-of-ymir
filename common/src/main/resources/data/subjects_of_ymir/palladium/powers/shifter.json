@@ -500,8 +500,8 @@
       "hidden": true,
       "hidden_in_bar": true,
       "sound": "subjects_of_ymir:electricity",
-      "volume": 0.5,
-      "pitch": 1.1,
+      "volume": 0.05,
+      "pitch": 1.15,
       "looping": true,
       "conditions": {
         "enabling": [

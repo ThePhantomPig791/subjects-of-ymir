@@ -9,6 +9,7 @@ public abstract class RollingParticle extends TextureSheetParticle {
     public final SpriteSet sprites;
     public final float scaleDelta, rollFriction;
     public float deltaRoll;
+    public boolean fadeOut = true;
 
     RollingParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, float scaleDelta, float rollFriction, SpriteSet sprites) {
         super(level, x, y, z);
@@ -29,7 +30,7 @@ public abstract class RollingParticle extends TextureSheetParticle {
 
             float t = (float) this.age / this.lifetime;
             this.scale(scaleDelta);
-            this.setAlpha(1 - t);
+            if (this.fadeOut) this.setAlpha(1 - t);
             this.oRoll = this.roll;
             this.roll += deltaRoll;
             deltaRoll *= rollFriction;

@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -586,6 +587,10 @@ public class Titan {
             buf.writeDouble(stats.extraDamage);
             buf.writeInt(stats.attackSpeed);
         }
+    }
+
+    public Component getName() {
+        return Component.translatable("titan." + this.id.getNamespace() + "." + this.id.getPath());
     }
 
     @Override

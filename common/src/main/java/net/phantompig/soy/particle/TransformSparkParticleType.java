@@ -14,6 +14,7 @@ public class TransformSparkParticleType extends RollingParticle {
         this.friction = 0.94f;
         this.gravity = -0.1f;
         this.lifetime = 10;
+        this.fadeOut = false;
         this.setSpriteFromAge(sprites);
         final int direction = (this.random.nextBoolean() ? 1 : -1);
         this.deltaRoll = (float) (0.01 + this.random.nextFloat() * 0.05) * direction;
