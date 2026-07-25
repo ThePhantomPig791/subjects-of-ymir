@@ -19,4 +19,5 @@ public class SoyConditionSerializers {
     public static final RegistrySupplier<ConditionSerializer> IS_UNSHIFTING = CONDITION_SERIALIZERS.register("is_unshifting", IsUnshiftingCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> HARDENING = CONDITION_SERIALIZERS.register("hardening", HardeningCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> WEARING_RING = CONDITION_SERIALIZERS.register("wearing_ring", WearingRingCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> CAN_SHIFT_TICKS = CONDITION_SERIALIZERS.register("can_shift_ticks", CanShiftTicksCondition.Serializer::new);
 }

@@ -83,7 +83,10 @@ public class TitanInstance {
     }
 
     public void tick() {
-        if (this.canShiftTicks > 0) this.canShiftTicks--;
+        if (this.canShiftTicks > 0) {
+            if (this.canShiftTicks > 1 || entity.getHealth() / entity.getMaxHealth() >= 1) this.canShiftTicks--;
+            else if (entity.tickCount % 40 == 0) this.canShiftTicks--;
+        }
         staminaTick();
         marksTick();
 

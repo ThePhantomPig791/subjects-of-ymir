@@ -444,6 +444,10 @@
           },
           {
             "type": "subjects_of_ymir:can_shift_from_stamina"
+          },
+          {
+            "type": "subjects_of_ymir:can_shift_ticks",
+            "min": 2
           }
         ],
         "unlocking": {
@@ -504,20 +508,9 @@
       "pitch": 1.15,
       "looping": true,
       "conditions": {
-        "enabling": [
-          {
-            "type": "subjects_of_ymir:can_shift_from_damage"
-          },
-          {
-            "type": "subjects_of_ymir:can_shift_from_stamina"
-          }
-        ],
-        "unlocking": {
-          "type": "palladium:not",
-          "conditions": {
-            "type": "palladium:ability_enabled",
-            "ability": "conceal"
-          }
+        "enabling": {
+          "type": "palladium:ability_enabled",
+          "ability": "small_lightning"
         }
       }
     },

@@ -504,7 +504,7 @@ public class Titan {
         builder.resolution = GsonHelper.getAsInt(json, "resolution", 128);
         builder.scale = GsonHelper.getAsFloat(json, "scale", 1);
         builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 40);
-        builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 50);
+        builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 60);
         builder.baseEyeColor = GsonUtil.getAsColor(json, "base_eye_color", null);
         builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));
         builder.weight = GsonHelper.getAsDouble(json, "weight", 1);
