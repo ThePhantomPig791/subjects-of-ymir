@@ -433,7 +433,7 @@ public class TitanInstance {
             this.strengthIncreases.forEach((key, value) -> siTag.put(key, FloatTag.valueOf(value)));
             tag.put("StrengthIncreases", siTag);
         }
-        tag.putInt("TickShifted", this.ticksShifted);
+        tag.putInt("TicksShifted", this.ticksShifted);
         return tag;
     }
 
