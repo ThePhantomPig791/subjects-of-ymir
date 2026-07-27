@@ -20,6 +20,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -180,8 +181,82 @@ public class Titan {
         if (!(entity instanceof SoyPlayerExtension ext)) return;
         ext.getTitanInstance().setProgress(++progress);
         entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, SoyConfig.Server.shouldTitansExplodeBlocksOnShift() ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false).explode();
-        ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + 10);
+        ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + 4);
+        ext.getTitanInstance().ticksShifted++;
 
+        final float invPro = 0.5f - ((float) progress) / this.maxProgress;
+        if (invPro > 0) {
+            PlayerUtil.spawnParticleForAll(
+                    entity.level(),
+                    128,
+                    (ParticleOptions) SoyParticles.TRANSFORM_ARC.get(),
+                    false,
+                    entity.getX(),
+                    entity.getEyeY(),
+                    entity.getZ(),
+                    3,
+                    5,
+                    3,
+                    0.2f,
+                    (int) (6 * invPro)
+            );
+            PlayerUtil.spawnParticleForAll(
+                    entity.level(),
+                    128,
+                    (ParticleOptions) SoyParticles.TRANSFORM_ZAP.get(),
+                    false,
+                    entity.getX(),
+                    entity.getEyeY(),
+                    entity.getZ(),
+                    3,
+                    5,
+                    3,
+                    0.2f,
+                    (int) (6 * invPro)
+            );
+            PlayerUtil.spawnParticleForAll(
+                    entity.level(),
+                    128,
+                    (ParticleOptions) SoyParticles.TRANSFORM_ZOP.get(),
+                    false,
+                    entity.getX(),
+                    entity.getEyeY(),
+                    entity.getZ(),
+                    3,
+                    5,
+                    3,
+                    0.2f,
+                    (int) (6 * invPro)
+            );
+            PlayerUtil.spawnParticleForAll(
+                    entity.level(),
+                    128,
+                    (ParticleOptions) SoyParticles.TRANSFORM_CRACK.get(),
+                    false,
+                    entity.getX(),
+                    entity.getEyeY(),
+                    entity.getZ(),
+                    3,
+                    5,
+                    3,
+                    0.2f,
+                    (int) (6 * invPro)
+            );
+            PlayerUtil.spawnParticleForAll(
+                    entity.level(),
+                    128,
+                    (ParticleOptions) SoyParticles.TRANSFORM_RAY.get(),
+                    false,
+                    entity.getX(),
+                    entity.getY() + 4,
+                    entity.getZ(),
+                    10,
+                    1f,
+                    10,
+                    0.3f,
+                    (int) (4 * invPro) + 1
+            );
+        }
         PlayerUtil.spawnParticleForAll(
                 entity.level(),
                 128,
@@ -195,62 +270,6 @@ public class Titan {
                 3,
                 0.2f,
                 4
-        );
-        PlayerUtil.spawnParticleForAll(
-                entity.level(),
-                128,
-                (ParticleOptions) SoyParticles.TRANSFORM_ARC.get(),
-                false,
-                entity.getX(),
-                entity.getEyeY(),
-                entity.getZ(),
-                3,
-                5,
-                3,
-                0.2f,
-                6
-        );
-        PlayerUtil.spawnParticleForAll(
-                entity.level(),
-                128,
-                (ParticleOptions) SoyParticles.TRANSFORM_ZAP.get(),
-                false,
-                entity.getX(),
-                entity.getEyeY(),
-                entity.getZ(),
-                3,
-                5,
-                3,
-                0.2f,
-                6
-        );
-        PlayerUtil.spawnParticleForAll(
-                entity.level(),
-                128,
-                (ParticleOptions) SoyParticles.TRANSFORM_ZOP.get(),
-                false,
-                entity.getX(),
-                entity.getEyeY(),
-                entity.getZ(),
-                3,
-                5,
-                3,
-                0.2f,
-                6
-        );
-        PlayerUtil.spawnParticleForAll(
-                entity.level(),
-                128,
-                (ParticleOptions) SoyParticles.TRANSFORM_CRACK.get(),
-                false,
-                entity.getX(),
-                entity.getEyeY(),
-                entity.getZ(),
-                3,
-                5,
-                3,
-                0.2f,
-                6
         );
     }
 
@@ -320,6 +339,7 @@ public class Titan {
     public void unshift(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
         if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh)) return;
         ext.getTitanInstance().strengthIncreases.clear();
+        ext.getTitanInstance().ticksShifted = 0;
 
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
@@ -438,27 +458,38 @@ public class Titan {
     }
 
     public void tick(LivingEntity entity) {
-        if (entity instanceof Player player) {
-            player.awardStat(SoyStats.TIME_AS_TITAN, 1);
+        if (entity instanceof SoyPlayerExtension ext) {
+            if (entity instanceof Player player) player.awardStat(SoyStats.TIME_AS_TITAN, 1);
+
+            ext.getTitanInstance().ticksShifted++;
+            if (ext.getTitanInstance().ticksShifted < 150) {
+                final double x = ext.getTitanInstance().ticksShifted / 10d + 10;
+                final float newSteamParticleAmount = (float) (-0.08888 * Math.pow(x, 2) + 2.6666 * x);
+                this.emitSteam(entity,  0.1f, (int) newSteamParticleAmount / 6);
+            }
 
             if (entity.getHealth() != entity.getMaxHealth()) {
                 float emptyHealthPercent = 1 - entity.getHealth() / entity.getMaxHealth();
                 for (int count = 0; count <= 3.5 * emptyHealthPercent; count++) {
-                    if (0.5 * Math.random() < emptyHealthPercent) PlayerUtil.spawnParticleForAll(
-                            entity.level(),
-                            128,
-                            (ParticleOptions) SoyParticles.LARGE_STEAM.get(),
-                            true,
-                            entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),
-                            entity.getY() + entity.getBoundingBox().getYsize() / 3 + 6 * (Math.random() - 0.5),
-                            entity.getZ() + entity.getBoundingBox().getZsize() * (Math.random() - 0.5),
-                            0, 0, 0,
-                            0.1f * emptyHealthPercent * (float) (Math.random() - 0.5),
-                            1
-                    );
+                    if (0.5 * Math.random() < emptyHealthPercent) emitSteam(entity, 0.1f * emptyHealthPercent * (float) (Math.random() - 0.5), 1);
                 }
             }
         }
+    }
+
+    private void emitSteam(Entity entity, float speed, int count) {
+        PlayerUtil.spawnParticleForAll(
+                entity.level(),
+                128,
+                (ParticleOptions) SoyParticles.LARGE_STEAM.get(),
+                true,
+                entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),
+                entity.getY() + entity.getBoundingBox().getYsize() / 3 + 6 * (Math.random() - 0.5),
+                entity.getZ() + entity.getBoundingBox().getZsize() * (Math.random() - 0.5),
+                0, 0, 0,
+                speed,
+                count
+        );
     }
 
     public void onFall(LivingEntity entity, float fallDistance) {

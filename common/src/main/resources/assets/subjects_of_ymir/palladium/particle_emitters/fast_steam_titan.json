@@ -1,7 +1,7 @@
 [
   {
     "body_part": "body",
-    "amount": 60,
+    "amount": 1,
     "offset": [0, 0, 0],
     "offset_random": [50, -20, 50],
     "motion": [0, 5, 0],

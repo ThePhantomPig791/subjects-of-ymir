@@ -51,7 +51,7 @@ public class SoyConfig {
     public static class Client {
         public static ForgeConfigSpec.IntValue RIGHT_HOOK_KEYCODE, LEFT_HOOK_KEYCODE;
         public static ForgeConfigSpec.DoubleValue ODM_SCREEN_TILT_STRENGTH, SPARK_PARTICLE_SCALE;
-        public static ForgeConfigSpec.BooleanValue WORLD_TINT, ODM_ANIMATIONS, SHIFTING_SPHERE;
+        public static ForgeConfigSpec.BooleanValue WORLD_TINT, ODM_ANIMATIONS, SHIFTING_SPHERE, OVERRIDE_SPHERE_COLOR;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -74,8 +74,11 @@ public class SoyConfig {
             builder.comment("Determines the scale for the particles that display when someone shifts into a Titan");
             SPARK_PARTICLE_SCALE = builder.defineInRange("client.sparkParticleScale", 1d, 0, 2);
 
-            builder.comment("If false, the sphere around someone shifting into a Titan will not appear");
+            builder.comment("If false, the lightning sphere around someone shifting into a Titan will not appear");
             SHIFTING_SPHERE = builder.define("client.shiftSphere", true);
+
+            builder.comment("If true, the color of the lightning sphere will be overridden with a less-intense tan/white, matching the color of the particles");
+            OVERRIDE_SPHERE_COLOR = builder.define("client.overrideSphereColor", false);
 
             return builder.build();
         }
@@ -105,6 +108,10 @@ public class SoyConfig {
 
         public static boolean shouldShiftRenderSphere() {
             return SHIFTING_SPHERE.get();
+        }
+
+        public static boolean shouldOverrideSphereColor() {
+            return OVERRIDE_SPHERE_COLOR.get();
         }
     }
 }

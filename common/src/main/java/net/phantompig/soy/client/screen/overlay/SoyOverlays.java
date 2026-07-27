@@ -52,6 +52,6 @@ public class SoyOverlays {
     }
 
     private static float ease(float x) {
-        return 0.25f * Math.max(-0.003125f * x * x * x + 0.0549107f * x * x - 0.120536f * x, 0);
+        return 0.5f * Math.max(-0.003125f * x * x * x + 0.0549107f * x * x - 0.120536f * x, 0);
     }
 }

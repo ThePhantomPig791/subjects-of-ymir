@@ -28,6 +28,7 @@ public class OdmAnimation extends PalladiumAnimation {
     @Override
     public void animate(Builder builder, AbstractClientPlayer player, HumanoidModel<?> model, FirstPersonContext firstPersonContext, float partialTicks) {
         if (firstPersonContext.firstPerson()) return;
+        if (player.isSpectator()) return;
         if (!SoyConfig.Client.shouldAnimateOdm()) return;
         if (player.isPassenger()) return;
 
@@ -92,7 +93,7 @@ public class OdmAnimation extends PalladiumAnimation {
                     .setXRotDegrees((float) rightArm.x)
                     .setYRotDegrees((float) rightArm.y)
                     .setZRotDegrees((float) rightArm.z);
-            if (!player.onGround() && !player.isVisuallySwimming()) builder.get(PlayerModelPart.LEFT_LEG)
+            if (aboveGround(player) && !player.isVisuallySwimming()) builder.get(PlayerModelPart.LEFT_LEG)
                     .setXRotDegrees((float) rightArm.x * -0.1f + (float) Math.sin(builder.getAgeInTicks()))
                     .setYRotDegrees((float) rightArm.y * 0.1f)
                     .setZRotDegrees((float) rightArm.z * -0.1f);
@@ -103,10 +104,14 @@ public class OdmAnimation extends PalladiumAnimation {
                     .setXRotDegrees((float) leftArm.x)
                     .setYRotDegrees((float) leftArm.y)
                     .setZRotDegrees((float) leftArm.z);
-            if (!player.onGround() && !player.isVisuallySwimming()) builder.get(PlayerModelPart.RIGHT_LEG)
+            if (aboveGround(player) && !player.isVisuallySwimming()) builder.get(PlayerModelPart.RIGHT_LEG)
                     .setXRotDegrees((float) leftArm.x * -0.1f + (float) Math.cos(builder.getAgeInTicks()))
                     .setYRotDegrees((float) leftArm.y * 0.1f)
                     .setZRotDegrees((float) leftArm.z * -0.1f);
         }
+    }
+
+    private static boolean aboveGround(AbstractClientPlayer player) {
+        return !player.onGround() && !player.level().getBlockState(player.blockPosition().below(2)).blocksMotion() && !player.level().getBlockState(player.blockPosition().below(3)).blocksMotion();
     }
 }

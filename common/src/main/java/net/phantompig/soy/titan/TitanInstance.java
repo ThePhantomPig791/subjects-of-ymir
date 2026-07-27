@@ -56,6 +56,8 @@ public class TitanInstance {
 
     public int deaths = 0;
 
+    public int ticksShifted = 0;
+
     public HashMap<String, Float> strengthIncreases;
 
 
@@ -328,6 +330,7 @@ public class TitanInstance {
         playerExt.getTitanInstance().setStamina(0);
         playerExt.getTitanInstance().setMaxStamina(0);
         playerExt.getTitanInstance().setMarksTimer(0);
+        playerExt.getTitanInstance().ticksShifted = 0;
         SoyProperties.PATH_POINTS.set(entity, 0);
     }
 
@@ -383,6 +386,7 @@ public class TitanInstance {
         to.deaths = from.deaths;
         to.memoryManager = from.memoryManager;
         to.strengthIncreases = from.strengthIncreases;
+        to.ticksShifted = from.ticksShifted;
     }
 
     public static TitanInstance fromTag(LivingEntity entity, CompoundTag tag) {
@@ -407,6 +411,7 @@ public class TitanInstance {
             si.getAllKeys().forEach(key -> inst.strengthIncreases.put(key, si.getFloat(key)));
         }
         inst.updateProperties();
+        inst.ticksShifted = tag.getInt("TicksShifted");
         return inst;
     }
 
@@ -428,6 +433,7 @@ public class TitanInstance {
             this.strengthIncreases.forEach((key, value) -> siTag.put(key, FloatTag.valueOf(value)));
             tag.put("StrengthIncreases", siTag);
         }
+        tag.putInt("TickShifted", this.ticksShifted);
         return tag;
     }
 
