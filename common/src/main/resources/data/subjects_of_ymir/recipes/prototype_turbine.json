@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "I": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        },
+        "E": {
+            "item": "subjects_of_ymir:iceburst_engine"
+        },
+        "L": {
+            "item": "minecraft:iron_ingot"
+        },
+        "H": {
+            "item": "minecraft:leather"
+        }
+    },
+    "pattern": [
+        "H H",
+        "LEL",
+        "ILI"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:prototype_turbine",
+        "count": 1
+    }
+}

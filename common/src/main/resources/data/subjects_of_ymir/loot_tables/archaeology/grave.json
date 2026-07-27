@@ -52,6 +52,10 @@
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:experience_bottle"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "subjects_of_ymir:iceburst_engine"
                 }
             ],
             "rolls": 1.0

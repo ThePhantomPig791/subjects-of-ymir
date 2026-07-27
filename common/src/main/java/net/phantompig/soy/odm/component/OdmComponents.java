@@ -10,15 +10,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class OdmComponents {
-    public static final HashMap<String, OdmComponent> ODM_COMPONENTS = new HashMap<>();
+    public static final LinkedHashMap<String, OdmComponent> ODM_COMPONENTS = new LinkedHashMap<>();
     public static final LinkedHashMap<String, RegistrySupplier<OdmComponentItem>> ODM_ITEMS = new LinkedHashMap<>();
 
     static {
-        register("prototype_turbine", OdmSlot.TURBINE, 500, 0, new StrafeStrengthBuilder().forward(0.02f).up(0.04f).build()); // one canister
+        register("prototype_turbine", OdmSlot.TURBINE, 500, 0, new StrafeStrengthBuilder().forward(0.1f).up(0.025f).build());
+        register("prototype_turbine_v2", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.04f).forward(0.06f).backward(0).up(0.04f).build());
+        register("prototype_turbine_v3", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.07f).forward(0.1f).up(0.12f).build());
+        register("turbine_v1", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.05f).forward(0.075f).backward(0).up(0.07f).build());
         register("turbine_v2", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.125f).forward(0.1f).backward(0.08f).up(0.11f).build());
-        register("blade_sheath", OdmSlot.SHEATH, 0, 6);
-        register("blade_sheath_with_canister", OdmSlot.SHEATH, 1000, 6); // two gas canisters
-        register("canister_sheath", OdmSlot.SHEATH, 2000, 0); // total four gas canisters
+        register("blade_sheath", OdmSlot.SHEATH, 0, 8);
+        register("blade_sheath_with_canister", OdmSlot.SHEATH, 1500, 6);
+        register("canister_sheath", OdmSlot.SHEATH, 3000, 0);
     }
 
     public static void register(String name, OdmSlot slot, int gasCapacity, int bladeCapacity) {

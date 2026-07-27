@@ -56,6 +56,7 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> BLADE = ITEMS.register("blade", () -> new BladeItem(new Item.Properties().stacksTo(16)));
     public static final RegistrySupplier<Item> GAS_CANISTER = ITEMS.register("gas_canister", () -> new GasHoldingItem(new Item.Properties().stacksTo(1), 500));
+    public static final RegistrySupplier<Item> ICEBURST_ENGINE = ITEMS.register("iceburst_engine", () -> new Item(new Item.Properties()));
 
     public static final RegistrySupplier<Item> BLADE_HANDLE = ITEMS.register("blade_handle", () -> new BladeHandleItem(new Item.Properties().stacksTo(1)));
 
@@ -161,6 +162,7 @@ public class SoyItems {
             entries.add(COMPRESSION_TABLE.get());
             entries.add(GAS_CANISTER.get());
             entries.add(GAS_CANISTER.get().getDefaultInstance());
+            entries.add(ICEBURST_ENGINE.get());
             entries.add(BLADE.get());
             entries.add(BLADE_HANDLE.get());
             OdmComponents.initCreativeMenu(entries);

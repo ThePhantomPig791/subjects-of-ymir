@@ -164,6 +164,12 @@
                             "tag": "{SpinalFluid:220}",
                             "conditions": []
                         }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
+                        }
                     ]
                 },
                 {
@@ -174,6 +180,12 @@
                             "function": "minecraft:set_nbt",
                             "tag": "{SpinalFluid:200}",
                             "conditions": []
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
                         }
                     ]
                 },
@@ -186,6 +198,12 @@
                             "tag": "{SpinalFluid:180}",
                             "conditions": []
                         }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
+                        }
                     ]
                 },
                 {
@@ -196,6 +214,12 @@
                             "function": "minecraft:set_nbt",
                             "tag": "{SpinalFluid:140}",
                             "conditions": []
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
                         }
                     ]
                 },
@@ -208,6 +232,12 @@
                             "tag": "{SpinalFluid:120}",
                             "conditions": []
                         }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
+                        }
                     ]
                 },
                 {
@@ -219,24 +249,25 @@
                             "tag": "{SpinalFluid:50}",
                             "conditions": []
                         }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
+                        }
                     ]
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "subjects_of_ymir:vial"
+                    "name": "subjects_of_ymir:vial",
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.3
+                        }
+                    ]
                 }
-            ],
-            "functions": [
-                {
-                    "function": "minecraft:set_count",
-                    "count": {
-                        "type": "minecraft:uniform",
-                        "min": -2,
-                        "max": 1
-                    }
-                }
-            ],
-            "conditions": []
+            ]
         },
         {
             "rolls": 1,

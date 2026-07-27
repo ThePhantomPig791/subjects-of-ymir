@@ -4,8 +4,8 @@
 		{
 			"description": {
 				"identifier": "geometry.unknown",
-				"texture_width": 64,
-				"texture_height": 64,
+				"texture_width": 48,
+				"texture_height": 48,
 				"visible_bounds_width": 3,
 				"visible_bounds_height": 2.5,
 				"visible_bounds_offset": [0, 0.75, 0]
@@ -30,10 +30,10 @@
 					"pivot": [5, 6, -4],
 					"rotation": [-10.15108, 9.84655, -1.75378],
 					"cubes": [
-						{"origin": [3, 8, -4], "size": [4, 4, 15], "uv": [0, 19]},
-						{"origin": [3, 8, 0], "size": [4, 4, 2], "inflate": 0.25, "uv": [38, 16]},
-						{"origin": [4.5, 9.5, -5], "size": [1, 1, 1], "uv": [38, 24]},
-						{"origin": [4.5, 9, -6], "size": [1, 2, 1], "uv": [22, 38]}
+						{"origin": [3, 8, -4], "size": [4, 4, 15], "uv": [0, 0]},
+						{"origin": [3, 8, 0], "size": [4, 4, 2], "inflate": 0.25, "uv": [18, 19]},
+						{"origin": [4.5, 9.5, -5], "size": [1, 1, 1], "uv": [22, 25]},
+						{"origin": [4.5, 9, -6], "size": [1, 2, 1], "uv": [18, 25]}
 					]
 				},
 				{
@@ -42,7 +42,7 @@
 					"pivot": [0, 12.5, 2],
 					"rotation": [-42.7046, 43.3227, -8.6474],
 					"cubes": [
-						{"origin": [0, 12, 2], "size": [0, 1, 9], "uv": [38, 0]}
+						{"origin": [0, 12, 2], "size": [0, 1, 9], "uv": [0, 19]}
 					]
 				},
 				{

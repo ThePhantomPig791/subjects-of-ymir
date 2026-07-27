@@ -5,10 +5,10 @@
         "C": {
             "tag": "minecraft:coals"
         },
-        "I": {
-            "item": "minecraft:raw_iron"
-        },
         "B": {
+            "item": "minecraft:raw_iron_block"
+        },
+        "I": {
             "item": "subjects_of_ymir:iron_bamboo"
         }
     },

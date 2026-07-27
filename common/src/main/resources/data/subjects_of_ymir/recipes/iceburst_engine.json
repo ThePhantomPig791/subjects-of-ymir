@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "I": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        },
+        "L": {
+            "item": "minecraft:iron_block"
+        },
+        "G": {
+            "item": "minecraft:gunpowder"
+        },
+        "C": {
+            "item": "minecraft:comparator"
+        },
+        "O": {
+            "tag": "minecraft:logs"
+        }
+    },
+    "pattern": [
+        "IGI",
+        "LCL",
+        "OLO"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:iceburst_engine",
+        "count": 1
+    }
+}

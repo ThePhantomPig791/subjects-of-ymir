@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "E": {
+            "item": "subjects_of_ymir:turbine_v1"
+        },
+        "L": {
+            "item": "subjects_of_ymir:ultrahard_steel_ingot"
+        }
+    },
+    "pattern": [
+        "LEL"
+    ],
+    "result": {
+        "item": "subjects_of_ymir:turbine_v2",
+        "count": 1
+    }
+}
