@@ -54,24 +54,41 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
             }
             return InteractionResultHolder.consume(player.getItemInHand(usedHand));
         } else {
+            if (
+                    player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof BladeHandleItem bladeM && bladeM.getStack(player.getItemInHand(InteractionHand.MAIN_HAND)).getItem() instanceof BladeItem
+                    && player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BladeHandleItem bladeO && bladeO.getStack(player.getItemInHand(InteractionHand.OFF_HAND)).getItem() instanceof BladeItem
+            ) {
+                return InteractionResultHolder.pass(player.getItemInHand(usedHand));
+            }
             ItemStack stack = player.getItemInHand(usedHand);
             ItemStack containedStack = this.getStack(stack);
             if (containedStack.isEmpty()) {
                 ItemStack odmStack = player.getItemBySlot(EquipmentSlot.LEGS);
                 if (odmStack.getItem() instanceof OdmAttachableAddonArmorItem odm) {
                     boolean rightHand = (usedHand == InteractionHand.MAIN_HAND) == (player.getMainArm() == HumanoidArm.RIGHT);
-                    ItemStack sheath = rightHand ? odm.getLeftSheath(odmStack) : odm.getRightSheath(odmStack);
-                    if (sheath.getItem() instanceof OdmComponentItem component) {
-                        ItemStack blade = component.takeBlade(sheath);
-                        if (!blade.isEmpty()) {
-                            this.setStack(stack, blade);
+                    ItemStack[] sheaths = new ItemStack[2]; // prioritize opposite-sided sheath
+                    sheaths[rightHand ? 0 : 1] = odm.getLeftSheath(odmStack);
+                    sheaths[rightHand ? 1 : 0] = odm.getRightSheath(odmStack);
+                    for (ItemStack sheath : sheaths) {
+                        if (sheath.getItem() instanceof OdmComponentItem component) {
+                            ItemStack blade = component.takeBlade(sheath);
+                            if (!blade.isEmpty()) {
+                                this.setStack(stack, blade);
+                                PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.ARMOR_EQUIP_IRON, SoundSource.PLAYERS, 0.6f, 0.75f + 0.1f * (float) Math.random());
+                                break;
+                            }
                         }
                     }
                 }
             } else {
-                dropBrokenBlade(level, player, UP, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-                dropBrokenBlade(level, player, DOWN, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
-                return InteractionResultHolder.consume(player.getItemInHand(usedHand));
+                if (
+                        (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof BladeHandleItem bladeM && bladeM.getStack(player.getItemInHand(InteractionHand.MAIN_HAND)).is(Items.IRON_NUGGET))
+                        || (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BladeHandleItem bladeO && bladeO.getStack(player.getItemInHand(InteractionHand.OFF_HAND)).is(Items.IRON_NUGGET))
+                ) {
+                    dropBrokenBlade(level, player, DOWN, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
+                    dropBrokenBlade(level, player, UP, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                    return InteractionResultHolder.consume(player.getItemInHand(usedHand));
+                }
             }
         }
         return super.use(level, player, usedHand);

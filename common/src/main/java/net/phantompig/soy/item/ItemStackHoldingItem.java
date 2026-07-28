@@ -34,7 +34,7 @@ public abstract class ItemStackHoldingItem extends Item {
                 return InteractionResultHolder.consume(itemStack);
             }
         }
-        return InteractionResultHolder.fail(itemStack);
+        return super.use(level, player, usedHand);
     }
 
     @Override
