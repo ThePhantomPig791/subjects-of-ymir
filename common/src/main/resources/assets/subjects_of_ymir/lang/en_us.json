@@ -139,6 +139,7 @@
   "tooltip.subjects_of_ymir.odm_attachable.turbine": "§nTurbine:§r %s",
   "tooltip.subjects_of_ymir.odm_attachable.right_sheath": "§nRight Sheath:§r %s",
   "tooltip.subjects_of_ymir.odm_attachable.left_sheath": "§nLeft Sheath:§r %s",
+  "tooltip.subjects_of_ymir.blades": "Blades: %s/%s",
 
   "tooltip.subjects_of_ymir.flare_cartridge_color": "Flare Cartridge Color: %s",
 

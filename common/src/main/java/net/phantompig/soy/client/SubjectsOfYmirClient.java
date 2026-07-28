@@ -26,7 +26,6 @@ import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.*;
 import net.phantompig.soy.menu.SoyMenus;
 import net.phantompig.soy.particle.*;
-import net.threetag.palladium.client.dynamictexture.DynamicTextureManager;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
 import net.threetag.palladium.event.PalladiumClientEvents;
 import net.threetag.palladium.util.SplashTextUtil;
@@ -40,19 +39,7 @@ public class SubjectsOfYmirClient {
         PackRenderLayerManager.registerParser(SubjectsOfYmir.rsrc("player_in_nape"), PlayerInNapeRenderLayer::parse);
         PackRenderLayerManager.registerParser(SubjectsOfYmir.rsrc("lightning_sphere"), LightningSphereRenderLayer::parse);
 
-        DynamicTextureManager.registerVariable(new TitanIdTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new TitanNamespaceTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new TitanVariantTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new TitanProgressTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new TitanDecayTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new TitanEyeColorTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new HardeningAllVariable.Serializer());
-        DynamicTextureManager.registerVariable(new HardeningKnucklesVariable.Serializer());
-        DynamicTextureManager.registerVariable(new HardeningHandsVariable.Serializer());
-        DynamicTextureManager.registerVariable(new MarksVariable.Serializer());
-        DynamicTextureManager.registerVariable(new OdmTurbineTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new OdmSheathRightTextureVariable.Serializer());
-        DynamicTextureManager.registerVariable(new OdmSheathLeftTextureVariable.Serializer());
+        SoyDynamicTextureVariables.init();
 
         PalladiumClientEvents.REGISTER_ANIMATIONS.register(registry -> {
             registry.accept(SubjectsOfYmir.rsrc("block"), BlockAnimation.INSTANCE);

@@ -171,6 +171,10 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
                 other.shrink(1);
                 playAttachSound(player, 1);
                 return true;
+            } else if (other.getItem() instanceof BladeItem && addBlade(stack, other.copyWithCount(1))) {
+                other.shrink(1);
+                player.playSound(SoundEvents.ARMOR_EQUIP_IRON,0.6f, 0.8f);
+                return true;
             }
         }
         return false;
@@ -192,6 +196,15 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
                     setTurbine(stack, other);
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    public boolean addBlade(ItemStack stack, ItemStack blade) {
+        for (ItemStack componentStack : new ItemStack[]{this.getRightSheath(stack), this.getLeftSheath(stack), this.getTurbine(stack)}) {
+            if (componentStack.getItem() instanceof OdmComponentItem comp) {
+                if (comp.addBlade(componentStack, blade)) return true;
             }
         }
         return false;

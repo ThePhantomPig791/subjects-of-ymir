@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -15,6 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.ThrownBladeEntity;
+import net.phantompig.soy.odm.component.OdmComponentItem;
 import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.util.PlayerUtil;
@@ -50,11 +52,32 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
             if (player instanceof SoyServerPlayerExtension ext) {
                 ext.soy$getCombatSystem().stopHolding();
             }
+            return InteractionResultHolder.consume(player.getItemInHand(usedHand));
+        } else {
+            ItemStack stack = player.getItemInHand(usedHand);
+            ItemStack containedStack = this.getStack(stack);
+            if (containedStack.isEmpty()) {
+                ItemStack odmStack = player.getItemBySlot(EquipmentSlot.LEGS);
+                if (odmStack.getItem() instanceof OdmAttachableAddonArmorItem odm) {
+                    boolean rightHand = (usedHand == InteractionHand.MAIN_HAND) == (player.getMainArm() == HumanoidArm.RIGHT);
+                    ItemStack sheath = rightHand ? odm.getLeftSheath(odmStack) : odm.getRightSheath(odmStack);
+                    if (sheath.getItem() instanceof OdmComponentItem component) {
+                        ItemStack blade = component.takeBlade(sheath);
+                        if (!blade.isEmpty()) {
+                            this.setStack(stack, blade);
+                        }
+                    }
+                }
+            } else {
+                dropBrokenBlade(level, player, UP, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                dropBrokenBlade(level, player, DOWN, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
+                return InteractionResultHolder.consume(player.getItemInHand(usedHand));
+            }
         }
         return super.use(level, player, usedHand);
     }
 
-    public void throwBlade(Level level, Player player, Vec3 normal, EquipmentSlot slot) {
+    public static void throwBlade(Level level, Player player, Vec3 normal, EquipmentSlot slot) {
         Vec3 offset = player.getEyePosition().add(player.getLookAngle().multiply(1, 0, 1).cross(normal).scale(0.3)).add(0, -1, 0);
         ItemStack stack = player.getItemBySlot(slot);
         if (stack.getItem() instanceof BladeHandleItem handle && handle.getStack(stack).getItem() instanceof BladeItem) {
@@ -67,6 +90,23 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
             PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.SNOWBALL_THROW, SoundSource.PLAYERS, 0.5f, 0.6f + 0.1f * (float) Math.random());
             PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.ARMOR_EQUIP_IRON, SoundSource.PLAYERS, 1, 1.5f + 0.1f * (float) Math.random());
         }
+    }
+
+    public static void dropBrokenBlade(Level level, Player player, Vec3 normal, EquipmentSlot slot) {
+        Vec3 offset = getOffset(player, normal);
+        ItemStack stack = player.getItemBySlot(slot);
+        if (stack.getItem() instanceof BladeHandleItem handle && handle.getStack(stack).is(Items.IRON_NUGGET)) {
+            ItemEntity entity = new ItemEntity(level, offset.x, offset.y, offset.z, handle.getStack(stack));
+            entity.addDeltaMovement(player.getLookAngle().scale(0.5));
+            level.addFreshEntity(entity);
+
+            handle.setStack(stack, Items.AIR.getDefaultInstance());
+            PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.ARMOR_EQUIP_IRON, SoundSource.PLAYERS, 0.7f, 0.8f + 0.1f * (float) Math.random());
+        }
+    }
+
+    private static Vec3 getOffset(Player player, Vec3 normal) {
+        return player.getEyePosition().add(player.getLookAngle().multiply(1, 0, 1).cross(normal).scale(0.3)).add(0, -1, 0);
     }
 
     @Override

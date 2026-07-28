@@ -19,8 +19,8 @@ public class OdmComponents {
         register("prototype_turbine_v3", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.07f).forward(0.1f).up(0.12f).build());
         register("turbine_v1", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.05f).forward(0.075f).backward(0).up(0.07f).build());
         register("turbine_v2", OdmSlot.TURBINE, 0, 0, new StrafeStrengthBuilder(0.125f).forward(0.1f).backward(0.08f).up(0.11f).build());
-        register("blade_sheath", OdmSlot.SHEATH, 0, 8);
-        register("blade_sheath_with_canister", OdmSlot.SHEATH, 1500, 6);
+        register("blade_sheath", OdmSlot.SHEATH, 0, 5);
+        register("blade_sheath_with_canister", OdmSlot.SHEATH, 1500, 4);
         register("canister_sheath", OdmSlot.SHEATH, 3000, 0);
     }
 
