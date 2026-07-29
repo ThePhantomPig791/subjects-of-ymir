@@ -217,14 +217,14 @@
                             "count": {
                                 "type": "minecraft:uniform",
                                 "min": 1,
-                                "max": 5
+                                "max": 3
                             }
                         }
                     ],
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.75
+							"chance": 0.4
 						}
 					]
 				}
@@ -249,7 +249,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.8
+							"chance": 0.4
 						}
 					]
 				}
@@ -274,7 +274,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.7
+							"chance": 0.4
 						}
 					]
 				}
@@ -299,7 +299,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.6
+							"chance": 0.5
 						}
 					]
 				}
@@ -331,7 +331,7 @@
 			]
 		},
 		{
-			"rolls": 2,
+			"rolls": 1,
 			"entries": [
 				{
 					"type": "minecraft:item",
@@ -340,7 +340,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.8
+							"chance": 0.4
 						}
 					]
 				},
@@ -351,7 +351,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.25
+							"chance": 0.1
 						}
 					]
 				},
@@ -362,14 +362,14 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.1
+							"chance": 0.05
 						}
 					]
 				}
 			]
 		},
 		{
-			"rolls": 2,
+			"rolls": 1,
 			"entries": [
 				{
 					"type": "minecraft:item",
@@ -378,7 +378,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.2
+							"chance": 0.08
 						}
 					]
 				},
@@ -389,7 +389,18 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.2
+							"chance": 0.07
+						}
+					]
+				},
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:blade_sheath_with_canister",
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.04
 						}
 					]
 				},
@@ -400,7 +411,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.4
+							"chance": 0.2
 						}
 					]
 				}
