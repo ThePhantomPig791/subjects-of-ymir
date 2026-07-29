@@ -42,6 +42,7 @@ public class SoyJeiPlugin implements IModPlugin {
 
         registration.addItemStackInfo(List.of(SoyItems.IRON_BAMBOO.get().getDefaultInstance(), SoyItems.IRON_BAMBOO_LEAF.get().getDefaultInstance()), Component.translatable("info.item.iron_bamboo"), Component.translatable("info.item.iron_bamboo_leaf"));
         registration.addItemStackInfo(List.of(SoyItems.RAW_ICEBURST.get().getDefaultInstance(), SoyItems.ICEBURST_ORE.get().getDefaultInstance(), SoyItems.DEEPSLATE_ICEBURST_ORE.get().getDefaultInstance()), Component.translatable("info.item.iceburst"));
+        registration.addItemStackInfo(List.of(SoyItems.BLADE_HANDLE.get().getDefaultInstance()), Component.translatable("info.item.blade_handle", Component.keybind("key.attack"), Component.keybind("key.use")));
     }
 
     @Override
