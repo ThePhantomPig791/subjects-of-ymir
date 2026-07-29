@@ -340,7 +340,18 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.4
+							"chance": 0.1
+						}
+					]
+				},
+				{
+					"type": "minecraft:item",
+					"name": "subjects_of_ymir:prototype_turbine_v1",
+					"functions": [],
+					"conditions": [
+						{
+							"condition": "minecraft:random_chance",
+							"chance": 0.05
 						}
 					]
 				},
@@ -351,18 +362,7 @@
 					"conditions": [
 						{
 							"condition": "minecraft:random_chance",
-							"chance": 0.1
-						}
-					]
-				},
-				{
-					"type": "minecraft:item",
-					"name": "subjects_of_ymir:turbine_v1",
-					"functions": [],
-					"conditions": [
-						{
-							"condition": "minecraft:random_chance",
-							"chance": 0.05
+							"chance": 0.01
 						}
 					]
 				}

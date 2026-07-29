@@ -5,8 +5,8 @@
         "I": {
             "item": "subjects_of_ymir:iron_bamboo"
         },
-        "E": {
-            "item": "subjects_of_ymir:iceburst_engine"
+        "C": {
+            "item": "subjects_of_ymir:gas_canister"
         },
         "L": {
             "item": "minecraft:iron_ingot"
@@ -17,7 +17,7 @@
     },
     "pattern": [
         "H H",
-        "LEL",
+        "LCL",
         "ILI"
     ],
     "result": {

@@ -2,6 +2,9 @@
     "type": "minecraft:crafting_shaped",
     "category": "equipment",
     "key": {
+        "S": {
+            "item": "minecraft:iron_ingot"
+        },
         "I": {
             "item": "subjects_of_ymir:iron_bamboo"
         },
@@ -10,7 +13,8 @@
         }
     },
     "pattern": [
-        "IEI"
+        "SES",
+        " I "
     ],
     "result": {
         "item": "subjects_of_ymir:prototype_turbine_v2",

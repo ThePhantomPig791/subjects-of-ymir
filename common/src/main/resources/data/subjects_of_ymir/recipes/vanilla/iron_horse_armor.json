@@ -13,8 +13,8 @@
         }
     },
     "pattern": [
-        "L L",
-        "SWS",
+        "L S",
+        "LWS",
         "S S"
     ],
     "result": {

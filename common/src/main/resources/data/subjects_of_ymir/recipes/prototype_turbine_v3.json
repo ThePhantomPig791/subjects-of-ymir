@@ -8,13 +8,13 @@
         "E": {
             "item": "subjects_of_ymir:prototype_turbine_v2"
         },
-        "L": {
-            "item": "minecraft:iron_ingot"
+        "S": {
+            "item": "subjects_of_ymir:ultrahard_steel_ingot"
         }
     },
     "pattern": [
-        "IEI",
-        "L L"
+        "SES",
+        "I I"
     ],
     "result": {
         "item": "subjects_of_ymir:prototype_turbine_v3",

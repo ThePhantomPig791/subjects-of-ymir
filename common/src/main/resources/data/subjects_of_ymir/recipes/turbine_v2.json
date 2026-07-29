@@ -5,12 +5,16 @@
         "E": {
             "item": "subjects_of_ymir:turbine_v1"
         },
-        "L": {
+        "I": {
+            "item": "subjects_of_ymir:iron_bamboo"
+        },
+        "S": {
             "item": "subjects_of_ymir:ultrahard_steel_ingot"
         }
     },
     "pattern": [
-        "LEL"
+        "SES",
+        " I "
     ],
     "result": {
         "item": "subjects_of_ymir:turbine_v2",

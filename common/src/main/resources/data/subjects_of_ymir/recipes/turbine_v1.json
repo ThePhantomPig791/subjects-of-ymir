@@ -2,19 +2,20 @@
     "type": "minecraft:crafting_shaped",
     "category": "equipment",
     "key": {
-        "I": {
-            "item": "subjects_of_ymir:iron_bamboo"
+        "S": {
+            "item": "subjects_of_ymir:ultrahard_steel_ingot"
         },
         "E": {
-            "item": "subjects_of_ymir:iceburst_engine"
+            "item": "subjects_of_ymir:prototype_turbine_v3"
         },
         "L": {
             "tag": "minecraft:logs"
         }
     },
     "pattern": [
+        " S ",
         "LEL",
-        "I I"
+        " S "
     ],
     "result": {
         "item": "subjects_of_ymir:turbine_v1",
