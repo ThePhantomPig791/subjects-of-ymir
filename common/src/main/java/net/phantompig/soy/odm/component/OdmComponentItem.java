@@ -15,6 +15,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.item.BladeItem;
 import net.phantompig.soy.item.GasHoldingItem;
+import net.phantompig.soy.item.SoyItems;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -112,5 +114,18 @@ public class OdmComponentItem extends GasHoldingItem {
         if (this.getBladeCapacity() > 0) {
             components.add(Component.translatable("tooltip.subjects_of_ymir.blades", this.getBladeCount(stack), this.getBladeCapacity()));
         }
+    }
+
+    @Override
+    public @NotNull ItemStack getDefaultInstance() {
+        ItemStack s = super.getDefaultInstance();
+        for (int i = 0; i < this.getBladeCapacity(); i++) {
+            addBlade(s, SoyItems.BLADE.get().getDefaultInstance());
+        }
+        return s;
+    }
+
+    public boolean shouldAddDefaultInstanceToCreativeMenu() {
+        return this.max > 0 || this.getBladeCapacity() > 0;
     }
 }

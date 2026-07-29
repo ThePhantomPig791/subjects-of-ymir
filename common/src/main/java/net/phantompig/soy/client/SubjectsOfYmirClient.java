@@ -25,6 +25,8 @@ import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.item.*;
 import net.phantompig.soy.menu.SoyMenus;
+import net.phantompig.soy.odm.component.OdmComponentItem;
+import net.phantompig.soy.odm.component.OdmComponents;
 import net.phantompig.soy.particle.*;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
 import net.threetag.palladium.event.PalladiumClientEvents;
@@ -99,6 +101,8 @@ public class SubjectsOfYmirClient {
         ItemProperties.register(SoyItems.VIAL.get(), SubjectsOfYmir.rsrc("spinal_fluid"), SubjectsOfYmirClient::getModelProgressForDataItem);
         ItemProperties.register(SoyItems.FLARE_GUN.get(), SubjectsOfYmir.rsrc("flare_gun"), (itemStack, clientLevel, livingEntity, i) -> itemStack.getItem() instanceof FlareGunItem flareGunItem && !flareGunItem.getStack(itemStack).isEmpty() ? 1 : 0);
         ItemProperties.register(SoyItems.BLADE_HANDLE.get(), SubjectsOfYmir.rsrc("blade"), SubjectsOfYmirClient::getBladeForHandleItem);
+        ItemProperties.register(OdmComponents.ODM_ITEMS.get("blade_sheath").get(), SubjectsOfYmir.rsrc("odm_blades"), SubjectsOfYmirClient::getBladesForComponentItem);
+        ItemProperties.register(OdmComponents.ODM_ITEMS.get("blade_sheath_with_canister").get(), SubjectsOfYmir.rsrc("odm_blades"), SubjectsOfYmirClient::getBladesForComponentItem);
 
         MenuScreens.register(SoyMenus.COMPRESSION.get(), CompressionScreen::new);
 
@@ -116,6 +120,13 @@ public class SubjectsOfYmirClient {
         if (itemStack.getItem() instanceof BladeHandleItem item) {
             if (item.getStack(itemStack).getItem() instanceof BladeItem) return 1;
             if (item.getStack(itemStack).is(Items.IRON_NUGGET)) return 0.5f;
+        }
+        return 0;
+    }
+
+    private static float getBladesForComponentItem(ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) {
+        if (itemStack.getItem() instanceof OdmComponentItem component) {
+            return (float) component.getBladeCount(itemStack) / component.getBladeCapacity();
         }
         return 0;
     }

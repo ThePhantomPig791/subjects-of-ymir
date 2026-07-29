@@ -69,8 +69,11 @@
                 }
             },
             "texture": {
-                "base": "subjects_of_ymir:textures/models/odm/sheath/blades/#BLADES.png",
+                "base": "subjects_of_ymir:textures/models/odm/sheath/blades/#SHEATH/#BLADES.png",
                 "variables": {
+                    "SHEATH": {
+                        "type": "subjects_of_ymir:odm_sheath_right"
+                    },
                     "BLADES": {
                         "type": "subjects_of_ymir:odm_blades_right"
                     }
@@ -87,8 +90,11 @@
                 }
             },
             "texture": {
-                "base": "subjects_of_ymir:textures/models/odm/sheath/blades/#BLADES.png",
+                "base": "subjects_of_ymir:textures/models/odm/sheath/blades/#SHEATH/#BLADES.png",
                 "variables": {
+                    "SHEATH": {
+                        "type": "subjects_of_ymir:odm_sheath_left"
+                    },
                     "BLADES": {
                         "type": "subjects_of_ymir:odm_blades_left"
                     }

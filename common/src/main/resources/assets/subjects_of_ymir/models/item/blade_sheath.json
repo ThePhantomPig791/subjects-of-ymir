@@ -1,0 +1,50 @@
+{
+	"parent": "subjects_of_ymir:item/blade_sheath_model",
+	"textures": {
+		"layer0": "subjects_of_ymir:item/blade_sheath_0"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"subjects_of_ymir:odm_blades": 0.14
+			},
+			"model": "subjects_of_ymir:item/blade_sheath_1"
+		},
+		{
+			"predicate": {
+				"subjects_of_ymir:odm_blades": 0.28
+			},
+			"model": "subjects_of_ymir:item/blade_sheath_2"
+		},
+		{
+			"predicate": {
+				"subjects_of_ymir:odm_blades": 0.42
+			},
+			"model": "subjects_of_ymir:item/blade_sheath_3"
+		},
+		{
+			"predicate": {
+				"subjects_of_ymir:odm_blades": 0.57
+			},
+			"model": "subjects_of_ymir:item/blade_sheath_4"
+		},
+		{
+			"predicate": {
+				"subjects_of_ymir:odm_blades": 0.71
+			},
+			"model": "subjects_of_ymir:item/blade_sheath_5"
+		},
+		{
+			"predicate": {
+				"subjects_of_ymir:odm_blades": 0.85
+			},
+			"model": "subjects_of_ymir:item/blade_sheath_6"
+		},
+		{
+			"predicate": {
+				"subjects_of_ymir:odm_blades": 0.99
+			},
+			"model": "subjects_of_ymir:item/blade_sheath_7"
+		}
+	]
+}

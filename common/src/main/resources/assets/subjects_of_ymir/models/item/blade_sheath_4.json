@@ -1,0 +1,6 @@
+{
+	"parent": "subjects_of_ymir:item/blade_sheath_model",
+	"textures": {
+		"0": "subjects_of_ymir:item/blade_sheath_4"
+	}
+}

@@ -1,5 +1,5 @@
 {
-	"parent": "subjects_of_ymir:item/blade_handle_parent",
+	"parent": "subjects_of_ymir:item/blade_handle_model",
 	"textures": {
 		"layer0": "subjects_of_ymir:item/blade_handle_full"
 	}
