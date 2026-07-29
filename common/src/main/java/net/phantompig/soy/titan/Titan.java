@@ -148,8 +148,8 @@ public class Titan {
         ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + charge * charge);
 
         entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(charge))).forEach(e -> {
+            double strength = charge / Math.max(Math.sqrt(e.distanceTo(entity)), 1);
             if (e instanceof ServerPlayer player) {
-                double strength = charge / Math.max(Math.sqrt(player.distanceTo(entity)), 1);
                 SoyNetwork.NETWORK.sendToPlayer(player, new ScreenShakeMessage(3500, (float) (5 + strength) / 100));
             }
         });
@@ -183,6 +183,16 @@ public class Titan {
         entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, SoyConfig.Server.shouldTitansExplodeBlocksOnShift() ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false).explode();
         ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + 4);
         ext.getTitanInstance().ticksShifted++;
+
+        entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(charge))).forEach(e -> {
+            double strength = charge / Math.max(Math.sqrt(e.distanceTo(entity)), 1) / 40;
+            if (!(entity.equals(e))) {
+                e.addDeltaMovement(e.position().subtract(entity.position()).normalize().scale(strength / Math.pow(e.getBoundingBox().getYsize(), 1.5)));
+                if (e instanceof ServerPlayer player) {
+                    player.connection.send(new ClientboundSetEntityMotionPacket(player));
+                }
+            }
+        });
 
         final float invPro = 0.5f - ((float) progress) / this.maxProgress;
         if (invPro > 0) {
