@@ -6,4 +6,5 @@ Beta
 
 - Prototype turbine v1 new assets
 - Shifting vfx tweak
-- Tweaked some turbine recipes and loot tables
+- Tweaked some turbine recipes and loot tables,
+- JEI aliases and information for odm and iceburst

@@ -346,7 +346,7 @@
 				},
 				{
 					"type": "minecraft:item",
-					"name": "subjects_of_ymir:prototype_turbine_v1",
+					"name": "subjects_of_ymir:prototype_turbine",
 					"functions": [],
 					"conditions": [
 						{
