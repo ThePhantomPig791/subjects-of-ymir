@@ -8,3 +8,4 @@ Beta
 - Added blade handle recipe (oops)
 - Readded blade sheath
 - Tweaked blade+canister sheath recipe
+- Tweaked loot tables
