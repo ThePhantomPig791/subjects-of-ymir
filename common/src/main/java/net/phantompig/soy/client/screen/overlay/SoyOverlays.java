@@ -46,12 +46,12 @@ public class SoyOverlays {
                 }
             }
             if (max > 0) {
-                guiGraphics.innerBlit(WHITE_LOCATION, 0, width, 0, height, 0, 0, 1, 0, 1, 0.01f, 0.47f, 0, ease(max + partialTicks));
+                guiGraphics.innerBlit(WHITE_LOCATION, 0, width, 0, height, 0, 0, 1, 0, 1, 0.7f, 0.7f, 0.1f, ease(max + partialTicks));
             }
         }
     }
 
     private static float ease(float x) {
-        return 0.5f * Math.max(-0.003125f * x * x * x + 0.0549107f * x * x - 0.120536f * x, 0);
+        return 0.2f * Math.max(-0.003125f * x * x * x + 0.0549107f * x * x - 0.120536f * x, 0);
     }
 }
