@@ -37,32 +37,20 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
-        if (usedHand == InteractionHand.OFF_HAND) return InteractionResultHolder.pass(stack);
-        if (level.isClientSide()) return InteractionResultHolder.pass(stack);
-        ItemStack offhandStack = player.getItemInHand(InteractionHand.OFF_HAND);
-        if (offhandStack.getItem() instanceof SpinalFluidHoldingItem osfhi && stack.getItem() instanceof SpinalFluidHoldingItem msfhi) {
-            if (player.isCrouching()) {
-                int extra = msfhi.move(osfhi.get(offhandStack), stack);
-                if (extra > -1) {
-                    osfhi.set(offhandStack, extra);
-                    transferSound(player.level(), player.getX(), player.getY(), player.getZ());
-                    return InteractionResultHolder.success(stack);
-                }
-            } else if (msfhi.moveOne(osfhi.get(offhandStack), stack)) {
-                osfhi.add(offhandStack, -1);
+        ItemStack main = player.getMainHandItem(), off = player.getOffhandItem();
+        if (player.isCrouching()) {
+            if (DataHoldingItem.moveOne(off, main)) {
                 transferSound(player.level(), player.getX(), player.getY(), player.getZ());
-                return InteractionResultHolder.pass(stack);
+                return InteractionResultHolder.success(player.getItemInHand(usedHand));
             }
+        } else if (DataHoldingItem.moveAll(off, main)) {
+            transferSound(player.level(), player.getX(), player.getY(), player.getZ());
+            return InteractionResultHolder.pass(player.getItemInHand(usedHand));
         }
         if (this.drinkable && this.get(stack) > 0) {
             ItemUtils.startUsingInstantly(level, player, usedHand);
         }
         return InteractionResultHolder.pass(stack);
-    }
-
-    private static void transferSound(Level level, double x, double y, double z) {
-        PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.HONEY_BLOCK_STEP, SoundSource.PLAYERS, 0.5f, 1.4f);
-        PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 0.5f, 1.8f);
     }
 
     @NotNull
@@ -82,14 +70,25 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
         if (stack.getItem() instanceof SpinalFluidHoldingItem spfhi && player instanceof SoyPlayerExtension ext) {
             if (ext.getTitanInstance().titan == null) {
                 return false; // TODO pure titans
-            } else return givePathPointsFrom(stack, spfhi, player);
+            } else {
+                if (givePathPointsFrom(stack, spfhi, player)) {
+                    injectSound(player.level(), player.getX(), player.getY(), player.getZ());
+                    return true;
+                }
+            }
         }
         return false;
+    }
+
+    private static void transferSound(Level level, double x, double y, double z) {
+        PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.HONEY_BLOCK_STEP, SoundSource.PLAYERS, 0.5f, 1.4f);
+        PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 0.5f, 1.8f);
     }
     private static void injectSound(Level level, double x, double y, double z) {
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.HONEY_BLOCK_STEP, SoundSource.PLAYERS, 0.5f, 2);
         PlayerUtil.playSoundToAll(level, x, y, z, 16, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 0.5f, 1.9f);
     }
+
     private static boolean givePathPointsFrom(ItemStack stack, SpinalFluidHoldingItem spfhi, Player player) {
         if (!(player instanceof SoyPlayerExtension ext)) return false;
         if (spfhi.get(stack) == 0) return false;

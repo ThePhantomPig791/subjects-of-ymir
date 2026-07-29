@@ -42,7 +42,16 @@ public abstract class DataHoldingItem extends Item {
         return stack.getOrCreateTag().getInt(this.dataTag);
     }
 
-    // to.getItem() should be an instance of this. aka if the "this" object is an InjectionItem, then "to" should be an injection item
+    /**
+     * Use the static methods instead. They're a lot less confusing.
+     * @see DataHoldingItem#moveOne(ItemStack, ItemStack)
+     * @see DataHoldingItem#moveAll(ItemStack, ItemStack)
+     * Moves all the data from another Itemstack to this.
+     * to.getItem() should be an instance of this. aka if the "this" object is an InjectionItem, then "to" should be an injection item
+     * @param fromAmount The amount of data held by the "from" Itemstack
+     * @param to The "to" ItemStack which this Item represents
+     * @return How much wasn't moved; the remainder which should be set correspondingly in the "from" ItemStack
+     */
     public int move(int fromAmount, ItemStack to) {
         if (get(to) >= max) return -1;
         int newAmount = fromAmount + get(to);
@@ -50,6 +59,10 @@ public abstract class DataHoldingItem extends Item {
         set(to, Math.min(newAmount, max));
         return newAmount > max ? newAmount - max : 0;
     }
+
+    /**
+     * @see DataHoldingItem#move(int, ItemStack)
+     */
     public boolean moveOne(int fromAmount, ItemStack to) {
         if (fromAmount == 0) return false;
         if (get(to) >= max) return false;
@@ -68,5 +81,23 @@ public abstract class DataHoldingItem extends Item {
     @Override
     public int getBarWidth(ItemStack stack) {
         return (int) Math.ceil(13f * get(stack) / this.max);
+    }
+
+    public static boolean moveOne(ItemStack from, ItemStack to) {
+        if (!(from.getItem() instanceof DataHoldingItem fromItem) || !(to.getItem() instanceof DataHoldingItem toItem)) return false;
+        if (toItem.moveOne(fromItem.get(from), to)) {
+            fromItem.add(from, -1);
+            return true;
+        }
+        return false;
+    }
+    public static boolean moveAll(ItemStack from, ItemStack to) {
+        if (!(from.getItem() instanceof DataHoldingItem fromItem) || !(to.getItem() instanceof DataHoldingItem toItem)) return false;
+        int extra = toItem.move(fromItem.get(from), to);
+        if (extra >= 0) {
+            fromItem.set(from, extra);
+            return true;
+        }
+        return false;
     }
 }
