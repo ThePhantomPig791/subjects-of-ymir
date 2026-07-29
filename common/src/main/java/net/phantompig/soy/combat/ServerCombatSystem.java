@@ -1,6 +1,7 @@
 package net.phantompig.soy.combat;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.item.BladeHandleItem;
@@ -279,9 +281,10 @@ public class ServerCombatSystem {
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
         var end = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
-        Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
+        HitResult hit = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true);
+        Vec3 hitPos = hit.getLocation();
 
-        player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction());
+        explodeAndFling(hitPos.x, hitPos.y, hitPos.z, strength, hitPos, end.subtract(start).normalize());
     }
 
     public void explodeInFrontFlat(float strength, float distance, float startHeightOffset, float endHeightOffset) {
@@ -290,9 +293,21 @@ public class ServerCombatSystem {
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
         var end = player.getLookAngle().multiply(1, 0, 1).normalize().scale(distance);
-        Vec3 hitPos = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true).getLocation();
+        HitResult hit = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true);
+        Vec3 hitPos = hit.getLocation();
 
-        player.level().explode(player, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction());
+        explodeAndFling(hitPos.x, hitPos.y, hitPos.z, strength, hitPos, start);
+    }
+
+    public void explodeAndFling(double x, double y, double z, float strength, Vec3 hitPos, Vec3 start) {
+        Vec3 delta = hitPos.subtract(start);
+        player.level().explode(player, x, y, z, strength, false, getExplosionInteraction());
+        player.level().getEntities(player, player.getBoundingBox().deflate(0, 3, 0).expandTowards(player.position().add(delta.scale(strength * 2)))).forEach(e -> {
+            e.addDeltaMovement(delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25)));
+            if (e instanceof ServerPlayer sp) {
+                sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
+            }
+        });
     }
 
     private Level.ExplosionInteraction getExplosionInteraction() {

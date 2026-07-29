@@ -24,7 +24,7 @@ public abstract class ExplosionMixin {
     @ModifyExpressionValue(method = "explode", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;distanceToSqr(Lnet/minecraft/world/phys/Vec3;)D", opcode = Opcodes.GETFIELD))
     public double soy$fixExplosions(double original, @Local Entity entity) {
         if ((entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) || entity instanceof TitanCorpseEntity) {
-            return entity.getEyePosition().distanceToSqr(new Vec3(this.x, this.y, this.z)) * 0.7 + original * 0.3;
+            return (entity.getEyePosition().distanceToSqr(new Vec3(this.x, this.y, this.z)) * 0.7 + original * 0.3) / 2;
         }
         return original;
     }
