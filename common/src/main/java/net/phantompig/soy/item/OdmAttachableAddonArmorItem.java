@@ -124,6 +124,10 @@ public class OdmAttachableAddonArmorItem extends AddonArmorItem {
     private float deIntensifyPitch(float x) { // https://www.desmos.com/calculator/btea69orrh
         return (float) (-0.0000439557 * Math.pow(x, 3) + 0.0000847253 * Math.pow(x, 2) + 1.00316 * x - 0.868569);
     }
+
+    /**
+     * @return If the given amount gas was successfully consumed, as opposed to the components not having enough stored gas
+     */
     public boolean consumeGas(ItemStack stack, int amount) {
         for (ItemStack item : this.getComponents(stack).toList()) {
             if (item.getItem() instanceof OdmComponentItem component) {

@@ -12,6 +12,8 @@ import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.item.BladeItem;
 import net.phantompig.soy.item.GasHoldingItem;
@@ -52,6 +54,9 @@ public class OdmComponentItem extends GasHoldingItem {
         ItemStack bladeStack = ItemStack.of((CompoundTag) blades.remove(0));
         ItemStack remainder = bladeStack.copyWithCount(bladeStack.getCount() - 1);
         bladeStack = bladeStack.copyWithCount(1);
+        if (EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.INFINITY_ARROWS)) {
+            blades.add(bladeStack.save(new CompoundTag()));
+        }
         if (!remainder.isEmpty()) {
             blades.add(remainder.save(new CompoundTag()));
             stack.getOrCreateTag().put("Blades", blades);
@@ -78,7 +83,12 @@ public class OdmComponentItem extends GasHoldingItem {
         return this.odmComponent.gasCapacity() != 0 && super.isBarVisible(stack);
     }
 
+    /**
+     * Consumes gas from the given ItemStack.
+     * @return The amount of gas the component couldn't consume. I.E. the leftover gas that needs to be taken from somewhere else
+     */
     public int consume(ItemStack stack, int amount) {
+        if (EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.INFINITY_ARROWS)) return 0;
         int remaining = get(stack);
         int newAmount = remaining - amount;
         this.set(stack, Math.max(newAmount, 0));
