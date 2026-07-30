@@ -34,6 +34,7 @@ import net.phantompig.soy.titan.TitanRegistry;
 import net.threetag.palladium.power.Power;
 import net.threetag.palladium.power.PowerManager;
 import net.threetag.palladium.power.ability.AbilityInstance;
+import net.threetag.palladium.util.property.PalladiumProperties;
 import net.threetag.palladiumcore.event.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +110,14 @@ public class SubjectsOfYmir {
         }));
 
         LivingEntityEvents.DEATH.register(((livingEntity, damageSource) -> {
+            if (livingEntity instanceof Player player) {
+                PalladiumProperties.JUMP_KEY_DOWN.set(player, false);
+                PalladiumProperties.FORWARD_KEY_DOWN.set(player, false);
+                PalladiumProperties.BACKWARDS_KEY_DOWN.set(player, false);
+                PalladiumProperties.RIGHT_KEY_DOWN.set(player, false);
+                PalladiumProperties.LEFT_KEY_DOWN.set(player, false);
+            }
+
             if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && livingEntity instanceof Player player) {
                 ext.getTitanInstance().setMarksTimer(0);
                 ext.getTitanInstance().setCharge(0);

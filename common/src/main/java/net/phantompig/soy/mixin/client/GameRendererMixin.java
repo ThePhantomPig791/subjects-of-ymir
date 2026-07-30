@@ -1,6 +1,7 @@
 package net.phantompig.soy.mixin.client;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -42,6 +43,16 @@ public abstract class GameRendererMixin {
         }
 
         ScreenShakeManager.update(poseStack2);
+    }
+
+    @ModifyReturnValue(method = "getFov", at = @At("RETURN"))
+    public double soy$getFov(double original, @Local(argsOnly = true) float partialTicks) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof OdmAttachableAddonArmorItem) {
+            double spd = Minecraft.getInstance().player.getDeltaMovementLerped(partialTicks).multiply(1, 0.5, 1).lengthSqr();
+            spd = spd / (spd + 20);
+            original += 30 * spd * this.minecraft.options.fovEffectScale().get();
+        }
+        return original;
     }
 
     @Unique
