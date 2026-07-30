@@ -254,8 +254,8 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     }
 
     public Vec3 getRightOrLeftOffset(float yRot, boolean rightHand) {
-        Vec3 offset = this.calculateViewVector(0, yRot); // only using this#calculateViewVector because it's private
+        Vec3 offset = this.calculateViewVector(0, yRot); // even though it's this.calculateViewVector, the method is basically static and doesn't have anything to do with this node entity
         offset = new Vec3(offset.z * (rightHand ? -1 : 1), 0, offset.x * (rightHand ? 1 : -1)).normalize();
-        return offset.scale(0.25).add(0, 0.65, 0);
+        return offset.scale(0.05).add(0, 1, 0);
     }
 }
