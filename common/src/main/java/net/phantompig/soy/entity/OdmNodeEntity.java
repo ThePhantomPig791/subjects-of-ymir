@@ -1,6 +1,7 @@
 package net.phantompig.soy.entity;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -109,6 +110,21 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         } else {
             if (!this.level().isClientSide() && !this.isNoGravity()) {
                 this.addDeltaMovement(new Vec3(0, -this.getGravity(), 0));
+
+                // aim assist
+                if (this.tickCount > 10) {
+                    final int assistRange = 2;
+                    for (int dx = -assistRange; dx <= assistRange; dx++) {
+                        for (int dy = assistRange; dy >= -assistRange; dy--) {
+                            for (int dz = -assistRange; dz <= assistRange; dz++) {
+                                if (this.level().getBlockState(BlockPos.containing(this.position().add(dx, dy, dz))).blocksMotion()) {
+                                    this.setDeltaMovement(new Vec3(dx, dy, dz));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -229,7 +245,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         var owner = this.getOwner();
         if (owner == null) return Vec3.ZERO;
         float yRot = owner instanceof LivingEntity living ? living.yBodyRot : owner.getYRot();
-        return owner.getPosition(partialTick).add(getRightOrLeftOffset(yRot, this.getRight()));
+        return owner.getPosition(partialTick).add(getRightOrLeftOffset(yRot, this.getRight()).subtract(0, owner.isCrouching() ? 0.2 : 0, 0));
     }
 
     @Override
@@ -256,6 +272,6 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     public Vec3 getRightOrLeftOffset(float yRot, boolean rightHand) {
         Vec3 offset = this.calculateViewVector(0, yRot); // even though it's this.calculateViewVector, the method is basically static and doesn't have anything to do with this node entity
         offset = new Vec3(offset.z * (rightHand ? -1 : 1), 0, offset.x * (rightHand ? 1 : -1)).normalize();
-        return offset.scale(0.05).add(0, 1, 0);
+        return offset.scale(0.15).add(0, 0.8, 0);
     }
 }

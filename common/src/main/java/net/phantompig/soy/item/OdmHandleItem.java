@@ -22,7 +22,7 @@ public interface OdmHandleItem {
                 if (rightHand) odm.removeRightHook(leggings);
                 else odm.removeLeftHook(leggings);
             } else if (!odm.getTurbine(leggings).isEmpty() && odm.consumeGas(leggings, 1)) {
-                OdmNodeEntity node = OdmLevelHelper.shootHook(player.level(), player);
+                OdmNodeEntity node = OdmLevelHelper.shootHook(player.level(), player, rightHand);
 
                 node.setRight(rightHand);
                 node.setPos(node.position().add(node.getRightOrLeftOffset(player.yBodyRot, rightHand)));

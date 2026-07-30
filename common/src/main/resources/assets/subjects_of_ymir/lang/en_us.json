@@ -172,7 +172,7 @@
   "info.item.iron_bamboo": "Iron-Weave Bamboo can be grown by planting bamboo above iron ore or blocks of raw iron. The roots of the bamboo will absorb the iron, creating a lightweight but tough material.",
   "info.item.iron_bamboo_leaf": "If any bamboo leaves were present on the stalk, each leaf will be shed into an Iron-Weave Bamboo Leaf upon the bamboo's transformation.",
   "info.item.iceburst": "Iceburst is a highly pressurized rock that forms in geodes deep underneath cold, compressed biomes (such as Frozen Peaks or Ice Spikes).",
-  "info.item.blade_handle": "Blade Handles allow you to control your ODM gear and attack Titans at the same time. When holding two Blade Handles, hold %s to raise your blades, and release to swing. Press %s to eject any broken blades, and press it again to reload any empty handles with blades from a valid sheath. Eject your blades while charging a swing to throw your blades, rapidly launching them towards whatever you want to hurt. Additionally, a single Blade Handle in your offhand can be swung as if it were a sword.",
+  "info.item.blade_handle": "Blade Handles allow you to control your ODM gear and attack Titans at the same time.\n- When holding two Blade Handles, hold %s to raise your blades, and release to swing.\n- Press %s to eject any broken blades, and press it again to reload any empty handles with blades from a valid equipped sheath.\n- Eject your blades while charging a swing to throw your blades, rapidly launching them towards whatever you want to hurt.\n- Additionally, a single Blade Handle in your offhand can be swung as if it were a sword.",
 
 
   "advancements.subjects_of_ymir.eldian_village.title": "Ragako",
