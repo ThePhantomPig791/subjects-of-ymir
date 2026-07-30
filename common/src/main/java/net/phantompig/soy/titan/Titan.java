@@ -134,6 +134,7 @@ public class Titan {
         }
 
         PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getY(), entity.getZ(), 64, SoySounds.SHIFT_LOCAL.get(), SoundSource.PLAYERS);
+        this.emitSteam(entity, 1.5f, 5 * charge, false);
 
         strikeLightning(entity);
         strikeLightning(entity);
@@ -488,11 +489,14 @@ public class Titan {
     }
 
     private void emitSteam(Entity entity, float speed, int count) {
+        this.emitSteam(entity, speed, count, true);
+    }
+    private void emitSteam(Entity entity, float speed, int count, boolean force) {
         PlayerUtil.spawnParticleForAll(
                 entity.level(),
                 128,
                 (ParticleOptions) SoyParticles.LARGE_STEAM.get(),
-                true,
+                force,
                 entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),
                 entity.getY() + entity.getBoundingBox().getYsize() / 3 + 6 * (Math.random() - 0.5),
                 entity.getZ() + entity.getBoundingBox().getZsize() * (Math.random() - 0.5),

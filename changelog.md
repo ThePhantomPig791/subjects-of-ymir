@@ -1,7 +1,7 @@
 # SOY Changelog
 Beta
 
-0.1.9 -> 0.1.9.1 (fabric-only)
+0.1.9 -> 0.1.10
 
 
-- Fixed Trinkets crashes
+- Added a few more steam particles when shifting
