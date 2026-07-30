@@ -302,7 +302,7 @@ public class ServerCombatSystem {
     public void explodeAndFling(double x, double y, double z, float strength, Vec3 hitPos, Vec3 start) {
         Vec3 delta = hitPos.subtract(start);
         player.level().explode(player, x, y, z, strength, false, getExplosionInteraction());
-        player.level().getEntities(player, player.getBoundingBox().deflate(0, 3, 0).expandTowards(player.position().add(delta.scale(strength * 2)))).forEach(e -> {
+        player.level().getEntities(player, player.getBoundingBox().move(delta.scale(strength * 2))).forEach(e -> {
             e.addDeltaMovement(delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25)));
             if (e instanceof ServerPlayer sp) {
                 sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
