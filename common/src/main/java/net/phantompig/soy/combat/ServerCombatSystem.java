@@ -132,7 +132,7 @@ public class ServerCombatSystem {
     }
 
     public void startHolding() {
-        SoyProperties.ODM_HOLD_ATTACK_INCREASING.set(this.player, true);
+        if (this.player.getFoodData().getFoodLevel() > 0) SoyProperties.ODM_HOLD_ATTACK_INCREASING.set(this.player, true);
     }
 
     public void stopHolding() {
@@ -160,6 +160,8 @@ public class ServerCombatSystem {
             Vec3 sweepLocation = this.player.getEyePosition().add(this.player.getLookAngle().scale(2));
             PlayerUtil.playSoundToAll(this.player.level(), sweepLocation.x, sweepLocation.y, sweepLocation.z, 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1, 1.6f);
             PlayerUtil.spawnParticleForAll(this.player.level(), 32, ParticleTypes.SWEEP_ATTACK, false, sweepLocation.x, sweepLocation.y, sweepLocation.z, 0, 0, 0, 0, 1);
+
+            this.player.causeFoodExhaustion(1);
         }
     }
 

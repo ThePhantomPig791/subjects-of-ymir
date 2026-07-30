@@ -33,9 +33,11 @@ public abstract class GuiMixin {
     @Shadow @Final
     private Minecraft minecraft;
 
-    @Shadow protected int screenHeight;
+    @Shadow
+    private int screenHeight;
 
-    @Shadow protected int screenWidth;
+    @Shadow
+    private int screenWidth;
 
     @Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;attackIndicator()Lnet/minecraft/client/OptionInstance;"))
     public void soy$renderStageAdvanceIcon(GuiGraphics guiGraphics, CallbackInfo ci) {
@@ -70,11 +72,11 @@ public abstract class GuiMixin {
             final InteractionHand leftHand = Minecraft.getInstance().player.getMainArm() == HumanoidArm.LEFT ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
             if (Minecraft.getInstance().player.getItemInHand(rightHand).getItem() instanceof OdmHandleItem) {
                 renderOriginal = false;
-                original.call(instance, soy$ICONS, x + soy$getSplitHookOffset(), y, 15, 32, 15, 15);
+                original.call(instance, atlasLocation, x + soy$getSplitHookOffset(), y, 7, 0, 7, 15);
             }
             if (Minecraft.getInstance().player.getItemInHand(leftHand).getItem() instanceof OdmHandleItem) {
                 renderOriginal = false;
-                original.call(instance, soy$ICONS, x - soy$getSplitHookOffset(), y, 0, 32, 15, 15);
+                original.call(instance, atlasLocation, x - soy$getSplitHookOffset(), y, 0, 0, 8, 15);
             }
             if (renderOriginal) {
                 original.call(instance, atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight);
