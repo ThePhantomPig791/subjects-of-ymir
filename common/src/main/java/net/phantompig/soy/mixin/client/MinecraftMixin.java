@@ -1,6 +1,7 @@
 package net.phantompig.soy.mixin.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.combat.ClientCombatSystem;
@@ -23,6 +24,7 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
     @Nullable
     public LocalPlayer player;
 
+    @Shadow @Nullable public ClientLevel level;
     @Unique
     public ClientCombatSystem soy$combatSystem;
 
@@ -81,6 +83,7 @@ public abstract class MinecraftMixin implements ClientCombatHolder {
     @Inject(method = "tick", at = @At("TAIL"))
     public void soy$tick(CallbackInfo ci) {
         this.soy$getCombatSystem().tick();
+        if (this.level == null && this.soy$combatSystem.heldLeftClick) this.soy$combatSystem.heldLeftClick = false;
     }
 
     @Unique
