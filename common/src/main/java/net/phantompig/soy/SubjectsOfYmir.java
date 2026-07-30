@@ -113,7 +113,7 @@ public class SubjectsOfYmir {
                 ext.getTitanInstance().setMarksTimer(0);
                 ext.getTitanInstance().setCharge(0);
                 ext.getTitanInstance().setProgress(0);
-                if (++ext.getTitanInstance().deaths >= 13) {
+                if (SoyConfig.Server.getCurseOfYmirDeaths() != Integer.MAX_VALUE && ++ext.getTitanInstance().deaths >= SoyConfig.Server.getCurseOfYmirDeaths()) {
                     player.drop(TitanInstance.toSpineIem(ext.getTitanInstance()), true, true);
                     TitanInstance.clearTitanFor(livingEntity);
                 }

@@ -8,6 +8,7 @@ public class SoyConfig {
         public static ForgeConfigSpec.BooleanValue CAN_DISPENSE_ICEBURST;
         public static ForgeConfigSpec.BooleanValue EXPLODE_ON_SHIFT, EXPLODE_ON_FALL, EXPLODE_ON_ATTACK;
         public static ForgeConfigSpec.BooleanValue SAVE_CURIOS_TRINKETS_INVENTORY;
+        public static ForgeConfigSpec.IntValue CURSE_OF_YMIR_DEATHS;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -30,6 +31,9 @@ public class SoyConfig {
             builder.comment("Enables/disables saving/loading curios and trinkets to/from NBT when shifting into a titan. I would not recommend enabling this; I couldn't get this to properly function (but didn't want to delete the code in case I got it to work in the future). Basically, ignore this because Titans already cannot take items from Curios or Trinkets slots.");
             SAVE_CURIOS_TRINKETS_INVENTORY = builder.define("titan.saveCuriosTrinketsInventory", false);
 
+            builder.comment("A Titan Shifter will drop their Titan in the form of a Spine Item when they die this number of times. Set to 1 to make every Shifter always lose their Titan upon dying. Set to the maximum integer to disable the Curse of Ymir.");
+            CURSE_OF_YMIR_DEATHS = builder.defineInRange("titan.curseOfYmirDeaths", 13, 1, Integer.MAX_VALUE);
+
             return builder.build();
         }
 
@@ -50,8 +54,13 @@ public class SoyConfig {
         public static boolean shouldTitansExplodeBlocksOnAttack() {
             return EXPLODE_ON_ATTACK.get();
         }
+
         public static boolean shouldSaveCuriosTrinketsInventory() {
             return SAVE_CURIOS_TRINKETS_INVENTORY.get();
+        }
+
+        public static int getCurseOfYmirDeaths() {
+            return CURSE_OF_YMIR_DEATHS.get();
         }
     }
 
@@ -116,7 +125,6 @@ public class SoyConfig {
         public static boolean shouldShiftRenderSphere() {
             return SHIFTING_SPHERE.get();
         }
-
         public static boolean shouldOverrideSphereColor() {
             return OVERRIDE_SPHERE_COLOR.get();
         }
