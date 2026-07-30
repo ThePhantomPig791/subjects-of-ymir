@@ -36,6 +36,16 @@ public class SoyDamageSources {
         );
     }
 
+    public static DamageSource slice(Level level, Entity direct, Entity causing) {
+        return new DamageSource(
+                level.registryAccess()
+                        .lookupOrThrow(Registries.DAMAGE_TYPE)
+                        .get(SLICE).get(),
+                direct,
+                causing
+        );
+    }
+
     public static DamageSource slice(Level level, Entity attacker) {
         return new DamageSource(
                 level.registryAccess()

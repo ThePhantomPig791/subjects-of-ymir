@@ -48,6 +48,7 @@ public class FlareGunItem extends ItemStackHoldingItem {
 
         if (cartridgeStack.getItem() instanceof FlareCartridgeItem cartridgeItem && cartridgeItem.hasColor(cartridgeStack)) {
             FlareEntity flareEntity = new FlareEntity(SoyEntities.FLARE.get(), level);
+            flareEntity.setOwner(livingEntity);
             flareEntity.setPos(livingEntity.getEyePosition());
             flareEntity.shootFromRotation(livingEntity,  livingEntity.isCrouching() ? livingEntity.getXRot() : -90, livingEntity.getYRot(), 0, 12, 15 - Math.min(15, 0.25f * (this.getUseDuration(stack) - timeCharged)));
             int color = cartridgeItem.getColor(cartridgeStack);

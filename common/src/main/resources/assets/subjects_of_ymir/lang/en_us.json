@@ -41,9 +41,9 @@
   "subtitle.subjects_of_ymir.hook_land": "Hook lands",
 
 
-  "death.attack.selfBite": "%s bit their own hand off",
-  "death.attack.selfStab": "%s stabbed themselves to death",
-  "death.attack.slice": "%s was sliced by %s",
+  "death.attack.soy.selfBite": "%s bit their own hand off",
+  "death.attack.soy.selfStab": "%s stabbed themselves to death",
+  "death.attack.soy.slice": "%s was sliced to death by %s",
 
   
   "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",

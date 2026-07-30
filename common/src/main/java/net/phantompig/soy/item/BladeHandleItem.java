@@ -99,6 +99,7 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
         ItemStack stack = player.getItemBySlot(slot);
         if (stack.getItem() instanceof BladeHandleItem handle && handle.getStack(stack).getItem() instanceof BladeItem) {
             ThrownBladeEntity blade = new ThrownBladeEntity(SoyEntities.THROWN_BLADE.get(), level);
+            blade.setOwner(player);
             blade.setPos(offset);
             blade.shootFromRotation(player, player.getXRot(), player.getYRot(), 0, 3, 0.1f);
             level.addFreshEntity(blade);
