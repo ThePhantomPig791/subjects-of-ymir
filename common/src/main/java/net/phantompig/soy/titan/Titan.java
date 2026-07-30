@@ -122,7 +122,7 @@ public class Titan {
         if (entity instanceof Player player) {
             ext.getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
             player.getInventory().clearContent();
-            if (SoyCuriosTrinketsUtil.INSTANCE.isLoaded()) {
+            if (SoyConfig.Server.shouldSaveCuriosTrinketsInventory() && SoyCuriosTrinketsUtil.INSTANCE.isLoaded()) {
                 if (ext.getTitanInstance().curiosTrinketsInventory == null) ext.getTitanInstance().curiosTrinketsInventory = new CompoundTag();
                 SoyCuriosTrinketsUtil.INSTANCE.write(player, ext.getTitanInstance().curiosTrinketsInventory);
                 SoyCuriosTrinketsUtil.INSTANCE.clear(player);
@@ -460,7 +460,7 @@ public class Titan {
                 player.getInventory().load(ext.getTitanInstance().playerInventory);
                 ext.getTitanInstance().playerInventory = null;
             }
-            if (SoyCuriosTrinketsUtil.INSTANCE.isLoaded() && ext.getTitanInstance().curiosTrinketsInventory != null) {
+            if (SoyConfig.Server.shouldSaveCuriosTrinketsInventory() && SoyCuriosTrinketsUtil.INSTANCE.isLoaded() && ext.getTitanInstance().curiosTrinketsInventory != null) {
                 SoyCuriosTrinketsUtil.INSTANCE.read(player, ext.getTitanInstance().curiosTrinketsInventory);
                 ext.getTitanInstance().curiosTrinketsInventory = null;
             }

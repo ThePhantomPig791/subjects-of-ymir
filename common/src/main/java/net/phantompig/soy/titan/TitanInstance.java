@@ -230,6 +230,7 @@ public class TitanInstance {
         return getStamina() > 0.7 * getMaxStamina();
     }
     public boolean wearingRing() {
+        if (this.entity.getMainHandItem().is(SoyItemTags.RINGS) || this.entity.getOffhandItem().is(SoyItemTags.RINGS)) return true;
         List<ItemStack> rings = CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "ring");
         rings.addAll(CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "hand/ring"));
         rings.addAll(CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "offhand/ring"));

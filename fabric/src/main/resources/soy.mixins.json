@@ -1,8 +1,10 @@
 {
   "required": true,
-  "package": "net.phantompig.soy.mixin",
+  "package": "net.phantompig.soy.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.TrinketFeatureRendererMixin",
+    "client.SurvivalTrinketSlotMixin"
   ],
   "mixins": [
   ],

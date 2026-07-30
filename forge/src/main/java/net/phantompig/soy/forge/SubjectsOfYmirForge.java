@@ -1,5 +1,6 @@
 package net.phantompig.soy.forge;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -11,6 +12,7 @@ import net.phantompig.soy.SubjectsOfYmir;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.phantompig.soy.client.SubjectsOfYmirClient;
+import net.phantompig.soy.forge.compat.curios.SoyCuriosEvents;
 import net.phantompig.soy.forge.compat.curios.SoyCuriosUtil;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
@@ -36,6 +38,7 @@ public class SubjectsOfYmirForge {
 
         if (Platform.isModLoaded("curios")) {
             SoyCuriosTrinketsUtil.INSTANCE = new SoyCuriosUtil();
+            MinecraftForge.EVENT_BUS.register(SoyCuriosEvents.class);
         }
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir initialized on Forge!");

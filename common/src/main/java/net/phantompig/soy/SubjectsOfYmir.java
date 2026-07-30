@@ -93,7 +93,7 @@ public class SubjectsOfYmir {
                     }
                 }
             } else {
-                titanInstance.canShiftTicks += (int) (amount.get() * 15);
+                titanInstance.canShiftTicks += (int) (10 * amount.get() + 15 * Math.sqrt(amount.get()));
             }
             return EventResult.pass();
         }));

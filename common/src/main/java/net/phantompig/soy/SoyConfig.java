@@ -7,6 +7,7 @@ public class SoyConfig {
         public static ForgeConfigSpec.BooleanValue CAN_INJECT_OTHERS;
         public static ForgeConfigSpec.BooleanValue CAN_DISPENSE_ICEBURST;
         public static ForgeConfigSpec.BooleanValue EXPLODE_ON_SHIFT, EXPLODE_ON_FALL, EXPLODE_ON_ATTACK;
+        public static ForgeConfigSpec.BooleanValue SAVE_CURIOS_TRINKETS_INVENTORY;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -25,6 +26,9 @@ public class SoyConfig {
 
             builder.comment("Enables/disables titans exploding blocks upon attacking");
             EXPLODE_ON_ATTACK = builder.define("titan.explodeBlocksOnAttack", true);
+
+            builder.comment("Enables/disables saving/loading curios and trinkets to/from NBT when shifting into a titan. I would not recommend enabling this; I couldn't get this to properly function (but didn't want to delete the code in case I got it to work in the future). Basically, ignore this because Titans already cannot take items from Curios or Trinkets slots.");
+            SAVE_CURIOS_TRINKETS_INVENTORY = builder.define("titan.saveCuriosTrinketsInventory", false);
 
             return builder.build();
         }
@@ -45,6 +49,9 @@ public class SoyConfig {
         }
         public static boolean shouldTitansExplodeBlocksOnAttack() {
             return EXPLODE_ON_ATTACK.get();
+        }
+        public static boolean shouldSaveCuriosTrinketsInventory() {
+            return SAVE_CURIOS_TRINKETS_INVENTORY.get();
         }
     }
 

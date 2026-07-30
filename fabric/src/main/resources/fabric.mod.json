@@ -32,7 +32,8 @@
     ]
   },
   "mixins": [
-    "soy-common.mixins.json"
+    "soy-common.mixins.json",
+    "soy.mixins.json"
   ],
   "depends": {
     "fabric": "*",
