@@ -5,4 +5,5 @@ Beta
 
 
 - Added Packed Iron Bamboo
+- Added Russian localization
 - Added a few more steam particles when shifting
