@@ -39,7 +39,7 @@ public class SoyItems {
 
     public static final RegistrySupplier<Item> IRON_BAMBOO = ITEMS.register("iron_bamboo", () -> new Item(new Item.Properties()));
     public static final RegistrySupplier<Item> IRON_BAMBOO_LEAF = ITEMS.register("iron_bamboo_leaf", () -> new Item(new Item.Properties()));
-    public static final RegistrySupplier<Item> PACKED_IRON_BAMBOO = ITEMS.register("packed_iron_bamboo", () -> new BlockItem(SoyBlocks.PACKED_IRON_BAMBOO.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> PACKED_IRON_BAMBOO = ITEMS.register("packed_iron_bamboo", () -> new TooltippedBlockItem("tooltip.subjects_of_ymir.packed_iron_bamboo", SoyBlocks.PACKED_IRON_BAMBOO.get(), new Item.Properties()));
 
     public static final RegistrySupplier<Item> IRON_BAMBOO_SWORD = ITEMS.register("iron_bamboo_sword", () -> new SwordItem(ToolTiers.IRON_BAMBOO, 3, -1.5f, new Item.Properties()));
     public static final RegistrySupplier<Item> IRON_BAMBOO_DAGGER = ITEMS.register("iron_bamboo_dagger", () -> new SwordItem(ToolTiers.IRON_BAMBOO, 1, -0.5f, new Item.Properties()));
