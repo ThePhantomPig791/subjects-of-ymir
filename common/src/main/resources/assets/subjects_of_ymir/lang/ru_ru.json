@@ -1,0 +1,194 @@
+{
+  "subtitle.subjects_of_ymir.shift": "Трансформация",
+  "subtitle.subjects_of_ymir.electricity": "Потрескивание молний",
+  "subtitle.subjects_of_ymir.steam": "Шипение Пара",
+  "subtitle.subjects_of_ymir.gas_burst": "Взрывы газа",
+  "subtitle.subjects_of_ymir.short_harden": "Укрепление Титана",
+  "subtitle.subjects_of_ymir.heartbeat": "Сердцебиение",
+  "subtitle.subjects_of_ymir.click": "Металлические щелчки",
+  "subtitle.subjects_of_ymir.hook_launch": "Запуск крюка",
+  "subtitle.subjects_of_ymir.hook_land": "Крюк зацепился",
+
+
+  "death.attack.soy.selfBite": "%s Попытался съесть свою руку",
+  "death.attack.soy.selfStab": "%s Игрался с ножом",
+  "death.attack.soy.slice": "%s was Использовал экипировку не по назначению %s",
+
+  
+  "itemGroup.subjects_of_ymir.soy": "Потомки Имир",
+
+
+  "palladium.tailoring_recipe.category.subjects_of_ymir.uniforms": "AOT Униформа",
+
+  
+  "item.subjects_of_ymir.activated_spine": "Активированный Позвоночник",
+  "item.subjects_of_ymir.spine": "Позвонок",
+  "item.subjects_of_ymir.ribcage": "Грудная клетка",
+  "item.subjects_of_ymir.broken_spine": "Сломанный позвоночник",
+  
+  "item.subjects_of_ymir.iron_bamboo": "Железный бамбук",
+  "item.subjects_of_ymir.raw_iceburst": "Рудное Ледяное пламя",
+  "item.subjects_of_ymir.raw_ultrahard_steel": "Сырая сверхтвердая сталь",
+  "item.subjects_of_ymir.ultrahard_steel_ingot": "Кусочек сверхтвердой стали",
+
+  "item.subjects_of_ymir.iron_bamboo_leaf": "Лист железного бамбука",
+  "item.subjects_of_ymir.iron_bamboo_sword": "Меч из железного бамбука",
+  "item.subjects_of_ymir.iron_bamboo_dagger": "Кинжал из железного бамбука",
+  "item.subjects_of_ymir.iron_bamboo_ring": "Кольцо из железного бамбука",
+  "item.subjects_of_ymir.blade": "Клинок",
+  "item.subjects_of_ymir.gas_canister": "Газовая канистра",
+  "item.subjects_of_ymir.iceburst_engine": "Двигатель ледяного пламени",
+
+  "item.subjects_of_ymir.cloak": "Плащ",
+  "item.subjects_of_ymir.uniform_jacket": "Куртка униформы",
+  "item.subjects_of_ymir.uniform_leggings": "Штаны униформы",
+  "item.subjects_of_ymir.uniform_boots": "Ботинки униформы",
+  "item.subjects_of_ymir.survey_corps_cloak": "Плащ",
+  "item.subjects_of_ymir.survey_corps_jacket": "Куртка униформы",
+  "item.subjects_of_ymir.garrison_cloak": "Плащ",
+  "item.subjects_of_ymir.garrison_jacket": "Куртка униформы",
+  "item.subjects_of_ymir.military_police_cloak": "Плащ",
+  "item.subjects_of_ymir.military_police_jacket": "Куртка униформы",
+  "item.subjects_of_ymir.cadet_cloak": "Плащ",
+  "item.subjects_of_ymir.cadet_jacket": "Куртка униформы",
+
+  "item.subjects_of_ymir.injection": "Шприц",
+  "item.subjects_of_ymir.vial": "Флакон",
+
+  "item.subjects_of_ymir.blade_sheath": "Ножны",
+  "item.subjects_of_ymir.blade_sheath_with_canister": "Ножны с канистрой",
+  "item.subjects_of_ymir.canister_sheath": "Подвесные канистры",
+  "item.subjects_of_ymir.prototype_turbine": "Прототип тубины v1",
+  "item.subjects_of_ymir.prototype_turbine_v2": "Прототип турбины v2",
+  "item.subjects_of_ymir.prototype_turbine_v3": "Прототип турбины v3",
+  "item.subjects_of_ymir.turbine_v1": "Турбина v1",
+  "item.subjects_of_ymir.turbine_v2": "Турбина V2",
+
+  "item.subjects_of_ymir.blade_handle": "Рукоять",
+
+  "item.subjects_of_ymir.flare_gun": "Сигнальная пушка",
+  "item.subjects_of_ymir.flare_cartridge": "Сигнальный заряд",
+
+
+  "tooltip.subjects_of_ymir.spine": "%s's позвонок",
+  "tooltip.subjects_of_ymir.emblem.survey_corps": "Эмблема §bРазвед корпуса§7",
+  "tooltip.subjects_of_ymir.emblem.military_police": "Эмблема §2Военной полиции§7",
+  "tooltip.subjects_of_ymir.emblem.garrison": "Эмблема §4Горнизона§7",
+  "tooltip.subjects_of_ymir.emblem.cadet": "Эмблема §8Кадета§7",
+
+  "tooltip.subjects_of_ymir.odm_attachable": "§Позволяет устанавливать на себя компоненты УПМ§r",
+  "tooltip.subjects_of_ymir.odm_component": "§dКомпонент Устройства Пространственного Маневрирования§r",
+  "tooltip.subjects_of_ymir.odm_attachable.turbine": "§nТурбина:§r %s",
+  "tooltip.subjects_of_ymir.odm_attachable.right_sheath": "§nПравые ножны:§r %s",
+  "tooltip.subjects_of_ymir.odm_attachable.left_sheath": "§nЛевые ножны:§r %s",
+  "tooltip.subjects_of_ymir.blades": "Клинки: %s/%s",
+
+  "tooltip.subjects_of_ymir.flare_cartridge_color": "Цвет сигнального заряда: %s",
+
+  "tooltip.subjects_of_ymir.packed_iron_bamboo": "Прочный сбоку, но слабый сверху или снизу.",
+
+
+  "filled_map.founding_tree": "Карта Элдийского путешественника",
+
+
+  "block.subjects_of_ymir.iceburst_ore": "Руда ледяного пламени",
+  "block.subjects_of_ymir.deepslate_iceburst_ore": "Глубинносланцевая руда ледяного пламени",
+
+  "block.subjects_of_ymir.iron_bamboo": "Железный бамбук",
+  "block.subjects_of_ymir.packed_iron_bamboo": "Упакованный железный бамбук",
+
+  "block.subjects_of_ymir.compression_table": "Станок прессования",
+
+  "block.subjects_of_ymir.hardening_block": "Блок укрепления",
+
+
+  "container.subjects_of_ymir.compression": "Станок прессования",
+
+  "gui.subjects_of_ymir.category.compression": "Прессование",
+
+  "recipe.compression.byproduct_chance": "%s Шанс",
+  "recipe.compression.byproduct_amount": "+%s",
+  "recipe.compression.byproduct.none": "§7Ничего§r",
+  "recipe.compression.byproduct.spinal_fluid": "§dСпинномозговая жидкость§r",
+  "recipe.compression.byproduct.gas": "§bПрессованный газ§r",
+
+
+  "info.item.iron_bamboo": "Железный бамбук может вырости если посадить обычный бамбук над железной рудой или блоком рудного железа. Корни бамбука будут поглащать железо создавая легкий но прочный материал",
+  "info.item.iron_bamboo_leaf": "Если на стебле бамбука присутствовали листья, то каждый из них по мере превращения в железный бамбук опадет и превратиться в лист железного бамбука.",
+  "info.item.iceburst": "Ледяное пламя — это образование горных пород под высоким давлением в жеодах, находящихся глубоко под холодными сжатыми биомами (такими как Замерзшие вершины или Ледяные шипы).",
+  "info.item.blade_handle": "Рукояти позволяют вам управлять вашим УПМ и в то же время атаковать титанов.n- Держа две рукояти в руках зажмите %s чтобы замахнуться клинками, а после отпустите для удара.\n- Нажмите %s чтобы выбросить сломанные клинки и нажмите еще раз чтобы перезарядить пустые рукояти клинками из ножен.\n- Перезарядите ваши кликни во время подготовки удара чтобы метнуть их.\n- Так же одной рукоятью с клинком в левой руке вы можете размахивать как мечом.",
+
+
+  "advancements.subjects_of_ymir.eldian_village.title": "Рогако",
+  "advancements.subjects_of_ymir.eldian_village.description": "Посетите древнюю элдийскую деревню",
+  "advancements.subjects_of_ymir.titan_bones.title": "Скелеты в шкафу",
+  "advancements.subjects_of_ymir.titan_bones.description": "Откопайте древние кости в элдийской деревне",
+  "advancements.subjects_of_ymir.titan_shift.title": "Островной Дьявол",
+  "advancements.subjects_of_ymir.titan_shift.description": "Потомок Имир, дьявол Парадиза, монстр",
+  "advancements.subjects_of_ymir.iron_bamboo.title": "Ferrocalamus",
+  "advancements.subjects_of_ymir.iron_bamboo.description": "Открыть для себя железный бамбук",
+  "advancements.subjects_of_ymir.craft_uniform.title": "Посвяти свое сердце",
+  "advancements.subjects_of_ymir.craft_uniform.description": "Сшей униформу",
+  "advancements.subjects_of_ymir.eat_spine.title": "Каннибал",
+  "advancements.subjects_of_ymir.eat_spine.description": "Съешь позвоночник другого игрока",
+
+
+  "stat.subjects_of_ymir.times_shifted_into_titan": "Превращений в титана",
+  "stat.subjects_of_ymir.time_as_titan": "Время в теле титана",
+  "stat.subjects_of_ymir.path_points_gained": "Получено очков путей",
+  "stat.subjects_of_ymir.amount_steam_healed": "Исцелено здоровья с помощью пара",
+
+
+  "titan.subjects_of_ymir.attack": "Атакующий титан",
+  "titan.subjects_of_ymir.armored": "Бронированный титан",
+
+
+  "power.subjects_of_ymir.shifter": "Сила титана",
+
+  "ability.subjects_of_ymir.titan_shift": "Превращение",
+  "ability.subjects_of_ymir.bite": "Укус руки",
+  "ability.subjects_of_ymir.conceal": "Скрыть",
+  "ability.subjects_of_ymir.steam_healing_overdrive": "Направленный пар",
+  "ability.subjects_of_ymir.titan_unshift": "Высвобождение",
+  "ability.subjects_of_ymir.block": "Блок",
+  "ability.subjects_of_ymir.shed": "Сброс",
+
+  "ability.text.subjects_of_ymir.path_points": "Очки путей",
+
+  "ability.text.subjects_of_ymir.root.title": "Сила титана",
+  "ability.text.subjects_of_ymir.root.description": "При определенных условиях вы способны трансформироваться в свою форму Титана. После достаточного времени и практики вам могут стать доступны дополнительные способности.",
+  "ability.text.subjects_of_ymir.bite.title": "Укус        ",
+  "ability.text.subjects_of_ymir.bite.description": "Намеренно укусите свою руку до крови чтобы позволить себе превратиться в титана.",
+  "ability.text.subjects_of_ymir.conceal.title": "Скрыть      ",
+  "ability.text.subjects_of_ymir.conceal.description": "Намеренно подавите способности своего титана убрав любые визуальные признаки вашей силы.",
+  "ability.text.subjects_of_ymir.steam_healing_overdrive.title": "Направленный пар",
+  "ability.text.subjects_of_ymir.steam_healing_overdrive.description": "Ускорьте процесс лечения паром чтобы быстро заживить любые раны.",
+  "ability.text.subjects_of_ymir.block.title": "Блок     ",
+  "ability.text.subjects_of_ymir.block.description": "Прикройте себя руками, чтобы уменьшить получаемый урон.",
+  "ability.text.subjects_of_ymir.failsafe.title": "Ложное спасение",
+  "ability.text.subjects_of_ymir.failsafe.description": "После достаточного количества превращений в титана это может стать настолько привычным, что вы подсознательно будете трансформироваться чтобы спастись от смерти.",
+
+  "ability.text.subjects_of_ymir.attack.root.title": "Атакующий титан",
+  "ability.text.subjects_of_ymir.attack.root.description": "Ваша форма титана сильна, вынослива и всегда будет двигаться вперед.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 8",
+  "ability.text.subjects_of_ymir.attack.crystal_eject.title": "Затвердевающее высвобождение",
+  "ability.text.subjects_of_ymir.attack.crystal_eject.description": "Нанесите затвердевание на каждый сантиметр своей кожи сформировав прочный и твердый кристалл, после чего выйдите из формы титана. §7(held keybind)§r.",
+  "ability.text.subjects_of_ymir.attack.infinite_crystal.title": "Затвердевающий купол",
+  "ability.text.subjects_of_ymir.attack.infinite_crystal.description": "Благодаря практике и дополнительному применению сыворотки титана вы сможете бесконечно наращивать свой затвердевший кристалл вплоть до момента высвобождения.",
+  "ability.text.subjects_of_ymir.attack.hardening_knuckles.title": "Затвердевшие кулаки",
+  "ability.text.subjects_of_ymir.attack.hardening_knuckles.description": "Вы можете сделать кожу на пальцах более твердой, что смертельно усилит ваши удары ценой снижения скорости атаки.",
+  "ability.text.subjects_of_ymir.attack.hardening_hands.title": "Затвердевшие руки",
+  "ability.text.subjects_of_ymir.attack.hardening_hands.description": "Вы можете укрепить остальную часть рук нанося еще больше урона.",
+  "ability.text.subjects_of_ymir.attack.berserk.title": "Берсерк",
+  "ability.text.subjects_of_ymir.attack.berserk.description": "После смертельного урона титан обретает второе дыхание, которое длится до шестидесяти секунд.",
+
+  "ability.text.subjects_of_ymir.armored.root.title": "Бронированный титан",
+  "ability.text.subjects_of_ymir.armored.root.description": "Ваша форма титана это неповоротливая и оборонительная мощь с впечатляющими наступательными возможностями. Будьте осторожны, потому что, хоть ваша броня и может выдержать удары, но она не неуязвима. \n\n§7HP: 20\nATK: 8\nSPD: 2\nDEF: 30",
+  "ability.text.subjects_of_ymir.armored.block.title": "Блок       ",
+  "ability.text.subjects_of_ymir.armored.block.description": "Прикройте себя руками, чтобы уменьшить получаемый урон. При движении на высоких скоростях блок способен создавать разрушения перед вами.",
+  "ability.text.subjects_of_ymir.armored.shed.title": "Сброс       ",
+  "ability.text.subjects_of_ymir.armored.shed.description": "Намеренно сбросьте броню, увеличив скорость передвижения вашего титана взамен на снижения урона от атак и защиты.",
+  "ability.text.subjects_of_ymir.armored.hardening.title": "Затвердевание",
+  "ability.text.subjects_of_ymir.armored.hardening.description": "При достаточной практике вы сможете усиливать кожу вокруг костяшек пальцев вашего титана, чтобы наносить действительно мощные удары.",
+  "ability.text.subjects_of_ymir.armored.climbing.title": "Ползанье",
+  "ability.text.subjects_of_ymir.armored.climbing.description": "Можно цепляться за стены, чтобы держаться и отталкиваться от них."
+}
