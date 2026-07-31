@@ -1,0 +1,43 @@
+{
+    "variants": {
+        "axis=x": [
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo_horizontal",
+                "x": 90,
+                "y": 90
+            },
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo_horizontal",
+                "x": 270,
+                "y": 90
+            }
+        ],
+        "axis=y": [
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo"
+            },
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo",
+                "y": 90
+            },
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo",
+                "y": 180
+            },
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo",
+                "y": 270
+            }
+        ],
+        "axis=z": [
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo_horizontal",
+                "x": 90
+            },
+            {
+                "model": "subjects_of_ymir:block/packed_iron_bamboo_horizontal",
+                "x": 270
+            }
+        ]
+    }
+}

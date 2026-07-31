@@ -2,6 +2,7 @@
     "replace": false,
     "values": [
         "subjects_of_ymir:iron_bamboo",
+        "subjects_of_ymir:packed_iron_bamboo",
         "subjects_of_ymir:compression_table"
     ]
 }

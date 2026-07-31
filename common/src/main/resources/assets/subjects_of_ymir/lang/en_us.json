@@ -41,8 +41,8 @@
   "subtitle.subjects_of_ymir.hook_land": "Hook lands",
 
 
-  "death.attack.soy.selfBite": "%s bit their own hand off",
-  "death.attack.soy.selfStab": "%s stabbed themselves to death",
+  "death.attack.soy.selfBite": "%s tried to eat their own hand",
+  "death.attack.soy.selfStab": "%s failed to practice kitchen safety",
   "death.attack.soy.slice": "%s was sliced to death by %s",
 
   
@@ -151,6 +151,7 @@
   "block.subjects_of_ymir.deepslate_iceburst_ore": "Deepslate Iceburst Ore",
 
   "block.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo",
+  "block.subjects_of_ymir.packed_iron_bamboo": "Packed Iron-Weave Bamboo",
 
   "block.subjects_of_ymir.compression_table": "Compression Table",
 

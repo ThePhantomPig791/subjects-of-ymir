@@ -3,6 +3,8 @@
     "values": [
         "subjects_of_ymir:iceburst_ore",
         "subjects_of_ymir:deepslate_iceburst_ore",
-        "subjects_of_ymir:hardening_block"
+        "subjects_of_ymir:hardening_block",
+        "subjects_of_ymir:packed_iron_bamboo",
+        "subjects_of_ymir:compression_table"
     ]
 }

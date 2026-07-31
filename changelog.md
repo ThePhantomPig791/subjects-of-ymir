@@ -4,4 +4,5 @@ Beta
 0.1.9 -> 0.1.10
 
 
+- Added Packed Iron Bamboo
 - Added a few more steam particles when shifting
