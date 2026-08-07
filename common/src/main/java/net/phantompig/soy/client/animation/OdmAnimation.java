@@ -7,6 +7,7 @@ import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.client.model.animation.PalladiumAnimation;
 import net.threetag.palladium.util.Easing;
 
@@ -17,8 +18,6 @@ public class OdmAnimation extends PalladiumAnimation {
     private static final Vec3 LEFT_ARM_AIR = new Vec3(10, -15, -45);
     private static final Vec3 BODY_FALL = new Vec3(-75, 0, 0);
     private static final Vec3 BODY_TILT = new Vec3(0, 0, 45);
-
-    private static final Vec3 UP = new Vec3(0, 1, 0);
 
     public static final OdmAnimation INSTANCE = new OdmAnimation();
     public OdmAnimation() {
@@ -48,7 +47,7 @@ public class OdmAnimation extends PalladiumAnimation {
                     }
                 }
 
-                double tilt = player.getDeltaMovement().dot(player.getLookAngle().cross(UP));
+                double tilt = player.getDeltaMovement().dot(player.getLookAngle().cross(ShapeUtil.UP));
                 if (Math.abs(tilt) > 0.11) {
                     boolean tiltLeft = tilt < 0;
                     tilt = Math.abs(tilt);

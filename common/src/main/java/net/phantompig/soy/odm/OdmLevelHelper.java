@@ -6,7 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.entity.OdmNodeEntity;
 import net.phantompig.soy.entity.SoyEntities;
-import net.phantompig.soy.item.BladeHandleItem;
+import net.phantompig.soy.util.ShapeUtil;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -26,7 +26,7 @@ public class OdmLevelHelper {
     public static OdmNodeEntity shootHook(Level level, Player player, boolean right) {
         Vec3 along = player.getLookAngle();
         if (player.isCrouching()) {
-            along = along.lerp(along.multiply(1, 0, 1).cross(right ? BladeHandleItem.UP : BladeHandleItem.DOWN), 0.25);
+            along = along.lerp(along.multiply(1, 0, 1).cross(right ? ShapeUtil.UP : ShapeUtil.DOWN), 0.25);
         }
         return shootHook(level, player, along, 8);
     }

@@ -12,6 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.client.renderer.ScreenShakeManager;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
+import net.phantompig.soy.util.ShapeUtil;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,8 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
-    @Unique private static final Vec3 soy$UP = new Vec3(0, 1, 0);
-
     @Shadow @Final Minecraft minecraft;
 
     @Unique
@@ -32,8 +31,8 @@ public abstract class GameRendererMixin {
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
     public void renderLevel(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo ci, @Local(ordinal = 1) PoseStack poseStack2) {
         if (this.minecraft.player != null && !this.minecraft.player.isPassenger()) {
-            soy$adjustCameraAngle(soy$UP, soy$cameraPitch, 0.4);
-            soy$adjustCameraAngle(this.minecraft.player.getLookAngle().cross(soy$UP), soy$cameraRoll, 0.715);
+            soy$adjustCameraAngle(ShapeUtil.UP, soy$cameraPitch, 0.4);
+            soy$adjustCameraAngle(this.minecraft.player.getLookAngle().cross(ShapeUtil.UP), soy$cameraRoll, 0.715);
         }
         if (this.soy$cameraPitch.get() != 0) {
             poseStack2.mulPose(Axis.XN.rotationDegrees(this.soy$cameraPitch.floatValue()));

@@ -19,12 +19,10 @@ import net.phantompig.soy.entity.ThrownBladeEntity;
 import net.phantompig.soy.odm.component.OdmComponentItem;
 import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.util.PlayerUtil;
 
 public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleItem {
-    public static Vec3 UP = new Vec3(0, 1, 0);
-    public static Vec3 DOWN = new Vec3(0, -1, 0);
-
     public BladeHandleItem(Properties properties) {
         super(stack -> stack.getItem() instanceof BladeItem || stack.is(Items.IRON_NUGGET), SoundEvents.ARMOR_EQUIP_CHAIN, properties);
     }
@@ -46,8 +44,8 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (SoyProperties.ODM_HOLD_ATTACK_INCREASING.get(player)) {
-            throwBlade(level, player, UP, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-            throwBlade(level, player, DOWN, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
+            throwBlade(level, player, ShapeUtil.UP, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+            throwBlade(level, player, ShapeUtil.DOWN, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
 
             if (player instanceof SoyServerPlayerExtension ext) {
                 ext.soy$getCombatSystem().stopHolding();
@@ -85,8 +83,8 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
                         (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof BladeHandleItem bladeM && bladeM.getStack(player.getItemInHand(InteractionHand.MAIN_HAND)).is(Items.IRON_NUGGET))
                         || (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BladeHandleItem bladeO && bladeO.getStack(player.getItemInHand(InteractionHand.OFF_HAND)).is(Items.IRON_NUGGET))
                 ) {
-                    dropBrokenBlade(level, player, DOWN, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
-                    dropBrokenBlade(level, player, UP, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                    dropBrokenBlade(level, player, ShapeUtil.DOWN, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
+                    dropBrokenBlade(level, player, ShapeUtil.UP, player.getMainArm() == HumanoidArm.RIGHT ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
                     return InteractionResultHolder.consume(player.getItemInHand(usedHand));
                 }
             }
