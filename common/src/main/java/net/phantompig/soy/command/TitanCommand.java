@@ -14,10 +14,12 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.Titan;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
@@ -367,6 +369,36 @@ public class TitanCommand {
                                                     return 1;
                                                 })
                                         )
+                                )
+                        )
+                        .then(Commands.literal("stats")
+                                .then(Commands.literal("max")
+                                        .executes(context -> {
+                                            var source = context.getSource();
+                                            var entity = EntityArgument.getPlayer(context, "entity");
+
+                                            entity.awardStat(SoyStats.TIME_AS_TITAN, 99999999);
+                                            entity.awardStat(SoyStats.AMOUNT_STEAM_HEALED, 99999999);
+                                            entity.awardStat(SoyStats.TIMES_SHIFTED, 99999999);
+                                            entity.awardStat(SoyStats.PATH_POINTS_GAINED, 99999999);
+                                            source.sendSuccess(() -> Component.translatable("commands.titan.success.stats.max", entity.getDisplayName()), true);
+
+                                            return 1;
+                                        })
+                                )
+                                .then(Commands.literal("reset")
+                                        .executes(context -> {
+                                            var source = context.getSource();
+                                            var entity = EntityArgument.getPlayer(context, "entity");
+
+                                            entity.resetStat(Stats.CUSTOM.get(SoyStats.TIME_AS_TITAN));
+                                            entity.resetStat(Stats.CUSTOM.get(SoyStats.AMOUNT_STEAM_HEALED));
+                                            entity.resetStat(Stats.CUSTOM.get(SoyStats.TIMES_SHIFTED));
+                                            entity.resetStat(Stats.CUSTOM.get(SoyStats.PATH_POINTS_GAINED));
+                                            source.sendSuccess(() -> Component.translatable("commands.titan.success.stats.reset", entity.getDisplayName()), true);
+
+                                            return 1;
+                                        })
                                 )
                         )
                 )

@@ -35,7 +35,6 @@ import net.threetag.palladiumcore.util.Platform;
 import org.joml.Vector3f;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class ServerCombatSystem {
     public final ServerPlayer player;

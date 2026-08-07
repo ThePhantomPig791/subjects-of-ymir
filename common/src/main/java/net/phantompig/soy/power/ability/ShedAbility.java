@@ -11,6 +11,7 @@ import net.phantompig.soy.titan.Titan;
 import net.threetag.palladium.power.IPowerHolder;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
+import net.threetag.palladium.power.ability.AbilityUtil;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.property.*;
 
@@ -64,5 +65,13 @@ public class ShedAbility extends Ability {
                 0.7f,
                 (float) (0.1 * Math.random() + 1.8 - value / 45f)
         );
+    }
+
+    public static int getMinimumShedLevel(LivingEntity entity) {
+        int min = 15;
+        for (AbilityInstance entry : AbilityUtil.getInstances(entity, SoyAbilities.SHED.get())) {
+            if (entry.getProperty(VALUE) < min) min = entry.getProperty(VALUE);
+        }
+        return min;
     }
 }

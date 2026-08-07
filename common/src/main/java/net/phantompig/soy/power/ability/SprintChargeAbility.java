@@ -1,7 +1,9 @@
 package net.phantompig.soy.power.ability;
 
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -51,25 +53,10 @@ public class SprintChargeAbility extends Ability {
                         }
                     }
                 }
-                PlayerUtil.spawnParticleForAll(
-                        entity.level(),
-                        128,
-                        (SimpleParticleType) SoyParticles.LARGE_STEAM.get(),
-                        true,
-                        entity.getX(),
-                        entity.getY() + entity.getBoundingBox().getYsize() / 3,
-                        entity.getZ(),
-                        (float) (Math.random() * entity.getBoundingBox().getXsize() / 3),
-                        (float) (Math.random() * entity.getBoundingBox().getYsize() / 3),
-                        (float) (Math.random() * entity.getBoundingBox().getZsize() / 3),
-                        0.08f,
-                        3
-                );
                 if (entity instanceof SoyPlayerExtension ext) {
                     if (entry.getEnabledTicks() % 10 == 0) {
-                        ext.getTitanInstance().exhaust(ext.getTitanInstance().getMaxStamina() / 70);
+                        ext.getTitanInstance().exhaustSafe(50);
                     }
-                    ext.getTitanInstance().regainStaminaCooldown = 30;
                 }
             } else if (!blocking && entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null) {
                 entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(uuid);
@@ -77,8 +64,12 @@ public class SprintChargeAbility extends Ability {
             if (blocking && !entity.level().isClientSide() && entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null && !entity.isInWater() && !entity.isInLava() && !entity.isInPowderSnow) {
                 double value = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid).getAmount();
                 if (entry.getEnabledTicks() % 2 == 0 && value > 0.02) {
-                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight() / 2, entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
+                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight() / 4, entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
                     entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
+                    if (entity instanceof SoyPlayerExtension ext) {
+                        ext.getTitanInstance().exhaust(100); // in addition to the 50 from earlier
+                        ext.getTitanInstance().regainStaminaCooldown = 30;
+                    }
                     PlayerUtil.spawnParticleForAll(
                             entity.level(),
                             128,
@@ -93,6 +84,26 @@ public class SprintChargeAbility extends Ability {
                             0.2f,
                             4
                     );
+                    PlayerUtil.spawnParticleForAll(
+                            entity.level(),
+                            128,
+                            (SimpleParticleType) SoyParticles.LARGE_STEAM.get(),
+                            true,
+                            entity.getX(),
+                            entity.getY() + entity.getBoundingBox().getYsize() / 3,
+                            entity.getZ(),
+                            (float) (Math.random() * entity.getBoundingBox().getXsize() / 3),
+                            (float) (Math.random() * entity.getBoundingBox().getYsize() / 3),
+                            (float) (Math.random() * entity.getBoundingBox().getZsize() / 3),
+                            0.08f,
+                            3
+                    );
+                    entity.level().getEntities(entity, entity.getBoundingBox().inflate(3)).forEach(e -> {
+                        e.addDeltaMovement(entity.getDeltaMovement().scale(2 / e.getBoundingBox().getYsize()));
+                        if (e instanceof ServerPlayer sp) {
+                            sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
+                        }
+                    });
                     if (entity instanceof SoyPlayerExtension ext) {
                         ext.getTitanInstance().exhaust(1);
                     }

@@ -20,6 +20,8 @@
   "commands.titan.success.deaths.set": "Set %s's deaths to %s (was %s)",
   "commands.titan.success.marks.get": "%s's marks timer is at %s",
   "commands.titan.success.marks.set": "Set %s's marks timer to %s (was %s)",
+  "commands.titan.success.stats.max": "Set %s's Titan-Statistics to their maxed-out values (unlocking all stat-based Titan abilities)",
+  "commands.titan.success.stats.reset": "Reset %s's Titan-Statistics to zero",
 
   "commands.titan.error.notPlayer": "Targeted entity must be a player",
   "commands.titan.error.shifted": "Cannot modify %s's Titan while they are shifted",

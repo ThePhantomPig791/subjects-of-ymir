@@ -497,6 +497,7 @@
     "shed": {
       "type": "subjects_of_ymir:shed",
       "list_index": 0,
+      "icon": "subjects_of_ymir:textures/icon/shed.png",
       "title": {
         "translate": "ability.subjects_of_ymir.shed"
       },

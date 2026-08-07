@@ -5,6 +5,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.power.ability.BlockAbility;
+import net.phantompig.soy.power.ability.ShedAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.threetag.palladium.client.model.animation.PalladiumAnimation;
 import net.threetag.palladium.power.ability.AbilityInstance;
@@ -42,6 +43,21 @@ public class BlockAnimation extends PalladiumAnimation {
         var progress = this.getProgress(player, partialTicks);
 
         if (progress > 0F) {
+            if (isCharging(player)) {
+                if (firstPersonContext.firstPerson()) {
+                    builder.get(PlayerModelPart.RIGHT_ARM)
+                            .setZ(30)
+                            .scaleX(4)
+                            .scaleY(4)
+                            .scaleZ(4)
+                            .animate(Easing.INOUTBACK, progress);
+                }
+                builder.get(PlayerModelPart.RIGHT_ARM)
+                        .setXRotDegrees(-110)
+                        .setYRotDegrees(-60)
+                        .animate(Easing.INOUTBACK, progress);
+                return;
+            }
 
             if (firstPersonContext.firstPerson()) {
                 builder.get(PlayerModelPart.RIGHT_ARM)
@@ -76,5 +92,9 @@ public class BlockAnimation extends PalladiumAnimation {
                         .animate(Easing.INOUTBACK, progress);
             }
         }
+    }
+
+    public boolean isCharging(AbstractClientPlayer player) {
+        return player.isSprinting() && (ShedAbility.getMinimumShedLevel(player) < 15);
     }
 }
