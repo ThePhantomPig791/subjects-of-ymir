@@ -13,6 +13,7 @@
   "death.attack.soy.selfBite": "%s Попытался съесть свою руку",
   "death.attack.soy.selfStab": "%s Игрался с ножом",
   "death.attack.soy.slice": "%s was Использовал экипировку не по назначению %s",
+  "death.attack.soy.titanPunch": "%s был обращен в прах %s",
 
   
   "itemGroup.subjects_of_ymir.soy": "Потомки Имир",

@@ -13,6 +13,7 @@ public class SoyDamageSources {
     public static final ResourceKey<DamageType> SELF_BITE = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("self_bite"));
     public static final ResourceKey<DamageType> SELF_STAB = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("self_stab"));
     public static final ResourceKey<DamageType> SLICE = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("slice"));
+    public static final ResourceKey<DamageType> TITAN_PUNCH = ResourceKey.create(Registries.DAMAGE_TYPE, SubjectsOfYmir.rsrc("titan_punch"));
 
     public static DamageSource selfBite(Level level, Entity direct, Entity causing, Vec3 damageSourcePosition) {
         return new DamageSource(
@@ -51,6 +52,15 @@ public class SoyDamageSources {
                 level.registryAccess()
                         .lookupOrThrow(Registries.DAMAGE_TYPE)
                         .get(SLICE).get(),
+                attacker
+        );
+    }
+
+    public static DamageSource titanPunch(Level level, Entity attacker) {
+        return new DamageSource(
+                level.registryAccess()
+                        .lookupOrThrow(Registries.DAMAGE_TYPE)
+                        .get(TITAN_PUNCH).get(),
                 attacker
         );
     }

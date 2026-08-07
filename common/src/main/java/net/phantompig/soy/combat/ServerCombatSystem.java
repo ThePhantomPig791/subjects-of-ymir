@@ -15,9 +15,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
+import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.item.BladeHandleItem;
 import net.phantompig.soy.item.BladeItem;
 import net.phantompig.soy.item.SoyItems;
@@ -26,10 +28,14 @@ import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
+import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.util.EntityUtil;
 import net.threetag.palladium.util.PlayerUtil;
+import net.threetag.palladiumcore.util.Platform;
+import org.joml.Vector3f;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ServerCombatSystem {
     public final ServerPlayer player;
@@ -282,11 +288,11 @@ public class ServerCombatSystem {
         strength += getExtraStrength();
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
-        var end = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
-        HitResult hit = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true);
+        var delta = player.getLookAngle().multiply(1, 0.5, 1).normalize().scale(distance);
+        HitResult hit = EntityUtil.rayTraceWithEntities(player, start, start.add(delta).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true);
         Vec3 hitPos = hit.getLocation();
 
-        explodeAndFling(hitPos.x, hitPos.y, hitPos.z, strength, hitPos, end.subtract(start).normalize());
+        explodeAndFling(strength, hitPos, start);
     }
 
     public void explodeInFrontFlat(float strength, float distance, float startHeightOffset, float endHeightOffset) {
@@ -294,22 +300,33 @@ public class ServerCombatSystem {
         strength += getExtraStrength();
 
         var start = player.getEyePosition().add(0, startHeightOffset * player.getEyeHeight(), 0);
-        var end = player.getLookAngle().multiply(1, 0, 1).normalize().scale(distance);
+        final float yRot = (float) Math.toRadians(player.yBodyRot + 90);
+        var end = new Vec3(Mth.cos(yRot), 0, Math.sin(yRot)).scale(distance);
         HitResult hit = EntityUtil.rayTraceWithEntities(player, start, start.add(end).add(0, endHeightOffset * player.getEyeHeight(), 0), distance, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, en -> true);
         Vec3 hitPos = hit.getLocation();
 
-        explodeAndFling(hitPos.x, hitPos.y, hitPos.z, strength, hitPos, start);
+        explodeAndFling(strength, hitPos, start);
     }
 
-    public void explodeAndFling(double x, double y, double z, float strength, Vec3 hitPos, Vec3 start) {
+    public void explodeAndFling(float strength, Vec3 hitPos, Vec3 start) {
         Vec3 delta = hitPos.subtract(start);
-        player.level().explode(player, x, y, z, strength, false, getExplosionInteraction());
-        player.level().getEntities(player, player.getBoundingBox().move(delta.scale(strength * 2))).forEach(e -> {
+        AABB box = player.getBoundingBox().setMinY(player.getBoundingBox().minY + player.getBoundingBox().getYsize() * 0.5f).move(delta);
+        box = box.move(hitPos.subtract(box.getCenter()).scale(0.5));
+
+        player.level().getEntities(player, box).forEach(e -> {
+            e.hurt(SoyDamageSources.titanPunch(player.level(), player), strength);
             e.addDeltaMovement(delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25)));
             if (e instanceof ServerPlayer sp) {
                 sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
             }
         });
+
+        player.level().explode(player, SoyDamageSources.titanPunch(player.level(), player), null, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction(), false);
+
+        if (!Platform.isProduction()) {
+            ShapeUtil.highlightVector(player.level(), player.position(), delta);
+            ShapeUtil.outlineBox(player.level(), box, new Vector3f(0.5f, 0, 0));
+        }
     }
 
     private Level.ExplosionInteraction getExplosionInteraction() {
