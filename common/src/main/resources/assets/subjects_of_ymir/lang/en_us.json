@@ -226,7 +226,7 @@
   "ability.text.subjects_of_ymir.steam_healing_overdrive.title": "Steam Overdrive",
   "ability.text.subjects_of_ymir.steam_healing_overdrive.description": "Kick your steam healing into high gear, rapidly closing any wounds.",
   "ability.text.subjects_of_ymir.block.title": "Block     ",
-  "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage.",
+  "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage. There is a small window at the beginning of your block where you can parry incoming damage and return half of it to its sender.",
   "ability.text.subjects_of_ymir.failsafe.title": "Failsafe    ",
   "ability.text.subjects_of_ymir.failsafe.description": "After shifting into a Titan enough times, it can become enough of a habit that you subconsciously transform to save yourself from death.",
 

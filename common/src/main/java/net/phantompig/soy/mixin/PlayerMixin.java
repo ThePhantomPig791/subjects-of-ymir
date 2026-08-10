@@ -2,22 +2,22 @@ package net.phantompig.soy.mixin;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.power.ability.BlockAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
+import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -94,28 +94,18 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, 
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 1), argsOnly = true)
     public float soy$modifyDamageTaken(float amount, DamageSource source) {
-        if (soy$blocksDamageSource((LivingEntity) (Object) this, source)) {
-            return amount * soy$getDamageReductionPercentage();
+        if (soy$blocksDamageSource((LivingEntity) (Object) this, source, amount)) {
+            return amount * (1 - SoyConfig.Server.getBlockPercentage());
         }
         return amount;
     }
 
     @Unique
-    private static boolean soy$blocksDamageSource(LivingEntity entity, DamageSource source) {
+    private static boolean soy$blocksDamageSource(LivingEntity entity, DamageSource source, float amount) {
         if (!AbilityUtil.isTypeEnabled(entity, SoyAbilities.BLOCK.get())) return false;
-        Entity directEntity = source.getDirectEntity();
-        if (directEntity == null) return false;
-        boolean pierce = directEntity instanceof Arrow proj && proj.getPierceLevel() > 0;
-        if (source.is(DamageTypeTags.BYPASSES_SHIELD) || pierce) return false;
-        Vec3 sourcePos = source.getSourcePosition();
-        if (sourcePos == null) return false;
-        Vec3 flatLookVec = entity.getLookAngle().multiply(1, 0, 1).normalize();
-        Vec3 vecTo = sourcePos.vectorTo(entity.position()).multiply(1, 0, 1).normalize();
-        return vecTo.dot(flatLookVec) < 0.0;
-    }
-
-    @Unique
-    private static float soy$getDamageReductionPercentage() {
-        return 0.2f;
+        for (AbilityInstance inst : AbilityUtil.getEnabledInstances(entity, SoyAbilities.BLOCK.get())) {
+            if (BlockAbility.shouldBlock(entity, source, amount, inst)) return true;
+        }
+        return false;
     }
 }

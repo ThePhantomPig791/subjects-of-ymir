@@ -9,6 +9,7 @@ public class SoyConfig {
         public static ForgeConfigSpec.BooleanValue EXPLODE_ON_SHIFT, EXPLODE_ON_FALL, EXPLODE_ON_ATTACK;
         public static ForgeConfigSpec.BooleanValue SAVE_CURIOS_TRINKETS_INVENTORY;
         public static ForgeConfigSpec.IntValue CURSE_OF_YMIR_DEATHS;
+        public static ForgeConfigSpec.DoubleValue BLOCK_PERCENTAGE;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -33,6 +34,9 @@ public class SoyConfig {
 
             builder.comment("A Titan Shifter will drop their Titan in the form of a Spine Item when they die this number of times. Set to 1 to make every Shifter always lose their Titan upon dying. Set to the maximum integer to disable the Curse of Ymir.");
             CURSE_OF_YMIR_DEATHS = builder.defineInRange("titan.curseOfYmirDeaths", 13, 1, Integer.MAX_VALUE);
+
+            builder.comment("The percentage of damage that is blocked when a Titan blocks an attack. 0.8 means that 80% of incoming damage will be blocked.");
+            BLOCK_PERCENTAGE = builder.defineInRange("titan.blockPercentage", 0.8, 0, 1);
 
             return builder.build();
         }
@@ -61,6 +65,10 @@ public class SoyConfig {
 
         public static int getCurseOfYmirDeaths() {
             return CURSE_OF_YMIR_DEATHS.get();
+        }
+
+        public static float getBlockPercentage() {
+            return BLOCK_PERCENTAGE.get().floatValue();
         }
     }
 
