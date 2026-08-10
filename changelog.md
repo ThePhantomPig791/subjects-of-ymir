@@ -9,6 +9,7 @@ Beta
 - Perfect Parrying attacks to deal counter damage
 - Moved all UP/DOWN vector constants to ShapeUtil
 - Added "/titan stat" sub-command
+- Tweaked sprint charging so it only uses stamina if you've shed enough armor
 
 TODO:
 - Investigate why blade handles stop swinging randomly

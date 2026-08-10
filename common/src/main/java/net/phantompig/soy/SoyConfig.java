@@ -8,6 +8,7 @@ public class SoyConfig {
         public static ForgeConfigSpec.BooleanValue CAN_DISPENSE_ICEBURST;
         public static ForgeConfigSpec.BooleanValue EXPLODE_ON_SHIFT, EXPLODE_ON_FALL, EXPLODE_ON_ATTACK;
         public static ForgeConfigSpec.BooleanValue SAVE_CURIOS_TRINKETS_INVENTORY;
+        public static ForgeConfigSpec.BooleanValue SCARE_VILLAGERS;
         public static ForgeConfigSpec.IntValue CURSE_OF_YMIR_DEATHS;
         public static ForgeConfigSpec.DoubleValue BLOCK_PERCENTAGE;
 
@@ -37,6 +38,10 @@ public class SoyConfig {
 
             builder.comment("The percentage of damage that is blocked when a Titan blocks an attack. 0.8 means that 80% of incoming damage will be blocked.");
             BLOCK_PERCENTAGE = builder.defineInRange("titan.blockPercentage", 0.8, 0, 1);
+
+            builder.comment("If true, Villagers will run away from Titans and Titan Corpses (requires world restart to take effect).");
+            builder.worldRestart();
+            SCARE_VILLAGERS = builder.define("titan.scareVillagers", true);
 
             return builder.build();
         }
@@ -69,6 +74,10 @@ public class SoyConfig {
 
         public static float getBlockPercentage() {
             return BLOCK_PERCENTAGE.get().floatValue();
+        }
+
+        public static boolean shouldVillagersRunAway() {
+            return SCARE_VILLAGERS.get();
         }
     }
 
