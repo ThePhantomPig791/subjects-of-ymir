@@ -116,6 +116,9 @@ public class SubjectsOfYmir {
                 PalladiumProperties.BACKWARDS_KEY_DOWN.set(player, false);
                 PalladiumProperties.RIGHT_KEY_DOWN.set(player, false);
                 PalladiumProperties.LEFT_KEY_DOWN.set(player, false);
+
+                SoyProperties.SWINGING_FISTS.set(player, false);
+                SoyProperties.SWINGING_LEGS.set(player, false);
             }
 
             if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && livingEntity instanceof Player player) {

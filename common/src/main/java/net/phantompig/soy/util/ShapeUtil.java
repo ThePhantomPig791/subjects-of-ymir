@@ -164,4 +164,8 @@ public class ShapeUtil {
             );
         }
     }
+
+    public static Vec3 vectorProjection(Vec3 a, Vec3 b) {
+        return b.scale(a.dot(b) / b.lengthSqr());
+    }
 }

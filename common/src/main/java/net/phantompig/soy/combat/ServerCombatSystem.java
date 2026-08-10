@@ -1,5 +1,8 @@
 package net.phantompig.soy.combat;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,6 +27,7 @@ import net.phantompig.soy.item.BladeHandleItem;
 import net.phantompig.soy.item.BladeItem;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.network.*;
+import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
@@ -89,6 +93,8 @@ public class ServerCombatSystem {
     }
 
     public void attack() {
+        setSwingingFists(false);
+        setSwingingLegs(false);
         if (extension.getTitanInstance().titan == null) return;
         final int maxAttackTime = getMaxAttackTime();
         if (attackTimer >= maxAttackTime * 12 / 20f || cooldown > 0 || extension == null || this.player.isSpectator()) {
@@ -108,6 +114,7 @@ public class ServerCombatSystem {
                     false,
                     false
             ));
+            setSwingingLegs(true);
         } else if (player.getXRot() > 30) {
             attackType = AttackType.GROUND;
             player.addEffect(new MobEffectInstance(
@@ -117,8 +124,10 @@ public class ServerCombatSystem {
                     false,
                     false
             ));
+            setSwingingFists(true);
         } else {
             attackType = AttackType.PUNCH;
+            setSwingingFists(true);
         }
 
         if (nextStageTimer > 0) {
@@ -259,7 +268,9 @@ public class ServerCombatSystem {
             }
         }
         if (attackType == AttackType.KICK) {
-            if (hit) explodeInFrontFlat(1.5f, 4, -0.85f, 0);
+            if (hit) {
+                explodeInFrontFlat(1.5f, 4, -0.85f, 0);
+            }
 
             cooldown = (int) (getMaxAttackTime() * 1.5f);
             nextStageTimer += nextStageTimer / 2;
@@ -268,7 +279,9 @@ public class ServerCombatSystem {
         }
 
         if (hit) exhaust((int) staminaToUse);
-        PlayerUtil.playSoundToAll(player.level(), player.getX(), player.getEyeY(), player.getZ(), 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 3, (float) (1 - staminaToUse / 25));
+        PlayerUtil.playSoundToAll(player.level(), player.getX(), player.getEyeY(), player.getZ(), 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 3, (float) (0.8 - staminaToUse / 25));
+        setSwingingFists(false);
+        setSwingingLegs(false);
     }
 
     public void exhaust(int stamina) {
@@ -280,6 +293,13 @@ public class ServerCombatSystem {
     }
     public void sendUpdateStageTimer(int ticks) {
         SoyNetwork.NETWORK.sendToPlayer(this.player, new SetNextAttackStageTimerMessage(ticks));
+    }
+
+    public void setSwingingFists(boolean s) {
+        SoyProperties.SWINGING_FISTS.set(this.player, s);
+    }
+    public void setSwingingLegs(boolean s) {
+        SoyProperties.SWINGING_LEGS.set(this.player, s);
     }
 
     public void explodeInFrontPartialLooking(float strength, float distance, float startHeightOffset, float endHeightOffset) {
@@ -314,12 +334,33 @@ public class ServerCombatSystem {
 
         player.level().getEntities(player, box).forEach(e -> {
             e.hurt(SoyDamageSources.titanPunch(player.level(), player), strength);
-            e.addDeltaMovement(delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25)));
+            var knockback = delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25));
+            var projectedMovement = ShapeUtil.vectorProjection(player.getDeltaMovement(), knockback);
+            e.addDeltaMovement(knockback.add(projectedMovement));
             if (e instanceof ServerPlayer sp) {
                 sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
             }
         });
 
+        var center = box.getCenter();
+        PlayerUtil.spawnParticleForAll(
+                player.level(), 32,
+                new BlockParticleOption(ParticleTypes.BLOCK, player.level().getBlockState(BlockPos.containing(center))),
+                false,
+                center.x, center.y, center.z,
+                (float) box.getXsize() / 2, (float) box.getYsize() / 2, (float)  box.getZsize() / 2,
+                0.5f, (int) (box.getXsize() * box.getYsize() * box.getZsize() / 3)
+
+        );
+        PlayerUtil.spawnParticleForAll(
+                player.level(), 32,
+                (ParticleOptions) SoyParticles.DIRT_CLOUD.get(),
+                false,
+                center.x, center.y, center.z,
+                (float) box.getXsize() / 2, (float) box.getYsize() / 10, (float)  box.getZsize() / 2,
+                0.2f, 5
+
+        );
         player.level().explode(player, SoyDamageSources.titanPunch(player.level(), player), null, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction(), false);
 
         if (!Platform.isProduction()) {

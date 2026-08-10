@@ -16,7 +16,7 @@ public class OdmLevelHelper {
         if (level instanceof ServerLevel) {
             OdmNodeEntity node = new OdmNodeEntity(SoyEntities.ODM_NODE.get(), level);
             node.setPos(player.position());
-            node.setDeltaMovement(along.scale(strength).add(vectorProjection(player.getDeltaMovement(), along)));
+            node.setDeltaMovement(along.scale(strength).add(ShapeUtil.vectorProjection(player.getDeltaMovement(), along)));
             node.setOwner(player);
             level.addFreshEntity(node);
             return node;
@@ -42,9 +42,5 @@ public class OdmLevelHelper {
             var entity = sl.getEntity(uuid);
             if (entity != null) entity.discard();
         }
-    }
-
-    private static Vec3 vectorProjection(Vec3 a, Vec3 b) {
-        return b.scale(a.dot(b) / b.lengthSqr());
     }
 }

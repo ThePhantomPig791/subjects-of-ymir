@@ -49,6 +49,29 @@
       "render_layer": "subjects_of_ymir:hardening"
     },
 
+    "combat_particles_fists": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "minecraft:cloud",
+      "emitter": "subjects_of_ymir:swinging_fists",
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:swinging_fists"
+        }
+      }
+    },
+    "combat_particles_legs": {
+      "type": "palladium:particles",
+      "hidden": true,
+      "particle_type": "minecraft:cloud",
+      "emitter": "subjects_of_ymir:swinging_legs",
+      "conditions": {
+        "enabling": {
+          "type": "subjects_of_ymir:swinging_legs"
+        }
+      }
+    },
+
     "name": {
       "type": "palladium:name_change",
       "hidden": true,
