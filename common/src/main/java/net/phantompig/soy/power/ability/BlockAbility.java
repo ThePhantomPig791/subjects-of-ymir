@@ -62,7 +62,7 @@ public class BlockAbility extends Ability implements AnimationTimer {
 
     @Override
     public String getDocumentationDescription() {
-        return "Blocks 80% of incoming damage. Linked to an animation. If an attack is blocked within [5, 10] ticks of activation, half of the blocked damage will be returned to the attacker.";
+        return "Blocks 80% of incoming damage. Linked to an animation. If an attack is blocked within [3, 7] ticks of activation, half of the blocked damage will be returned to the attacker.";
     }
 
     public static boolean shouldBlock(LivingEntity entity, DamageSource source, float amount, AbilityInstance entry) {
@@ -76,7 +76,7 @@ public class BlockAbility extends Ability implements AnimationTimer {
         Vec3 vecTo = sourcePos.vectorTo(entity.position()).multiply(1, 0, 1).normalize();
         if (vecTo.dot(flatLookVec) < 0.0) {
             // parry
-            if (entry.getProperty(TIMER) >= 5 && entry.getProperty(TIMER) <= 10) {
+            if (entry.getProperty(TIMER) >= 3 && entry.getProperty(TIMER) <= 7) {
                 var attacker = source.getEntity();
                 if (attacker != null) {
                     attacker.hurt(source, amount * SoyConfig.Server.getBlockPercentage() * 0.5f);
