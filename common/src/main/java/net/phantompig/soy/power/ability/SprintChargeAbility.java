@@ -41,7 +41,8 @@ public class SprintChargeAbility extends Ability {
                     if (entry.getEnabledTicks() % 20 == 0) {
                         Power power = entry.getProperty(SHED_POWER) == null ? holder.getPower() : PowerManager.getInstance(entity.level()).getPower(entry.getProperty(SHED_POWER));
                         if (PowerManager.getPowerHandler(entity).isEmpty()) return;
-                        double max = 0.2 * (1 - PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE) / 15d);
+                        int shed = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE);
+                        double max = 0.2 * (1 - shed / 15d);
 
                         if (entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) == null) {
                             entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", max / 10, AttributeModifier.Operation.ADDITION));
@@ -55,7 +56,13 @@ public class SprintChargeAbility extends Ability {
                 }
                 if (entity instanceof SoyPlayerExtension ext) {
                     if (entry.getEnabledTicks() % 10 == 0) {
-                        ext.getTitanInstance().exhaustSafe(50);
+                        Power power = entry.getProperty(SHED_POWER) == null ? holder.getPower() : PowerManager.getInstance(entity.level()).getPower(entry.getProperty(SHED_POWER));
+                        if (PowerManager.getPowerHandler(entity).isEmpty()) return;
+                        int shed = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE);
+
+                        if (shed < 13) {
+                            ext.getTitanInstance().exhaustSafe(50 * (13 - shed));
+                        }
                     }
                 }
             } else if (!blocking && entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null) {

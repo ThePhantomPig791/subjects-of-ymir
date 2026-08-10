@@ -1,5 +1,8 @@
 package net.phantompig.soy.power.ability;
 
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -12,6 +15,7 @@ import net.threetag.palladium.power.IPowerHolder;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladium.power.ability.AnimationTimer;
+import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladium.util.property.IntegerProperty;
 import net.threetag.palladium.util.property.PalladiumProperty;
 import net.threetag.palladium.util.property.PropertyManager;
@@ -76,6 +80,14 @@ public class BlockAbility extends Ability implements AnimationTimer {
                 var attacker = source.getEntity();
                 if (attacker != null) {
                     attacker.hurt(source, amount * SoyConfig.Server.getBlockPercentage() * 0.5f);
+                    PlayerUtil.playSoundToAll(entity.level(), attacker.getX(), attacker.getEyeY(), attacker.getZ(), 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 2, 1.8f);
+                    PlayerUtil.playSoundToAll(entity.level(), attacker.getX(), attacker.getEyeY(), attacker.getZ(), 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 2, 1.4f + (float) (0.1 * Math.random()));
+                    PlayerUtil.spawnParticleForAll(entity.level(), 64,
+                            ParticleTypes.FLASH, true,
+                            entity.getX(), entity.getY() + entity.getEyeHeight() * 0.8, entity.getZ(),
+                            0, 0, 0,
+                            0, 1
+                    );
                 }
             }
             return true;
