@@ -8,7 +8,7 @@ public class SoyConfig {
         public static ForgeConfigSpec.BooleanValue CAN_DISPENSE_ICEBURST;
         public static ForgeConfigSpec.BooleanValue EXPLODE_ON_SHIFT, EXPLODE_ON_FALL, EXPLODE_ON_ATTACK;
         public static ForgeConfigSpec.BooleanValue SAVE_CURIOS_TRINKETS_INVENTORY;
-        public static ForgeConfigSpec.BooleanValue SCARE_VILLAGERS;
+        public static ForgeConfigSpec.BooleanValue SCARE_VILLAGERS, AGGRAVATE_IRON_GOLEMS;
         public static ForgeConfigSpec.IntValue CURSE_OF_YMIR_DEATHS;
         public static ForgeConfigSpec.DoubleValue BLOCK_PERCENTAGE;
 
@@ -42,6 +42,10 @@ public class SoyConfig {
             builder.comment("If true, Villagers will run away from Titans and Titan Corpses (requires world restart to take effect).");
             builder.worldRestart();
             SCARE_VILLAGERS = builder.define("titan.scareVillagers", true);
+
+            builder.comment("If true, Iron Golems will attack Titans and Titan Corpses on sight (requires world restart to take effect).");
+            builder.worldRestart();
+            AGGRAVATE_IRON_GOLEMS = builder.define("titan.aggroGolems", true);
 
             return builder.build();
         }
@@ -78,6 +82,9 @@ public class SoyConfig {
 
         public static boolean shouldVillagersRunAway() {
             return SCARE_VILLAGERS.get();
+        }
+        public static boolean shouldIronGolemsAttackOnTitans() { // see what i did there
+            return AGGRAVATE_IRON_GOLEMS.get();
         }
     }
 
