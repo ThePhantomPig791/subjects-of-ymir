@@ -13,4 +13,5 @@ Beta
 
 TODO:
 - Investigate why blade handles stop swinging randomly
-- Titan endurance
+- Titan endurance (maybe? still pondering)
+- ODM hooks not attaching to entities properly

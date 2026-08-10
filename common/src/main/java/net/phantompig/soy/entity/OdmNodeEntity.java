@@ -39,9 +39,9 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     private static final EntityDataAccessor<Boolean> DATA_RIGHT = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_STUCK_ENTITY_ID = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Vector3f> DATA_STUCK_OFFSET = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.VECTOR3);
+    private static final EntityDataAccessor<Boolean> DATA_STUCK = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.BOOLEAN);
 
     public UUID stuckEntityUuid;
-    public boolean stuck;
     public int stuckTicks;
 
     public OdmNodeEntity(EntityType<? extends AbstractHurtingProjectile> entityType, Level level) {
@@ -52,7 +52,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     @Override
     public void tick() {
         super.tick();
-        if (stuck) {
+        if (this.getStuck()) {
             // pull player
             Entity owner = this.getOwner();
             if (owner == null || SoyProperties.PROGRESS.get(owner) > 0 || owner instanceof LivingEntity living && !belongsTo(living)) {
@@ -78,7 +78,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             if (this.level().isClientSide() && this.stuckTicks % 17 == 0) {
                 if (reelVolume > 0.35) {
                     float pitch = (float) (0.95 + 0.1 * Math.random());
-                    if (owner.equals(Minecraft.getInstance().player)) owner.playSound(SoySounds.REEL_LOCAL.get(), reelVolume, pitch); // TODO that genuinely might crash on a server but like i'm checking Level#isClientSide so it's probably fine??
+                    if (owner.equals(Minecraft.getInstance().player)) owner.playSound(SoySounds.REEL_LOCAL.get(), reelVolume, pitch);
                     else this.level().playLocalSound(owner.getX(), owner.getY(), owner.getZ(), SoySounds.REEL.get(), SoundSource.PLAYERS, reelVolume, pitch, false);
                 }
             }
@@ -92,17 +92,17 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
                         break;
                     }
                 }
-                this.stuck = newStuck; // if stuck to an entity, this will be set again (correctly) a few lines down
+                this.setStuck(newStuck);
             }
 
             // stay stuck to entity
             this.getStuckEntity().ifPresent(e -> {
                 if (e.isRemoved()) {
                     this.setStuckEntity(null);
-                    this.stuck = false;
+                    this.setStuck(false);
                 } else {
                     this.setPos(e.position().add(this.getStuckOffset()));
-                    this.stuck = true;
+                    this.setStuck(true);
                 }
             });
 
@@ -167,7 +167,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.HOOK_LAND.get(), SoundSource.PLAYERS, v, p);
         if (this.getOwner() instanceof Player pl) PlayerUtil.playSound(pl, this.getX(), this.getY(), this.getZ(), SoySounds.HOOK_LAND.get(), SoundSource.PLAYERS, v, p);
 
-        this.stuck = true;
+        this.setStuck(true);
         this.setDeltaMovement(0, 0, 0);
         if (result.getType() == HitResult.Type.BLOCK) this.setPos(result.getLocation());
         super.onHit(result);
@@ -212,19 +212,20 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         if (entity == null) {
             this.entityData.set(DATA_STUCK_ENTITY_ID, -1);
             this.entityData.set(DATA_STUCK_OFFSET, Vec3.ZERO.toVector3f());
+            this.setStuck(false);
             this.stuckEntityUuid = null;
-            this.stuck = false;
             return;
         }
         this.entityData.set(DATA_STUCK_ENTITY_ID, entity.getId());
         Vec3 offset = this.position().subtract(entity.position());
         offset = offset.subtract(offset.normalize().scale(entity.getBoundingBox().distanceToSqr(this.position()))).scale(0.9);
         this.entityData.set(DATA_STUCK_OFFSET, offset.toVector3f());
+        this.setStuck(true);
         this.stuckEntityUuid = entity.getUUID();
     }
 
     public Optional<Entity> getStuckEntity() { // will cache the entity ID if it's not set, so this should be called on the server
-        if (!this.stuck) return Optional.empty();
+        if (!this.getStuck()) return Optional.empty();
         int id = this.entityData.get(DATA_STUCK_ENTITY_ID);
         if (this.level() instanceof ServerLevel level && id == -1 && this.stuckEntityUuid != null) {
             final Entity e = level.getEntity(this.stuckEntityUuid);
@@ -235,6 +236,13 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             return Optional.ofNullable(e);
         }
         return Optional.ofNullable(this.level().getEntity(id));
+    }
+
+    public boolean getStuck() {
+        return this.entityData.get(DATA_STUCK);
+    }
+    public void setStuck(boolean stuck) {
+        this.entityData.set(DATA_STUCK, stuck);
     }
 
     public Vec3 getStuckOffset() {
@@ -253,19 +261,18 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         this.entityData.define(DATA_RIGHT, false);
         this.entityData.define(DATA_STUCK_ENTITY_ID, -1);
         this.entityData.define(DATA_STUCK_OFFSET, Vec3.ZERO.toVector3f());
+        this.entityData.define(DATA_STUCK, false);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.stuck = compound.getBoolean("Stuck");
         if (compound.contains("StuckEntityUuid")) this.stuckEntityUuid = compound.getUUID("StuckEntityUuid");
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putBoolean("Stuck", this.stuck);
         if (this.stuckEntityUuid != null) compound.putUUID("StuckEntityUuid", this.stuckEntityUuid);
     }
 
