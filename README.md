@@ -21,6 +21,7 @@ Textures and Models: Mostly sugar04k (discord) (anything that looks good and isn
 - ODM Click Sound: https://www.youtube.com/watch?v=dBJUIYv52Xw
 - ODM Hook Sounds: https://www.youtube.com/watch?v=__53poQEaPo and https://www.youtube.com/watch?v=RuGmLsFmKWI
 - Flare Sounds: https://www.youtube.com/watch?v=Q_vggboHDwE
+- Blade Slash Sound: https://pixabay.com/sound-effects/sword-slash-476148/
 
 - YouSeeBIGGIRL/T:T Music Disc: https://www.youtube.com/watch?v=vy63u2hKoPE
 - Splinter Wolf Music Disc: https://www.youtube.com/watch?v=p3MivL4Fyk8

@@ -22,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
+import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.item.BladeHandleItem;
 import net.phantompig.soy.item.BladeItem;
@@ -30,6 +31,7 @@ import net.phantompig.soy.network.*;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.phantompig.soy.util.ShapeUtil;
@@ -172,8 +174,10 @@ public class ServerCombatSystem {
             });
 
             Vec3 sweepLocation = this.player.getEyePosition().add(this.player.getLookAngle().scale(2));
-            PlayerUtil.playSoundToAll(this.player.level(), sweepLocation.x, sweepLocation.y, sweepLocation.z, 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1, 1.6f);
+            PlayerUtil.playSoundToAll(this.player.level(), sweepLocation.x, sweepLocation.y, sweepLocation.z, 32, SoySounds.BLADE_SLASH.get(), SoundSource.PLAYERS, 1, 0.8f + (float) (0.3f * Math.random()));
+            PlayerUtil.playSoundToAll(this.player.level(), sweepLocation.x, sweepLocation.y, sweepLocation.z, 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 0.5f, 1.6f);
             PlayerUtil.spawnParticleForAll(this.player.level(), 32, ParticleTypes.SWEEP_ATTACK, false, sweepLocation.x, sweepLocation.y, sweepLocation.z, 0, 0, 0, 0, 1);
+            PlayerUtil.spawnParticleForAll(this.player.level(), 16, ParticleTypes.CLOUD, false, sweepLocation.x, sweepLocation.y, sweepLocation.z, 0, 0, 0, 0.1f, (int) (4 * Math.random()));
 
             this.player.causeFoodExhaustion(1);
         }
@@ -332,16 +336,6 @@ public class ServerCombatSystem {
         AABB box = player.getBoundingBox().setMinY(player.getBoundingBox().minY + player.getBoundingBox().getYsize() * 0.5f).move(delta);
         box = box.move(hitPos.subtract(box.getCenter()).scale(0.5));
 
-        player.level().getEntities(player, box).forEach(e -> {
-            e.hurt(SoyDamageSources.titanPunch(player.level(), player), strength);
-            var knockback = delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25));
-            var projectedMovement = ShapeUtil.vectorProjection(player.getDeltaMovement(), knockback);
-            e.addDeltaMovement(knockback.add(projectedMovement));
-            if (e instanceof ServerPlayer sp) {
-                sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
-            }
-        });
-
         var center = box.getCenter();
         PlayerUtil.spawnParticleForAll(
                 player.level(), 32,
@@ -362,6 +356,20 @@ public class ServerCombatSystem {
 
         );
         player.level().explode(player, SoyDamageSources.titanPunch(player.level(), player), null, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction(), false);
+
+        player.level().getEntities(player, box).forEach(e -> {
+            e.hurt(SoyDamageSources.titanPunch(player.level(), player), strength);
+            if (e instanceof LivingEntity livingE && livingE.isDeadOrDying()) {
+                SubjectsOfYmir.LOGGER.info("dead");
+                PlayerUtil.playSoundToAll(player.level(), e.getX(), e.getEyeY(), e.getZ(), 64, SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS, 2, 0.9f + (float) (0.1 * Math.random()));
+            }
+            var knockback = delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25));
+            var projectedMovement = ShapeUtil.vectorProjection(player.getDeltaMovement(), knockback);
+            e.addDeltaMovement(knockback.add(projectedMovement));
+            if (e instanceof ServerPlayer sp) {
+                sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
+            }
+        });
 
         if (!Platform.isProduction()) {
             ShapeUtil.highlightVector(player.level(), player.position(), delta);

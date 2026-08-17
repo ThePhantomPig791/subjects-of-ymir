@@ -10,6 +10,7 @@ Beta
 - Moved all UP/DOWN vector constants to ShapeUtil
 - Added "/titan stat" sub-command
 - Tweaked sprint charging so it only uses stamina if you've shed enough armor
+- Added a few sound effects for titan combat and odm blade swinging
 
 TODO:
 - Investigate why blade handles stop swinging randomly

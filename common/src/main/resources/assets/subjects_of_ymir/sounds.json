@@ -184,6 +184,34 @@
     ]
   },
 
+  "titan_kill": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:titan_kill_0",
+        "attenuation_distance": 64
+      },
+      {
+        "name": "subjects_of_ymir:titan_kill_1",
+        "attenuation_distance": 64
+      },
+      {
+        "name": "subjects_of_ymir:titan_kill_2",
+        "attenuation_distance": 64
+      }
+    ]
+  },
+
+  "blade_slash": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:blade_slash",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+
   "music_disc.youseebiggirl": {
     "sounds": [
       {

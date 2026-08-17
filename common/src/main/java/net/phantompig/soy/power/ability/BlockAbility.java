@@ -80,8 +80,9 @@ public class BlockAbility extends Ability implements AnimationTimer {
                 var attacker = source.getEntity();
                 if (attacker != null) {
                     attacker.hurt(source, amount * SoyConfig.Server.getBlockPercentage() * 0.5f);
-                    PlayerUtil.playSoundToAll(entity.level(), attacker.getX(), attacker.getEyeY(), attacker.getZ(), 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 2, 1.8f);
+                    PlayerUtil.playSoundToAll(entity.level(), attacker.getX(), attacker.getEyeY(), attacker.getZ(), 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 2, 1.6f + (float) (0.1 * Math.random()));
                     PlayerUtil.playSoundToAll(entity.level(), attacker.getX(), attacker.getEyeY(), attacker.getZ(), 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 2, 1.4f + (float) (0.1 * Math.random()));
+                    PlayerUtil.playSoundToAll(entity.level(), attacker.getX(), attacker.getEyeY(), attacker.getZ(), 32, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 2, 1.2f + (float) (0.1 * Math.random()));
                     PlayerUtil.spawnParticleForAll(entity.level(), 64,
                             ParticleTypes.FLASH, true,
                             entity.getX(), entity.getY() + entity.getEyeHeight() * 0.8, entity.getZ(),
