@@ -39,6 +39,9 @@ public class SoyProperties {
     public static final PalladiumProperty<Boolean> SWINGING_FISTS = new BooleanProperty("subjects_of_ymir/swinging_fists").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<Boolean> SWINGING_LEGS = new BooleanProperty("subjects_of_ymir/swinging_legs").sync(SyncType.EVERYONE);
 
+    public static final PalladiumProperty<Boolean> GRABBED = new BooleanProperty("subjects_of_ymir/grabbed").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<String> GRABBING = new StringProperty("subjects_of_ymir/grabbing").sync(SyncType.EVERYONE);
+
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
             if (handler.getEntity() instanceof LivingEntity) {
@@ -61,6 +64,8 @@ public class SoyProperties {
                 handler.register(ODM_HOLD_ATTACK_INCREASING, false);
                 handler.register(SWINGING_FISTS, false);
                 handler.register(SWINGING_LEGS, false);
+                handler.register(GRABBED, false);
+                handler.register(GRABBING, "");
             }
         });
     }

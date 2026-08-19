@@ -22,7 +22,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.item.BladeHandleItem;
 import net.phantompig.soy.item.BladeItem;
@@ -360,7 +359,6 @@ public class ServerCombatSystem {
         player.level().getEntities(player, box).forEach(e -> {
             e.hurt(SoyDamageSources.titanPunch(player.level(), player), strength);
             if (e instanceof LivingEntity livingE && livingE.isDeadOrDying()) {
-                SubjectsOfYmir.LOGGER.info("dead");
                 PlayerUtil.playSoundToAll(player.level(), e.getX(), e.getEyeY(), e.getZ(), 64, SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS, 2, 0.9f + (float) (0.1 * Math.random()));
             }
             var knockback = delta.normalize().scale(strength * 10 / Math.pow(e.getBoundingBox().getYsize(), 1.25));

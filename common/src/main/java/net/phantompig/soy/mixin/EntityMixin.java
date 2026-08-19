@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityAccess;
 import net.minecraft.world.phys.AABB;
-import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.network.ScreenShakeMessage;
 import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.player.SoyPlayerExtension;
@@ -68,7 +67,6 @@ public abstract class EntityMixin implements Nameable, EntityAccess, CommandSour
                     this.level.getEntities((Entity) (Object) this, this.getBoundingBox().inflate(18)).forEach(e -> {
                         if (e instanceof ServerPlayer sp) {
                             final float strength = finalScale / this.distanceTo(sp);
-                            SubjectsOfYmir.LOGGER.info("strength {}", strength);
                             SoyNetwork.NETWORK.sendToPlayer(sp, new ScreenShakeMessage(200 + (int) (300 * strength), 0.02f + 0.1f * strength));
                         }
                     });

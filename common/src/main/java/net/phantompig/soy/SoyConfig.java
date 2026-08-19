@@ -11,6 +11,7 @@ public class SoyConfig {
         public static ForgeConfigSpec.BooleanValue SCARE_VILLAGERS, AGGRAVATE_IRON_GOLEMS;
         public static ForgeConfigSpec.IntValue CURSE_OF_YMIR_DEATHS;
         public static ForgeConfigSpec.DoubleValue BLOCK_PERCENTAGE;
+        public static ForgeConfigSpec.BooleanValue GRABBING_ENABLED;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -46,6 +47,10 @@ public class SoyConfig {
             builder.comment("If true, Iron Golems will attack Titans and Titan Corpses on sight (requires world restart to take effect).");
             builder.worldRestart();
             AGGRAVATE_IRON_GOLEMS = builder.define("titan.aggroGolems", true);
+
+            builder.comment("Enabled or disables Titans being able to grab smaller entities.");
+            builder.worldRestart();
+            GRABBING_ENABLED = builder.define("titan.grabbingEnabled", true);
 
             return builder.build();
         }
@@ -85,6 +90,10 @@ public class SoyConfig {
         }
         public static boolean shouldIronGolemsAttackOnTitans() { // see what i did there
             return AGGRAVATE_IRON_GOLEMS.get();
+        }
+
+        public static boolean allowGrabbing() {
+            return GRABBING_ENABLED.get();
         }
     }
 

@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.threetag.palladium.client.renderer.renderlayer.AbstractPackRenderLayer;
 import net.threetag.palladium.client.screen.AccessoryScreen;
 import net.threetag.palladium.util.PlayerUtil;
@@ -53,15 +54,24 @@ public class PlayerInNapeRenderLayer extends AbstractPackRenderLayer {
             }
 
             var body = playerModel.body;
+            var renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);
 
             poseStack.pushPose();
             poseStack.scale(1 / scale, 1 / scale, 1 / scale);
             poseStack.translate(body.x, body.y + 1, body.z + 0.5 * (scale - 1) / scale);
-            //model.body.offsetPos(new Vector3f(body.x, body.y + 1, (float) (body.z + 0.5 * (scale - 1) / scale)));
-            if (player.isCrouching()) poseStack.translate(0, -2, 0.5);
+
+            // crouch offset (thanks luc for commenting your code)
+            Vec3 offset = renderer.getRenderOffset(player, partialTicks);
+            poseStack.translate(offset.x, offset.y, offset.z);
+
             poseStack.mulPose(Axis.XP.rotation(body.xRot));
             poseStack.mulPose(Axis.YP.rotation(body.yRot));
             poseStack.mulPose(Axis.ZP.rotation(body.zRot));
+
+            // crouch offset's scarier yet more understandable cousin (my own horrific creation)
+            if (player.isCrouching()) {
+                poseStack.translate(0, -0.5, 1);
+            }
 
             model.renderToBuffer(
                     poseStack,

@@ -35,6 +35,7 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
             if (Math.random() < 0.02) {
                 this.setStack(stack, Items.IRON_NUGGET.getDefaultInstance());
                 attacker.broadcastBreakEvent(attacker.getItemBySlot(EquipmentSlot.MAINHAND).equals(stack) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                PlayerUtil.playSoundToAll(attacker.level(), attacker.getX(), attacker.getY(), attacker.getZ(), 16, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 2, 1.5f);
             }
             return true;
         }

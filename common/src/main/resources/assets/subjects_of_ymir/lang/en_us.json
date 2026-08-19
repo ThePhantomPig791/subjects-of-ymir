@@ -229,6 +229,8 @@
   "ability.text.subjects_of_ymir.block.description": "Shield yourself with your arms to reduce incoming damage. There is a small window at the beginning of your block where you can parry incoming damage and return half of it to its sender.",
   "ability.text.subjects_of_ymir.failsafe.title": "Failsafe    ",
   "ability.text.subjects_of_ymir.failsafe.description": "After shifting into a Titan enough times, it can become enough of a habit that you subconsciously transform to save yourself from death.",
+  "ability.text.subjects_of_ymir.grab.title": "Grabbing",
+  "ability.text.subjects_of_ymir.grab.description": "Grab smaller entities that dare to get too close (enable, then right-click).",
 
   "ability.text.subjects_of_ymir.attack.root.title": "Attack Titan",
   "ability.text.subjects_of_ymir.attack.root.description": "Your Titan form is strong, durable, and motivated to keep moving forward.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 8",

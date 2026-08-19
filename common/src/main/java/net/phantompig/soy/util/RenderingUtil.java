@@ -1,11 +1,23 @@
 package net.phantompig.soy.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.CameraType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.power.ability.GrabbingAbility;
+import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.renderer.PalladiumRenderTypes;
+import net.threetag.palladium.entity.BodyPart;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+
+import java.util.Objects;
 
 public class RenderingUtil {
     public static void renderSphere(PoseStack poseStack, MultiBufferSource bufferSource, float radius, float r, float g, float b, float alpha) {
@@ -66,5 +78,30 @@ public class RenderingUtil {
         vertexConsumer.vertex(matrix, 0, 0, 0).color(r, g, b, alpha).uv2(15728640).endVertex();
 
         poseStack.popPose();
+    }
+
+    public static void transformPosestackForGrabbedEntity(Entity entity, PoseStack poseStack, float partialTicks) {
+        if (SoyProperties.GRABBED.isRegistered(entity) && SoyProperties.GRABBED.get(entity)) {
+            LivingEntity grabber = null;
+            for (Entity e : entity.level().getEntities(entity, entity.getBoundingBox().inflate(40))) {
+                if (e instanceof LivingEntity living && GrabbingAbility.getGrabbing(living).equals(entity.getUUID())) {
+                    grabber = living;
+                    break;
+                }
+            }
+            if (grabber == null) return;
+            Vec3 delta = grabber.getPosition(partialTicks).subtract(entity.getPosition(partialTicks));
+            poseStack.translate(delta.x, delta.y, delta.z);
+            if (Objects.equals(Minecraft.getInstance().player, grabber) && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON) {
+
+            } else if (grabber instanceof AbstractClientPlayer player) {
+                poseStack.mulPoseMatrix(BodyPart.getTransformationMatrix(BodyPart.RIGHT_ARM, new Vector3f(0, 0.6f, 0), player, partialTicks).normalize3x3());
+
+                var renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);
+                Vec3 offset = renderer.getRenderOffset(player, partialTicks).reverse();
+                poseStack.translate(offset.x, offset.y, offset.z);
+            }
+            poseStack.mulPose(Direction.NORTH.getRotation());
+        }
     }
 }

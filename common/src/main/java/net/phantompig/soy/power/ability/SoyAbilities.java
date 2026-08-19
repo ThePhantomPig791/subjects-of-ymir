@@ -24,4 +24,6 @@ public class SoyAbilities {
 
     public static final RegistrySupplier<Ability> SPRINT_CHARGE = ABILITIES.register("sprint_charge", SprintChargeAbility::new);
     public static final RegistrySupplier<Ability> SHED = ABILITIES.register("shed", ShedAbility::new);
+
+    public static final RegistrySupplier<Ability> GRABBING = ABILITIES.register("grabbing", GrabbingAbility::new);
 }
