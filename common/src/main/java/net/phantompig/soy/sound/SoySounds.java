@@ -27,6 +27,7 @@ public class SoySounds {
     public static final RegistrySupplier<SoundEvent> REEL_LOCAL = make("reel_local", 16);
     public static final RegistrySupplier<SoundEvent> TITAN_KILL = make("titan_kill", 64);
     public static final RegistrySupplier<SoundEvent> BLADE_SLASH = make("blade_slash", 32);
+    public static final RegistrySupplier<SoundEvent> TITAN_STEP = make("titan_step", 64);
 
     public static final RegistrySupplier<SoundEvent> MUSIC_DISC_YOUSEEBIGGIRL = make("music_disc.youseebiggirl", 256);
     public static final RegistrySupplier<SoundEvent> MUSIC_DISC_SPLINTER_WOLF = make("music_disc.splinter_wolf", 256);

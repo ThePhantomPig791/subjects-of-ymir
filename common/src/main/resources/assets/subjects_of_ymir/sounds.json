@@ -212,6 +212,17 @@
     ]
   },
 
+  "titan_step": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "subjects_of_ymir:titan_step",
+        "attenuation_distance": 64,
+        "volume": 3
+      }
+    ]
+  },
+
   "music_disc.youseebiggirl": {
     "sounds": [
       {
