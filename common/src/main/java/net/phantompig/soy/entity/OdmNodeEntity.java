@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -21,10 +22,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
@@ -164,8 +167,16 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         if (result instanceof EntityHitResult eHit && this.ownedBy(eHit.getEntity())) return;
 
         final float v = (float) (0.5 * this.getDeltaMovement().lengthSqr()), p = (float) (0.9 + 0.2 * Math.random());
+        final boolean hitHardenedCrystal = result instanceof BlockHitResult bHit && this.level().getBlockState(bHit.getBlockPos()).is(SoyBlocks.HARDENING_BLOCK.get());
         PlayerUtil.playSoundToAll(this.level(), this.getX(), this.getY(), this.getZ(), 64, SoySounds.HOOK_LAND.get(), SoundSource.PLAYERS, v, p);
-        if (this.getOwner() instanceof Player pl) PlayerUtil.playSound(pl, this.getX(), this.getY(), this.getZ(), SoySounds.HOOK_LAND.get(), SoundSource.PLAYERS, v, p);
+        if (hitHardenedCrystal) {
+            PlayerUtil.playSoundToAll(this.level(), result.getLocation().x, result.getLocation().y, result.getLocation().z, 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, p + 0.7f);
+            PlayerUtil.playSoundToAll(this.level(), result.getLocation().x, result.getLocation().y, result.getLocation().z, 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 0.6f, p + 0.5f);
+            PlayerUtil.playSoundToAll(this.level(), result.getLocation().x, result.getLocation().y, result.getLocation().z, 32, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 0.6f, p + 0.3f);
+        }
+        if (this.getOwner() instanceof Player pl) {
+            PlayerUtil.playSound(pl, this.getX(), this.getY(), this.getZ(), SoySounds.HOOK_LAND.get(), SoundSource.PLAYERS, v, p);
+        }
 
         this.setStuck(true);
         this.setDeltaMovement(0, 0, 0);

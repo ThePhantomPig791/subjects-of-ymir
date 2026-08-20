@@ -442,6 +442,13 @@
               "type": "palladium:ability_enabled",
               "ability": "shift"
             }
+          },
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_enabled",
+              "ability": "steam_healing_overdrive"
+            }
           }
         ]
       }

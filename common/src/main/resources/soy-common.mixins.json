@@ -3,9 +3,11 @@
   "package": "net.phantompig.soy.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.CameraMixin",
     "client.ClientLevelMixin",
     "client.GameRendererMixin",
     "client.GuiMixin",
+    "client.ItemInHandRendererMixin",
     "client.KeyMappingMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",

@@ -168,6 +168,8 @@
   "ability.text.subjects_of_ymir.block.description": "Прикройтесь руками, чтобы уменьшить наносимый урон. В начале вашего блока есть небольшое окно, в котором вы можете парировать наносимый урон и возвращать половину отправителю",
   "ability.text.subjects_of_ymir.failsafe.title": "Ложное спасение",
   "ability.text.subjects_of_ymir.failsafe.description": "После достаточного количества превращений в титана это может стать настолько привычным, что вы подсознательно будете трансформироваться чтобы спастись от смерти.",
+  "ability.text.subjects_of_ymir.grab.title": "Схватить",
+  "ability.text.subjects_of_ymir.grab.description": "Схвати намного меньшее существо чтобы уменьшить расстояние  (enable, then right-click).",
 
   "ability.text.subjects_of_ymir.attack.root.title": "Атакующий титан",
   "ability.text.subjects_of_ymir.attack.root.description": "Ваша форма титана сильна, вынослива и всегда будет двигаться вперед.\n\n§7HP: 20\nATK: 7\nSPD: 3\nDEF: 8",

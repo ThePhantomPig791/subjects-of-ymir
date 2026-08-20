@@ -8,18 +8,13 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.util.RenderingUtil;
-import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
-    @Unique
-    private static final Vector3f HELD_OFFSET = new Vector3f(6, 18, 0);
-
     @ModifyExpressionValue(
             method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/WalkAnimationState;position(F)F")
@@ -33,11 +28,17 @@ public abstract class LivingEntityRendererMixin {
 
     @Inject(
             method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
-            at = @At("HEAD")
+            at = @At("HEAD"),
+            cancellable = true
     )
     public void soy$renderHead(LivingEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
         poseStack.pushPose();
-        RenderingUtil.transformPosestackForGrabbedEntity(entity, poseStack, partialTicks);
+        if (RenderingUtil.transformPosestackForGrabbedEntity(entity, poseStack, partialTicks) && packedLight != 15728641) {
+            // the packed light is being used as a "marker".
+            // if it's specifically 15728641, we know this is being rendered from ItemInHandRendererMixin and we shouldn't cancel the rendering. god this took me so long to figure out
+            ci.cancel();
+            poseStack.popPose();
+        }
     }
 
     @Inject(

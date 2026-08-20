@@ -19,6 +19,7 @@ import net.phantompig.soy.entity.ThrownBladeEntity;
 import net.phantompig.soy.odm.component.OdmComponentItem;
 import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.util.PlayerUtil;
 
@@ -94,18 +95,27 @@ public class BladeHandleItem extends ItemStackHoldingItem implements OdmHandleIt
     }
 
     public static void throwBlade(Level level, Player player, Vec3 normal, EquipmentSlot slot) {
-        Vec3 offset = player.getEyePosition().add(player.getLookAngle().multiply(1, 0, 1).cross(normal).scale(0.3)).add(0, -1, 0);
+        Vec3 perp = player.getLookAngle().multiply(1, 0, 1).cross(normal);
+        Vec3 offset = player.getEyePosition().add(perp.scale(0.3)).add(0, -1, 0);
         ItemStack stack = player.getItemBySlot(slot);
         if (stack.getItem() instanceof BladeHandleItem handle && handle.getStack(stack).getItem() instanceof BladeItem) {
             ThrownBladeEntity blade = new ThrownBladeEntity(SoyEntities.THROWN_BLADE.get(), level);
             blade.setOwner(player);
             blade.setPos(offset);
-            blade.shootFromRotation(player, player.getXRot(), player.getYRot(), 0, 3, 0.1f);
-            level.addFreshEntity(blade);
 
+            Vec3 along = player.getLookAngle();
+            if (player.isCrouching()) {
+                along = along.lerp(perp, 0.25);
+            }
+            blade.setDeltaMovement(player.getDeltaMovement().add(along.scale(4)));
+
+            level.addFreshEntity(blade);
             handle.setStack(stack, Items.AIR.getDefaultInstance());
-            PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.SNOWBALL_THROW, SoundSource.PLAYERS, 0.5f, 0.6f + 0.1f * (float) Math.random());
-            PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.ARMOR_EQUIP_IRON, SoundSource.PLAYERS, 1, 1.5f + 0.1f * (float) Math.random());
+
+            PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.SNOWBALL_THROW, SoundSource.PLAYERS, 0.8f, 0.6f + 0.1f * (float) Math.random());
+            PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.ARMOR_EQUIP_IRON, SoundSource.PLAYERS, 1.5f, 1.5f + 0.1f * (float) Math.random());
+            PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1, 1.4f + 0.1f * (float) Math.random());
+            PlayerUtil.playSoundToAll(level, player.getX(), player.getY(), player.getZ(), 32, SoySounds.BLADE_SLASH.get(), SoundSource.PLAYERS, 0.5f, 1.2f + 0.1f * (float) Math.random());
         }
     }
 

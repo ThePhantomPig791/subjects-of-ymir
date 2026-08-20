@@ -80,7 +80,10 @@ public class RenderingUtil {
         poseStack.popPose();
     }
 
-    public static void transformPosestackForGrabbedEntity(Entity entity, PoseStack poseStack, float partialTicks) {
+    /**
+     * @return True if the entity's rendering should be canceled
+     */
+    public static boolean transformPosestackForGrabbedEntity(Entity entity, PoseStack poseStack, float partialTicks) {
         if (SoyProperties.GRABBED.isRegistered(entity) && SoyProperties.GRABBED.get(entity)) {
             LivingEntity grabber = null;
             for (Entity e : entity.level().getEntities(entity, entity.getBoundingBox().inflate(40))) {
@@ -89,19 +92,23 @@ public class RenderingUtil {
                     break;
                 }
             }
-            if (grabber == null) return;
-            Vec3 delta = grabber.getPosition(partialTicks).subtract(entity.getPosition(partialTicks));
-            poseStack.translate(delta.x, delta.y, delta.z);
-            if (Objects.equals(Minecraft.getInstance().player, grabber) && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON) {
+            if (grabber == null) return false;
 
+            if (Objects.equals(Minecraft.getInstance().player, grabber) && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON) {
+                return true;
             } else if (grabber instanceof AbstractClientPlayer player) {
+                Vec3 delta = grabber.getPosition(partialTicks).subtract(entity.getPosition(partialTicks));
+                poseStack.translate(delta.x, delta.y, delta.z);
+
                 poseStack.mulPoseMatrix(BodyPart.getTransformationMatrix(BodyPart.RIGHT_ARM, new Vector3f(0, 0.6f, 0), player, partialTicks).normalize3x3());
 
                 var renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);
                 Vec3 offset = renderer.getRenderOffset(player, partialTicks).reverse();
                 poseStack.translate(offset.x, offset.y, offset.z);
+
+                poseStack.mulPose(Direction.NORTH.getRotation());
             }
-            poseStack.mulPose(Direction.NORTH.getRotation());
         }
+        return false;
     }
 }

@@ -22,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SoyConfig;
+import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.item.BladeHandleItem;
 import net.phantompig.soy.item.BladeItem;
@@ -47,7 +48,7 @@ public class ServerCombatSystem {
 
     public int attackTimer, nextStageTimer, cooldown;
 
-    public int attackStage = 1; // not zero based!!! (because of how armin named the animations, i'm too lazy to change it)
+    public int attackStage = 1; // not zero based!!! (because of how sugar04 named the animations, i'm too lazy to change it)
     public AttackType attackType = AttackType.PUNCH;
 
     public ServerCombatSystem(ServerPlayer player) {
@@ -335,10 +336,29 @@ public class ServerCombatSystem {
         AABB box = player.getBoundingBox().setMinY(player.getBoundingBox().minY + player.getBoundingBox().getYsize() * 0.5f).move(delta);
         box = box.move(hitPos.subtract(box.getCenter()).scale(0.5));
 
+        var hitState = player.level().getBlockState(BlockPos.containing(hitPos));
         var center = box.getCenter();
-        PlayerUtil.spawnParticleForAll(
+        var centerState = player.level().getBlockState(BlockPos.containing(center));
+        if (
+                (centerState.is(SoyBlocks.HARDENING_BLOCK.get()) || hitState.is(SoyBlocks.HARDENING_BLOCK.get()))
+                && ((player instanceof HardeningSystemHolder hsh && hsh.soy$getHardeningSystem().getKnuckles() > 0))
+        ) {
+            PlayerUtil.playSoundToAll(player.level(), center.x, center.y, center.z, 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 2, 1.6f + (float) (0.1 * Math.random()));
+            PlayerUtil.playSoundToAll(player.level(), center.x, center.y, center.z, 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 2, 1.4f + (float) (0.1 * Math.random()));
+            PlayerUtil.playSoundToAll(player.level(), center.x, center.y, center.z, 32, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 2, 1.2f + (float) (0.1 * Math.random()));
+        }
+        if (!hitState.isAir()) PlayerUtil.spawnParticleForAll(
                 player.level(), 32,
-                new BlockParticleOption(ParticleTypes.BLOCK, player.level().getBlockState(BlockPos.containing(center))),
+                new BlockParticleOption(ParticleTypes.BLOCK, hitState),
+                false,
+                center.x, center.y, center.z,
+                (float) box.getXsize() / 2, (float) box.getYsize() / 2, (float)  box.getZsize() / 2,
+                0.5f, (int) (box.getXsize() * box.getYsize() * box.getZsize() / 3)
+
+        );
+        if (!centerState.isAir()) PlayerUtil.spawnParticleForAll(
+                player.level(), 32,
+                new BlockParticleOption(ParticleTypes.BLOCK, centerState),
                 false,
                 center.x, center.y, center.z,
                 (float) box.getXsize() / 2, (float) box.getYsize() / 2, (float)  box.getZsize() / 2,

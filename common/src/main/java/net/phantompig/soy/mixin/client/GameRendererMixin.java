@@ -24,12 +24,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
     @Shadow @Final Minecraft minecraft;
-
     @Unique
     private final AtomicDouble soy$cameraPitch = new AtomicDouble(0), soy$cameraRoll = new AtomicDouble(0);
 
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
-    public void renderLevel(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo ci, @Local(ordinal = 1) PoseStack poseStack2) {
+    public void soy$renderLevel(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo ci, @Local(ordinal = 1) PoseStack poseStack2) {
         if (this.minecraft.player != null && !this.minecraft.player.isPassenger()) {
             soy$adjustCameraAngle(ShapeUtil.UP, soy$cameraPitch, 0.4);
             soy$adjustCameraAngle(this.minecraft.player.getLookAngle().cross(ShapeUtil.UP), soy$cameraRoll, 0.715);
