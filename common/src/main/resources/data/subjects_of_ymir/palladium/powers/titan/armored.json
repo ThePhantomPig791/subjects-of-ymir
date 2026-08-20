@@ -648,7 +648,7 @@
         ]
       }
     },
-    "grab__both_arms": {
+    "grab_both_arms": {
       "type": "palladium:show_both_arms",
       "hidden": true,
       "conditions": {

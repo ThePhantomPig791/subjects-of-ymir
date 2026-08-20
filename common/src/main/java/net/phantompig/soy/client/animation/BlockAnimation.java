@@ -76,7 +76,7 @@ public class BlockAnimation extends PalladiumAnimation {
                         .scaleZ(2)
                         .rotateXDegrees(45)
                         .rotateYDegrees(-180)
-                        .rotateZDegrees(-70)
+                        .rotateZDegrees(70)
                         .animate(Easing.INOUTBACK, progress);
             } else {
                 builder.get(PlayerModelPart.RIGHT_ARM)
@@ -86,9 +86,9 @@ public class BlockAnimation extends PalladiumAnimation {
                         .animate(Easing.INOUTBACK, progress);
 
                 builder.get(PlayerModelPart.LEFT_ARM)
-                        .setXRotDegrees(-75)
-                        .setYRotDegrees(30)
-                        .setZRotDegrees(60)
+                        .setXRotDegrees(70) // -
+                        .setYRotDegrees(-60) // -
+                        .setZRotDegrees(15)
                         .animate(Easing.INOUTBACK, progress);
             }
         }

@@ -757,6 +757,28 @@
           }
         ]
       }
+    },
+    "grab_both_arms": {
+      "type": "palladium:show_both_arms",
+      "hidden": true,
+      "conditions": {
+        "enabling": [
+          {
+            "type": "palladium:ability_enabled",
+            "ability": "grabbing"
+          },
+          {
+            "type": "subjects_of_ymir:is_left_handed"
+          },
+          {
+            "type": "palladium:ability_integer_property",
+            "ability": "grabbing",
+            "property": "timer",
+            "min": -1,
+            "max": -1
+          }
+        ]
+      }
     }
   }
 }

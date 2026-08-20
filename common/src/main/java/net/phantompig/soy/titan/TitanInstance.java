@@ -12,9 +12,13 @@ import net.phantompig.soy.item.SoyItemTags;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.item.SpineItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.power.ability.BlockAbility;
+import net.phantompig.soy.power.ability.ShedAbility;
+import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.compat.curiostinkets.CuriosTrinketsUtil;
 import net.threetag.palladium.power.PowerManager;
+import net.threetag.palladium.power.ability.AbilityUtil;
 import net.threetag.palladiumcore.util.Platform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -236,6 +240,16 @@ public class TitanInstance {
         rings.addAll(CuriosTrinketsUtil.getInstance().getItemsInSlot(entity, "offhand/ring"));
         for (ItemStack stack : rings) {
             if (stack.is(SoyItemTags.RINGS)) return true;
+        }
+        return false;
+    }
+
+    public boolean isNapeProtected() {
+        if (AbilityUtil.getInstances(this.entity, SoyAbilities.BLOCK.get()).stream().map(abil -> abil.getProperty(BlockAbility.TIMER)).max(Integer::compareTo).orElse(0) > 5) {
+            return true;
+        }
+        if (ShedAbility.getMinimumShedLevel(this.entity) > 5) {
+            return true;
         }
         return false;
     }

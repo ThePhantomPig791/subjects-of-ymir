@@ -1,6 +1,8 @@
 package net.phantompig.soy.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -8,12 +10,15 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.BerserkAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
+import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.power.ability.AbilityUtil;
+import net.threetag.palladiumcore.util.Platform;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,11 +35,38 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow public abstract ItemStack getItemBySlot(EquipmentSlot slot);
 
+    @Shadow public abstract void remove(RemovalReason reason);
+
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
     public void soy$isPushable(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this instanceof SoyPlayerExtension extension && extension.getTitanInstance().getProgress() > 0) {
             cir.setReturnValue(false);
         }
+    }
+
+    @WrapOperation(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"))
+    public void soy$hurtNape(LivingEntity entity, DamageSource damageSource, float damageAmount, Operation<Void> original) {
+        if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0 && !ext.getTitanInstance().isNapeProtected()) {
+            Vec3 sourcePos = damageSource.getSourcePosition();
+            if (sourcePos != null) {
+                Vec3 napePos = entity.position().add(0, entity.getBbHeight() * 0.7, 0);
+                if (sourcePos.distanceToSqr(napePos) < 16) {
+                    Vec3 vecToSource = sourcePos.subtract(napePos).normalize();
+                    Vec3 bodyFacing = new Vec3(Math.cos(Math.toRadians(entity.yBodyRot + 90)), 0, Math.sin(Math.toRadians(entity.yBodyRot + 90)));
+                    if (bodyFacing.dot(vecToSource) < -0.2) {
+                        damageAmount += 30;
+                        if (damageSource.getDirectEntity() != null) {
+                            damageAmount += (float) damageSource.getDirectEntity().getDeltaMovement().length();
+                        }
+                    }
+                    if (!Platform.isProduction()) {
+                        ShapeUtil.highlightVector(entity.level(), napePos, bodyFacing.scale(10));
+                        ShapeUtil.highlightVector(entity.level(), napePos, vecToSource.scale(10));
+                    }
+                }
+            }
+        }
+        original.call(entity, damageSource, damageAmount);
     }
 
     @Inject(method = "checkTotemDeathProtection", at = @At("HEAD"), cancellable = true)

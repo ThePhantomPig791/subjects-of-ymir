@@ -63,6 +63,7 @@ public class Titan {
     public static final UUID TITAN_HEALTH_ATTRIBUTE_UUID = UUID.fromString("09ed062b-73c1-4a2d-0803-8512514aa03e");
     public static final UUID TITAN_ARMOR_ATTRIBUTE_UUID = UUID.fromString("12abc62b-73c1-4a2d-0000-8512514aa03e");
     public static final UUID TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID = UUID.fromString("ba2e2d7f-1f67-4800-8c9e-31b9e693ecdb");
+    public static final UUID TITAN_KNOCKBACK_RESISTANCE_ATTRIBUTE_UUID = UUID.fromString("ba2e2d2a-1f23-4800-0826-31b9e691eceb");
 
     public static final ResourceLocation TITAN_SHIFT_ADVANCEMENT = SubjectsOfYmir.rsrc("titan_shift");
 
@@ -113,6 +114,9 @@ public class Titan {
         }
         if (entity.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID) == null) {
             entity.getAttribute(Attributes.ATTACK_DAMAGE).addPermanentModifier(new AttributeModifier(TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID, "titan attack damage", this.stats.extraDamage, AttributeModifier.Operation.ADDITION));
+        }
+        if (entity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getModifier(TITAN_KNOCKBACK_RESISTANCE_ATTRIBUTE_UUID) == null) {
+            entity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).addPermanentModifier(new AttributeModifier(TITAN_KNOCKBACK_RESISTANCE_ATTRIBUTE_UUID, "titan knockback resistance", 1, AttributeModifier.Operation.ADDITION));
         }
 
         entity.extinguishFire();
@@ -356,6 +360,7 @@ public class Titan {
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
         entity.getAttribute(Attributes.ARMOR).removeModifier(TITAN_ARMOR_ATTRIBUTE_UUID);
         entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(TITAN_ATTACK_DAMAGE_ATTRIBUTE_UUID);
+        entity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).removeModifier(TITAN_KNOCKBACK_RESISTANCE_ATTRIBUTE_UUID);
 
         entity.heal(20);
         entity.removeAllEffects();

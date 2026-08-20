@@ -203,7 +203,9 @@ public class ServerCombatSystem {
     }
 
     public List<Entity> getEntitiesInOdmRange() {
-        List<Entity> list = this.player.level().getEntities(this.player, this.player.getBoundingBox().move(this.player.getLookAngle().scale(2)).inflate(2, 0, 2));
+        AABB box = this.player.getBoundingBox().move(this.player.getLookAngle().scale(2.25)).inflate(1.5, 0.2, 1.5);
+        List<Entity> list = this.player.level().getEntities(this.player, box);
+        ShapeUtil.outlineBox(this.player.level(), box, new Vector3f(0.4f, 0.6f, 1));
         list.removeIf(e -> !(e instanceof LivingEntity));
         return list;
     }
