@@ -5,6 +5,8 @@ Beta
 
 
 - Grabbing system to allow Titans to pick up smaller entities
+- Damaging a Titan at its nape deals a lot of extra damage
+- Blocking now protects the nape
 - Fixed titan combat
 - Fixed armored titan charging wackiness
 - Perfect Parrying attacks to deal counter damage
