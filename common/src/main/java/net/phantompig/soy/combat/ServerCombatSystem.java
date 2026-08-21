@@ -136,7 +136,7 @@ public class ServerCombatSystem {
         }
 
         if (nextStageTimer > 0) {
-            if (++attackStage > attackType.maxAttackStage) attackStage = 1;
+            if (AbilityUtil.getEnabledInstances(this.player, SoyAbilities.NAPE_COVER.get()).isEmpty() && ++attackStage > attackType.maxAttackStage) attackStage = 1;
         } else attackStage = 1;
 
         String animationId = attackType.toString() + attackStage;

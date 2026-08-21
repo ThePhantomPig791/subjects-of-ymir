@@ -163,4 +163,9 @@ public class SubjectsOfYmir {
     public static ResourceLocation rsrc(String path) {
         return new ResourceLocation(MOD_ID, path);
     }
+
+    public static boolean isShifterOrTitanPower(ResourceLocation id) {
+        if (id.getPath().contains("/")) id = id.withPath(id.getPath().substring(id.getPath().indexOf("/") + 1));
+        return id.equals(SHIFTER_POWER) || TitanRegistry.titanExists(id);
+    }
 }

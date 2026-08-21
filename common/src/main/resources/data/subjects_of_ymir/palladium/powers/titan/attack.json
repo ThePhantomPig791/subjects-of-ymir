@@ -2,19 +2,20 @@
   "name": {
     "translate": "titan.subjects_of_ymir.attack"
   },
-  "background": "minecraft:textures/block/bone_block_side.png",
+  "background": "subjects_of_ymir:textures/gui/powers/background.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/titan.png",
   "gui_display_type": "tree",
-  "primary_color": [238, 247, 62],
-  "secondary_color": [47, 48, 12],
+  "primary_color": [3, 113, 168],
+  "secondary_color": [8, 34, 49],
   "persistent_data": true,
   "icon": {
     "type": "palladium:compound",
     "icons": [
-      "subjects_of_ymir:textures/icon/titan_face/outline.png",
+      "subjects_of_ymir:textures/icon/titan_face/outline_back.png",
       "#subjects_of_ymir:face_icon/head",
       "#subjects_of_ymir:face_icon/eyes",
-      "#subjects_of_ymir:face_icon/hair"
+      "#subjects_of_ymir:face_icon/hair",
+      "subjects_of_ymir:textures/icon/titan_face/outline_front.png"
     ]
   },
   "abilities": {
@@ -27,15 +28,7 @@
         "translate": "ability.text.subjects_of_ymir.attack.root.description"
       },
       "gui_position": [0, 0],
-      "icon": {
-        "type": "palladium:compound",
-        "icons": [
-          "subjects_of_ymir:textures/icon/titan_face/outline.png",
-          "#subjects_of_ymir:face_icon/head",
-          "#subjects_of_ymir:face_icon/eyes",
-          "#subjects_of_ymir:face_icon/hair"
-        ]
-      }
+      "icon": "subjects_of_ymir:textures/icon/titan.png"
     },
 
     "renderer": {
@@ -314,7 +307,34 @@
           "type": "palladium:held",
           "key_type": "right_click",
           "needs_empty_hand": true
-        }
+        },
+        "unlocking": [
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_enabled",
+              "ability": "nape_cover"
+            }
+          },
+          {
+            "type": "palladium:or",
+            "conditions": [
+              {
+                "type": "palladium:not",
+                "conditions": {
+                  "type": "palladium:crouching"
+                }
+              },
+              {
+                "type": "palladium:ability_integer_property",
+                "ability": "block",
+                "property": "timer",
+                "min": 1,
+                "max": 99
+              }
+            ]
+          }
+        ]
       }
     },
     "block_both_hands": {
@@ -322,11 +342,23 @@
       "hidden": true,
       "conditions": {
         "enabling": {
-          "type": "palladium:ability_integer_property",
-          "ability": "block",
-          "property": "timer",
-          "min": 1,
-          "max": 10
+          "type": "palladium:or",
+          "conditions": [
+            {
+              "type": "palladium:ability_integer_property",
+              "ability": "block",
+              "property": "timer",
+              "min": 1,
+              "max": 10
+            },
+            {
+              "type": "palladium:ability_integer_property",
+              "ability": "nape_cover",
+              "property": "timer",
+              "min": 1,
+              "max": 10
+            }
+          ]
         }
       }
     },
@@ -342,6 +374,42 @@
           "type": "palladium:ability_enabled",
           "ability": "block"
         }
+      }
+    },
+    "nape_cover": {
+      "type": "subjects_of_ymir:nape_cover",
+      "hidden": true,
+      "hidden_in_bar": true,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held",
+          "key_type": "right_click",
+          "needs_empty_hand": true
+        },
+        "unlocking": [
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_enabled",
+              "ability": "block"
+            }
+          },
+          {
+            "type": "palladium:or",
+            "conditions": [
+              {
+                "type": "palladium:crouching"
+              },
+              {
+                "type": "palladium:ability_integer_property",
+                "ability": "nape_cover",
+                "property": "timer",
+                "min": 1,
+                "max": 99
+              }
+            ]
+          }
+        ]
       }
     },
 

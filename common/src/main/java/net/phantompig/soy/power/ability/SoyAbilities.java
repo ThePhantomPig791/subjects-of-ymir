@@ -26,4 +26,5 @@ public class SoyAbilities {
     public static final RegistrySupplier<Ability> SHED = ABILITIES.register("shed", ShedAbility::new);
 
     public static final RegistrySupplier<Ability> GRABBING = ABILITIES.register("grabbing", GrabbingAbility::new);
+    public static final RegistrySupplier<Ability> NAPE_COVER = ABILITIES.register("nape_cover", NapeCoverAbility::new);
 }

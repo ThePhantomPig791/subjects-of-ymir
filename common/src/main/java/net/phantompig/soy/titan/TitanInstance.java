@@ -4,8 +4,6 @@ import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +19,6 @@ import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.compat.curiostinkets.CuriosTrinketsUtil;
 import net.threetag.palladium.power.PowerManager;
 import net.threetag.palladium.power.ability.AbilityUtil;
-import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladiumcore.util.Platform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -248,7 +245,7 @@ public class TitanInstance {
     }
 
     public NapeProtection getNapeProtectionType() {
-        if (AbilityUtil.getInstances(this.entity, SoyAbilities.BLOCK.get()).stream().map(abil -> abil.getProperty(BlockAbility.TIMER)).max(Integer::compareTo).orElse(0) > 5) {
+        if (AbilityUtil.getInstances(this.entity, SoyAbilities.NAPE_COVER.get()).stream().map(abil -> abil.getProperty(BlockAbility.TIMER)).max(Integer::compareTo).orElse(0) >= 7) {
             return NapeProtection.COVERED;
         }
         if (AbilityUtil.getInstances(this.entity, SoyAbilities.SHED.get()).stream().map(abil -> abil.getProperty(ShedAbility.VALUE)).max(Integer::compareTo).orElse(0) > 8) {

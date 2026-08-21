@@ -2,17 +2,13 @@
   "name": {
     "translate": "power.subjects_of_ymir.shifter"
   },
-  "background": "minecraft:textures/block/bone_block_top.png",
+  "background": "subjects_of_ymir:textures/gui/powers/background.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/shifter.png",
   "gui_display_type": "tree",
+  "primary_color": [3, 113, 168],
+  "secondary_color": [8, 34, 49],
   "persistent_data": true,
-  "icon": {
-    "type": "palladium:compound",
-    "icons": [
-      "subjects_of_ymir:textures/icon/titan_face/outline.png",
-      "subjects_of_ymir:textures/icon/titan_face/steve.png"
-    ]
-  },
+  "icon": "subjects_of_ymir:textures/icon/shift.png",
   "abilities": {
     "root": {
       "type": "palladium:dummy",
@@ -23,13 +19,7 @@
       "description": {
         "translate": "ability.text.subjects_of_ymir.root.description"
       },
-      "icon": {
-        "type": "palladium:compound",
-        "icons": [
-          "subjects_of_ymir:textures/icon/titan_face/outline.png",
-          "subjects_of_ymir:textures/icon/titan_face/steve.png"
-        ]
-      }
+      "icon": "subjects_of_ymir:textures/icon/titan.png"
     },
     "bite_unlock": {
       "type": "palladium:dummy",

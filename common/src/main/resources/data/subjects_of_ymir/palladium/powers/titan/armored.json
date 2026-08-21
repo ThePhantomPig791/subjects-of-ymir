@@ -2,19 +2,20 @@
   "name": {
     "translate": "titan.subjects_of_ymir.armored"
   },
-  "background": "minecraft:textures/block/bone_block_side.png",
+  "background": "subjects_of_ymir:textures/gui/powers/background.png",
   "ability_bar_texture": "subjects_of_ymir:textures/gui/ability_bars/titan.png",
   "gui_display_type": "tree",
-  "primary_color": [255, 165, 0],
-  "secondary_color": [50, 32, 0],
+  "primary_color": [3, 113, 168],
+  "secondary_color": [8, 34, 49],
   "persistent_data": true,
   "icon": {
     "type": "palladium:compound",
     "icons": [
-      "subjects_of_ymir:textures/icon/titan_face/outline.png",
+      "subjects_of_ymir:textures/icon/titan_face/outline_back.png",
       "#subjects_of_ymir:face_icon/head",
       "#subjects_of_ymir:face_icon/eyes",
-      "#subjects_of_ymir:face_icon/hair"
+      "#subjects_of_ymir:face_icon/hair",
+      "subjects_of_ymir:textures/icon/titan_face/outline_front.png"
     ]
   },
   "abilities": {
@@ -30,10 +31,10 @@
       "icon": {
         "type": "palladium:compound",
         "icons": [
-          "subjects_of_ymir:textures/icon/titan_face/outline.png",
           "#subjects_of_ymir:face_icon/head",
           "#subjects_of_ymir:face_icon/eyes",
-          "#subjects_of_ymir:face_icon/hair"
+          "#subjects_of_ymir:face_icon/hair",
+          "subjects_of_ymir:textures/icon/titan_face/outline_front.png"
         ]
       }
     },
@@ -152,7 +153,34 @@
           "type": "palladium:held",
           "key_type": "right_click",
           "needs_empty_hand": true
-        }
+        },
+        "unlocking": [
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_enabled",
+              "ability": "nape_cover"
+            }
+          },
+          {
+            "type": "palladium:or",
+            "conditions": [
+              {
+                "type": "palladium:not",
+                "conditions": {
+                  "type": "palladium:crouching"
+                }
+              },
+              {
+                "type": "palladium:ability_integer_property",
+                "ability": "block",
+                "property": "timer",
+                "min": 1,
+                "max": 99
+              }
+            ]
+          }
+        ]
       }
     },
     "block_both_hands": {
@@ -160,12 +188,60 @@
       "hidden": true,
       "conditions": {
         "enabling": {
-          "type": "palladium:ability_integer_property",
-          "ability": "block",
-          "property": "timer",
-          "min": 1,
-          "max": 10
+          "type": "palladium:or",
+          "conditions": [
+            {
+              "type": "palladium:ability_integer_property",
+              "ability": "block",
+              "property": "timer",
+              "min": 1,
+              "max": 10
+            },
+            {
+              "type": "palladium:ability_integer_property",
+              "ability": "nape_cover",
+              "property": "timer",
+              "min": 1,
+              "max": 10
+            }
+          ]
         }
+      }
+    },
+    "nape_cover": {
+      "type": "subjects_of_ymir:nape_cover",
+      "hidden": true,
+      "hidden_in_bar": true,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held",
+          "key_type": "right_click",
+          "needs_empty_hand": true
+        },
+        "unlocking": [
+          {
+            "type": "palladium:not",
+            "conditions": {
+              "type": "palladium:ability_enabled",
+              "ability": "block"
+            }
+          },
+          {
+            "type": "palladium:or",
+            "conditions": [
+              {
+                "type": "palladium:crouching"
+              },
+              {
+                "type": "palladium:ability_integer_property",
+                "ability": "nape_cover",
+                "property": "timer",
+                "min": 1,
+                "max": 99
+              }
+            ]
+          }
+        ]
       }
     },
 
@@ -174,12 +250,43 @@
       "shed_ability": "shed"
     },
 
+    "shed_dummy": {
+      "type": "palladium:dummy",
+      "icon": "subjects_of_ymir:textures/icon/shed.png",
+      "title": {
+        "translate": "ability.text.subjects_of_ymir.armored.shed.title"
+      },
+      "description": {
+        "translate": "ability.text.subjects_of_ymir.armored.shed.description"
+      },
+      "gui_position": [1, -1.75],
+      "hidden": false,
+      "hidden_in_bar": true,
+      "conditions": {
+        "unlocking": [
+          {
+            "type": "palladium:ability_unlocked",
+            "ability": "root"
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:time_as_titan",
+            "min": 6000
+          },
+          {
+            "type": "subjects_of_ymir:statistic",
+            "stat": "subjects_of_ymir:times_shifted_into_titan",
+            "min": 5
+          }
+        ]
+      }
+    },
     "attribute_speed_1": {
       "type": "palladium:attribute_modifier",
       "icon": "minecraft:textures/mob_effect/speed.png",
       "title": "+0.05 SPD",
       "hidden": false,
-      "gui_position": [1, -1.75],
+      "gui_position": [1.75, -2.25],
       "attribute": "minecraft:generic.movement_speed",
       "amount": 0.005,
       "operation": 0,
@@ -188,7 +295,7 @@
         "unlocking": [
           {
             "type": "palladium:ability_unlocked",
-            "ability": "root"
+            "ability": "shed_dummy"
           },
           {
             "type": "palladium:property_buyable",
@@ -207,7 +314,7 @@
       "icon": "minecraft:textures/mob_effect/speed.png",
       "title": "+0.05 SPD",
       "hidden": false,
-      "gui_position": [1.75, -2.25],
+      "gui_position": [1, -2.75],
       "attribute": "minecraft:generic.movement_speed",
       "amount": 0.005,
       "operation": 0,
@@ -235,7 +342,7 @@
       "icon": "minecraft:textures/mob_effect/speed.png",
       "title": "+0.05 SPD",
       "hidden": false,
-      "gui_position": [1, -2.75],
+      "gui_position": [1.5, -3.25],
       "attribute": "minecraft:generic.movement_speed",
       "amount": 0.005,
       "operation": 0,
@@ -254,37 +361,6 @@
             "description": {
               "translate": "ability.text.subjects_of_ymir.path_points"
             }
-          }
-        ]
-      }
-    },
-    "shed_dummy": {
-      "type": "palladium:dummy",
-      "icon": "subjects_of_ymir:textures/icon/shed.png",
-      "title": {
-        "translate": "ability.text.subjects_of_ymir.armored.shed.title"
-      },
-      "description": {
-        "translate": "ability.text.subjects_of_ymir.armored.shed.description"
-      },
-      "gui_position": [1.5, -3.25],
-      "hidden": false,
-      "hidden_in_bar": true,
-      "conditions": {
-        "unlocking": [
-          {
-            "type": "palladium:ability_unlocked",
-            "ability": "attribute_speed_3"
-          },
-          {
-            "type": "subjects_of_ymir:statistic",
-            "stat": "subjects_of_ymir:time_as_titan",
-            "min": 10000
-          },
-          {
-            "type": "subjects_of_ymir:statistic",
-            "stat": "subjects_of_ymir:times_shifted_into_titan",
-            "min": 13
           }
         ]
       }

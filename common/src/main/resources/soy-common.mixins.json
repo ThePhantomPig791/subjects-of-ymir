@@ -3,6 +3,7 @@
   "package": "net.phantompig.soy.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.BuyAbilityScreenMixin",
     "client.CameraMixin",
     "client.ClientLevelMixin",
     "client.GameRendererMixin",
@@ -13,7 +14,11 @@
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
     "client.PlayerRendererMixin",
-    "client.StuckInBodyLayerMixin"
+    "client.PowersScreenMixin",
+    "client.PowerTabTypeMixin",
+    "client.StuckInBodyLayerMixin",
+    "client.TreeAbilityWidgetMixin",
+    "client.TreePowerTabMixin"
   ],
   "mixins": [
     "BlockBehaviourMixin",
@@ -27,7 +32,9 @@
     "LivingEntityMixin",
     "PlayerMixin",
     "ServerPlayerMixin",
-    "VillagerMixin"
+    "VillagerMixin",
+    "client.ButtonMixin",
+    "client.PowerTabAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

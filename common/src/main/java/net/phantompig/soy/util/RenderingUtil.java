@@ -6,13 +6,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
+import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.mixin.client.PowerTabAccessor;
 import net.phantompig.soy.power.ability.GrabbingAbility;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.renderer.PalladiumRenderTypes;
+import net.threetag.palladium.client.screen.power.PowersScreen;
 import net.threetag.palladium.entity.BodyPart;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -103,12 +107,45 @@ public class RenderingUtil {
                 poseStack.mulPoseMatrix(BodyPart.getTransformationMatrix(BodyPart.RIGHT_ARM, new Vector3f(0, 0.6f, 0), player, partialTicks).normalize3x3());
 
                 var renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);
-                Vec3 offset = renderer.getRenderOffset(player, partialTicks).reverse();
+                Vec3 offset = renderer.getRenderOffset(player, partialTicks);
                 poseStack.translate(offset.x, offset.y, offset.z);
 
                 poseStack.mulPose(Direction.NORTH.getRotation());
             }
         }
         return false;
+    }
+
+    public static final ResourceLocation WIDGETS = SubjectsOfYmir.rsrc("textures/gui/powers/widgets.png");
+    public static final ResourceLocation WINDOW = SubjectsOfYmir.rsrc("textures/gui/powers/window.png");
+    public static final ResourceLocation TABS = SubjectsOfYmir.rsrc("textures/gui/powers/tabs.png");
+    public static final ResourceLocation VANILLA_WIDGETS = SubjectsOfYmir.rsrc("textures/gui/widgets.png");
+
+
+    public static boolean shouldRenderTitanGui() {
+        if (
+                Minecraft.getInstance().screen instanceof PowersScreen screen
+                        && screen.selectedTab != null
+        ) {
+            ResourceLocation id = ((PowerTabAccessor) screen.selectedTab).soy$getIPowerHolder().getPower().getId();
+            return SubjectsOfYmir.isShifterOrTitanPower(id);
+        }
+        return false;
+    }
+    public static ResourceLocation titanAtlas(ResourceLocation original, ResourceLocation titanReplacement) {
+        return shouldRenderTitanGui() ? titanReplacement : original;
+    }
+
+    public static ResourceLocation widgetsAtlas(ResourceLocation original) {
+        return titanAtlas(original, WIDGETS);
+    }
+    public static ResourceLocation windowAtlas(ResourceLocation original) {
+        return titanAtlas(original, WINDOW);
+    }
+    public static ResourceLocation tabsAtlas(ResourceLocation original) {
+        return titanAtlas(original, TABS);
+    }
+    public static ResourceLocation vanillaWidgetsAtlas(ResourceLocation original) {
+        return titanAtlas(original, VANILLA_WIDGETS);
     }
 }
