@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -92,8 +93,38 @@ public abstract class GuiMixin {
         return this.screenWidth / 8;
     }
 
-    @WrapOperation(method = {"renderHeart", "renderPlayerHealth"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIII)V"))
-    public void soy$drawDisplayIcon(GuiGraphics instance, ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight, Operation<Void> original) {
+    @WrapOperation(method = {"renderHeart", "renderPlayerHealth", "renderExperienceBar"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIII)V"))
+    public void soy$drawTitanIcons(GuiGraphics instance, ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight, Operation<Void> original) {
         original.call(instance, RenderingUtil.vanillaIconsAtlas(atlasLocation), x, y, uOffset, vOffset, uWidth, vHeight);
+    }
+
+    @WrapOperation(method = "renderExperienceBar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I", ordinal = 4))
+    public int soy$renderExperienceText(GuiGraphics instance, Font font, String text, int x, int y, int color, boolean dropShadow, Operation<Integer> original) {
+        if (RenderingUtil.isTitan()) {
+            color = 2454487;
+        }
+        return original.call(instance, font, text, x, y, color, dropShadow);
+    }
+
+    @WrapOperation(method = "renderPlayerHealth", at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/Gui;screenWidth:I", ordinal = 0))
+    public int soy$centerHearts(Gui instance, Operation<Integer> original) {
+        return original.call(instance) + (RenderingUtil.isTitan() ? 93 : 0);
+    }
+    @WrapOperation(method = "renderExperienceBar", at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/Gui;screenHeight:I", ordinal = 1))
+    public int soy$moveXpNumberDown(Gui instance, Operation<Integer> original) {
+        return original.call(instance) + (RenderingUtil.isTitan() ? 4 : 0);
+    }
+    @WrapOperation(method = "renderPlayerHealth", at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/Gui;screenWidth:I", ordinal = 1))
+    public int soy$centerBubbles(Gui instance, Operation<Integer> original) {
+        return original.call(instance) - (RenderingUtil.isTitan() ? 109 : 0);
+    }
+    @WrapOperation(method = "renderPlayerHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;getVisibleVehicleHeartRows(I)I"))
+    public int soy$moveBubblesUp(Gui instance, int vehicleHealth, Operation<Integer> original) {
+        int extra = 0;
+        if (RenderingUtil.isTitan() && Minecraft.getInstance().player != null) {
+            extra += (int) (Minecraft.getInstance().player.getMaxHealth() / 20);
+            extra += Minecraft.getInstance().player.getArmorValue() / 10;
+        }
+        return original.call(instance, vehicleHealth) + extra;
     }
 }
