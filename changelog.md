@@ -4,6 +4,7 @@ Beta
 0.1.11 -> 0.1.12
 
 
+- New skill tree and gui textures
 - New shifting alpha masks
 - Small fixes and tweaks
 

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.mixin.client.PowerTabAccessor;
+import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.GrabbingAbility;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.renderer.PalladiumRenderTypes;
@@ -116,12 +117,16 @@ public class RenderingUtil {
         return false;
     }
 
-    public static final ResourceLocation WIDGETS = SubjectsOfYmir.rsrc("textures/gui/powers/widgets.png");
+    public static final ResourceLocation WIDGETS = SubjectsOfYmir.rsrc("textures/gui/powers/widgets.png"); // power screen icons
     public static final ResourceLocation WINDOW = SubjectsOfYmir.rsrc("textures/gui/powers/window.png");
     public static final ResourceLocation TABS = SubjectsOfYmir.rsrc("textures/gui/powers/tabs.png");
-    public static final ResourceLocation VANILLA_WIDGETS = SubjectsOfYmir.rsrc("textures/gui/widgets.png");
+    public static final ResourceLocation VANILLA_WIDGETS = SubjectsOfYmir.rsrc("textures/gui/widgets.png"); // buttons
+    public static final ResourceLocation VANILLA_ICONS = SubjectsOfYmir.rsrc("textures/gui/titan_icons.png"); // health bar and stuff
 
 
+    public static boolean isTitan() {
+        return Minecraft.getInstance().player instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0;
+    }
     public static boolean shouldRenderTitanGui() {
         if (
                 Minecraft.getInstance().screen instanceof PowersScreen screen
@@ -147,5 +152,8 @@ public class RenderingUtil {
     }
     public static ResourceLocation vanillaWidgetsAtlas(ResourceLocation original) {
         return titanAtlas(original, VANILLA_WIDGETS);
+    }
+    public static ResourceLocation vanillaIconsAtlas(ResourceLocation original) {
+        return isTitan() ? VANILLA_ICONS : original;
     }
 }

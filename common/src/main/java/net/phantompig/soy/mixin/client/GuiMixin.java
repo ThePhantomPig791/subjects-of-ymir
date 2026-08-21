@@ -13,6 +13,7 @@ import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.item.OdmHandleItem;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.util.RenderingUtil;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -89,5 +90,10 @@ public abstract class GuiMixin {
     @Unique
     private int soy$getSplitHookOffset() {
         return this.screenWidth / 8;
+    }
+
+    @WrapOperation(method = {"renderHeart", "renderPlayerHealth"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIII)V"))
+    public void soy$drawDisplayIcon(GuiGraphics instance, ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight, Operation<Void> original) {
+        original.call(instance, RenderingUtil.vanillaIconsAtlas(atlasLocation), x, y, uOffset, vOffset, uWidth, vHeight);
     }
 }
