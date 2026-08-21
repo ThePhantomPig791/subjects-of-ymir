@@ -30,11 +30,14 @@ import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.network.*;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.power.ability.ShedAbility;
+import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.phantompig.soy.util.ShapeUtil;
+import net.threetag.palladium.power.ability.AbilityUtil;
 import net.threetag.palladium.util.EntityUtil;
 import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladiumcore.util.Platform;
@@ -343,7 +346,7 @@ public class ServerCombatSystem {
         var centerState = player.level().getBlockState(BlockPos.containing(center));
         if (
                 (centerState.is(SoyBlocks.HARDENING_BLOCK.get()) || hitState.is(SoyBlocks.HARDENING_BLOCK.get()))
-                && ((player instanceof HardeningSystemHolder hsh && hsh.soy$getHardeningSystem().getKnuckles() > 0))
+                && ((player instanceof HardeningSystemHolder hsh && hsh.soy$getHardeningSystem().getKnuckles() > 0) || (AbilityUtil.getInstances(this.player, SoyAbilities.SHED.get()).stream().map(abil -> abil.getProperty(ShedAbility.VALUE)).max(Integer::compareTo).orElse(0) > 5))
         ) {
             PlayerUtil.playSoundToAll(player.level(), center.x, center.y, center.z, 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 2, 1.6f + (float) (0.1 * Math.random()));
             PlayerUtil.playSoundToAll(player.level(), center.x, center.y, center.z, 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 2, 1.4f + (float) (0.1 * Math.random()));

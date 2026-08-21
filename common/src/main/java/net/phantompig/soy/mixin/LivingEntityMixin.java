@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -19,6 +20,7 @@ import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.BerserkAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.sound.SoySounds;
+import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import net.threetag.palladium.util.PlayerUtil;
@@ -51,45 +53,53 @@ public abstract class LivingEntityMixin extends Entity {
 
     @WrapOperation(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"))
     public void soy$hurtNape(LivingEntity entity, DamageSource damageSource, float damageAmount, Operation<Void> original) {
-        if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0 && !ext.getTitanInstance().isNapeProtected()) {
-            Vec3 sourcePos = damageSource.getSourcePosition();
-            if (sourcePos != null) {
-                Vec3 napePos = entity.position().add(0, entity.getBbHeight() * 0.7, 0);
-                Vec3 vecToSource = sourcePos.subtract(napePos).normalize();
-                if (vecToSource.multiply(1, 12, 1).lengthSqr() < 28) {
-                    vecToSource = vecToSource.normalize();
-                    Vec3 bodyFacing = this.calculateViewVector(0, entity.getYRot());
-                    if (bodyFacing.dot(vecToSource) < -0.2) {
-                        damageAmount += 30;
-                        if (damageSource.getDirectEntity() != null) {
-                            damageAmount += (float) damageSource.getDirectEntity().getDeltaMovement().length();
+        if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
+            TitanInstance.NapeProtection napeProtection = ext.getTitanInstance().getNapeProtectionType();
+            if (napeProtection == TitanInstance.NapeProtection.ARMORED && damageAmount > 6) {
+                PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getEyeY(), entity.getZ(), 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 1.6f + (float) (0.1 * Math.random()));
+                PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getEyeY(), entity.getZ(), 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 0.6f, 1.4f + (float) (0.1 * Math.random()));
+                PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getEyeY(), entity.getZ(), 32, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 0.6f, 1.2f + (float) (0.1 * Math.random()));
+            }
+            if (napeProtection == TitanInstance.NapeProtection.NONE) {
+                Vec3 sourcePos = damageSource.getSourcePosition();
+                if (sourcePos != null) {
+                    Vec3 napePos = entity.position().add(0, entity.getBbHeight() * 0.7, 0);
+                    Vec3 vecToSource = sourcePos.subtract(napePos).normalize();
+                    if (vecToSource.multiply(1, 12, 1).lengthSqr() < 28) {
+                        vecToSource = vecToSource.normalize();
+                        Vec3 bodyFacing = this.calculateViewVector(0, entity.getYRot());
+                        if (bodyFacing.dot(vecToSource) < -0.2) {
+                            damageAmount += 30;
+                            if (damageSource.getDirectEntity() != null) {
+                                damageAmount += (float) damageSource.getDirectEntity().getDeltaMovement().length();
+                            }
+                            PlayerUtil.playSoundToAll(
+                                    entity.level(),
+                                    napePos.x, napePos.y, napePos.z,
+                                    32,
+                                    SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
+                                    2, 1.6f + (float) (0.1 * Math.random())
+                            );
+                            PlayerUtil.playSoundToAll(
+                                    entity.level(),
+                                    napePos.x, napePos.y, napePos.z,
+                                    32,
+                                    SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
+                                    2, 0.8f + (float) (0.1 * Math.random())
+                            );
+                            PlayerUtil.spawnParticleForAll(
+                                    entity.level(), 32,
+                                    new DustParticleOptions(new Vector3f(0.6f, 0.05f, 0), 4),
+                                    false,
+                                    napePos.x, napePos.y, napePos.z,
+                                    1.5f, 0.4f, 1.5f,
+                                    0, 30
+                            );
                         }
-                        PlayerUtil.playSoundToAll(
-                                entity.level(),
-                                napePos.x, napePos.y, napePos.z,
-                                32,
-                                SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
-                                2, 1.6f + (float) (0.1 * Math.random())
-                        );
-                        PlayerUtil.playSoundToAll(
-                                entity.level(),
-                                napePos.x, napePos.y, napePos.z,
-                                32,
-                                SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
-                                2, 0.8f + (float) (0.1 * Math.random())
-                        );
-                        PlayerUtil.spawnParticleForAll(
-                                entity.level(), 32,
-                                new DustParticleOptions(new Vector3f(0.6f, 0.05f, 0), 4),
-                                false,
-                                napePos.x, napePos.y, napePos.z,
-                                1.5f, 0.4f, 1.5f,
-                                0, 30
-                        );
-                    }
-                    if (!Platform.isProduction()) {
-                        ShapeUtil.highlightVector(entity.level(), napePos, bodyFacing.scale(10));
-                        ShapeUtil.highlightVector(entity.level(), napePos, vecToSource.scale(10));
+                        if (!Platform.isProduction()) {
+                            ShapeUtil.highlightVector(entity.level(), napePos, bodyFacing.scale(10));
+                            ShapeUtil.highlightVector(entity.level(), napePos, vecToSource.scale(10));
+                        }
                     }
                 }
             }

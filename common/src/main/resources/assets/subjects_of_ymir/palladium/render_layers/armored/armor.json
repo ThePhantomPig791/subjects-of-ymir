@@ -18,7 +18,7 @@
         "type": "subjects_of_ymir:titan_progress",
         "subtract": 30,
         "min": 0,
-        "max": 9
+        "max": 20
       },
       "SHED": {
         "type": "palladium:ability_integer_property",

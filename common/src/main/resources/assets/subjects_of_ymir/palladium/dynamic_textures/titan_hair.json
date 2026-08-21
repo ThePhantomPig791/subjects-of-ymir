@@ -14,7 +14,7 @@
       "type": "subjects_of_ymir:titan_progress",
       "subtract": 28,
       "min": 0,
-      "max": 9
+      "max": 20
     },
     "DECAY": {
       "type": "subjects_of_ymir:titan_decay",

@@ -553,7 +553,7 @@ public class Titan {
         builder.variants = GsonHelper.isArrayNode(json, "variants") ? GsonHelper.getAsJsonArray(json, "variants", new JsonArray()).asList().stream().map(JsonElement::getAsString).toList() : List.of("default");
         builder.resolution = GsonHelper.getAsInt(json, "resolution", 128);
         builder.scale = GsonHelper.getAsFloat(json, "scale", 1);
-        builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 40);
+        builder.maxProgress = GsonHelper.getAsInt(json, "max_progress", 50);
         builder.maxCharge = GsonHelper.getAsInt(json, "max_charge", 60);
         builder.baseEyeColor = GsonUtil.getAsColor(json, "base_eye_color", null);
         builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));

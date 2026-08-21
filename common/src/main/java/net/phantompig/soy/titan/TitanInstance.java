@@ -247,17 +247,20 @@ public class TitanInstance {
         return false;
     }
 
-    public boolean isNapeProtected() {
+    public NapeProtection getNapeProtectionType() {
         if (AbilityUtil.getInstances(this.entity, SoyAbilities.BLOCK.get()).stream().map(abil -> abil.getProperty(BlockAbility.TIMER)).max(Integer::compareTo).orElse(0) > 5) {
-            return true;
+            return NapeProtection.COVERED;
         }
         if (AbilityUtil.getInstances(this.entity, SoyAbilities.SHED.get()).stream().map(abil -> abil.getProperty(ShedAbility.VALUE)).max(Integer::compareTo).orElse(0) > 8) {
-            PlayerUtil.playSoundToAll(this.entity.level(), this.entity.getX(), this.entity.getEyeY(), this.entity.getZ(), 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 1.6f + (float) (0.1 * Math.random()));
-            PlayerUtil.playSoundToAll(this.entity.level(), this.entity.getX(), this.entity.getEyeY(), this.entity.getZ(), 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 0.6f, 1.4f + (float) (0.1 * Math.random()));
-            PlayerUtil.playSoundToAll(this.entity.level(), this.entity.getX(), this.entity.getEyeY(), this.entity.getZ(), 32, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 0.6f, 1.2f + (float) (0.1 * Math.random()));
-            return true;
+            return NapeProtection.ARMORED;
         }
-        return false;
+        return NapeProtection.NONE;
+    }
+
+    public enum NapeProtection {
+        NONE,
+        COVERED,
+        ARMORED
     }
 
 
