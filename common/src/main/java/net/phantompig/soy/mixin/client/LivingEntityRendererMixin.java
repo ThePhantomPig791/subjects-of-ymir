@@ -36,6 +36,7 @@ public abstract class LivingEntityRendererMixin {
         if (RenderingUtil.transformPosestackForGrabbedEntity(entity, poseStack, partialTicks) && packedLight != 15728641) {
             // the packed light is being used as a "marker".
             // if it's specifically 15728641, we know this is being rendered from ItemInHandRendererMixin and we shouldn't cancel the rendering. god this took me so long to figure out
+            // i should note. this is so scuffed and there *must* be a better way
             ci.cancel();
             poseStack.popPose();
         }

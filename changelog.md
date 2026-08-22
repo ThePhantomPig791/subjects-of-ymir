@@ -6,9 +6,9 @@ Beta
 
 - New skill tree and gui textures
 - New shifting alpha masks
+- FINALLY fixed odm hooks not properly attaching to entities
 - Small fixes and tweaks
 
 TODO:
-- ODM hooks not attaching to entities properly
 - Investigate why blade handles stop swinging randomly
 - Titan endurance (maybe? still pondering)

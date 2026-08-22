@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -33,7 +34,6 @@ import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
 import net.threetag.palladium.util.PlayerUtil;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -41,8 +41,8 @@ import java.util.UUID;
 public class OdmNodeEntity extends AbstractHurtingProjectile {
     private static final EntityDataAccessor<Boolean> DATA_RIGHT = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_STUCK_ENTITY_ID = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Vector3f> DATA_STUCK_OFFSET = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.VECTOR3);
     private static final EntityDataAccessor<Boolean> DATA_STUCK = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Float> DATA_OFFSET = SynchedEntityData.defineId(OdmNodeEntity.class, EntityDataSerializers.FLOAT);
 
     public UUID stuckEntityUuid;
     public int stuckTicks;
@@ -87,27 +87,28 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
             }
 
             // check still stuck
+            boolean newStuck = false;
+            // to block
             if (!this.level().isClientSide()) {
-                boolean newStuck = false;
                 for (VoxelShape shape : level().getBlockCollisions(this, this.getBoundingBox().inflate(1))) {
                     if (!shape.isEmpty()) {
                         newStuck = true;
                         break;
                     }
                 }
-                this.setStuck(newStuck);
             }
-
-            // stay stuck to entity
-            this.getStuckEntity().ifPresent(e -> {
-                if (e.isRemoved()) {
+            // to entity
+            for (Entity e : this.getStuckEntity().stream().toList()) {
+                if (e.isRemoved() || (e instanceof LivingEntity l && l.isDeadOrDying())) {
                     this.setStuckEntity(null);
-                    this.setStuck(false);
+                    break;
                 } else {
-                    this.setPos(e.position().add(this.getStuckOffset()));
-                    this.setStuck(true);
+                    this.setPos(e.getEyePosition().add(0, this.getOffset(), 0));
+                    newStuck = true;
+                    break;
                 }
-            });
+            }
+            this.setStuck(newStuck);
 
             stuckTicks++;
         } else {
@@ -180,17 +181,26 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
 
         this.setStuck(true);
         this.setDeltaMovement(0, 0, 0);
-        if (result.getType() == HitResult.Type.BLOCK) this.setPos(result.getLocation());
+        if (result.getType() == HitResult.Type.BLOCK) {
+            this.setPos(result.getLocation());
+            this.setOffset(0);
+        }
         super.onHit(result);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
+
+        Entity hitEntity = result.getEntity();
+        float offset = (float) (this.getY() - hitEntity.getEyeY());
+        offset = Mth.clamp(offset, -hitEntity.getEyeHeight(), hitEntity.getBbHeight() - hitEntity.getEyeHeight());
+        this.setOffset(offset);
+
         if (this.level().isClientSide()) return;
-        if (result.getEntity().equals(this.getOwner())) return;
-        if (this.getStuckEntity().isPresent() && this.getStuckEntity().get().equals(result.getEntity())) return;
-        this.setStuckEntity(result.getEntity());
+        if (hitEntity.equals(this.getOwner())) return;
+        if (this.getStuckEntity().isPresent() && this.getStuckEntity().get().equals(hitEntity)) return;
+        this.setStuckEntity(hitEntity);
     }
 
     @Override
@@ -199,7 +209,7 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     }
 
     public float getGravity() {
-        return 0.04f;
+        return this.getStuck() ? 0 : 0.04f;
     }
 
     @Override
@@ -222,15 +232,11 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     public void setStuckEntity(@Nullable Entity entity) {
         if (entity == null) {
             this.entityData.set(DATA_STUCK_ENTITY_ID, -1);
-            this.entityData.set(DATA_STUCK_OFFSET, Vec3.ZERO.toVector3f());
             this.setStuck(false);
             this.stuckEntityUuid = null;
             return;
         }
         this.entityData.set(DATA_STUCK_ENTITY_ID, entity.getId());
-        Vec3 offset = this.position().subtract(entity.position());
-        offset = offset.subtract(offset.normalize().scale(entity.getBoundingBox().distanceToSqr(this.position()))).scale(0.9);
-        this.entityData.set(DATA_STUCK_OFFSET, offset.toVector3f());
         this.setStuck(true);
         this.stuckEntityUuid = entity.getUUID();
     }
@@ -256,8 +262,11 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
         this.entityData.set(DATA_STUCK, stuck);
     }
 
-    public Vec3 getStuckOffset() {
-        return new Vec3(this.entityData.get(DATA_STUCK_OFFSET));
+    public float getOffset() {
+        return this.entityData.get(DATA_OFFSET);
+    }
+    public void setOffset(float offset) {
+        this.entityData.set(DATA_OFFSET, offset);
     }
 
     public Vec3 getOwnerPosition(float partialTick) {
@@ -271,20 +280,24 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     protected void defineSynchedData() {
         this.entityData.define(DATA_RIGHT, false);
         this.entityData.define(DATA_STUCK_ENTITY_ID, -1);
-        this.entityData.define(DATA_STUCK_OFFSET, Vec3.ZERO.toVector3f());
         this.entityData.define(DATA_STUCK, false);
+        this.entityData.define(DATA_OFFSET, 0f);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains("StuckEntityUuid")) this.stuckEntityUuid = compound.getUUID("StuckEntityUuid");
+        this.setRight(compound.getBoolean("RightHanded"));
+        this.setOffset(compound.getFloat("OffsetY"));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         if (this.stuckEntityUuid != null) compound.putUUID("StuckEntityUuid", this.stuckEntityUuid);
+        compound.putBoolean("RightHanded", this.getRight());
+        compound.putFloat("OffsetY", this.getOffset());
     }
 
     public Vec3 getRightOrLeftOffset(float yRot, boolean rightHand) {

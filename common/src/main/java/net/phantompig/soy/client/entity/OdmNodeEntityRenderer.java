@@ -31,7 +31,7 @@ public class OdmNodeEntityRenderer extends EntityRenderer<OdmNodeEntity> {
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
         if (entity.getOwner() != null) {
             AtomicReference<Vec3> startPos = new AtomicReference<>();
-            entity.getStuckEntity().ifPresentOrElse(e -> startPos.set(e.getPosition(partialTick).add(entity.getStuckOffset())), () -> startPos.set(entity.getPosition(partialTick)));
+            entity.getStuckEntity().ifPresentOrElse(e -> startPos.set(e.getEyePosition(partialTick).add(0, entity.getOffset(), 0)), () -> startPos.set(entity.getPosition(partialTick)));
             Vec3 endPos = entity.getOwnerPosition(partialTick);
             poseStack.pushPose();
             RenderUtil.faceVec(poseStack, startPos.get(), endPos);
