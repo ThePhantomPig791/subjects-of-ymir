@@ -19,6 +19,7 @@ import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.client.renderer.PalladiumRenderTypes;
 import net.threetag.palladium.client.screen.power.PowersScreen;
 import net.threetag.palladium.entity.BodyPart;
+import net.threetag.palladiumcore.util.Platform;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -105,6 +106,9 @@ public class RenderingUtil {
                 Vec3 delta = grabber.getPosition(partialTicks).subtract(entity.getPosition(partialTicks));
                 poseStack.translate(delta.x, delta.y, delta.z);
 
+                if (Platform.isForge() && grabber.isCrouching()) {
+                    poseStack.translate(0, 6, 0);
+                }
                 poseStack.mulPoseMatrix(BodyPart.getTransformationMatrix(BodyPart.RIGHT_ARM, new Vector3f(0, 0.6f, 0), player, partialTicks).normalize3x3());
 
                 var renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);

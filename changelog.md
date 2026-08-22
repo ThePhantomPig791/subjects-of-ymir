@@ -9,6 +9,6 @@ Beta
 - Small fixes and tweaks
 
 TODO:
+- ODM hooks not attaching to entities properly
 - Investigate why blade handles stop swinging randomly
 - Titan endurance (maybe? still pondering)
-- ODM hooks not attaching to entities properly
