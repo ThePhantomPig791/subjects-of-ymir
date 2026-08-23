@@ -32,7 +32,7 @@ public class SubjectsOfYmirFabric implements ModInitializer {
         registerPlacedFeatures();
 
         ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.STYLING_PHASE, (entity, message) -> {
-            if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0 && ext.getTitanInstance().titan != null && !ext.getTitanInstance().titan.canSpeak) {
+            if (entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0 && ext.soy$getTitanInstance().titan != null && !ext.soy$getTitanInstance().titan.canSpeak) {
                 return CompletableFuture.completedFuture(ChatUtil.gibberishify(message));
             }
             return CompletableFuture.completedFuture(message);

@@ -43,7 +43,7 @@ public class HardeningKnucklesAbility extends Ability {
                         0.7f,
                         (float) (0.1 * Math.random() + 1)
                 );
-                ext.getTitanInstance().exhaust(1);
+                ext.soy$getTitanInstance().exhaust(1);
             }
             entry.setUniqueProperty(TIMER, entry.getProperty(TIMER) + 1);
         }
@@ -51,7 +51,7 @@ public class HardeningKnucklesAbility extends Ability {
 
     @Override
     public void lastTick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (!enabled && entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() == 0) {
+        if (!enabled && entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() == 0) {
             entry.setUniqueProperty(TIMER, 0);
         }
     }

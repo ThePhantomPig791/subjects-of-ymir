@@ -25,7 +25,7 @@ public abstract class IronGolemMixin extends AbstractGolem {
             if (this.targetSelector == null) return;
             this.targetSelector.getAvailableGoals().removeIf(goal -> goal.getGoal() instanceof TargetTitanGoal);
             this.targetSelector.addGoal(2, new TargetTitanGoal(this, LivingEntity.class, 5, false, false, (livingEntity) ->
-                livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0
+                livingEntity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0
             ));
         }
     }

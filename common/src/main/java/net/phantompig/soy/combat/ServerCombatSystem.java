@@ -73,12 +73,12 @@ public class ServerCombatSystem {
         float sum = 0;
         var effect = this.player.getEffect(MobEffects.DAMAGE_BOOST);
         if (effect != null) sum += 0.5f * effect.getAmplifier();
-        sum += extension.getTitanInstance().strengthIncreases.values().stream().reduce(Float::sum).orElse(0f);
+        sum += extension.soy$getTitanInstance().strengthIncreases.values().stream().reduce(Float::sum).orElse(0f);
         return sum;
     }
     private int getMaxAttackTime() {
-        if (extension.getTitanInstance().titan == null) return 0;
-        return extension.getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease();
+        if (extension.soy$getTitanInstance().titan == null) return 0;
+        return extension.soy$getTitanInstance().titan.stats.attackSpeed + getHardening().getAttackTimeIncrease();
     }
 
     public enum AttackType {
@@ -100,7 +100,7 @@ public class ServerCombatSystem {
     public void attack() {
         setSwingingFists(false);
         setSwingingLegs(false);
-        if (extension.getTitanInstance().titan == null) return;
+        if (extension.soy$getTitanInstance().titan == null) return;
         final int maxAttackTime = getMaxAttackTime();
         if (attackTimer >= maxAttackTime * 12 / 20f || cooldown > 0 || extension == null || this.player.isSpectator()) {
             attackStage = 1;
@@ -216,8 +216,8 @@ public class ServerCombatSystem {
     public void tick() {
         tickOdmHoldAttack();
 
-        if (extension.getTitanInstance().titan == null) return;
-        if (extension.getTitanInstance().getProgress() == 0) {
+        if (extension.soy$getTitanInstance().titan == null) return;
+        if (extension.soy$getTitanInstance().getProgress() == 0) {
             attackTimer = nextStageTimer = cooldown = 0;
         } else {
             if (attackTimer > 0) {
@@ -232,7 +232,7 @@ public class ServerCombatSystem {
     }
 
     public void attackEffect() {
-        if (extension == null || extension.getTitanInstance().titan == null) {
+        if (extension == null || extension.soy$getTitanInstance().titan == null) {
             return;
         }
 
@@ -294,7 +294,7 @@ public class ServerCombatSystem {
     }
 
     public void exhaust(int stamina) {
-        extension.getTitanInstance().exhaust(stamina);
+        extension.soy$getTitanInstance().exhaust(stamina);
     }
 
     public void sendUpdateAttackTicker(int ticks) {

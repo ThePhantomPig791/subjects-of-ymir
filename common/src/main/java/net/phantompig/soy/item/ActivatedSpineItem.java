@@ -35,7 +35,7 @@ public class ActivatedSpineItem extends Item {
 
         TitanInstance.sequentialRandomizeFor(livingEntity);
         if (livingEntity instanceof SoyPlayerExtension ext) {
-            ext.getTitanInstance().setCharge(520);
+            ext.soy$getTitanInstance().setCharge(520);
         }
         livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 50, 0, true, false, false));
         livingEntity.addDeltaMovement(new Vec3(0, 2, 0));
@@ -54,7 +54,7 @@ public class ActivatedSpineItem extends Item {
         if (
                 !level.isClientSide()
                 && player instanceof SoyPlayerExtension ext
-                && ext.getTitanInstance().titan == null
+                && ext.soy$getTitanInstance().titan == null
         ) {
             player.startUsingItem(usedHand);
             return InteractionResultHolder.consume(itemStack);

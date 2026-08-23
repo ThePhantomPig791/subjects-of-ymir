@@ -15,10 +15,10 @@ public class TitanPowerProvider extends PowerProvider {
     @Override
     public void providePowers(LivingEntity entity, IPowerHandler handler, PowerCollector collector) {
         if (entity instanceof SoyPlayerExtension playerExt) {
-            if (playerExt.getTitanInstance().titan == null) return;
-            ResourceLocation id = playerExt.getTitanInstance().titan.id;
+            if (playerExt.soy$getTitanInstance().titan == null) return;
+            ResourceLocation id = playerExt.soy$getTitanInstance().titan.id;
             PowerManager inst = PowerManager.getInstance(null);
-            Power power = inst.getPower(playerExt.getTitanInstance().titan.powerPath);
+            Power power = inst.getPower(playerExt.soy$getTitanInstance().titan.powerPath);
             if (power == null) {
                 SubjectsOfYmir.LOGGER.error("Unable to find power for titan {}", id);
                 return;
@@ -34,7 +34,7 @@ public class TitanPowerProvider extends PowerProvider {
         @Override
         public boolean stillValid(LivingEntity entity, Power power) {
             if (entity instanceof SoyPlayerExtension playerExt) {
-                return playerExt.getTitanInstance().is(this.id);
+                return playerExt.soy$getTitanInstance().is(this.id);
             }
             return false;
         }

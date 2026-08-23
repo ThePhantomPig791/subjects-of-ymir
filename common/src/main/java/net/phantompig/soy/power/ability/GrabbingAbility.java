@@ -70,8 +70,8 @@ public class GrabbingAbility extends Ability {
     public void raycastGrab(LivingEntity entity) {
         if (!SoyConfig.Server.allowGrabbing()) return;
         HitResult hit = EntityUtil.rayTraceWithEntities(entity, getGrabReach(entity), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE);
-        if (hit instanceof EntityHitResult eHit && eHit.getEntity() instanceof LivingEntity living && living.getBbHeight() <= entity.getBbHeight() * 0.25) {
-            startGrabbing(entity, living);
+        if (hit instanceof EntityHitResult eHit && eHit.getEntity() instanceof LivingEntity livingTarget && canGrab(entity, livingTarget)) {
+            startGrabbing(entity, livingTarget);
         }
     }
 
@@ -103,9 +103,12 @@ public class GrabbingAbility extends Ability {
 
     @Override
     public void lastTick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        stopGrabbing(entity, true);
+        stopGrabbing(entity, entity.isCrouching());
     }
 
+    public static boolean canGrab(LivingEntity grabber, LivingEntity held) {
+        return held.getBbHeight() <= grabber.getBbHeight() * 0.25;
+    }
     public static void startGrabbing(LivingEntity grabber, LivingEntity grabbed) {
         if (grabber.level() instanceof ServerLevel) {
             SoyProperties.GRABBED.set(grabbed, true);
@@ -115,7 +118,7 @@ public class GrabbingAbility extends Ability {
     public static void stopGrabbing(LivingEntity entity) {
         stopGrabbing(entity, false);
     }
-    public static void stopGrabbing(LivingEntity entity, boolean mayThrow) {
+    public static void stopGrabbing(LivingEntity entity, boolean shouldThrow) {
         UUID grabbing = getGrabbing(entity);
         if (grabbing != null && entity.level() instanceof ServerLevel level) {
             if (level.getEntity(grabbing) instanceof LivingEntity grabbedEntity) {
@@ -124,9 +127,9 @@ public class GrabbingAbility extends Ability {
                 offset = new Vec3(-offset.z, 0, offset.x).normalize().scale(entity.getBbWidth()).add(0, entity.getBbHeight() * 0.5, 0);
                 grabbedEntity.setPos(entity.position().add(offset));
 
-                if (mayThrow && entity.isCrouching() && entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
+                if (shouldThrow && entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null) {
                     entity.swing(entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, true);
-                    grabbedEntity.setDeltaMovement(entity.getLookAngle().scale(1 + Math.pow(ext.getTitanInstance().titan.stats.extraDamage, 0.75)).add(entity.getDeltaMovement()));
+                    grabbedEntity.setDeltaMovement(entity.getLookAngle().scale(1 + Math.pow(ext.soy$getTitanInstance().titan.stats.extraDamage, 0.75)).add(entity.getDeltaMovement()));
                     if (grabbedEntity instanceof ServerPlayer p) {
                         p.connection.send(new ClientboundSetEntityMotionPacket(p));
                     }
@@ -153,6 +156,17 @@ public class GrabbingAbility extends Ability {
         String p = SoyProperties.GRABBING.get(entity);
         if (p.isEmpty()) return Util.NIL_UUID;
         return UUID.fromString(p);
+    }
+
+    public static LivingEntity getGrabber(LivingEntity held) {
+        LivingEntity grabber = null;
+        for (Entity e : held.level().getEntities(held, held.getBoundingBox().inflate(40))) {
+            if (e instanceof LivingEntity living && GrabbingAbility.getGrabbing(living).equals(held.getUUID())) {
+                grabber = living;
+                break;
+            }
+        }
+        return grabber;
     }
 
     public static boolean isGrabbingSomething(LivingEntity entity) {

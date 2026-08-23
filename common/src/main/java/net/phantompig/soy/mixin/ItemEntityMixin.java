@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ItemEntityMixin implements TraceableEntity {
     @Inject(method = "playerTouch", at = @At("HEAD"), cancellable = true)
     public void soy$playerTouch(Player player, CallbackInfo ci) {
-        if (player instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) ci.cancel();
+        if (player instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0) ci.cancel();
     }
 }

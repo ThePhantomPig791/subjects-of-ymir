@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface SoyPlayerExtension {
     @NotNull
-    TitanInstance getTitanInstance();
+    TitanInstance soy$getTitanInstance();
 
-    void setTitanInstance(TitanInstance instance);
+    void soy$setTitanInstance(TitanInstance instance);
 }

@@ -61,7 +61,7 @@ public class SprintChargeAbility extends Ability {
                         int shed = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE);
 
                         if (shed < 13) {
-                            ext.getTitanInstance().exhaustSafe(50 * (13 - shed));
+                            ext.soy$getTitanInstance().exhaustSafe(50 * (13 - shed));
                         }
                     }
                 }
@@ -74,8 +74,8 @@ public class SprintChargeAbility extends Ability {
                     entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight() / 4, entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
                     entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
                     if (entity instanceof SoyPlayerExtension ext) {
-                        ext.getTitanInstance().exhaust(100); // in addition to the 50 from earlier
-                        ext.getTitanInstance().regainStaminaCooldown = 30;
+                        ext.soy$getTitanInstance().exhaust(100); // in addition to the 50 from earlier
+                        ext.soy$getTitanInstance().regainStaminaCooldown = 30;
                     }
                     PlayerUtil.spawnParticleForAll(
                             entity.level(),
@@ -112,7 +112,7 @@ public class SprintChargeAbility extends Ability {
                         }
                     });
                     if (entity instanceof SoyPlayerExtension ext) {
-                        ext.getTitanInstance().exhaust(1);
+                        ext.soy$getTitanInstance().exhaust(1);
                     }
                 }
             }

@@ -14,9 +14,9 @@ public class IsShiftingCondition extends Condition {
     @Override
     public boolean active(DataContext context) {
         Entity entity = context.getEntity();
-        if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null) return false;
+        if (!(entity instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().titan == null) return false;
         int pro = SoyProperties.PROGRESS.get(entity);
-        return pro > 0 && pro < ext.getTitanInstance().titan.maxProgress;
+        return pro > 0 && pro < ext.soy$getTitanInstance().titan.maxProgress;
     }
 
     @Override

@@ -41,7 +41,7 @@ public class TitanMemoryManager {
     }
 
     public void onChat(Player player, String raw) {
-        if (Math.random() < 0.01 || (Math.random() < 0.2 && player instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0)) {
+        if (Math.random() < 0.01 || (Math.random() < 0.2 && player instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0)) {
             this.currentHolderMessages.add("<" + player.getDisplayName().getString() + "> " + raw);
             PlayerUtil.playSound(player, player.getX(), player.getEyeY(), player.getZ(), SoySounds.HEARTBEAT.get(), SoundSource.PLAYERS);
         }

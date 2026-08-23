@@ -24,8 +24,8 @@ public class ShiftProgressCondition extends Condition {
         if (entity == null) return false;
 
         int pro = SoyProperties.PROGRESS.get(entity);
-        if (max == -1 && entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
-            return pro >= min && pro <= ext.getTitanInstance().titan.maxProgress;
+        if (max == -1 && entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null) {
+            return pro >= min && pro <= ext.soy$getTitanInstance().titan.maxProgress;
         }
         return pro >= min && pro <= max;
     }

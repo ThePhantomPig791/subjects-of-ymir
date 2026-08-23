@@ -334,12 +334,12 @@ public class TitanInstance {
     public static void setFor(LivingEntity entity, Tuple<Titan, String> titan) {
         if (!(entity instanceof SoyPlayerExtension playerExt)) return;
         TitanInstance newTitan = new TitanInstance(entity, titan.getA(), titan.getB());
-        playerExt.setTitanInstance(newTitan);
-        playerExt.getTitanInstance().randomizeEyeColor();
-        playerExt.getTitanInstance().setProgress(0);
-        playerExt.getTitanInstance().setCharge(0);
-        playerExt.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
-        playerExt.getTitanInstance().setMarksTimer(0);
+        playerExt.soy$setTitanInstance(newTitan);
+        playerExt.soy$getTitanInstance().randomizeEyeColor();
+        playerExt.soy$getTitanInstance().setProgress(0);
+        playerExt.soy$getTitanInstance().setCharge(0);
+        playerExt.soy$getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
+        playerExt.soy$getTitanInstance().setMarksTimer(0);
         SoyProperties.STAMINA.set(entity, titan.getA().defaultMaxStamina);
         SoyProperties.MAX_STAMINA.set(entity, titan.getA().defaultMaxStamina);
     }
@@ -347,11 +347,11 @@ public class TitanInstance {
     // removes stamina and all properties
     public static void clearTitanFor(LivingEntity entity) {
         if (!(entity instanceof SoyPlayerExtension playerExt)) return;
-        playerExt.setTitanInstance(new TitanInstance(entity));
-        playerExt.getTitanInstance().setStamina(0);
-        playerExt.getTitanInstance().setMaxStamina(0);
-        playerExt.getTitanInstance().setMarksTimer(0);
-        playerExt.getTitanInstance().ticksShifted = 0;
+        playerExt.soy$setTitanInstance(new TitanInstance(entity));
+        playerExt.soy$getTitanInstance().setStamina(0);
+        playerExt.soy$getTitanInstance().setMaxStamina(0);
+        playerExt.soy$getTitanInstance().setMarksTimer(0);
+        playerExt.soy$getTitanInstance().ticksShifted = 0;
         SoyProperties.PATH_POINTS.set(entity, 0);
     }
 
@@ -379,7 +379,7 @@ public class TitanInstance {
         var tag = SpineItem.getTitanInstanceTag(stack);
         if (tag.isEmpty()) return;
         var inst = fromTag(forEntity, tag);
-        ext.setTitanInstance(inst);
+        ext.soy$setTitanInstance(inst);
         int[] rgb = tag.getIntArray("EyeColor");
         inst.setEyeColor(new Color(rgb[0], rgb[1], rgb[2]));
         inst.setMaxStamina(inst.titan.defaultMaxStamina);

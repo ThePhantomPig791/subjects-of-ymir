@@ -20,7 +20,7 @@ public abstract class LivingEntityRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/WalkAnimationState;position(F)F")
     )
     public float soy$getWalkAnimationPosition(float original, @Local(argsOnly = true) LivingEntity entity) {
-        if (entity instanceof SoyPlayerExtension extension && extension.getTitanInstance().getProgress() > 0) {
+        if (entity instanceof SoyPlayerExtension extension && extension.soy$getTitanInstance().getProgress() > 0) {
             return original * 0.6f;
         }
         return original;

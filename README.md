@@ -19,7 +19,7 @@ Textures and Models: Mostly sugar04k (discord) (anything that looks good and isn
 - Transformation Sound: https://www.youtube.com/watch?v=LOEVrye7QDA
 - The Electricity Sound That Comes Before The Transformation: https://www.youtube.com/watch?v=9X45Wu3ccMg
 - ODM Click Sound: https://www.youtube.com/watch?v=dBJUIYv52Xw
-- ODM Hook Sounds: https://www.youtube.com/watch?v=__53poQEaPo and https://www.youtube.com/watch?v=RuGmLsFmKWI
+- ODM Hook Sounds: https://www.youtube.com/watch?v=__53poQEaPo (@lawlight.k003) and https://www.youtube.com/watch?v=RuGmLsFmKWI (Mike5FX)
 - Flare Sounds: https://www.youtube.com/watch?v=Q_vggboHDwE
 - Blade Slash Sound: https://pixabay.com/sound-effects/sword-slash-476148/
 - Titan Footsteps Sound: https://pixabay.com/sound-effects/film-special-effects-heavy-walking-footsteps-352771/

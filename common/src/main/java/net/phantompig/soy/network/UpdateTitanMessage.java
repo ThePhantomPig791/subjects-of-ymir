@@ -38,6 +38,6 @@ public class UpdateTitanMessage extends MessageS2C {
 
     public void handleClient(MessageContext messageContext) {
         if (!(Minecraft.getInstance().player instanceof SoyPlayerExtension ext)) return;
-        ext.getTitanInstance().titan = this.titan;
+        ext.soy$getTitanInstance().titan = this.titan;
     }
 }

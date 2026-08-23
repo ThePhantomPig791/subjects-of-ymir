@@ -46,15 +46,15 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
     public void soy$isPushable(CallbackInfoReturnable<Boolean> cir) {
-        if ((Object) this instanceof SoyPlayerExtension extension && extension.getTitanInstance().getProgress() > 0) {
+        if ((Object) this instanceof SoyPlayerExtension extension && extension.soy$getTitanInstance().getProgress() > 0) {
             cir.setReturnValue(false);
         }
     }
 
     @WrapOperation(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"))
     public void soy$hurtNape(LivingEntity entity, DamageSource damageSource, float damageAmount, Operation<Void> original) {
-        if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
-            TitanInstance.NapeProtection napeProtection = ext.getTitanInstance().getNapeProtectionType();
+        if (entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0) {
+            TitanInstance.NapeProtection napeProtection = ext.soy$getTitanInstance().getNapeProtectionType();
             if (napeProtection == TitanInstance.NapeProtection.ARMORED && damageAmount > 6) {
                 PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getEyeY(), entity.getZ(), 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 1.6f + (float) (0.1 * Math.random()));
                 PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getEyeY(), entity.getZ(), 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 0.6f, 1.4f + (float) (0.1 * Math.random()));
@@ -109,22 +109,22 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "checkTotemDeathProtection", at = @At("HEAD"), cancellable = true)
     private void soy$checkTotemDeathProtection(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
-        if (this instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
-            if (ext.getTitanInstance().getProgress() > 0) {
-                if (AbilityUtil.isTypeEnabled(ext.getTitanInstance().entity, SoyAbilities.BERSERK.get())) {
-                    AbilityUtil.getEnabledInstances(ext.getTitanInstance().entity, SoyAbilities.BERSERK.get()).forEach(ability -> {
+        if (this instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null) {
+            if (ext.soy$getTitanInstance().getProgress() > 0) {
+                if (AbilityUtil.isTypeEnabled(ext.soy$getTitanInstance().entity, SoyAbilities.BERSERK.get())) {
+                    AbilityUtil.getEnabledInstances(ext.soy$getTitanInstance().entity, SoyAbilities.BERSERK.get()).forEach(ability -> {
                         ability.setUniqueProperty(BerserkAbility.TIMER, ability.getProperty(BerserkAbility.MAX_TIME));
                     });
                     this.setHealth(20);
                     cir.setReturnValue(true);
                     return;
                 }
-                ext.getTitanInstance().titan.unshiftWithAdverseEffects(ext.getTitanInstance().entity);
+                ext.soy$getTitanInstance().titan.unshiftWithAdverseEffects(ext.soy$getTitanInstance().entity);
                 this.setHealth(8);
                 cir.setReturnValue(true);
-            } else if (AbilityUtil.isEnabled(ext.getTitanInstance().entity, SubjectsOfYmir.SHIFTER_POWER, "failsafe_unlock") && ext.getTitanInstance().getStamina() >= 0.7f * ext.getTitanInstance().getMaxStamina()) {
-                ext.getTitanInstance().setCharge(30);
-                ext.getTitanInstance().setStamina(20);
+            } else if (AbilityUtil.isEnabled(ext.soy$getTitanInstance().entity, SubjectsOfYmir.SHIFTER_POWER, "failsafe_unlock") && ext.soy$getTitanInstance().getStamina() >= 0.7f * ext.soy$getTitanInstance().getMaxStamina()) {
+                ext.soy$getTitanInstance().setCharge(30);
+                ext.soy$getTitanInstance().setStamina(20);
                 this.setHealth(16);
                 cir.setReturnValue(true);
             }

@@ -14,6 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class SurvivalTrinketSlotMixin {
     @Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true, order = 2000, require = 0)
     public void soy$mayPickup(Player player, CallbackInfoReturnable<Boolean> cir) {
-        if (player instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) cir.setReturnValue(false);
+        if (player instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0) cir.setReturnValue(false);
     }
 }

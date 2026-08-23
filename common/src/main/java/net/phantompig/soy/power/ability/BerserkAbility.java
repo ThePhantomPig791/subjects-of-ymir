@@ -29,7 +29,7 @@ public class BerserkAbility extends Ability {
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (enabled && entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null) {
+        if (enabled && entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null) {
             int timer = entry.getProperty(TIMER);
             final int maxTimer = entry.getProperty(MAX_TIME);
             if (timer == maxTimer) { // first tick
@@ -88,11 +88,11 @@ public class BerserkAbility extends Ability {
                         true,
                         Level.ExplosionInteraction.BLOCK
                 );
-                ext.getTitanInstance().titan.unshiftWithAdverseEffects(entity, false, false);
+                ext.soy$getTitanInstance().titan.unshiftWithAdverseEffects(entity, false, false);
                 entry.setUniqueProperty(TIMER, -1);
             } else if (timer > 0) { // every tick
                 entry.setUniqueProperty(TIMER, timer - 1);
-                ext.getTitanInstance().exhaustSafe(1);
+                ext.soy$getTitanInstance().exhaustSafe(1);
             }
         }
     }

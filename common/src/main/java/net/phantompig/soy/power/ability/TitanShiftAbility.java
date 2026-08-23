@@ -20,7 +20,7 @@ public class TitanShiftAbility extends Ability {
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        var titanInstance = ((SoyPlayerExtension) entity).getTitanInstance();
+        var titanInstance = ((SoyPlayerExtension) entity).soy$getTitanInstance();
         if (titanInstance.titan == null) return;
         int progress = titanInstance.getProgress();
         int charge = titanInstance.getCharge();

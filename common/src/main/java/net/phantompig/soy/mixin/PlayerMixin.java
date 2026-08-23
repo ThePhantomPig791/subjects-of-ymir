@@ -58,12 +58,12 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, 
 
     @Override
     @NotNull
-    public TitanInstance getTitanInstance() {
+    public TitanInstance soy$getTitanInstance() {
         return soy$titanInstance;
     }
 
     @Override
-    public void setTitanInstance(TitanInstance instance) {
+    public void soy$setTitanInstance(TitanInstance instance) {
         soy$titanInstance = instance;
         instance.updateProperties();
     }

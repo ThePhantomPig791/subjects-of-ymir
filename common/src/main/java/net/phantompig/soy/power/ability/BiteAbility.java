@@ -53,8 +53,8 @@ public class BiteAbility extends Ability implements AnimationTimer {
                 };
                 if (entity instanceof SoyPlayerExtension ext) {
                     var amount = entry.getProperty(AMOUNT);
-                    entity.hurt(source, amount == -1 ? ext.getTitanInstance().getDamageThreshold() : amount);
-                    ext.getTitanInstance().canShiftTicks = 60;
+                    entity.hurt(source, amount == -1 ? ext.soy$getTitanInstance().getDamageThreshold() : amount);
+                    ext.soy$getTitanInstance().canShiftTicks = 60;
                 }
             }
         }

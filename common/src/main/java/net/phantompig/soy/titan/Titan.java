@@ -42,6 +42,8 @@ import net.phantompig.soy.network.ScreenShakeMessage;
 import net.phantompig.soy.network.SoyNetwork;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.power.ability.GrabbingAbility;
+import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
@@ -124,11 +126,11 @@ public class Titan {
         entity.resetFallDistance();
 
         if (entity instanceof Player player) {
-            ext.getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
+            ext.soy$getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
             player.getInventory().clearContent();
             if (SoyConfig.Server.shouldSaveCuriosTrinketsInventory() && SoyCuriosTrinketsUtil.INSTANCE.isLoaded()) {
-                if (ext.getTitanInstance().curiosTrinketsInventory == null) ext.getTitanInstance().curiosTrinketsInventory = new CompoundTag();
-                SoyCuriosTrinketsUtil.INSTANCE.write(player, ext.getTitanInstance().curiosTrinketsInventory);
+                if (ext.soy$getTitanInstance().curiosTrinketsInventory == null) ext.soy$getTitanInstance().curiosTrinketsInventory = new CompoundTag();
+                SoyCuriosTrinketsUtil.INSTANCE.write(player, ext.soy$getTitanInstance().curiosTrinketsInventory);
                 SoyCuriosTrinketsUtil.INSTANCE.clear(player);
             }
 
@@ -147,10 +149,10 @@ public class Titan {
         entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20, 10, true, false));
         entity.addEffect(new MobEffectInstance(MobEffects.SATURATION, 20, 10, true, false));
 
-        ext.getTitanInstance().startScaleChange();
-        ext.getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
-        ext.getTitanInstance().canShiftTicks = 0;
-        ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + charge * charge);
+        ext.soy$getTitanInstance().startScaleChange();
+        ext.soy$getTitanInstance().setDecay(TitanInstance.START_CORPSE_DECAY);
+        ext.soy$getTitanInstance().canShiftTicks = 0;
+        ext.soy$getTitanInstance().setMarksTimer(ext.soy$getTitanInstance().getMarksTimer() + charge * charge);
 
         entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(charge))).forEach(e -> {
             double strength = charge / Math.max(Math.sqrt(e.distanceTo(entity)), 1);
@@ -184,10 +186,10 @@ public class Titan {
 
     public void tickDuringShift(LivingEntity entity, int progress, int charge) {
         if (!(entity instanceof SoyPlayerExtension ext)) return;
-        ext.getTitanInstance().setProgress(++progress);
+        ext.soy$getTitanInstance().setProgress(++progress);
         entity.level().explode(entity, null, null, entity.getX(), entity.getEyeY(), entity.getZ(), (float) Math.sqrt(charge / 5f), false, SoyConfig.Server.shouldTitansExplodeBlocksOnShift() ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false).explode();
-        ext.getTitanInstance().setMarksTimer(ext.getTitanInstance().getMarksTimer() + 4);
-        ext.getTitanInstance().ticksShifted++;
+        ext.soy$getTitanInstance().setMarksTimer(ext.soy$getTitanInstance().getMarksTimer() + 4);
+        ext.soy$getTitanInstance().ticksShifted++;
 
         entity.level().getEntities(null, entity.getBoundingBox().inflate(15 + 3 * Math.sqrt(charge))).forEach(e -> {
             double strength = charge / Math.max(Math.sqrt(e.distanceTo(entity)), 1) / 40;
@@ -198,6 +200,11 @@ public class Titan {
                 }
             }
         });
+
+        if (progress > 2 && SoyProperties.GRABBED.get(entity)) {
+            LivingEntity grabber = GrabbingAbility.getGrabber(entity);
+            if (grabber != null && !GrabbingAbility.canGrab(grabber, entity)) GrabbingAbility.stopGrabbing(grabber);
+        }
 
         final float invPro = 0.5f - ((float) progress) / this.maxProgress;
         if (invPro > 0) {
@@ -293,7 +300,7 @@ public class Titan {
             pl.getAdvancements().award(pl.server.getAdvancements().getAdvancement(TITAN_SHIFT_ADVANCEMENT), "shift");
         }
         if (entity instanceof SoyPlayerExtension ext) {
-            ext.getTitanInstance().setStamina((int) (ext.getTitanInstance().getStamina() * 0.6));
+            ext.soy$getTitanInstance().setStamina((int) (ext.soy$getTitanInstance().getStamina() * 0.6));
         }
     }
 
@@ -346,15 +353,15 @@ public class Titan {
             player.causeFoodExhaustion(8);
         }
         if (entity instanceof SoyPlayerExtension ext) {
-            ext.getTitanInstance().setStamina((int) (ext.getTitanInstance().getStamina() * 0.1));
-            ext.getTitanInstance().setMarksTimer(6000);
+            ext.soy$getTitanInstance().setStamina((int) (ext.soy$getTitanInstance().getStamina() * 0.1));
+            ext.soy$getTitanInstance().setMarksTimer(6000);
         }
     }
 
     public void unshift(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
-        if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh)) return;
-        ext.getTitanInstance().strengthIncreases.clear();
-        ext.getTitanInstance().ticksShifted = 0;
+        if (!(entity instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh)) return;
+        ext.soy$getTitanInstance().strengthIncreases.clear();
+        ext.soy$getTitanInstance().ticksShifted = 0;
 
         SuperpowerUtil.removeSuperpower(entity, this.powerPath);
         entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(TITAN_HEALTH_ATTRIBUTE_UUID);
@@ -429,7 +436,7 @@ public class Titan {
             corpse.setDeltaMovement(entity.getDeltaMovement().scale(1.1));
             corpse.hasImpulse = true; // TODO fix this. no momentum is carried over
 
-            TitanInstance.copyTo(ext.getTitanInstance(), corpse.titanInstance);
+            TitanInstance.copyTo(ext.soy$getTitanInstance(), corpse.titanInstance);
             HardeningSystem.copyTo(hardh.soy$getHardeningSystem(), corpse.hardeningSystem);
             if (corpse.titanInstance.titan == null) {
                 corpse.discard();
@@ -444,11 +451,11 @@ public class Titan {
         }
 
 
-        ext.getTitanInstance().setProgress(0);
-        ext.getTitanInstance().setCharge(0);
-        ext.getTitanInstance().resetScale();
+        ext.soy$getTitanInstance().setProgress(0);
+        ext.soy$getTitanInstance().setCharge(0);
+        ext.soy$getTitanInstance().resetScale();
 
-        entity.teleportTo(entity.getX(), entity.getY() + ext.getTitanInstance().titan.scale * 1.4, entity.getZ());
+        entity.teleportTo(entity.getX(), entity.getY() + ext.soy$getTitanInstance().titan.scale * 1.4, entity.getZ());
         entity.addDeltaMovement(entity.getLookAngle().scale(-0.5));
         if (entity instanceof ServerPlayer player) {
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
@@ -462,13 +469,13 @@ public class Titan {
 
         if (entity instanceof Player player) {
             player.getInventory().dropAll();
-            if (ext.getTitanInstance().playerInventory != null) {
-                player.getInventory().load(ext.getTitanInstance().playerInventory);
-                ext.getTitanInstance().playerInventory = null;
+            if (ext.soy$getTitanInstance().playerInventory != null) {
+                player.getInventory().load(ext.soy$getTitanInstance().playerInventory);
+                ext.soy$getTitanInstance().playerInventory = null;
             }
-            if (SoyConfig.Server.shouldSaveCuriosTrinketsInventory() && SoyCuriosTrinketsUtil.INSTANCE.isLoaded() && ext.getTitanInstance().curiosTrinketsInventory != null) {
-                SoyCuriosTrinketsUtil.INSTANCE.read(player, ext.getTitanInstance().curiosTrinketsInventory);
-                ext.getTitanInstance().curiosTrinketsInventory = null;
+            if (SoyConfig.Server.shouldSaveCuriosTrinketsInventory() && SoyCuriosTrinketsUtil.INSTANCE.isLoaded() && ext.soy$getTitanInstance().curiosTrinketsInventory != null) {
+                SoyCuriosTrinketsUtil.INSTANCE.read(player, ext.soy$getTitanInstance().curiosTrinketsInventory);
+                ext.soy$getTitanInstance().curiosTrinketsInventory = null;
             }
         }
     }
@@ -477,9 +484,9 @@ public class Titan {
         if (entity instanceof SoyPlayerExtension ext) {
             if (entity instanceof Player player) player.awardStat(SoyStats.TIME_AS_TITAN, 1);
 
-            ext.getTitanInstance().ticksShifted++;
-            if (ext.getTitanInstance().ticksShifted < 150) {
-                final double x = ext.getTitanInstance().ticksShifted / 10d + 10;
+            ext.soy$getTitanInstance().ticksShifted++;
+            if (ext.soy$getTitanInstance().ticksShifted < 150) {
+                final double x = ext.soy$getTitanInstance().ticksShifted / 10d + 10;
                 final float newSteamParticleAmount = (float) (-0.08888 * Math.pow(x, 2) + 2.6666 * x);
                 this.emitSteam(entity,  0.1f, (int) newSteamParticleAmount / 6);
             }
@@ -541,7 +548,7 @@ public class Titan {
             });
 
             if (entity instanceof SoyPlayerExtension ext) {
-                ext.getTitanInstance().exhaust((int) (fallDistance * 2));
+                ext.soy$getTitanInstance().exhaust((int) (fallDistance * 2));
             }
         }
     }

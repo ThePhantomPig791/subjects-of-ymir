@@ -11,7 +11,7 @@ public class IsUnshiftingCondition extends Condition {
 
     @Override
     public boolean active(DataContext context) {
-        return context.getEntity() instanceof SoyPlayerExtension ext && ext.getTitanInstance().forceUnshift;
+        return context.getEntity() instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().forceUnshift;
     }
 
     @Override

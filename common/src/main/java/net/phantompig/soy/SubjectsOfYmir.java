@@ -78,10 +78,10 @@ public class SubjectsOfYmir {
         LivingEntityEvents.HURT.register(((entity, damageSource, amount) -> {
             if (damageSource.is(SoyDamageTypeTags.CANNOT_CAUSE_SHIFT)
                     || !(entity instanceof SoyPlayerExtension soy)
-                    || amount.get() < soy.getTitanInstance().getDamageThreshold()) {
+                    || amount.get() < soy.soy$getTitanInstance().getDamageThreshold()) {
                 return EventResult.pass();
             }
-            var titanInstance = soy.getTitanInstance();
+            var titanInstance = soy.soy$getTitanInstance();
             if (titanInstance.getProgress() != 0) {
                 // hardcoded armored titan behavior for losing armor on hurt
                 if (titanInstance.titan != null && titanInstance.titan.id.equals(rsrc("armored"))) {
@@ -100,9 +100,9 @@ public class SubjectsOfYmir {
         }));
 
         LivingEntityEvents.TICK.register((entity -> {
-            if (entity instanceof SoyPlayerExtension soy && soy.getTitanInstance().titan != null) {
-                soy.getTitanInstance().tick();
-                if (entity instanceof ServerPlayer player && soy.getTitanInstance().memoryManager != null) soy.getTitanInstance().memoryManager.tick(player);
+            if (entity instanceof SoyPlayerExtension soy && soy.soy$getTitanInstance().titan != null) {
+                soy.soy$getTitanInstance().tick();
+                if (entity instanceof ServerPlayer player && soy.soy$getTitanInstance().memoryManager != null) soy.soy$getTitanInstance().memoryManager.tick(player);
             }
             if (!entity.level().isClientSide && entity instanceof SoyServerPlayerExtension serverExt) {
                 serverExt.soy$getCombatSystem().tick();
@@ -121,12 +121,12 @@ public class SubjectsOfYmir {
                 SoyProperties.SWINGING_LEGS.set(player, false);
             }
 
-            if (livingEntity instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && livingEntity instanceof Player player) {
-                ext.getTitanInstance().setMarksTimer(0);
-                ext.getTitanInstance().setCharge(0);
-                ext.getTitanInstance().setProgress(0);
-                if (SoyConfig.Server.getCurseOfYmirDeaths() != Integer.MAX_VALUE && ++ext.getTitanInstance().deaths >= SoyConfig.Server.getCurseOfYmirDeaths()) {
-                    player.drop(TitanInstance.toSpineIem(ext.getTitanInstance()), true, true);
+            if (livingEntity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null && livingEntity instanceof Player player) {
+                ext.soy$getTitanInstance().setMarksTimer(0);
+                ext.soy$getTitanInstance().setCharge(0);
+                ext.soy$getTitanInstance().setProgress(0);
+                if (SoyConfig.Server.getCurseOfYmirDeaths() != Integer.MAX_VALUE && ++ext.soy$getTitanInstance().deaths >= SoyConfig.Server.getCurseOfYmirDeaths()) {
+                    player.drop(TitanInstance.toSpineIem(ext.soy$getTitanInstance()), true, true);
                     TitanInstance.clearTitanFor(livingEntity);
                 }
             }
@@ -142,13 +142,13 @@ public class SubjectsOfYmir {
 
         PlayerEvents.CLONE.register(((oldPlayer, newPlayer, wasDeath) -> {
             if (oldPlayer instanceof SoyPlayerExtension oldExt && newPlayer instanceof SoyPlayerExtension newExt) {
-                newExt.setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.getTitanInstance().toTag()));
+                newExt.soy$setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.soy$getTitanInstance().toTag()));
             }
         }));
 
         ChatEvents.SERVER_SUBMITTED.register((player, raw, message) -> {
             if (player instanceof SoyPlayerExtension ext) {
-                ext.getTitanInstance().getMemoryManager().onChat(player, raw);
+                ext.soy$getTitanInstance().getMemoryManager().onChat(player, raw);
             }
             return EventResult.pass();
         });

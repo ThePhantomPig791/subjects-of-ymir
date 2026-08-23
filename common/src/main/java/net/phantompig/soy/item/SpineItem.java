@@ -71,7 +71,7 @@ public class SpineItem extends Item {
                 && !getTitanInstanceTag(itemStack).isEmpty()
                 && !player.getUUID().equals(getPreviousInheritorUUID(itemStack))
                 && player instanceof SoyPlayerExtension ext
-                && ext.getTitanInstance().titan == null
+                && ext.soy$getTitanInstance().titan == null
         ) {
             player.startUsingItem(usedHand);
             return InteractionResultHolder.consume(itemStack);

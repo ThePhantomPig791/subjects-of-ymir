@@ -19,9 +19,9 @@ public class SoyOverlays {
     public static final ResourceLocation WHITE_LOCATION = SubjectsOfYmir.rsrc("textures/white.png");
 
     public static void renderExhaustionOverlay(Minecraft minecraft, Gui gui, GuiGraphics guiGraphics, float partialTicks, int width, int height) {
-        if (!(minecraft.player instanceof SoyPlayerExtension ext) || ext.getTitanInstance().getMaxStamina() == 0) return;
-        float a = 1 - Mth.clamp((float) ext.getTitanInstance().getStamina() / ext.getTitanInstance().getMaxStamina(), 0, 1);
-        if (ext.getTitanInstance().getProgress() == 0) {
+        if (!(minecraft.player instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().getMaxStamina() == 0) return;
+        float a = 1 - Mth.clamp((float) ext.soy$getTitanInstance().getStamina() / ext.soy$getTitanInstance().getMaxStamina(), 0, 1);
+        if (ext.soy$getTitanInstance().getProgress() == 0) {
             a = Easing.outCubic(a);
         } else {
             a = Easing.inQuad(a);
@@ -30,7 +30,7 @@ public class SoyOverlays {
     }
 
     public static void renderAllHardeningOverlay(Minecraft minecraft, Gui gui, GuiGraphics guiGraphics, float partialTicks, int width, int height) {
-        if (!(minecraft.player instanceof HardeningSystemHolder h) || !(minecraft.player instanceof SoyPlayerExtension ext) || ext.getTitanInstance().getProgress() == 0) return;
+        if (!(minecraft.player instanceof HardeningSystemHolder h) || !(minecraft.player instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().getProgress() == 0) return;
         float num = h.soy$getHardeningSystem().getAllHardening();
         if (num > 0) guiGraphics.innerBlit(HARDENING_LOCATION, 0, width, 0, height, 0, 0, 1, 0, 1, 1, 1, 1, num);
     }
@@ -41,7 +41,7 @@ public class SoyOverlays {
             for (Entity e : minecraft.level.entitiesForRendering()) {
                 if (e instanceof TitanCorpseEntity) continue;
                 if (e instanceof SoyPlayerExtension ext) {
-                    int progress = ext.getTitanInstance().getProgress();
+                    int progress = ext.soy$getTitanInstance().getProgress();
                     if (progress < 20 && progress > max) {
                         max = progress;
                     }

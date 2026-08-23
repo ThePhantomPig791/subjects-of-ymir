@@ -19,6 +19,6 @@ public abstract class TrinketFeatureRendererMixin {
             require = 0
     )
     public void soy$render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
-        if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) ci.cancel();
+        if (entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0) ci.cancel();
     }
 }

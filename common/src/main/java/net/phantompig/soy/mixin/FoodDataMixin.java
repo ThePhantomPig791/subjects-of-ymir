@@ -19,7 +19,7 @@ public abstract class FoodDataMixin {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void soy$tick(Player player, CallbackInfo ci) {
-        if (!(player instanceof SoyPlayerExtension ext) || ext.getTitanInstance().getProgress() == 0) return;
+        if (!(player instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().getProgress() == 0) return;
         this.setFoodLevel(20);
         this.setExhaustion(6);
         this.setSaturation(0);

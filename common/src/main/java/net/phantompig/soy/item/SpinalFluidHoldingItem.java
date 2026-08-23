@@ -68,7 +68,7 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
 
     public static boolean inject(ItemStack stack, Player player) {
         if (stack.getItem() instanceof SpinalFluidHoldingItem spfhi && player instanceof SoyPlayerExtension ext) {
-            if (ext.getTitanInstance().titan == null) {
+            if (ext.soy$getTitanInstance().titan == null) {
                 return false; // TODO pure titans
             } else {
                 if (givePathPointsFrom(stack, spfhi, player)) {
@@ -94,7 +94,7 @@ public class SpinalFluidHoldingItem extends DataHoldingItem {
         if (spfhi.get(stack) == 0) return false;
         SoyProperties.PATH_POINTS.set(player, SoyProperties.PATH_POINTS.get(player) + spfhi.get(stack));
         player.awardStat(SoyStats.PATH_POINTS_GAINED, spfhi.get(stack));
-        ext.getTitanInstance().getMemoryManager().populateWithAncientMessages(player, ext.getTitanInstance().variant, 3, -2);
+        ext.soy$getTitanInstance().getMemoryManager().populateWithAncientMessages(player, ext.soy$getTitanInstance().variant, 3, -2);
         spfhi.set(stack, 0);
         PlayerUtil.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.1f);
         return true;

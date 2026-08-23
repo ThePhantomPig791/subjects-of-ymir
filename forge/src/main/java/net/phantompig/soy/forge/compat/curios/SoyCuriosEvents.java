@@ -8,7 +8,7 @@ import top.theillusivec4.curios.api.event.CurioUnequipEvent;
 public class SoyCuriosEvents {
     @SubscribeEvent
     public static void curioUnequip(CurioUnequipEvent event) {
-        if (event.getEntity() instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0) {
+        if (event.getEntity() instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0) {
             event.setResult(Event.Result.DENY);
         }
     }

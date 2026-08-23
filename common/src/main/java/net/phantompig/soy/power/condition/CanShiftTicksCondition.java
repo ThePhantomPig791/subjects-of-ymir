@@ -24,7 +24,7 @@ public class CanShiftTicksCondition extends Condition {
 
         int x;
         if (entity instanceof SoyPlayerExtension ext) {
-            x = ext.getTitanInstance().canShiftTicks;
+            x = ext.soy$getTitanInstance().canShiftTicks;
         } else {
             return false;
         }

@@ -49,8 +49,8 @@ public abstract class EntityMixin implements Nameable, EntityAccess, CommandSour
 
     @Inject(method = "createHoverEvent", at = @At("HEAD"), cancellable = true)
     public void soy$createHoverEvent(CallbackInfoReturnable<HoverEvent> cir) {
-        if ((Object) this instanceof SoyPlayerExtension extension && extension.getTitanInstance().titan != null && extension.getTitanInstance().getProgress() > 0) {
-            cir.setReturnValue(new HoverEvent(HoverEvent.Action.SHOW_ENTITY, new HoverEvent.EntityTooltipInfo(this.getType(), Util.NIL_UUID, extension.getTitanInstance().titan.getName())));
+        if ((Object) this instanceof SoyPlayerExtension extension && extension.soy$getTitanInstance().titan != null && extension.soy$getTitanInstance().getProgress() > 0) {
+            cir.setReturnValue(new HoverEvent(HoverEvent.Action.SHOW_ENTITY, new HoverEvent.EntityTooltipInfo(this.getType(), Util.NIL_UUID, extension.soy$getTitanInstance().titan.getName())));
         }
     }
 
@@ -86,6 +86,6 @@ public abstract class EntityMixin implements Nameable, EntityAccess, CommandSour
 
     @Unique
     public boolean soy$isTitan() {
-        return (Object) this instanceof SoyPlayerExtension extension && extension.getTitanInstance().getProgress() > 0;
+        return (Object) this instanceof SoyPlayerExtension extension && extension.soy$getTitanInstance().getProgress() > 0;
     }
 }

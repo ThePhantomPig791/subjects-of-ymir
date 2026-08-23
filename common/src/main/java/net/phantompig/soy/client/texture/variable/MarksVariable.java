@@ -21,7 +21,7 @@ public class MarksVariable extends AbstractIntegerTextureVariable {
     @Override
     public int getNumber(DataContext context) {
         if (!(context.getEntity() instanceof SoyPlayerExtension ext)) return 0;
-        int marks = ext.getTitanInstance().getMarksTimer();
+        int marks = ext.soy$getTitanInstance().getMarksTimer();
         return (int) (255f * marks / (marks + 2000));
     }
 

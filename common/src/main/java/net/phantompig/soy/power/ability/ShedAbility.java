@@ -25,7 +25,7 @@ public class ShedAbility extends Ability {
 
     @Override
     public void firstTick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (entity instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() <= 1) {
+        if (entity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() <= 1) {
             entry.setUniqueProperty(VALUE, 15);
         }
     }
@@ -48,7 +48,7 @@ public class ShedAbility extends Ability {
     public static void update(LivingEntity entity, AbilityInstance entry) {
         int value = entry.getProperty(VALUE);
         if (entity instanceof SoyPlayerExtension ext) {
-            ext.getTitanInstance().strengthIncreases.put("shed (or lack thereof)", value / 10f);
+            ext.soy$getTitanInstance().strengthIncreases.put("shed (or lack thereof)", value / 10f);
         }
         if (entity.getAttribute(Attributes.ARMOR).getModifier(Titan.TITAN_ARMOR_ATTRIBUTE_UUID) != null) {
             double armor = entity.getAttribute(Attributes.ARMOR).getValue();

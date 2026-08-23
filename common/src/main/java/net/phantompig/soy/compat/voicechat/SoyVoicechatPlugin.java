@@ -36,9 +36,9 @@ public class SoyVoicechatPlugin implements VoicechatPlugin {
     private void onMicrophonePacketEvent(MicrophonePacketEvent event) {
         if (event.getSenderConnection() == null) return;
         Player player = (Player) event.getSenderConnection().getPlayer().getPlayer();
-        if (!(player instanceof SoyPlayerExtension ext) || ext.getTitanInstance().getProgress() == 0) return;
+        if (!(player instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().getProgress() == 0) return;
         event.getPacket().setOpusEncodedData(
-                ext.getTitanInstance().titan != null && ext.getTitanInstance().titan.canSpeak ?
+                ext.soy$getTitanInstance().titan != null && ext.soy$getTitanInstance().titan.canSpeak ?
                         processAudioForSpeakingTitan(event.getPacket().getOpusEncodedData()) :
                         processAudioForUnintelligibleTitan(event.getPacket().getOpusEncodedData())
         );

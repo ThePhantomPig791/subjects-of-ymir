@@ -90,14 +90,8 @@ public class RenderingUtil {
      * @return True if the entity's rendering should be canceled
      */
     public static boolean transformPosestackForGrabbedEntity(Entity entity, PoseStack poseStack, float partialTicks) {
-        if (SoyProperties.GRABBED.isRegistered(entity) && SoyProperties.GRABBED.get(entity)) {
-            LivingEntity grabber = null;
-            for (Entity e : entity.level().getEntities(entity, entity.getBoundingBox().inflate(40))) {
-                if (e instanceof LivingEntity living && GrabbingAbility.getGrabbing(living).equals(entity.getUUID())) {
-                    grabber = living;
-                    break;
-                }
-            }
+        if (SoyProperties.GRABBED.isRegistered(entity) && SoyProperties.GRABBED.get(entity) && entity instanceof LivingEntity livingEntity) {
+            LivingEntity grabber = GrabbingAbility.getGrabber(livingEntity);
             if (grabber == null) return false;
 
             if (Objects.equals(Minecraft.getInstance().player, grabber) && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON) {
@@ -129,7 +123,7 @@ public class RenderingUtil {
 
 
     public static boolean isTitan() {
-        return Minecraft.getInstance().player instanceof SoyPlayerExtension ext && ext.getTitanInstance().getProgress() > 0;
+        return Minecraft.getInstance().player instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().getProgress() > 0;
     }
     public static boolean shouldRenderTitanGui() {
         if (

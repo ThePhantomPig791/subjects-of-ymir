@@ -13,8 +13,8 @@ public class CanShiftFromStaminaCondition extends Condition {
     @Override
     public boolean active(DataContext context) {
         Entity entity = context.getEntity();
-        if (!(entity instanceof SoyPlayerExtension ext) || ext.getTitanInstance().getProgress() > 0) return false;
-        return ext.getTitanInstance().canShiftFromStamina();
+        if (!(entity instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().getProgress() > 0) return false;
+        return ext.soy$getTitanInstance().canShiftFromStamina();
     }
 
     @Override

@@ -49,7 +49,7 @@ public class TitanCommand {
                         .then(Commands.literal("eyes")
                                 .then(Commands.literal("set")
                                         .then(Commands.argument("color", StringArgumentType.string()).suggests((ctx, builder) -> {
-                                                    if (EntityArgument.getPlayer(ctx, "entity") instanceof SoyPlayerExtension ext && ext.getTitanInstance().titan != null && ext.getTitanInstance().titan.baseEyeColor != null) return builder.suggest("\"#" + Integer.toHexString(ext.getTitanInstance().titan.baseEyeColor.getRGB()).substring(2) + "\"").buildFuture();
+                                                    if (EntityArgument.getPlayer(ctx, "entity") instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null && ext.soy$getTitanInstance().titan.baseEyeColor != null) return builder.suggest("\"#" + Integer.toHexString(ext.soy$getTitanInstance().titan.baseEyeColor.getRGB()).substring(2) + "\"").buildFuture();
                                                     return builder.suggest("\"#ffffff\"").buildFuture();
                                                 }).executes(context -> {
                                                     var source = context.getSource();
@@ -58,7 +58,7 @@ public class TitanCommand {
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
                                                         var newColor = Color.decode(color);
-                                                        playerExt.getTitanInstance().setEyeColor(newColor);
+                                                        playerExt.soy$getTitanInstance().setEyeColor(newColor);
                                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.color.set", entity.getDisplayName(), Integer.toHexString(newColor.getRGB()).substring(2)), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -75,8 +75,8 @@ public class TitanCommand {
                                             var entity = EntityArgument.getPlayer(context, "entity");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
-                                                playerExt.getTitanInstance().randomizeEyeColor();
-                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.color.randomize", entity.getDisplayName(), Integer.toHexString(playerExt.getTitanInstance().getEyeColor().getRGB()).substring(2)), true);
+                                                playerExt.soy$getTitanInstance().randomizeEyeColor();
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.color.randomize", entity.getDisplayName(), Integer.toHexString(playerExt.soy$getTitanInstance().getEyeColor().getRGB()).substring(2)), true);
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                 return 0;
@@ -92,15 +92,15 @@ public class TitanCommand {
                                     var entity = EntityArgument.getPlayer(context, "entity");
 
                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                        if (playerExt.getTitanInstance().titan == null) {
+                                        if (playerExt.soy$getTitanInstance().titan == null) {
                                             source.sendFailure(Component.translatable("commands.titan.error.noTitan", entity.getDisplayName()));
                                             return 0;
                                         }
-                                        if (playerExt.getTitanInstance().getProgress() == 0) {
+                                        if (playerExt.soy$getTitanInstance().getProgress() == 0) {
                                             source.sendFailure(Component.translatable("commands.titan.error.notShifted", entity.getDisplayName()));
                                             return 0;
                                         }
-                                        playerExt.getTitanInstance().forceUnshift = true;
+                                        playerExt.soy$getTitanInstance().forceUnshift = true;
                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.unshift", entity.getDisplayName()), true);
                                     } else {
                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -164,7 +164,7 @@ public class TitanCommand {
                                     var entity = EntityArgument.getPlayer(context, "entity");
 
                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                        if (playerExt.getTitanInstance().getProgress() > 0) {
+                                        if (playerExt.soy$getTitanInstance().getProgress() > 0) {
                                             source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
                                             return 0;
                                         }
@@ -184,12 +184,12 @@ public class TitanCommand {
                                     var entity = EntityArgument.getPlayer(context, "entity");
 
                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                        if (playerExt.getTitanInstance().titan == null) {
+                                        if (playerExt.soy$getTitanInstance().titan == null) {
                                             source.sendSuccess(() -> Component.translatable("commands.titan.success.noTitan", entity.getDisplayName()), true);
                                             return 0;
                                         }
-                                        ResourceLocation id = playerExt.getTitanInstance().titan.id;
-                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.get", entity.getDisplayName(), id, playerExt.getTitanInstance().variant), true);
+                                        ResourceLocation id = playerExt.soy$getTitanInstance().titan.id;
+                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.get", entity.getDisplayName(), id, playerExt.soy$getTitanInstance().variant), true);
                                         return TitanRegistry.indexOf(id) + 1;
                                     } else {
                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -204,8 +204,8 @@ public class TitanCommand {
                                             var entity = EntityArgument.getPlayer(context, "entity");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
-                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.get", entity.getDisplayName(), playerExt.getTitanInstance().getStamina(), playerExt.getTitanInstance().getMaxStamina()), true);
-                                                return playerExt.getTitanInstance().getStamina();
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.get", entity.getDisplayName(), playerExt.soy$getTitanInstance().getStamina(), playerExt.soy$getTitanInstance().getMaxStamina()), true);
+                                                return playerExt.soy$getTitanInstance().getStamina();
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                 return 0;
@@ -220,8 +220,8 @@ public class TitanCommand {
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                                        int old = playerExt.getTitanInstance().getMaxStamina();
-                                                        playerExt.getTitanInstance().setMaxStamina(amount);
+                                                        int old = playerExt.soy$getTitanInstance().getMaxStamina();
+                                                        playerExt.soy$getTitanInstance().setMaxStamina(amount);
                                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.set_max", entity.getDisplayName(), amount, old), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -240,8 +240,8 @@ public class TitanCommand {
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                                        int old = playerExt.getTitanInstance().getStamina();
-                                                        playerExt.getTitanInstance().setStamina(amount);
+                                                        int old = playerExt.soy$getTitanInstance().getStamina();
+                                                        playerExt.soy$getTitanInstance().setStamina(amount);
                                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.set", entity.getDisplayName(), amount, old), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -260,12 +260,12 @@ public class TitanCommand {
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                                        if (amount > 0 && playerExt.getTitanInstance().getStamina() == playerExt.getTitanInstance().getMaxStamina()) {
+                                                        if (amount > 0 && playerExt.soy$getTitanInstance().getStamina() == playerExt.soy$getTitanInstance().getMaxStamina()) {
                                                             source.sendFailure(Component.translatable("commands.titan.error.maxStamina", entity.getDisplayName()));
                                                             return 0;
                                                         }
-                                                        playerExt.getTitanInstance().regainStamina(amount);
-                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.add", amount, entity.getDisplayName(), playerExt.getTitanInstance().getStamina()), true);
+                                                        playerExt.soy$getTitanInstance().regainStamina(amount);
+                                                        source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.add", amount, entity.getDisplayName(), playerExt.soy$getTitanInstance().getStamina()), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                         return 0;
@@ -281,13 +281,13 @@ public class TitanCommand {
                                             var entity = EntityArgument.getPlayer(context, "entity");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
-                                                if (playerExt.getTitanInstance().getStamina() == playerExt.getTitanInstance().getMaxStamina()) {
+                                                if (playerExt.soy$getTitanInstance().getStamina() == playerExt.soy$getTitanInstance().getMaxStamina()) {
                                                     source.sendFailure(Component.translatable("commands.titan.error.maxStamina", entity.getDisplayName()));
                                                     return 0;
                                                 }
-                                                int old = playerExt.getTitanInstance().getStamina();
-                                                playerExt.getTitanInstance().setStamina(playerExt.getTitanInstance().getMaxStamina());
-                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.set", entity.getDisplayName(), playerExt.getTitanInstance().getStamina(), old), true);
+                                                int old = playerExt.soy$getTitanInstance().getStamina();
+                                                playerExt.soy$getTitanInstance().setStamina(playerExt.soy$getTitanInstance().getMaxStamina());
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.set", entity.getDisplayName(), playerExt.soy$getTitanInstance().getStamina(), old), true);
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                 return 0;
@@ -304,7 +304,7 @@ public class TitanCommand {
                                             var entity = EntityArgument.getPlayer(context, "entity");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
-                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.deaths.get", entity.getDisplayName(), playerExt.getTitanInstance().deaths), true);
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.deaths.get", entity.getDisplayName(), playerExt.soy$getTitanInstance().deaths), true);
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                 return 0;
@@ -321,8 +321,8 @@ public class TitanCommand {
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                                        int old = playerExt.getTitanInstance().deaths;
-                                                        playerExt.getTitanInstance().deaths = amount;
+                                                        int old = playerExt.soy$getTitanInstance().deaths;
+                                                        playerExt.soy$getTitanInstance().deaths = amount;
                                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.deaths.set", entity.getDisplayName(), amount, old), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -341,7 +341,7 @@ public class TitanCommand {
                                             var entity = EntityArgument.getPlayer(context, "entity");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
-                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.marks.get", entity.getDisplayName(), playerExt.getTitanInstance().getMarksTimer()), true);
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.marks.get", entity.getDisplayName(), playerExt.soy$getTitanInstance().getMarksTimer()), true);
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
                                                 return 0;
@@ -358,8 +358,8 @@ public class TitanCommand {
                                                     var amount = IntegerArgumentType.getInteger(context, "amount");
 
                                                     if (entity instanceof SoyPlayerExtension playerExt) {
-                                                        int old = playerExt.getTitanInstance().getMarksTimer();
-                                                        playerExt.getTitanInstance().setMarksTimer(amount);
+                                                        int old = playerExt.soy$getTitanInstance().getMarksTimer();
+                                                        playerExt.soy$getTitanInstance().setMarksTimer(amount);
                                                         source.sendSuccess(() -> Component.translatable("commands.titan.success.marks.set", entity.getDisplayName(), amount, old), true);
                                                     } else {
                                                         source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
@@ -436,7 +436,7 @@ public class TitanCommand {
                 source.sendFailure(Component.translatable("commands.titan.error.noSuchVariant", titan.id, variant));
                 return 0;
             }
-            if (playerExt.getTitanInstance().getProgress() > 0) {
+            if (playerExt.soy$getTitanInstance().getProgress() > 0) {
                 source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
                 return 0;
             }
@@ -455,12 +455,12 @@ public class TitanCommand {
         var entity = EntityArgument.getPlayer(context, "entity");
 
         if (entity instanceof SoyPlayerExtension playerExt) {
-            if (playerExt.getTitanInstance().getProgress() > 0) {
+            if (playerExt.soy$getTitanInstance().getProgress() > 0) {
                 source.sendFailure(Component.translatable("commands.titan.error.shifted", entity.getDisplayName()));
                 return 0;
             }
             if (popSpine) {
-                entity.drop(TitanInstance.toSpineIem(playerExt.getTitanInstance()), false, true);
+                entity.drop(TitanInstance.toSpineIem(playerExt.soy$getTitanInstance()), false, true);
                 source.sendSuccess(() -> Component.translatable("commands.titan.success.remove_pop", entity.getDisplayName()), true);
             } else {
                 source.sendSuccess(() -> Component.translatable("commands.titan.success.remove", entity.getDisplayName()), true);
