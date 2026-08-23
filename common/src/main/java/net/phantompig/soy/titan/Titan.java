@@ -379,7 +379,6 @@ public class Titan {
             player.connection.send(new ClientboundUpdateAttributesPacket(player.getId(), List.of(player.getAttribute(Attributes.MAX_HEALTH), player.getAttribute(Attributes.ARMOR))));
         }
 
-
         if (hardh.soy$getHardeningSystem().getAllHardening() >= 0.9f) {
             spawnCorpse = false;
 
@@ -447,6 +446,12 @@ public class Titan {
                 SuperpowerUtil.addSuperpower(corpse, corpse.titanInstance.titan.powerPath);
 
                 entity.level().addFreshEntity(corpse);
+
+                if (SoyProperties.GRABBED.get(entity)) { // TODO test when colossal titan is added
+                    LivingEntity grabber = GrabbingAbility.getGrabber(entity);
+                    GrabbingAbility.startGrabbing(grabber, corpse);
+                    SoyProperties.GRABBED.set(entity, false);
+                }
             }
         }
 
