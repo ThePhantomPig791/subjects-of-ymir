@@ -47,6 +47,7 @@
   "death.attack.soy.selfStab": "%s failed to practice kitchen safety",
   "death.attack.soy.slice": "%s was sliced to death by %s",
   "death.attack.soy.titanPunch": "%s was pulverized by the %s",
+  "death.attack.soy.eat": "%s was eaten by the %s",
 
   
   "itemGroup.subjects_of_ymir.soy": "Subjects of Ymir",

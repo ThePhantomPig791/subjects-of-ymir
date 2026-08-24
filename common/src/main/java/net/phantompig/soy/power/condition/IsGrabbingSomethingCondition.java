@@ -8,25 +8,20 @@ import net.threetag.palladium.condition.Condition;
 import net.threetag.palladium.condition.ConditionSerializer;
 import net.threetag.palladium.util.context.DataContext;
 
-public class GrabbedEntityNearby extends Condition {
-    public GrabbedEntityNearby() {}
+public class IsGrabbingSomethingCondition extends Condition {
+    public IsGrabbingSomethingCondition() {}
 
     @Override
     public boolean active(DataContext context) {
-        Entity entity = context.getEntity();
-        if (entity instanceof LivingEntity living) {
-            for (Entity e : entity.level().getEntities(entity, entity.getBoundingBox().inflate(30))) {
-                if (GrabbingAbility.getGrabbing(living).equals(e.getUUID())) {
-                    return true;
-                }
-            }
+        if (context.getEntity() instanceof LivingEntity living) {
+            return GrabbingAbility.isGrabbingSomething(living);
         }
         return false;
     }
 
     @Override
     public ConditionSerializer getSerializer() {
-        return SoyConditionSerializers.GRABBED_ENTITY_NEARBY.get();
+        return SoyConditionSerializers.IS_GRABBING_SOMETHING.get();
     }
 
     public static class Serializer extends ConditionSerializer {
@@ -34,12 +29,12 @@ public class GrabbedEntityNearby extends Condition {
 
         @Override
         public Condition make(JsonObject json) {
-            return new GrabbedEntityNearby();
+            return new IsGrabbingSomethingCondition();
         }
 
         @Override
         public String getDocumentationDescription() {
-            return "Checks if the entity being grabbed by this entity is nearby.";
+            return "Checks if the entity is grabbing something";
         }
     }
 }

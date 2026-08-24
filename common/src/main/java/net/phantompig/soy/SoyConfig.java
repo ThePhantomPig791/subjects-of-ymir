@@ -1,6 +1,7 @@
 package net.phantompig.soy;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.threetag.palladiumcore.util.Platform;
 
 public class SoyConfig {
     public static class Server {
@@ -100,7 +101,7 @@ public class SoyConfig {
     public static class Client {
         public static ForgeConfigSpec.IntValue RIGHT_HOOK_KEYCODE, LEFT_HOOK_KEYCODE;
         public static ForgeConfigSpec.DoubleValue ODM_SCREEN_TILT_STRENGTH, SPARK_PARTICLE_SCALE;
-        public static ForgeConfigSpec.BooleanValue WORLD_TINT, ODM_ANIMATIONS, SHIFTING_SPHERE, OVERRIDE_SPHERE_COLOR;
+        public static ForgeConfigSpec.BooleanValue WORLD_TINT, ODM_ANIMATIONS, SHIFTING_SPHERE, OVERRIDE_SPHERE_COLOR, GRAB_CROUCH_OFFSET_FIX;
 
         public static ForgeConfigSpec generateConfig() {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -128,6 +129,9 @@ public class SoyConfig {
 
             builder.comment("If true, the color of the lightning sphere will be overridden with a less-intense tan/white, matching the color of the particles");
             OVERRIDE_SPHERE_COLOR = builder.define("client.overrideSphereColor", false);
+
+            builder.comment("If true, grabbed entities will be moved upwards when crouching. This fixes a bug that occurs most commonly on Forge, so this is enabled by default only on that modloader.");
+            GRAB_CROUCH_OFFSET_FIX = builder.define("client.grabCrouchOffsetFix", Platform.isForge());
 
             return builder.build();
         }
@@ -160,6 +164,10 @@ public class SoyConfig {
         }
         public static boolean shouldOverrideSphereColor() {
             return OVERRIDE_SPHERE_COLOR.get();
+        }
+
+        public static boolean grabCrouchOffsetFix() {
+            return GRAB_CROUCH_OFFSET_FIX.get();
         }
     }
 }

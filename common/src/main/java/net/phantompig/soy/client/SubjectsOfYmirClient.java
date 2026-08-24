@@ -50,6 +50,7 @@ public class SubjectsOfYmirClient {
             registry.accept(SubjectsOfYmir.rsrc("flare_gun"), FlareGunAnimation.INSTANCE);
             registry.accept(SubjectsOfYmir.rsrc("odm"), OdmAnimation.INSTANCE);
             registry.accept(SubjectsOfYmir.rsrc("nape_cover"), NapeCoverAnimation.INSTANCE);
+            registry.accept(SubjectsOfYmir.rsrc("eat"), EatAnimation.INSTANCE);
         });
 
         EntityRendererRegistry.register(SoyEntities.TITAN_CORPSE, TitanCorpseEntityRenderer::new);

@@ -19,12 +19,12 @@ public class SoyAbilities {
     public static final RegistrySupplier<Ability> HARDENING_KNUCKLES = ABILITIES.register("hardening_knuckles", HardeningKnucklesAbility::new);
     public static final RegistrySupplier<Ability> HARDENING_HANDS = ABILITIES.register("hardening_hands", HardeningHandsAbility::new);
     public static final RegistrySupplier<Ability> CLIMBING = ABILITIES.register("climbing", ClimbingAbility::new);
+    public static final RegistrySupplier<Ability> GRABBING = ABILITIES.register("grabbing", GrabbingAbility::new);
+    public static final RegistrySupplier<Ability> NAPE_COVER = ABILITIES.register("nape_cover", NapeCoverAbility::new);
+    public static final RegistrySupplier<Ability> EAT = ABILITIES.register("eat", EatAbility::new);
 
     public static final RegistrySupplier<Ability> BERSERK = ABILITIES.register("berserk", BerserkAbility::new);
 
     public static final RegistrySupplier<Ability> SPRINT_CHARGE = ABILITIES.register("sprint_charge", SprintChargeAbility::new);
     public static final RegistrySupplier<Ability> SHED = ABILITIES.register("shed", ShedAbility::new);
-
-    public static final RegistrySupplier<Ability> GRABBING = ABILITIES.register("grabbing", GrabbingAbility::new);
-    public static final RegistrySupplier<Ability> NAPE_COVER = ABILITIES.register("nape_cover", NapeCoverAbility::new);
 }

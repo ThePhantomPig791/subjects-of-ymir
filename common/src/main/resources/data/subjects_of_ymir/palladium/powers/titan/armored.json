@@ -151,10 +151,16 @@
         "unlocking": [
           {
             "type": "palladium:not",
-            "conditions": {
-              "type": "palladium:ability_enabled",
-              "ability": "nape_cover"
-            }
+            "conditions": [
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "nape_cover"
+              },
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "eat"
+              }
+            ]
           },
           {
             "type": "palladium:or",
@@ -202,6 +208,44 @@
         }
       }
     },
+    "block_slow": {
+      "type": "palladium:attribute_modifier",
+      "hidden": true,
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.5,
+      "operation": 1,
+      "uuid": "09ed062a-73c1-7777-1103-3331114aa03e",
+      "conditions": {
+        "enabling": {
+          "type": "palladium:or",
+          "conditions": [
+            {
+              "type": "palladium:and",
+              "conditions": [
+                {
+                  "type": "palladium:not",
+                  "conditions": {
+                    "type": "palladium:crouching"
+                  }
+                },
+                {
+                  "type": "palladium:ability_enabled",
+                  "ability": "block"
+                }
+              ]
+            },
+            {
+              "type": "palladium:ability_enabled",
+              "ability": "nape_cover"
+            },
+            {
+              "type": "palladium:ability_enabled",
+              "ability": "eat"
+            }
+          ]
+        }
+      }
+    },
     "nape_cover": {
       "type": "subjects_of_ymir:nape_cover",
       "hidden": true,
@@ -215,10 +259,16 @@
         "unlocking": [
           {
             "type": "palladium:not",
-            "conditions": {
-              "type": "palladium:ability_enabled",
-              "ability": "block"
-            }
+            "conditions": [
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "block"
+              },
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "eat"
+              }
+            ]
           },
           {
             "type": "palladium:or",
@@ -739,6 +789,35 @@
             "property": "timer",
             "min": -1,
             "max": -1
+          }
+        ]
+      }
+    },
+    "eat": {
+      "type": "subjects_of_ymir:eat",
+      "hidden": true,
+      "conditions": {
+        "enabling": {
+          "type": "palladium:held",
+          "key_type": "right_click",
+          "needs_empty_hand": true
+        },
+        "unlocking": [
+          {
+            "type": "palladium:not",
+            "conditions": [
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "block"
+              },
+              {
+                "type": "palladium:ability_enabled",
+                "ability": "nape_cover"
+              }
+            ]
+          },
+          {
+            "type": "subjects_of_ymir:is_grabbing_something"
           }
         ]
       }

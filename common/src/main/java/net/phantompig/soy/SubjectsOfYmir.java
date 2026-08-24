@@ -22,6 +22,7 @@ import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.phantompig.soy.power.TitanPowerProvider;
+import net.phantompig.soy.power.ability.GrabbingAbility;
 import net.phantompig.soy.power.ability.ShedAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.power.condition.SoyConditionSerializers;
@@ -120,12 +121,12 @@ public class SubjectsOfYmir {
                 SoyProperties.SWINGING_FISTS.set(player, false);
                 SoyProperties.SWINGING_LEGS.set(player, false);
             }
-
             if (livingEntity instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null && livingEntity instanceof Player player) {
                 ext.soy$getTitanInstance().setMarksTimer(0);
                 ext.soy$getTitanInstance().setCharge(0);
                 ext.soy$getTitanInstance().setProgress(0);
-                if (SoyConfig.Server.getCurseOfYmirDeaths() != Integer.MAX_VALUE && ++ext.soy$getTitanInstance().deaths >= SoyConfig.Server.getCurseOfYmirDeaths()) {
+                if ((SoyConfig.Server.getCurseOfYmirDeaths() != Integer.MAX_VALUE && ++ext.soy$getTitanInstance().deaths >= SoyConfig.Server.getCurseOfYmirDeaths())
+                || (damageSource.is(SoyDamageSources.EAT) && damageSource.getDirectEntity() instanceof SoyPlayerExtension atkrExt && atkrExt.soy$getTitanInstance().getProgress() > 0)) {
                     player.drop(TitanInstance.toSpineIem(ext.soy$getTitanInstance()), true, true);
                     TitanInstance.clearTitanFor(livingEntity);
                 }
@@ -136,6 +137,9 @@ public class SubjectsOfYmir {
                 OdmLevelHelper.removeNode(livingEntity.level(), odm.getRightHook(leggings));
                 odm.removeLeftHook(leggings);
                 odm.removeRightHook(leggings);
+            }
+            if (SoyProperties.GRABBED.get(livingEntity)) {
+                GrabbingAbility.stopGrabbing(GrabbingAbility.getGrabber(livingEntity));
             }
             return EventResult.pass();
         }));
