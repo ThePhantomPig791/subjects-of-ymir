@@ -13,6 +13,7 @@
     "root": {
       "type": "palladium:dummy",
       "gui_position": [0, 0],
+      "gui_frame_type": "goal",
       "title": {
         "translate": "ability.text.subjects_of_ymir.root.title"
       },
@@ -106,6 +107,7 @@
     "failsafe_unlock": {
       "type": "palladium:dummy",
       "gui_position": [0, -1],
+      "gui_frame_type": "challenge",
       "title": {
         "translate": "ability.text.subjects_of_ymir.failsafe.title"
       },
