@@ -225,6 +225,9 @@
               "type": "palladium:ability_unlocked",
               "ability": "shift"
             }
+          },
+          {
+            "type": "subjects_of_ymir:can_bite_hand"
           }
         ]
       }

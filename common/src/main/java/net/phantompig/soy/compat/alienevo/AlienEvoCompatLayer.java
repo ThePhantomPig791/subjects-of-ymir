@@ -10,6 +10,11 @@ public class AlienEvoCompatLayer implements SoyCompatLayer {
     public static final ResourceLocation OMNITRIX_ITEM_ID = new ResourceLocation("alienevo:prototype_omnitrix");
 
     @Override
+    public String getName() {
+        return "Alien Evolution (Addonpack)";
+    }
+
+    @Override
     public boolean shouldDisableShifterAbilities(LivingEntity entity) {
         return isAlien(entity);
     }

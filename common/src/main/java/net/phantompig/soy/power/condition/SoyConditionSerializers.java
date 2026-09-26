@@ -25,4 +25,5 @@ public class SoyConditionSerializers {
     public static final RegistrySupplier<ConditionSerializer> GRABBED_ENTITY_NEARBY = CONDITION_SERIALIZERS.register("grabbed_entity_nearby", GrabbedEntityNearbyCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_GRABBING_SOMETHING = CONDITION_SERIALIZERS.register("is_grabbing_something", IsGrabbingSomethingCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_LEFT_HANDED = CONDITION_SERIALIZERS.register("is_left_handed", IsLeftHandedCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> CAN_BITE_HAND = CONDITION_SERIALIZERS.register("can_bite_hand", CanBiteHandCondition.Serializer::new);
 }

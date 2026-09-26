@@ -16,7 +16,7 @@ public class TitanPowerProvider extends PowerProvider {
     @Override
     public void providePowers(LivingEntity entity, IPowerHandler handler, PowerCollector collector) {
         if (entity instanceof SoyPlayerExtension playerExt) {
-            if (playerExt.soy$getTitanInstance().titan == null) return;
+            if (playerExt.soy$getTitanInstance().titan == null || SoyCompatLayers.shouldDisableShifterAbilities(entity)) return;
             ResourceLocation id = playerExt.soy$getTitanInstance().titan.id;
             PowerManager inst = PowerManager.getInstance(null);
             Power power = inst.getPower(playerExt.soy$getTitanInstance().titan.powerPath);
@@ -34,9 +34,7 @@ public class TitanPowerProvider extends PowerProvider {
     public record Validator(ResourceLocation id) implements IPowerValidator {
         @Override
         public boolean stillValid(LivingEntity entity, Power power) {
-            SubjectsOfYmir.LOGGER.info("about to test shouldDisable. level: {}", entity.level());
-            if (SoyCompatLayers.shouldDisableShifterAbilities(entity)) return false; // TODO fix. it's returning false but not removing the power
-            SubjectsOfYmir.LOGGER.info("still valid so far. level: {}", entity.level());
+            if (SoyCompatLayers.shouldDisableShifterAbilities(entity)) return false;
             if (entity instanceof SoyPlayerExtension playerExt) {
                 return playerExt.soy$getTitanInstance().is(this.id);
             }

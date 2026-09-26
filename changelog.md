@@ -4,7 +4,8 @@ Beta
 0.1.13 -> 0.1.14
 
 
-- Added compatibility for Alien Evolution
+- Added compatibility layers system
+- Added compat for Alien Evolution and Dampened
 - Fixed certain entities not being immune to fire
 
 TODO:

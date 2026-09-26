@@ -5,11 +5,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.compat.alienevo.AlienEvoCompatLayer;
+import net.phantompig.soy.compat.dampened.DampenedCompatLayer;
 import net.phantompig.soy.property.SoyProperties;
 import net.threetag.palladium.power.SuperpowerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SoyCompatLayers {
     public static final List<SoyCompatLayer> layers = new ArrayList<>();
@@ -18,9 +20,11 @@ public class SoyCompatLayers {
         layers.clear();
         if (BuiltInRegistries.ITEM.containsKey(AlienEvoCompatLayer.OMNITRIX_ITEM_ID)) {
             layers.add(new AlienEvoCompatLayer());
-            SubjectsOfYmir.LOGGER.info("Loaded compatibility layer for Alien Evolution");
         }
-        SubjectsOfYmir.LOGGER.info("Loaded {} compatibility layers", layers.size());
+        if (BuiltInRegistries.ITEM.containsKey(DampenedCompatLayer.DAMPENING_CUFFS_ITEM_ID)) {
+            layers.add(new DampenedCompatLayer());
+        }
+        SubjectsOfYmir.LOGGER.info("Loaded {} compatibility layers: {}", layers.size(), layers.stream().map(SoyCompatLayer::getName).collect(Collectors.joining()));
     }
 
 
@@ -46,13 +50,15 @@ public class SoyCompatLayers {
 
 
     public static boolean shouldDisableShifterAbilities(LivingEntity entity) {
-        var bl = layers.stream().anyMatch(layer -> layer.shouldDisableShifterAbilities(entity));
-        SubjectsOfYmir.LOGGER.info("should disable: {}", bl);
-        return bl;
+        return layers.stream().anyMatch(layer -> layer.shouldDisableShifterAbilities(entity));
     }
 
     public static boolean shouldForceUnshift(LivingEntity entity) {
         return layers.stream().anyMatch(layer -> layer.shouldForceUnshift(entity));
+    }
+
+    public static boolean shouldDisableBite(LivingEntity entity) {
+        return layers.stream().anyMatch(layer -> layer.shouldDisableBite(entity));
     }
 
     public static List<ResourceLocation> getDisabledPowerIds(LivingEntity entity) {

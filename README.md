@@ -29,3 +29,10 @@ Textures and Models: Mostly sugar04k (discord) (anything that looks good and isn
 - cóunter・attàck-mˈænkάɪnd Music Disc: https://www.youtube.com/watch?v=icSrzREkNJM
 - Call of Silence Music Disc: https://www.youtube.com/watch?v=B-1ZzOp0UUA
 - Bauklötze Music Disc: https://www.youtube.com/watch?v=qKK-GVTxqow
+
+## Compatibility
+- Simple Voice Chat: Titans that can't speak have their voice data mutilated
+- Curios/Trinkets: the Iron-Bamboo Ring can go in the ring slot; slots can't be accessed while in Titan form
+- JEI: recipes; compression table category
+- Alien Evolution: you can't be transformed into an alien with shifter powers; shifting disables omnitrix powers
+- Dampened: you can't bite your hand if you have handcuffs; Titan powers are disabled by dark matter dampening (the lore-idea is that the Paths use dark matter to transport energy)
