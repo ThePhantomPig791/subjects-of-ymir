@@ -796,6 +796,7 @@
     "eat": {
       "type": "subjects_of_ymir:eat",
       "hidden": true,
+      "hidden_in_bar": true,
       "conditions": {
         "enabling": {
           "type": "palladium:held",
