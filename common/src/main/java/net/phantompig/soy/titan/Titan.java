@@ -36,6 +36,7 @@ import net.phantompig.soy.SoyConfig;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
+import net.phantompig.soy.compat.SoyCompatLayers;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.TitanCorpseEntity;
 import net.phantompig.soy.network.ScreenShakeMessage;
@@ -182,6 +183,8 @@ public class Titan {
                 }
             }
         }
+
+        SoyCompatLayers.onShift(entity);
     }
 
     public void tickDuringShift(LivingEntity entity, int progress, int charge) {
@@ -455,7 +458,6 @@ public class Titan {
             }
         }
 
-
         ext.soy$getTitanInstance().setProgress(0);
         ext.soy$getTitanInstance().setCharge(0);
         ext.soy$getTitanInstance().resetScale();
@@ -471,7 +473,6 @@ public class Titan {
         hardening.setKnuckles(0);
         hardening.setHands(0);
 
-
         if (entity instanceof Player player) {
             player.getInventory().dropAll();
             if (ext.soy$getTitanInstance().playerInventory != null) {
@@ -483,6 +484,8 @@ public class Titan {
                 ext.soy$getTitanInstance().curiosTrinketsInventory = null;
             }
         }
+
+        SoyCompatLayers.onUnshift(entity);
     }
 
     public void tick(LivingEntity entity) {

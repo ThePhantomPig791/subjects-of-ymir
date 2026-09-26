@@ -3,6 +3,7 @@ package net.phantompig.soy.power;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.compat.SoyCompatLayers;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.threetag.palladium.power.*;
 import net.threetag.palladium.power.provider.PowerProvider;
@@ -24,7 +25,7 @@ public class TitanPowerProvider extends PowerProvider {
                 return;
             }
             // collector.addPower(power, () -> new Validator(id));
-            collector.addPower(inst.getPower(SubjectsOfYmir.rsrc("shifter")), () -> new Validator(id));
+            collector.addPower(inst.getPower(SubjectsOfYmir.SHIFTER_POWER), () -> new Validator(id));
         }
     }
 
@@ -33,6 +34,9 @@ public class TitanPowerProvider extends PowerProvider {
     public record Validator(ResourceLocation id) implements IPowerValidator {
         @Override
         public boolean stillValid(LivingEntity entity, Power power) {
+            SubjectsOfYmir.LOGGER.info("about to test shouldDisable. level: {}", entity.level());
+            if (SoyCompatLayers.shouldDisableShifterAbilities(entity)) return false; // TODO fix. it's returning false but not removing the power
+            SubjectsOfYmir.LOGGER.info("still valid so far. level: {}", entity.level());
             if (entity instanceof SoyPlayerExtension playerExt) {
                 return playerExt.soy$getTitanInstance().is(this.id);
             }

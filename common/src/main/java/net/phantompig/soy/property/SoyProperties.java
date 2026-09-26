@@ -8,6 +8,7 @@ import net.threetag.palladium.event.PalladiumEvents;
 import net.threetag.palladium.util.property.*;
 
 import java.awt.*;
+import java.util.List;
 
 public class SoyProperties {
     public static final PalladiumProperty<Integer> PROGRESS = new IntegerProperty("subjects_of_ymir/progress").sync(SyncType.EVERYONE);
@@ -42,6 +43,8 @@ public class SoyProperties {
     public static final PalladiumProperty<Boolean> GRABBED = new BooleanProperty("subjects_of_ymir/grabbed").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<String> GRABBING = new StringProperty("subjects_of_ymir/grabbing").sync(SyncType.EVERYONE);
 
+    public static final PalladiumProperty<List<ResourceLocation>> DISABLED_POWERS = new ResourceLocationListProperty("subjects_of_ymir/disabled_powers").sync(SyncType.NONE); // i.e. disabled when shifted into a titan. disabling works via removing the power and adding it back upon unshifting. see SoyCompatLayer for more details
+
     public static void init() {
         PalladiumEvents.REGISTER_PROPERTY.register(handler -> {
             if (handler.getEntity() instanceof LivingEntity) {
@@ -66,6 +69,7 @@ public class SoyProperties {
                 handler.register(SWINGING_LEGS, false);
                 handler.register(GRABBED, false);
                 handler.register(GRABBING, "");
+                handler.register(DISABLED_POWERS, List.of());
             }
         });
     }

@@ -13,7 +13,7 @@ public class SoyEntities {
 
     public static RegistrySupplier<EntityType<TitanCorpseEntity>> TITAN_CORPSE = ENTITY_TYPES.register(
             "titan_corpse",
-            () -> EntityType.Builder.of(TitanCorpseEntity::new, MobCategory.MISC).sized(0.6f, 1.8f).build("titan_corpse")
+            () -> EntityType.Builder.of(TitanCorpseEntity::new, MobCategory.MISC).sized(0.6f, 1.8f).fireImmune().build("titan_corpse")
     );
 
     public static RegistrySupplier<EntityType<OdmNodeEntity>> ODM_NODE = ENTITY_TYPES.register(
@@ -23,12 +23,12 @@ public class SoyEntities {
 
     public static RegistrySupplier<EntityType<FlareEntity>> FLARE = ENTITY_TYPES.register(
             "flare",
-            () -> EntityType.Builder.of(FlareEntity::new, MobCategory.MISC).sized(1, 1).updateInterval(1).clientTrackingRange(512).build("flare")
+            () -> EntityType.Builder.of(FlareEntity::new, MobCategory.MISC).sized(1, 1).fireImmune().updateInterval(1).clientTrackingRange(512).build("flare")
     );
 
     public static RegistrySupplier<EntityType<ThrownBladeEntity>> THROWN_BLADE = ENTITY_TYPES.register(
             "thrown_blade",
-            () -> EntityType.Builder.of(ThrownBladeEntity::new, MobCategory.MISC).sized(1, 1).updateInterval(10).clientTrackingRange(64).build("thrown_blade")
+            () -> EntityType.Builder.of(ThrownBladeEntity::new, MobCategory.MISC).sized(1, 1).fireImmune().updateInterval(10).clientTrackingRange(64).build("thrown_blade")
     );
 
     public static void init() {

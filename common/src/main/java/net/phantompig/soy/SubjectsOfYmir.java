@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
+import net.phantompig.soy.compat.SoyCompatLayers;
 import net.phantompig.soy.entity.SoyDamageSources;
 import net.phantompig.soy.entity.SoyDamageTypeTags;
 import net.phantompig.soy.entity.SoyEntities;
@@ -70,7 +71,6 @@ public class SubjectsOfYmir {
         SoyNetwork.init();
         SoyDamageSources.init();
         SoyPaintingVariants.init();
-
 
         CommandEvents.REGISTER.register((dispatcher, selection) -> {
             TitanCommand.register(dispatcher);
@@ -155,6 +155,10 @@ public class SubjectsOfYmir {
                 ext.soy$getTitanInstance().getMemoryManager().onChat(player, raw);
             }
             return EventResult.pass();
+        });
+
+        LifecycleEvents.SERVER_ABOUT_TO_START.register(handler -> {
+            SoyCompatLayers.init();
         });
     }
 

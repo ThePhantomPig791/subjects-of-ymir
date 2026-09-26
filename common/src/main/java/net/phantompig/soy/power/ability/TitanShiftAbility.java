@@ -3,6 +3,7 @@ package net.phantompig.soy.power.ability;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Items;
+import net.phantompig.soy.compat.SoyCompatLayers;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.threetag.palladium.power.IPowerHolder;
@@ -68,9 +69,8 @@ public class TitanShiftAbility extends Ability {
             titanInstance.titan.tick(entity);
         }
 
-        if (titanInstance.forceUnshift && titanInstance.getProgress() > 0) {
+        if ((titanInstance.forceUnshift || SoyCompatLayers.shouldForceUnshift(entity)) && titanInstance.getProgress() > 0) {
             titanInstance.forceUnshift = false;
-
             titanInstance.titan.unshift(entity);
         }
     }
