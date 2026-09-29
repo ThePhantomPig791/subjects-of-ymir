@@ -122,9 +122,10 @@ public abstract class LivingEntityMixin extends Entity {
                 ext.soy$getTitanInstance().titan.unshiftWithAdverseEffects(ext.soy$getTitanInstance().entity);
                 this.setHealth(8);
                 cir.setReturnValue(true);
-            } else if (AbilityUtil.isEnabled(ext.soy$getTitanInstance().entity, SubjectsOfYmir.SHIFTER_POWER, "failsafe_unlock") && ext.soy$getTitanInstance().getStamina() >= 0.7f * ext.soy$getTitanInstance().getMaxStamina()) {
+            } else if (ext.soy$getTitanInstance().failsafeCooldown == 0 && AbilityUtil.isEnabled(ext.soy$getTitanInstance().entity, SubjectsOfYmir.SHIFTER_POWER, "failsafe_unlock") && ext.soy$getTitanInstance().canShiftFromStamina()) {
                 ext.soy$getTitanInstance().setCharge(30);
                 ext.soy$getTitanInstance().setStamina(20);
+                ext.soy$getTitanInstance().failsafeCooldown = 6000;
                 this.setHealth(16);
                 cir.setReturnValue(true);
             }

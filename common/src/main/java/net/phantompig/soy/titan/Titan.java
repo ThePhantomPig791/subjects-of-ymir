@@ -70,6 +70,7 @@ public class Titan {
 
     public static final ResourceLocation TITAN_SHIFT_ADVANCEMENT = SubjectsOfYmir.rsrc("titan_shift");
 
+    public static final int DEFAULT_MAX_STAMINA = 500;
 
     public final ResourceLocation id;
     public final ResourceLocation powerPath;
@@ -82,12 +83,13 @@ public class Titan {
     public final Color baseEyeColor;
     public final double weight;
     public final int defaultMaxStamina;
+    public final float regainStaminaChance, limitingStaminaPercentagePerShift;
 
     public final TitanStats stats;
 
     public final boolean canSpeak;
 
-    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, Color baseEyeColor, TitanStats stats, double weight, int defaultMaxStamina, boolean canSpeak) {
+    private Titan(ResourceLocation id, List<String> variants, int resolution, float scale, int maxProgress, int maxCharge, Color baseEyeColor, TitanStats stats, double weight, int defaultMaxStamina, float regainStaminaChance, float limitingStaminaPercentagePerShift, boolean canSpeak) {
         this.id = id;
         this.variants = variants;
         this.resolution = resolution;
@@ -99,6 +101,8 @@ public class Titan {
         this.stats = stats;
         this.weight = weight;
         this.defaultMaxStamina = defaultMaxStamina;
+        this.regainStaminaChance = regainStaminaChance;
+        this.limitingStaminaPercentagePerShift = limitingStaminaPercentagePerShift;
         this.canSpeak = canSpeak;
 
         this.powerPath = id.withPath("titan/" + id.getPath());
@@ -125,6 +129,8 @@ public class Titan {
         entity.extinguishFire();
         entity.removeAllEffects();
         entity.resetFallDistance();
+
+        ext.soy$getTitanInstance().exhaustSafe(300 + 20 * charge);
 
         if (entity instanceof Player player) {
             ext.soy$getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
@@ -302,9 +308,6 @@ public class Titan {
         if (entity instanceof ServerPlayer pl) {
             pl.getAdvancements().award(pl.server.getAdvancements().getAdvancement(TITAN_SHIFT_ADVANCEMENT), "shift");
         }
-        if (entity instanceof SoyPlayerExtension ext) {
-            ext.soy$getTitanInstance().setStamina((int) (ext.soy$getTitanInstance().getStamina() * 0.6));
-        }
     }
 
     public void unshift(LivingEntity entity) {
@@ -356,8 +359,9 @@ public class Titan {
             player.causeFoodExhaustion(8);
         }
         if (entity instanceof SoyPlayerExtension ext) {
-            ext.soy$getTitanInstance().setStamina((int) (ext.soy$getTitanInstance().getStamina() * 0.1));
+            ext.soy$getTitanInstance().setStamina(0);
             ext.soy$getTitanInstance().setMarksTimer(6000);
+            ext.soy$getTitanInstance().limitingStaminaPercentage = Math.min(1, ext.soy$getTitanInstance().limitingStaminaPercentage + 0.20f);
         }
     }
 
@@ -381,6 +385,8 @@ public class Titan {
             player.hurt(player.damageSources().magic(), 1);
             player.connection.send(new ClientboundUpdateAttributesPacket(player.getId(), List.of(player.getAttribute(Attributes.MAX_HEALTH), player.getAttribute(Attributes.ARMOR))));
         }
+
+        ext.soy$getTitanInstance().limitingStaminaPercentage = Math.min(1, ext.soy$getTitanInstance().limitingStaminaPercentage + this.limitingStaminaPercentagePerShift);
 
         if (hardh.soy$getHardeningSystem().getAllHardening() >= 0.9f) {
             spawnCorpse = false;
@@ -573,7 +579,9 @@ public class Titan {
         builder.baseEyeColor = GsonUtil.getAsColor(json, "base_eye_color", null);
         builder.stats = TitanStats.fromJson(json.getAsJsonObject("stats"));
         builder.weight = GsonHelper.getAsDouble(json, "weight", 1);
-        builder.defaultMaxStamina = GsonHelper.getAsInt(json, "default_max_stamina", 100);
+        builder.defaultMaxStamina = GsonHelper.getAsInt(json, "default_max_stamina", DEFAULT_MAX_STAMINA);
+        builder.regainStaminaChance = GsonHelper.getAsFloat(json, "regain_stamina_chance", 0.5f);
+        builder.limitingStaminaPercentagePerShift = GsonHelper.getAsFloat(json, "limiting_stamina_percentage_per_shift", 0.3f);
         builder.canSpeak = GsonHelper.getAsBoolean(json, "can_speak", false);
         return builder.create();
     }
@@ -599,12 +607,13 @@ public class Titan {
         public TitanStats stats;
         public double weight;
         public int defaultMaxStamina;
+        public float regainStaminaChance, limitingStaminaPercentagePerShift;
         public boolean canSpeak;
 
         public TitanBuilder() {}
 
         public Titan create() {
-            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, baseEyeColor, stats, weight, defaultMaxStamina, canSpeak);
+            return new Titan(id, variants, resolution, scale, maxProgress, maxCharge, baseEyeColor, stats, weight, defaultMaxStamina, regainStaminaChance, limitingStaminaPercentagePerShift, canSpeak);
         }
 
         public TitanBuilder withStats(TitanStats stats) {
@@ -678,6 +687,8 @@ public class Titan {
                 TitanStats.fromNetwork(buf),
                 buf.readDouble(),
                 buf.readInt(),
+                buf.readFloat(),
+                buf.readFloat(),
                 buf.readBoolean()
         );
     }
@@ -695,6 +706,8 @@ public class Titan {
         TitanStats.toNetwork(titan.stats, buf);
         buf.writeDouble(titan.weight);
         buf.writeInt(titan.defaultMaxStamina);
+        buf.writeFloat(titan.regainStaminaChance);
+        buf.writeFloat(titan.limitingStaminaPercentagePerShift);
         buf.writeBoolean(titan.canSpeak);
     }
 }

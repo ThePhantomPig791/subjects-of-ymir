@@ -34,5 +34,5 @@ Textures and Models: Mostly sugar04k (discord) (anything that looks good and isn
 - Simple Voice Chat: Titans that can't speak have their voice data mutilated
 - Curios/Trinkets: the Iron-Bamboo Ring can go in the ring slot; slots can't be accessed while in Titan form
 - JEI: recipes; compression table category
-- Alien Evolution: you can't be transformed into an alien with shifter powers; shifting disables omnitrix powers
-- Dampened: you can't bite your hand if you have handcuffs; Titan powers are disabled by dark matter dampening (the lore-idea is that the Paths use dark matter to transport energy)
+- Alien Evolution: transforming into an alien disabled shifter powers; shifting disables omnitrix powers
+- Dampened: wearing handcuffs in the curios slot disables biting; Titan powers are disabled by the dark matter dampening effect (the lore-idea is that the Paths use dark matter to transport energy)

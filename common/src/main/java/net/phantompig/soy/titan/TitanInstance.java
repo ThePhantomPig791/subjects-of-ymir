@@ -56,7 +56,9 @@ public class TitanInstance {
     @Nullable
     public CompoundTag curiosTrinketsInventory;
 
-    public int regainStaminaCooldown = 0;
+    public int regainStaminaCooldown = 0, failsafeCooldown = 0;
+
+    public float limitingStaminaPercentage = 0;
 
     public int deaths = 0;
 
@@ -95,10 +97,6 @@ public class TitanInstance {
         }
         staminaTick();
         marksTick();
-
-        if (!Platform.isProduction() && entity instanceof ServerPlayer player && player.isCreative()) {
-            player.displayClientMessage(Component.literal("Stamina: " + getStamina() + " / " + getMaxStamina() + ", Deaths: " + this.deaths), true);
-        }
     }
 
 
@@ -179,24 +177,60 @@ public class TitanInstance {
         setStamina(getStamina() + stamina);
     }
     public void staminaTick() {
+        if (this.titan == null) return;
         if (regainStaminaCooldown > 0) regainStaminaCooldown--;
         else {
-            int stam = getStamina(), max = getMaxStamina();
-            if (stam < max) {
-                if (this.getProgress() > 0) {
-                    if (stam < 0.4f * max) SoyProperties.PATH_POINTS.set(entity, SoyProperties.PATH_POINTS.get(entity) + 1);
-                    regainStamina(1);
-                    if (Math.random() < 0.1) setMaxStamina(max + 1);
-                    if (Math.random() > entity.getHealth() / entity.getMaxHealth()) exhaust(1);
-                } else {
-                    if (Math.random() < 0.4) regainStamina(1);
-                    if (Math.random() < 0.02) setMaxStamina(max + 1);
+            if (entity.getHealth() >= 0.9f * entity.getMaxHealth()) {
+                int stam = getStamina(), max = getMaxStamina();
+                boolean shifted = this.getProgress() > 0;
+                int limit = (int) ((1 - this.limitingStaminaPercentage) * max);
+                if (shifted) {
+                    if (stam < limit) {
+                        if (stam < 0.4f * max) SoyProperties.PATH_POINTS.set(entity, SoyProperties.PATH_POINTS.get(entity) + 1);
+                        if (Math.random() < this.titan.regainStaminaChance) regainStamina(1);
+                        double incMaxChance = -1f * max / (max + 20) + 1;
+                        if (Math.random() < incMaxChance) {
+                            setMaxStamina(max + 1);
+                        }
+                        if (Math.random() > entity.getHealth() / entity.getMaxHealth()) exhaust(1);
+                    } else if (stam > limit) {
+                        setStamina(limit);
+                    }
+                }
+                if (!shifted) {
+                    if (stam < limit) {
+                        if (Math.random() < (this.titan.regainStaminaChance / 4 + max / 4000f)) regainStamina(1);
+                        double incMaxChance = -1f * max / (max + 2) + 1;
+                        if (Math.random() < incMaxChance) {
+                            setMaxStamina(max + 1);
+                        }
+                    } else if (stam > limit) {
+                        setStamina(limit);
+                    }
+                    if (stam >= max && this.failsafeCooldown > 0) {
+                        this.failsafeCooldown--;
+                    }
                 }
             }
         }
 
-        if (getStamina() <= 0 && this.titan != null && this.getProgress() > 0) {
+        if (entity.tickCount % 10 == 0 && this.limitingStaminaPercentage > 0) {
+            this.limitingStaminaPercentage = Math.max(0, this.limitingStaminaPercentage - 0.0004f);
+        }
+
+        if (entity.isSleeping()) {
+            this.failsafeCooldown = Math.max(0, this.failsafeCooldown - 5);
+            regainStamina(1);
+            regainStaminaCooldown = 0;
+            if (this.limitingStaminaPercentage > 0) this.limitingStaminaPercentage = Math.max(0, this.limitingStaminaPercentage - 0.001f);
+        }
+
+        if (getStamina() <= 0 && this.getProgress() > 0) {
             this.titan.unshiftWithAdverseEffects(entity);
+        }
+
+        if (!Platform.isProduction() && entity instanceof ServerPlayer player) {
+            player.displayClientMessage(Component.literal("Stamina: " + getStamina() + " / " + getMaxStamina() + " (Limit: " + ((int) ((1 - this.limitingStaminaPercentage) * 1000)) / 10 + "%), Deaths: " + this.deaths), true);
         }
     }
 
@@ -223,15 +257,14 @@ public class TitanInstance {
     }
 
     public float getDamageThreshold() {
-        return Math.max(35 - 5 * (float) Math.log(this.getMaxStamina()), 1);
+        return Math.max((this.entity.getHealth() / this.entity.getMaxHealth()) * (-0.01f * getMaxStamina() + 15), 1);
     }
-
 
     public boolean canShiftFromDamage() {
         return this.canShiftTicks > 0;
     }
     public boolean canShiftFromStamina() {
-        return getStamina() > 0.7 * getMaxStamina();
+        return getStamina() > 400;
     }
     public boolean wearingRing() {
         if (this.entity.getMainHandItem().is(SoyItemTags.RINGS) || this.entity.getOffhandItem().is(SoyItemTags.RINGS)) return true;
@@ -433,6 +466,8 @@ public class TitanInstance {
         }
         inst.updateProperties();
         inst.ticksShifted = tag.getInt("TicksShifted");
+        inst.failsafeCooldown = tag.getInt("FailsafeCooldown");
+        inst.limitingStaminaPercentage = tag.getFloat("LimitingStaminaPercentage");
         return inst;
     }
 
@@ -455,6 +490,8 @@ public class TitanInstance {
             tag.put("StrengthIncreases", siTag);
         }
         tag.putInt("TicksShifted", this.ticksShifted);
+        tag.putInt("FailsafeCooldown", this.failsafeCooldown);
+        tag.putFloat("LimitingStaminaPercentage", this.limitingStaminaPercentage);
         return tag;
     }
 
