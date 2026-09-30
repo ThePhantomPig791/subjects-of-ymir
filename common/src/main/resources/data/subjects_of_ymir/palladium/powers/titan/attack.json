@@ -512,7 +512,7 @@
         "unlocking": [
           {
             "type": "palladium:ability_unlocked",
-            "ability": "attribute_attack_damage_1"
+            "ability": "attribute_attack_damage_2"
           },
           {
             "type": "subjects_of_ymir:statistic",

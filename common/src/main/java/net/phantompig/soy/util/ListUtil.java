@@ -2,6 +2,7 @@ package net.phantompig.soy.util;
 
 import net.minecraft.util.Tuple;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,5 +27,17 @@ public class ListUtil {
             if (Math.random() < weights[i]) return weightedList.get(i).getA();
         }
         return weightedList.get(weightedList.size() - 1).getA();
+    }
+
+    public static <T> List<T> randomize(List<T> list) {
+        list = new ArrayList<>(list);
+        // fisher-yates shuffle
+        for (int i = list.size() - 1; i >= 1; i--) {
+            int j = (int) (Math.random() * i);
+            T old = list.get(j);
+            list.set(j, list.get(i));
+            list.set(i, old);
+        }
+        return list;
     }
 }

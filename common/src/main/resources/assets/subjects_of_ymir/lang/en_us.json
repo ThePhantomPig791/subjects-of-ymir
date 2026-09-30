@@ -12,7 +12,7 @@
   "commands.titan.success.points.subtract": "Took %s Path Points from %s (now %s)",
   "commands.titan.success.noTitan": "%s does not have a Titan",
   "commands.titan.success.get": "%s has Titan %s with variant \"%s\"",
-  "commands.titan.success.stamina.get": "%s has %s stamina available out of %s max stamina",
+  "commands.titan.success.stamina.get": "%s has %s stamina available out of %s (%s%) max stamina",
   "commands.titan.success.stamina.set_max": "Set %s's max stamina to %s (was %s)",
   "commands.titan.success.stamina.set": "Set %s's stamina to %s (was %s)",
   "commands.titan.success.stamina.add": "Added %s stamina to %s (now %s)",

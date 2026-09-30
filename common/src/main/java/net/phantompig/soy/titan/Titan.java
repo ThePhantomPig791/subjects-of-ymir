@@ -130,7 +130,7 @@ public class Titan {
         entity.removeAllEffects();
         entity.resetFallDistance();
 
-        ext.soy$getTitanInstance().exhaustSafe(300 + 20 * charge);
+        ext.soy$getTitanInstance().exhaustSafe(300 + 5 * charge);
 
         if (entity instanceof Player player) {
             ext.soy$getTitanInstance().playerInventory = player.getInventory().save(new ListTag());
