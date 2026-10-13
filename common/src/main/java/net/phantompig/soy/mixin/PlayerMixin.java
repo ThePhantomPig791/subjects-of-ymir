@@ -10,11 +10,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.SoyConfig;
+import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.BlockAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.titan.TitanInstance;
+import net.phantompig.soy.titan.armor.ArmorSystem;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.power.ability.AbilityInstance;
@@ -29,7 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, HardeningSystemHolder {
+public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, HardeningSystemHolder, ArmorSystemHolder {
     @Unique
     @NotNull
     private TitanInstance soy$titanInstance = new TitanInstance((Player) (Object) this);
@@ -37,6 +40,10 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, 
     @Unique
     @NotNull
     private HardeningSystem soy$hardeningSystem = new HardeningSystem((Player) (Object) this);
+
+    @Unique
+    @NotNull
+    private ArmorSystem soy$armorSystem = new ArmorSystem((Player) (Object) (this));
 
     private PlayerMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -48,12 +55,15 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, 
         soy$titanInstance = TitanInstance.fromTag((Player) (Object) this, soyTag);
         CompoundTag hardeningTag = compound.contains("Hardening", Tag.TAG_COMPOUND) ? compound.getCompound("Hardening") : new CompoundTag();
         soy$hardeningSystem = HardeningSystem.fromTag((Player) (Object) this, hardeningTag);
+        CompoundTag armorSystemTag = compound.contains("Armor", Tag.TAG_COMPOUND) ? compound.getCompound("Armor") : new CompoundTag();
+        soy$armorSystem = ArmorSystem.fromTag((Player) (Object) this, armorSystemTag);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
     public void soy$addAdditionalSaveData(CompoundTag compound, CallbackInfo ci) {
         compound.put("Titan", this.soy$titanInstance.toTag());
         compound.put("Hardening", this.soy$hardeningSystem.toTag());
+        compound.put("Armor", this.soy$armorSystem.toTag());
     }
 
     @Override
@@ -72,6 +82,12 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, 
     @NotNull
     public HardeningSystem soy$getHardeningSystem() {
         return this.soy$hardeningSystem;
+    }
+
+    @Override
+    @NotNull
+    public ArmorSystem soy$getArmorSystem() {
+        return this.soy$armorSystem;
     }
 
 
@@ -107,5 +123,15 @@ public abstract class PlayerMixin extends Entity implements SoyPlayerExtension, 
             if (BlockAbility.shouldBlock(entity, source, amount, inst)) return true;
         }
         return false;
+    }
+
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;stopSleepInBed(ZZ)V"))
+    public void soy$wakeUp(CallbackInfo ci) {
+        SubjectsOfYmir.LOGGER.info("woke up");
+        this.soy$getTitanInstance().failsafeCooldown = 0;
+        this.soy$getTitanInstance().regainStamina(this.soy$getTitanInstance().getMaxStamina());
+        this.soy$getTitanInstance().regainStaminaCooldown = 0;
+        if (this.soy$getTitanInstance().limitingStaminaPercentage > 0) this.soy$getTitanInstance().limitingStaminaPercentage = 0;
     }
 }

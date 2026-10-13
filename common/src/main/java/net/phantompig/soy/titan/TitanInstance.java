@@ -5,17 +5,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.phantompig.soy.item.SoyItemTags;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.item.SpineItem;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.power.ability.BlockAbility;
-import net.phantompig.soy.power.ability.ShedAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
+import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.compat.curiostinkets.CuriosTrinketsUtil;
 import net.threetag.palladium.power.PowerManager;
 import net.threetag.palladium.power.ability.AbilityUtil;
@@ -154,7 +157,7 @@ public class TitanInstance {
         return SoyProperties.STAMINA.get(this.entity);
     }
     public void setStamina(int stamina) {
-        int m = getMaxStamina();
+        int m = (int) (getMaxStamina() * (1 - this.limitingStaminaPercentage));
         if (stamina > m) stamina = m;
         if (stamina < 0) stamina = 0;
         SoyProperties.STAMINA.set(this.entity, stamina);
@@ -166,10 +169,12 @@ public class TitanInstance {
         SoyProperties.MAX_STAMINA.set(this.entity, max);
     }
     public void exhaust(int stamina) {
+        if (stamina == 0) return;
         setStamina(getStamina() - stamina);
         regainStaminaCooldown = (int) (200 * stamina / (stamina + 20f));
     }
     public void exhaustSafe(int stamina) {
+        if (stamina == 0) return;
         if (stamina >= getStamina()) exhaust(getStamina() - 1);
         else exhaust(stamina);
     }
@@ -278,11 +283,11 @@ public class TitanInstance {
     }
 
     public NapeProtection getNapeProtectionType() {
+        if (this.entity instanceof ArmorSystemHolder arh && arh.soy$getArmorSystem().getNape() > 0) {
+            return NapeProtection.ARMORED;
+        }
         if (AbilityUtil.getInstances(this.entity, SoyAbilities.NAPE_COVER.get()).stream().map(abil -> abil.getProperty(BlockAbility.TIMER)).max(Integer::compareTo).orElse(0) >= 7) {
             return NapeProtection.COVERED;
-        }
-        if (AbilityUtil.getInstances(this.entity, SoyAbilities.SHED.get()).stream().map(abil -> abil.getProperty(ShedAbility.VALUE)).max(Integer::compareTo).orElse(0) > 8) {
-            return NapeProtection.ARMORED;
         }
         return NapeProtection.NONE;
     }
@@ -291,6 +296,24 @@ public class TitanInstance {
         NONE,
         COVERED,
         ARMORED
+    }
+
+    public boolean hitsNape(DamageSource damageSource) {
+        Vec3 sourcePos = damageSource.getSourcePosition();
+        if (sourcePos != null) {
+            Vec3 napePos = entity.position().add(0, entity.getBbHeight() * 0.7, 0);
+            Vec3 vecToSource = sourcePos.subtract(napePos).normalize();
+            if (vecToSource.multiply(1, 12, 1).lengthSqr() < 28) {
+                vecToSource = vecToSource.normalize();
+                Vec3 bodyFacing = ShapeUtil.calculateViewVector(0, entity.getYRot());
+                if (!Platform.isProduction()) {
+                    ShapeUtil.highlightVector(entity.level(), napePos, bodyFacing.scale(10));
+                    ShapeUtil.highlightVector(entity.level(), napePos, vecToSource.scale(10));
+                }
+                return bodyFacing.dot(vecToSource) < -0.2;
+            }
+        }
+        return false;
     }
 
 

@@ -9,7 +9,7 @@ public abstract class RollingParticle extends TextureSheetParticle {
     public final SpriteSet sprites;
     public final float scaleDelta, rollFriction;
     public float deltaRoll;
-    public boolean fadeOut = true;
+    public boolean fadeOut = true, setSpritesOverTime = true;
 
     RollingParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, float scaleDelta, float rollFriction, SpriteSet sprites) {
         super(level, x, y, z);
@@ -26,7 +26,7 @@ public abstract class RollingParticle extends TextureSheetParticle {
     public void tick() {
         super.tick();
         if (!this.removed) {
-            this.setSpriteFromAge(sprites);
+            if (this.setSpritesOverTime) this.setSpriteFromAge(sprites);
 
             float t = (float) this.age / this.lifetime;
             this.scale(scaleDelta);

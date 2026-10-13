@@ -5,8 +5,8 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.phantompig.soy.power.ability.BlockAbility;
-import net.phantompig.soy.power.ability.ShedAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
 import net.threetag.palladium.client.model.animation.PalladiumAnimation;
 import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladium.power.ability.AbilityUtil;
@@ -93,6 +93,6 @@ public class BlockAnimation extends PalladiumAnimation {
     }
 
     public boolean isCharging(AbstractClientPlayer player) {
-        return player.isSprinting() && (ShedAbility.getMinimumShedLevel(player) < 15);
+        return player.isSprinting() && player instanceof ArmorSystemHolder arh && arh.soy$getArmorSystem().hasLowerArmor();
     }
 }

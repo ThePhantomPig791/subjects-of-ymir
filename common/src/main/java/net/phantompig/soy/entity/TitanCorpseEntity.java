@@ -12,6 +12,8 @@ import net.minecraft.world.level.Level;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.TitanInstance;
+import net.phantompig.soy.titan.armor.ArmorSystem;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.threetag.palladium.util.PlayerUtil;
@@ -19,10 +21,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHolder {
+public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHolder, ArmorSystemHolder {
     public TitanInstance titanInstance = new TitanInstance(this);
 
     public HardeningSystem hardeningSystem = new HardeningSystem(this);
+
+    public ArmorSystem armorSystem = new ArmorSystem(this);
 
     public TitanCorpseEntity(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
@@ -65,6 +69,10 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
     @Override
     public @NotNull HardeningSystem soy$getHardeningSystem() {
         return this.hardeningSystem;
+    }
+
+    public @NotNull ArmorSystem soy$getArmorSystem() {
+        return this.armorSystem;
     }
 
     @Override
@@ -133,6 +141,8 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
         this.titanInstance = TitanInstance.fromTag(this, soyTag);
         CompoundTag hardeningTag = compound.contains("Hardening", Tag.TAG_COMPOUND) ? compound.getCompound("Hardening") : new CompoundTag();
         this.hardeningSystem = HardeningSystem.fromTag(this, hardeningTag);
+        CompoundTag armorTag = compound.contains("Armor", Tag.TAG_COMPOUND) ? compound.getCompound("Armor") : new CompoundTag();
+        this.armorSystem = ArmorSystem.fromTag(this, armorTag);
     }
 
     @Override
@@ -140,5 +150,6 @@ public class TitanCorpseEntity extends LivingEntity implements HardeningSystemHo
         super.addAdditionalSaveData(compound);
         compound.put("Titan", this.titanInstance.toTag());
         compound.put("Hardening", this.hardeningSystem.toTag());
+        compound.put("Armor", this.armorSystem.toTag());
     }
 }

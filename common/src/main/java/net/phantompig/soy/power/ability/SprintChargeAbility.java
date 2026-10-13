@@ -2,7 +2,6 @@ package net.phantompig.soy.power.ability;
 
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -10,9 +9,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
 import net.threetag.palladium.power.IPowerHolder;
-import net.threetag.palladium.power.Power;
-import net.threetag.palladium.power.PowerManager;
 import net.threetag.palladium.power.ability.Ability;
 import net.threetag.palladium.power.ability.AbilityInstance;
 import net.threetag.palladium.util.PlayerUtil;
@@ -21,62 +19,57 @@ import net.threetag.palladium.util.property.*;
 import java.util.UUID;
 
 public class SprintChargeAbility extends Ability {
-    public static final PalladiumProperty<ResourceLocation> SHED_POWER = new ResourceLocationProperty("shed_power").configurable("Shed source power (leave null for current power)");
-    public static final PalladiumProperty<String> SHED_ABILITY = new StringProperty("shed_ability").configurable("Shed source ability - should be a \"subjects_of_ymir:shed\" ability");
+    public static final PalladiumProperty<Double> MAX_SPEED = new DoubleProperty("max_speed").configurable("The maximum speed increase that can be achieved by sprinting");
+    public static final PalladiumProperty<Double> SPEED_PER_TIME = new DoubleProperty("speed_per_second").configurable("The amount of speed to add per time while sprinting");
+    public static final PalladiumProperty<Integer> TIME = new IntegerProperty("time").configurable("The time between each speed increase");
     public static final PalladiumProperty<UUID> ATTRIBUTE_UUID = new UUIDProperty("uuid").configurable("Used for the movement speed attribute");
+    public static final PalladiumProperty<String> BLOCK_ABILITY = new StringProperty("block_ability").configurable("The ability key for a block ability that, when active, will enable charging");
 
     public SprintChargeAbility() {
-        this.withProperty(SHED_POWER, null);
-        this.withProperty(SHED_ABILITY, "example");
+        this.withProperty(MAX_SPEED, 0.1);
+        this.withProperty(SPEED_PER_TIME, 0.01);
+        this.withProperty(TIME, 10);
         this.withProperty(ATTRIBUTE_UUID, UUID.fromString("73c2510b-6bdd-4378-9a29-c23fcb4d8d95"));
+        this.withProperty(BLOCK_ABILITY, "block");
     }
 
     @Override
     public void tick(LivingEntity entity, AbilityInstance entry, IPowerHolder holder, boolean enabled) {
-        if (enabled) {
+        if (enabled && entity instanceof SoyPlayerExtension ext && entity instanceof ArmorSystemHolder arh && arh.soy$getArmorSystem().getLower() < 2) {
             UUID uuid = entry.getProperty(ATTRIBUTE_UUID);
-            boolean blocking = holder.getAbilities().get("block") != null && holder.getAbilities().get("block").getProperty(BlockAbility.TIMER) > 0;
-            if (entity.isSprinting()) {
+            boolean blocking = holder.getAbilities().get(entry.getProperty(BLOCK_ABILITY)) != null && holder.getAbilities().get(entry.getProperty(BLOCK_ABILITY)).getProperty(BlockAbility.TIMER) > 0;
+            if (entity.isSprinting() && ext.soy$getTitanInstance().getStamina() > 1) {
                 if (!blocking) {
-                    if (entry.getEnabledTicks() % 20 == 0) {
-                        Power power = entry.getProperty(SHED_POWER) == null ? holder.getPower() : PowerManager.getInstance(entity.level()).getPower(entry.getProperty(SHED_POWER));
-                        if (PowerManager.getPowerHandler(entity).isEmpty()) return;
-                        int shed = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE);
-                        double max = 0.2 * (1 - shed / 15d);
-
-                        if (entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) == null) {
-                            entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", max / 10, AttributeModifier.Operation.ADDITION));
-                        } else {
-                            double value = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid).getAmount();
-                            if (value >= max) return;
-                            entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(uuid);
-                            entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", value + max / 10, AttributeModifier.Operation.ADDITION));
-                        }
+                    double value;
+                    var attribute = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid);
+                    if (attribute == null) {
+                        value = 0;
+                    } else {
+                        value = attribute.getAmount();
                     }
-                }
-                if (entity instanceof SoyPlayerExtension ext) {
-                    if (entry.getEnabledTicks() % 10 == 0) {
-                        Power power = entry.getProperty(SHED_POWER) == null ? holder.getPower() : PowerManager.getInstance(entity.level()).getPower(entry.getProperty(SHED_POWER));
-                        if (PowerManager.getPowerHandler(entity).isEmpty()) return;
-                        int shed = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get(entry.getProperty(SHED_ABILITY)).getProperty(ShedAbility.VALUE);
 
-                        if (shed < 13) {
-                            ext.soy$getTitanInstance().exhaustSafe(50 * (13 - shed));
+                    if ((entry.getEnabledTicks() + 1) % entry.getProperty(TIME) == 0) {
+                        if (attribute != null) {
+                            entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(uuid);
                         }
+                        if (value >= entry.getProperty(MAX_SPEED)) value = entry.getProperty(MAX_SPEED) - entry.getProperty(SPEED_PER_TIME);
+                        entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(new AttributeModifier(uuid, "sprint charge speed", value + entry.getProperty(SPEED_PER_TIME), AttributeModifier.Operation.ADDITION));
+                    }
+
+                    if (value > entry.getProperty(SPEED_PER_TIME) * 2 || value >= entry.getProperty(MAX_SPEED)) {
+                        ext.soy$getTitanInstance().exhaustSafe(1);
                     }
                 }
             } else if (!blocking && entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null) {
                 entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(uuid);
             }
             if (blocking && !entity.level().isClientSide() && entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid) != null && !entity.isInWater() && !entity.isInLava() && !entity.isInPowderSnow) {
-                double value = entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(uuid).getAmount();
-                if (entry.getEnabledTicks() % 2 == 0 && value > 0.02) {
-                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight() / 4, entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
-                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), (float) value * 30, false, Level.ExplosionInteraction.BLOCK, false);
-                    if (entity instanceof SoyPlayerExtension ext) {
-                        ext.soy$getTitanInstance().exhaust(100); // in addition to the 50 from earlier
-                        ext.soy$getTitanInstance().regainStaminaCooldown = 30;
-                    }
+                double speed = entity.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
+                if (entry.getEnabledTicks() % 2 == 0 && speed > 0.15) {
+                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight() / 4, entity.getZ(), (float) speed * 20, false, Level.ExplosionInteraction.BLOCK, false);
+                    entity.level().explode(entity, null, null, entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), (float) speed * 25, false, Level.ExplosionInteraction.BLOCK, false);
+                    ext.soy$getTitanInstance().exhaust(5);
+                    ext.soy$getTitanInstance().regainStaminaCooldown = 30;
                     PlayerUtil.spawnParticleForAll(
                             entity.level(),
                             128,
@@ -111,9 +104,6 @@ public class SprintChargeAbility extends Ability {
                             sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
                         }
                     });
-                    if (entity instanceof SoyPlayerExtension ext) {
-                        ext.soy$getTitanInstance().exhaust(1);
-                    }
                 }
             }
         }
@@ -129,6 +119,6 @@ public class SprintChargeAbility extends Ability {
 
     @Override
     public String getDocumentationDescription() {
-        return "Increases a speed attribute while sprinting, with a max taken from a referenced \"subjects_of_ymir:shed\" ability";
+        return "Increases a speed attribute while sprinting and allows a charge to be enabled when a referenced block ability is enabled";
     }
 }

@@ -2,6 +2,7 @@ package net.phantompig.soy.util;
 
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -171,5 +172,16 @@ public class ShapeUtil {
 
     public static Vec3 vectorProjection(Vec3 a, Vec3 b) {
         return b.scale(a.dot(b) / b.lengthSqr());
+    }
+
+    // from the entity class
+    public static Vec3 calculateViewVector(float xRot, float yRot) {
+        float f = xRot * ((float)Math.PI / 180F);
+        float g = -yRot * ((float)Math.PI / 180F);
+        float h = Mth.cos(g);
+        float i = Mth.sin(g);
+        float j = Mth.cos(f);
+        float k = Mth.sin(f);
+        return new Vec3(i * j, -k, h * j);
     }
 }

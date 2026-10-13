@@ -13,7 +13,8 @@
     "extra_health": 20,
     "extra_armor": 30,
     "extra_attack_damage": 8,
-    "attack_speed": 30
+    "attack_speed": 30,
+    "has_armor": true
   },
   "base_eye_color": "#ffffcc",
   "weight": 1,

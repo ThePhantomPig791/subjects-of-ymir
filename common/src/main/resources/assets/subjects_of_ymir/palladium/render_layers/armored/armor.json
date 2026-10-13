@@ -1,57 +1,192 @@
 {
-  "type": "geckolib:default",
-  "model": {
-    "base": "subjects_of_ymir:geo/titan/armored/#VAR/skin.geo.json",
-    "variables": {
-      "VAR": {
-        "type": "subjects_of_ymir:titan_variant"
-      }
-    }
-  },
-  "texture": {
-    "base": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor.png",
-    "variables": {
-      "VAR": {
-        "type": "subjects_of_ymir:titan_variant"
+  "type": "palladium:compound",
+  "layers": [
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "subjects_of_ymir:geo/titan/armored/#VAR/skin.geo.json",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
       },
-      "PROGRESS": {
-        "type": "subjects_of_ymir:titan_progress",
-        "subtract": 30,
-        "min": 0,
-        "max": 20
-      },
-      "SHED": {
-        "type": "palladium:ability_integer_property",
-        "power": "subjects_of_ymir:titan/armored",
-        "ability": "shed",
-        "property": "value",
-        "fallback_value": 0,
-        "multiply": 255,
-        "divide": 15,
-        "min": 0,
-        "max": 255
-      },
-      "DECAY": {
-        "type": "subjects_of_ymir:titan_decay",
-        "subtract": 300,
-        "min": 0,
-        "max": 255
+      "texture": {
+        "base": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/head/#ARMOR.png",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          },
+          "PROGRESS": {
+            "type": "subjects_of_ymir:titan_progress",
+            "subtract": 30,
+            "min": 0,
+            "max": 20
+          },
+          "ARMOR": {
+            "type": "subjects_of_ymir:upper_armor",
+            "min": 0,
+            "max": 2
+          },
+          "DECAY": {
+            "type": "subjects_of_ymir:titan_decay",
+            "subtract": 300,
+            "min": 0,
+            "max": 255
+          }
+        },
+        "transformers": [
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/shift/#PROGRESS.png"
+          },
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
+          }
+        ],
+        "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/head/#ARMOR_#PROGRESS_#DECAY"
       }
     },
-    "transformers": [
-      {
-        "type": "palladium:alpha_mask",
-        "mask": "subjects_of_ymir:textures/models/alpha_masks/shift/#PROGRESS.png"
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "subjects_of_ymir:geo/titan/armored/#VAR/skin.geo.json",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
       },
-      {
-        "type": "palladium:alpha_mask",
-        "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#SHED.png"
-      },
-      {
-        "type": "palladium:alpha_mask",
-        "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
+      "texture": {
+        "base": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/upper/#ARMOR.png",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          },
+          "PROGRESS": {
+            "type": "subjects_of_ymir:titan_progress",
+            "subtract": 30,
+            "min": 0,
+            "max": 20
+          },
+          "ARMOR": {
+            "type": "subjects_of_ymir:upper_armor",
+            "min": 0,
+            "max": 2
+          },
+          "DECAY": {
+            "type": "subjects_of_ymir:titan_decay",
+            "subtract": 300,
+            "min": 0,
+            "max": 255
+          }
+        },
+        "transformers": [
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/shift/#PROGRESS.png"
+          },
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
+          }
+        ],
+        "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/upper/#ARMOR_#PROGRESS_#DECAY"
       }
-    ],
-    "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor_#PROGRESS_#SHED_#DECAY"
-  }
+    },
+    {
+      "type": "geckolib:default",
+      "model": {
+        "base": "subjects_of_ymir:geo/titan/armored/#VAR/skin.geo.json",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
+      },
+      "texture": {
+        "base": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/lower/#ARMOR.png",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          },
+          "PROGRESS": {
+            "type": "subjects_of_ymir:titan_progress",
+            "subtract": 30,
+            "min": 0,
+            "max": 20
+          },
+          "ARMOR": {
+            "type": "subjects_of_ymir:lower_armor",
+            "min": 0,
+            "max": 2
+          },
+          "DECAY": {
+            "type": "subjects_of_ymir:titan_decay",
+            "subtract": 300,
+            "min": 0,
+            "max": 255
+          }
+        },
+        "transformers": [
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/shift/#PROGRESS.png"
+          },
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
+          }
+        ],
+        "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/lower/#ARMOR_#PROGRESS_#DECAY"
+      }
+    },{
+      "type": "geckolib:default",
+      "model": {
+        "base": "subjects_of_ymir:geo/titan/armored/#VAR/skin.geo.json",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          }
+        }
+      },
+      "texture": {
+        "base": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/nape/#ARMOR.png",
+        "variables": {
+          "VAR": {
+            "type": "subjects_of_ymir:titan_variant"
+          },
+          "PROGRESS": {
+            "type": "subjects_of_ymir:titan_progress",
+            "subtract": 30,
+            "min": 0,
+            "max": 20
+          },
+          "ARMOR": {
+            "type": "subjects_of_ymir:nape_armor",
+            "min": 0,
+            "max": 2
+          },
+          "DECAY": {
+            "type": "subjects_of_ymir:titan_decay",
+            "subtract": 300,
+            "min": 0,
+            "max": 255
+          }
+        },
+        "transformers": [
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/shift/#PROGRESS.png"
+          },
+          {
+            "type": "palladium:alpha_mask",
+            "mask": "subjects_of_ymir:textures/models/alpha_masks/corpse/decay/128/#DECAY.png"
+          }
+        ],
+        "output": "subjects_of_ymir:textures/models/titan/armored/#VAR/armor/nape/#ARMOR_#PROGRESS_#DECAY"
+      }
+    }
+  ]
 }

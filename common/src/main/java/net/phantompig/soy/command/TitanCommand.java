@@ -289,6 +289,7 @@ public class TitanCommand {
                                                 playerExt.soy$getTitanInstance().setStamina(playerExt.soy$getTitanInstance().getMaxStamina());
                                                 playerExt.soy$getTitanInstance().limitingStaminaPercentage = 0;
                                                 playerExt.soy$getTitanInstance().regainStaminaCooldown = 0;
+                                                playerExt.soy$getTitanInstance().failsafeCooldown = 0;
                                                 source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.set", entity.getDisplayName(), playerExt.soy$getTitanInstance().getStamina(), old), true);
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));

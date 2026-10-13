@@ -19,5 +19,8 @@ public class SoyDynamicTextureVariables {
         DynamicTextureManager.registerVariable(new OdmSheathLeftTextureVariable.Serializer());
         DynamicTextureManager.registerVariable(new OdmBladesLeftTextureVariable.Serializer());
         DynamicTextureManager.registerVariable(new OdmBladesRightTextureVariable.Serializer());
+        DynamicTextureManager.registerVariable(new UpperArmorVariable.Serializer());
+        DynamicTextureManager.registerVariable(new LowerArmorVariable.Serializer());
+        DynamicTextureManager.registerVariable(new NapeArmorVariable.Serializer());
     }
 }

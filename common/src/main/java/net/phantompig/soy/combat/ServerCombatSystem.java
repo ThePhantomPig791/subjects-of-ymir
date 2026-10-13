@@ -5,24 +5,19 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -35,13 +30,12 @@ import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.network.*;
 import net.phantompig.soy.particle.SoyParticles;
 import net.phantompig.soy.player.SoyPlayerExtension;
-import net.phantompig.soy.power.ability.ShedAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
-import net.phantompig.soy.util.ListUtil;
 import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import net.threetag.palladium.util.EntityUtil;
@@ -49,9 +43,7 @@ import net.threetag.palladium.util.PlayerUtil;
 import net.threetag.palladiumcore.util.Platform;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ServerCombatSystem {
     public final ServerPlayer player;
@@ -355,7 +347,8 @@ public class ServerCombatSystem {
         var centerState = player.level().getBlockState(BlockPos.containing(center));
         if (
                 (centerState.is(SoyBlocks.HARDENING_BLOCK.get()) || hitState.is(SoyBlocks.HARDENING_BLOCK.get()))
-                && ((player instanceof HardeningSystemHolder hsh && hsh.soy$getHardeningSystem().getKnuckles() > 0) || (AbilityUtil.getInstances(this.player, SoyAbilities.SHED.get()).stream().map(abil -> abil.getProperty(ShedAbility.VALUE)).max(Integer::compareTo).orElse(0) > 5))
+                && ((player instanceof HardeningSystemHolder hsh && hsh.soy$getHardeningSystem().getKnuckles() > 0)
+                        || (player instanceof ArmorSystemHolder arh && arh.soy$getArmorSystem().hasUpperArmor()))
         ) {
             PlayerUtil.playSoundToAll(player.level(), center.x, center.y, center.z, 32, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 2, 1.6f + (float) (0.1 * Math.random()));
             PlayerUtil.playSoundToAll(player.level(), center.x, center.y, center.z, 32, SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 2, 1.4f + (float) (0.1 * Math.random()));
@@ -389,10 +382,8 @@ public class ServerCombatSystem {
 
         );
 
-        // explode
         player.level().explode(player, SoyDamageSources.titanPunch(player.level(), player), null, hitPos.x, hitPos.y, hitPos.z, strength, false, getExplosionInteraction(), false);
 
-        // entities
         player.level().getEntities(player, box).forEach(e -> {
             e.hurt(SoyDamageSources.titanPunch(player.level(), player), strength);
             if (e instanceof LivingEntity livingE && livingE.isDeadOrDying()) {
@@ -405,34 +396,6 @@ public class ServerCombatSystem {
                 sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
             }
         });
-
-        // blocks
-        if (player.level() instanceof ServerLevel level) {
-            int flingRadius = (int) (strength);
-            List<Tuple<BlockPos, BlockState>> toFling = new ArrayList<>();
-            for (int x = -flingRadius; x <= flingRadius; x++) {
-                for (int y = -flingRadius; y <= flingRadius; y++) {
-                    for (int z = -flingRadius; z <= flingRadius; z++) {
-                        if (Math.random() < 0.8 && x * x + y * y + z * z <= flingRadius * flingRadius) {
-                            var blockPos = hitBlockPos.offset(x, y, z);
-                            var state = level.getBlockState(blockPos);
-                            if (state.isSolid() && state.getBlock().getExplosionResistance() < 16) {
-                                toFling.add(new Tuple<>(blockPos, state));
-                            }
-                        }
-                    }
-                }
-            }
-            toFling = ListUtil.randomize(toFling);
-            toFling.forEach(tuple -> {
-                FallingBlockEntity entity = FallingBlockEntity.fall(level, tuple.getA(), tuple.getB());
-                if (level.getEntity(entity.getUUID()) == null) {
-                    level.removeBlock(tuple.getA(), false);
-                    entity.setDeltaMovement(tuple.getA().getCenter().subtract(center).normalize().add(0, 1, 0));
-                    level.addFreshEntity(entity);
-                }
-            });
-        }
 
         if (!Platform.isProduction()) {
             ShapeUtil.highlightVector(player.level(), player.position(), delta);

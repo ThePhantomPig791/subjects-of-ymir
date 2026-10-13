@@ -29,6 +29,10 @@ public class SoyProperties {
     public static final PalladiumProperty<Integer> HARDENING_KNUCKLES = new IntegerProperty("subjects_of_ymir/hardening/knuckles").sync(SyncType.EVERYONE);
     public static final PalladiumProperty<Integer> HARDENING_HANDS = new IntegerProperty("subjects_of_ymir/hardening/hands").sync(SyncType.EVERYONE);
 
+    public static final PalladiumProperty<Integer> ARMOR_UPPER = new IntegerProperty("subjects_of_ymir/armor/upper").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Integer> ARMOR_LOWER = new IntegerProperty("subjects_of_ymir/armor/lower").sync(SyncType.EVERYONE);
+    public static final PalladiumProperty<Integer> ARMOR_NAPE = new IntegerProperty("subjects_of_ymir/armor/nape").sync(SyncType.EVERYONE);
+
     public static final PalladiumProperty<Integer> STAMINA = new IntegerProperty("subjects_of_ymir/stamina").sync(SyncType.SELF);
     public static final PalladiumProperty<Integer> MAX_STAMINA = new IntegerProperty("subjects_of_ymir/max_stamina").sync(SyncType.SELF);
 
@@ -60,6 +64,9 @@ public class SoyProperties {
                 handler.register(HARDENING_ALL, 0);
                 handler.register(HARDENING_KNUCKLES, 0);
                 handler.register(HARDENING_HANDS, 0);
+                handler.register(ARMOR_UPPER, 0);
+                handler.register(ARMOR_LOWER, 0);
+                handler.register(ARMOR_NAPE, 0);
                 handler.register(STAMINA, 0);
                 handler.register(MAX_STAMINA, 0);
                 handler.register(MARKS_TIMER, 0);

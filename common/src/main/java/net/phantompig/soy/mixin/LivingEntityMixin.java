@@ -7,6 +7,8 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,10 +23,8 @@ import net.phantompig.soy.power.ability.BerserkAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.titan.TitanInstance;
-import net.phantompig.soy.util.ShapeUtil;
 import net.threetag.palladium.power.ability.AbilityUtil;
 import net.threetag.palladium.util.PlayerUtil;
-import net.threetag.palladiumcore.util.Platform;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -44,6 +44,9 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow public abstract void remove(RemovalReason reason);
 
+    @Shadow
+    public abstract boolean addEffect(MobEffectInstance effectInstance);
+
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
     public void soy$isPushable(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this instanceof SoyPlayerExtension extension && extension.soy$getTitanInstance().getProgress() > 0) {
@@ -61,46 +64,34 @@ public abstract class LivingEntityMixin extends Entity {
                 PlayerUtil.playSoundToAll(entity.level(), entity.getX(), entity.getEyeY(), entity.getZ(), 32, SoundEvents.METAL_PLACE, SoundSource.PLAYERS, 0.6f, 1.2f + (float) (0.1 * Math.random()));
             }
             if (napeProtection == TitanInstance.NapeProtection.NONE) {
-                Vec3 sourcePos = damageSource.getSourcePosition();
-                if (sourcePos != null) {
-                    Vec3 napePos = entity.position().add(0, entity.getBbHeight() * 0.7, 0);
-                    Vec3 vecToSource = sourcePos.subtract(napePos).normalize();
-                    if (vecToSource.multiply(1, 12, 1).lengthSqr() < 28) {
-                        vecToSource = vecToSource.normalize();
-                        Vec3 bodyFacing = this.calculateViewVector(0, entity.getYRot());
-                        if (bodyFacing.dot(vecToSource) < -0.2) {
-                            damageAmount += 30;
-                            if (damageSource.getDirectEntity() != null) {
-                                damageAmount += (float) damageSource.getDirectEntity().getDeltaMovement().length();
-                            }
-                            PlayerUtil.playSoundToAll(
-                                    entity.level(),
-                                    napePos.x, napePos.y, napePos.z,
-                                    32,
-                                    SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
-                                    2, 1.6f + (float) (0.1 * Math.random())
-                            );
-                            PlayerUtil.playSoundToAll(
-                                    entity.level(),
-                                    napePos.x, napePos.y, napePos.z,
-                                    32,
-                                    SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
-                                    2, 0.8f + (float) (0.1 * Math.random())
-                            );
-                            PlayerUtil.spawnParticleForAll(
-                                    entity.level(), 32,
-                                    new DustParticleOptions(new Vector3f(0.6f, 0.05f, 0), 4),
-                                    false,
-                                    napePos.x, napePos.y, napePos.z,
-                                    1.5f, 0.4f, 1.5f,
-                                    0, 30
-                            );
-                        }
-                        if (!Platform.isProduction()) {
-                            ShapeUtil.highlightVector(entity.level(), napePos, bodyFacing.scale(10));
-                            ShapeUtil.highlightVector(entity.level(), napePos, vecToSource.scale(10));
-                        }
+                if (ext.soy$getTitanInstance().hitsNape(damageSource)) {
+                    damageAmount += 30;
+                    if (damageSource.getDirectEntity() != null) {
+                        damageAmount += (float) damageSource.getDirectEntity().getDeltaMovement().length();
                     }
+                    double napeY = entity.getBbHeight() * 0.7 + entity.getY();
+                    PlayerUtil.playSoundToAll(
+                            entity.level(),
+                            entity.getX(), napeY, entity.getZ(),
+                            32,
+                            SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
+                            2, 1.6f + (float) (0.1 * Math.random())
+                    );
+                    PlayerUtil.playSoundToAll(
+                            entity.level(),
+                            entity.getX(), napeY, entity.getZ(),
+                            32,
+                            SoySounds.TITAN_KILL.get(), SoundSource.PLAYERS,
+                            2, 0.8f + (float) (0.1 * Math.random())
+                    );
+                    PlayerUtil.spawnParticleForAll(
+                            entity.level(), 32,
+                            new DustParticleOptions(new Vector3f(0.6f, 0.05f, 0), 4),
+                            false,
+                            entity.getX(), napeY, entity.getZ(),
+                            1.5f, 0.4f, 1.5f,
+                            0, 30
+                    );
                 }
             }
         }
@@ -111,20 +102,40 @@ public abstract class LivingEntityMixin extends Entity {
     private void soy$checkTotemDeathProtection(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
         if (this instanceof SoyPlayerExtension ext && ext.soy$getTitanInstance().titan != null) {
             if (ext.soy$getTitanInstance().getProgress() > 0) {
-                if (AbilityUtil.isTypeEnabled(ext.soy$getTitanInstance().entity, SoyAbilities.BERSERK.get())) {
-                    AbilityUtil.getEnabledInstances(ext.soy$getTitanInstance().entity, SoyAbilities.BERSERK.get()).forEach(ability -> {
-                        ability.setUniqueProperty(BerserkAbility.TIMER, ability.getProperty(BerserkAbility.MAX_TIME));
-                    });
-                    this.setHealth(20);
-                    cir.setReturnValue(true);
-                    return;
+                if (ext.soy$getTitanInstance().hitsNape(damageSource)) {
+                    if (AbilityUtil.isTypeEnabled(ext.soy$getTitanInstance().entity, SoyAbilities.BERSERK.get())) {
+                        AbilityUtil.getEnabledInstances(ext.soy$getTitanInstance().entity, SoyAbilities.BERSERK.get()).forEach(ability -> {
+                            ability.setUniqueProperty(BerserkAbility.TIMER, ability.getProperty(BerserkAbility.MAX_TIME));
+                        });
+                        this.setHealth(20);
+                        cir.setReturnValue(true);
+                        return;
+                    }
+                    ext.soy$getTitanInstance().titan.unshiftWithAdverseEffects(ext.soy$getTitanInstance().entity);
+                    this.setHealth(8);
+                } else {
+                    Vec3 sourcePos = damageSource.getSourcePosition();
+                    double heightRelative;
+                    if (sourcePos != null) {
+                         heightRelative = (sourcePos.y -  this.getY()) / this.getBbHeight();
+                    } else heightRelative = 0;
+
+                    if (heightRelative < 0.4) {
+                        this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 2, false, false));
+                    } else if (heightRelative < 0.75) {
+                        this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 2, false, false));
+                    } else {
+                        this.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 200, 2, false, false));
+                    }
+
+                    this.setHealth(1);
+
+                    ext.soy$getTitanInstance().titan.emitSteam(this, this.getX(), this.getY(), this.getZ(), this.getBoundingBox().getXsize(), this.getBbHeight() * heightRelative, this.getBoundingBox().getZsize(), 0.25f, 12, false);
                 }
-                ext.soy$getTitanInstance().titan.unshiftWithAdverseEffects(ext.soy$getTitanInstance().entity);
-                this.setHealth(8);
                 cir.setReturnValue(true);
             } else if (ext.soy$getTitanInstance().failsafeCooldown == 0 && AbilityUtil.isEnabled(ext.soy$getTitanInstance().entity, SubjectsOfYmir.SHIFTER_POWER, "failsafe_unlock") && ext.soy$getTitanInstance().canShiftFromStamina()) {
-                ext.soy$getTitanInstance().setCharge(30);
-                ext.soy$getTitanInstance().setStamina(20);
+                ext.soy$getTitanInstance().setCharge(100);
+                ext.soy$getTitanInstance().setStamina(ext.soy$getTitanInstance().getMaxStamina());
                 ext.soy$getTitanInstance().failsafeCooldown = 6000;
                 this.setHealth(16);
                 cir.setReturnValue(true);

@@ -70,6 +70,7 @@ public class SubjectsOfYmirClient {
         ParticleProviderRegistry.register(SoyParticles.TRANSFORM_ZOP, TransformArcParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.TRANSFORM_CRACK, TransformArcParticleType.Provider::new);
         ParticleProviderRegistry.register(SoyParticles.TRANSFORM_RAY, TransformRayParticleType.Provider::new);
+        ParticleProviderRegistry.register(SoyParticles.ARMOR_DEBRIS, ArmorDebrisParticleType.Provider::new);
 
         ColorHandlerRegistry.registerItemColors((stack, i) -> {
             if (i > 0) return -1;

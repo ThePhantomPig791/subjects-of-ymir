@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.player.Player;
 import net.phantompig.soy.SubjectsOfYmir;
 import net.phantompig.soy.combat.ClientCombatHolder;
 import net.phantompig.soy.item.OdmHandleItem;
@@ -126,5 +127,13 @@ public abstract class GuiMixin {
             extra += Minecraft.getInstance().player.getArmorValue() / 10;
         }
         return original.call(instance, vehicleHealth) + extra;
+    }
+
+    @WrapOperation(method = "renderPlayerHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getArmorValue()I"))
+    public int soy$scaleArmorBar(Player instance, Operation<Integer> original) {
+        if (RenderingUtil.isTitan()) {
+            return (int) (original.call(instance) / 3d * 2);
+        }
+        return original.call(instance);
     }
 }

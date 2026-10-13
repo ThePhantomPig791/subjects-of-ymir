@@ -10,10 +10,11 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin implements SoyServerPlayerExtension {
     @Unique
-    private ServerCombatSystem soy$combatSystem = new ServerCombatSystem((ServerPlayer) (Object) this);
+    private ServerCombatSystem soy$combatSystem = null;
 
     @Override
     public @NotNull ServerCombatSystem soy$getCombatSystem() {
+        if (this.soy$combatSystem == null) this.soy$combatSystem = new ServerCombatSystem((ServerPlayer) (Object) this);
         return this.soy$combatSystem;
     }
 

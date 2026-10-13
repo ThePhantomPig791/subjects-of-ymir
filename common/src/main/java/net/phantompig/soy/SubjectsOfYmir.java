@@ -24,7 +24,6 @@ import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.phantompig.soy.power.TitanPowerProvider;
 import net.phantompig.soy.power.ability.GrabbingAbility;
-import net.phantompig.soy.power.ability.ShedAbility;
 import net.phantompig.soy.power.ability.SoyAbilities;
 import net.phantompig.soy.power.condition.SoyConditionSerializers;
 import net.phantompig.soy.property.SoyProperties;
@@ -33,9 +32,7 @@ import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
 import net.phantompig.soy.titan.TitanInstance;
 import net.phantompig.soy.titan.TitanRegistry;
-import net.threetag.palladium.power.Power;
-import net.threetag.palladium.power.PowerManager;
-import net.threetag.palladium.power.ability.AbilityInstance;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
 import net.threetag.palladium.util.property.PalladiumProperties;
 import net.threetag.palladiumcore.event.*;
 import org.slf4j.Logger;
@@ -77,24 +74,17 @@ public class SubjectsOfYmir {
         });
 
         LivingEntityEvents.HURT.register(((entity, damageSource, amount) -> {
-            if (damageSource.is(SoyDamageTypeTags.CANNOT_CAUSE_SHIFT)
-                    || !(entity instanceof SoyPlayerExtension soy)
-                    || amount.get() < soy.soy$getTitanInstance().getDamageThreshold()) {
-                return EventResult.pass();
-            }
+            if (!(entity instanceof SoyPlayerExtension soy)) return EventResult.pass();
             var titanInstance = soy.soy$getTitanInstance();
             if (titanInstance.getProgress() != 0) {
-                // hardcoded armored titan behavior for losing armor on hurt
-                if (titanInstance.titan != null && titanInstance.titan.id.equals(rsrc("armored"))) {
-                    Power power = PowerManager.getInstance(entity.level()).getPower(rsrc("titan/armored"));
-                    AbilityInstance ability = PowerManager.getPowerHandler(entity).get().getPowerHolder(power).getAbilities().get("shed");
-                    int subAmount = (int) Math.max(0, amount.get() / 120 * (30 - entity.getHealth()));
-                    if (subAmount >= 1) {
-                        ability.setUniqueProperty(ShedAbility.VALUE, ability.getProperty(ShedAbility.VALUE) - subAmount);
-                        ShedAbility.update(entity, ability);
-                    }
+                if (entity instanceof ArmorSystemHolder arh) {
+                    arh.soy$getArmorSystem().hurt(damageSource, amount);
                 }
             } else {
+                if (damageSource.is(SoyDamageTypeTags.CANNOT_CAUSE_SHIFT)
+                        || amount.get() < soy.soy$getTitanInstance().getDamageThreshold()) {
+                    return EventResult.pass();
+                }
                 titanInstance.canShiftTicks += (int) (10 * amount.get() + 15 * Math.sqrt(amount.get()));
             }
             return EventResult.pass();
@@ -147,6 +137,9 @@ public class SubjectsOfYmir {
         PlayerEvents.CLONE.register(((oldPlayer, newPlayer, wasDeath) -> {
             if (oldPlayer instanceof SoyPlayerExtension oldExt && newPlayer instanceof SoyPlayerExtension newExt) {
                 newExt.soy$setTitanInstance(TitanInstance.fromTag(newPlayer, oldExt.soy$getTitanInstance().toTag()));
+            }
+            if (oldPlayer instanceof SoyServerPlayerExtension oldExt && newPlayer instanceof SoyServerPlayerExtension newExt) {
+                newExt.soy$setCombatSystem(oldExt.soy$getCombatSystem());
             }
         }));
 

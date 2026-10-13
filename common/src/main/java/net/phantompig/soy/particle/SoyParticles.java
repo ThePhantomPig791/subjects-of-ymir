@@ -27,6 +27,7 @@ public class SoyParticles {
     public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_ZOP = PARTICLE_TYPES.register("transform_zop", () -> new SimpleParticleType(false));
     public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_CRACK = PARTICLE_TYPES.register("transform_crack", () -> new SimpleParticleType(false));
     public static final RegistrySupplier<ParticleType<SimpleParticleType>> TRANSFORM_RAY = PARTICLE_TYPES.register("transform_ray", () -> new SimpleParticleType(true));
+    public static final RegistrySupplier<ParticleType<SimpleParticleType>> ARMOR_DEBRIS = PARTICLE_TYPES.register("armor_debris", () -> new SimpleParticleType(false));
 
     public static void init() {
         PARTICLE_TYPES.register();

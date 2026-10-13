@@ -47,6 +47,8 @@ import net.phantompig.soy.power.ability.GrabbingAbility;
 import net.phantompig.soy.property.SoyProperties;
 import net.phantompig.soy.sound.SoySounds;
 import net.phantompig.soy.stat.SoyStats;
+import net.phantompig.soy.titan.armor.ArmorSystem;
+import net.phantompig.soy.titan.armor.ArmorSystemHolder;
 import net.phantompig.soy.titan.hardening.HardeningSystem;
 import net.phantompig.soy.titan.hardening.HardeningSystemHolder;
 import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
@@ -191,6 +193,9 @@ public class Titan {
         }
 
         SoyCompatLayers.onShift(entity);
+        if (entity instanceof ArmorSystemHolder arh) {
+            arh.soy$getArmorSystem().shift();
+        }
     }
 
     public void tickDuringShift(LivingEntity entity, int progress, int charge) {
@@ -366,7 +371,7 @@ public class Titan {
     }
 
     public void unshift(LivingEntity entity, boolean spawnCorpse, boolean shouldCorpseDecay) {
-        if (!(entity instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh)) return;
+        if (!(entity instanceof SoyPlayerExtension ext) || ext.soy$getTitanInstance().titan == null || !(entity instanceof HardeningSystemHolder hardh) || !(entity instanceof ArmorSystemHolder arh)) return;
         ext.soy$getTitanInstance().strengthIncreases.clear();
         ext.soy$getTitanInstance().ticksShifted = 0;
 
@@ -446,6 +451,7 @@ public class Titan {
 
             TitanInstance.copyTo(ext.soy$getTitanInstance(), corpse.titanInstance);
             HardeningSystem.copyTo(hardh.soy$getHardeningSystem(), corpse.hardeningSystem);
+            ArmorSystem.copyTo(arh.soy$getArmorSystem(), corpse.armorSystem);
             if (corpse.titanInstance.titan == null) {
                 corpse.discard();
             } else {
@@ -492,6 +498,7 @@ public class Titan {
         }
 
         SoyCompatLayers.onUnshift(entity);
+        arh.soy$getArmorSystem().unshift();
     }
 
     public void tick(LivingEntity entity) {
@@ -514,18 +521,21 @@ public class Titan {
         }
     }
 
-    private void emitSteam(Entity entity, float speed, int count) {
+    public void emitSteam(Entity entity, float speed, int count) {
         this.emitSteam(entity, speed, count, true);
     }
-    private void emitSteam(Entity entity, float speed, int count, boolean force) {
+    public void emitSteam(Entity entity, float speed, int count, boolean force) {
+        emitSteam(entity, entity.getX(), entity.getY(), entity.getZ(), entity.getBoundingBox().getXsize(), entity.getBoundingBox().getYsize(), entity.getBoundingBox().getZsize(), speed, count, force);
+    }
+    public void emitSteam(Entity entity, double x, double y, double z, double xr, double yr, double zr, float speed, int count, boolean force) {
         PlayerUtil.spawnParticleForAll(
                 entity.level(),
                 128,
                 (ParticleOptions) SoyParticles.LARGE_STEAM.get(),
                 force,
-                entity.getX() + entity.getBoundingBox().getXsize() * (Math.random() - 0.5),
-                entity.getY() + entity.getBoundingBox().getYsize() / 3 + 6 * (Math.random() - 0.5),
-                entity.getZ() + entity.getBoundingBox().getZsize() * (Math.random() - 0.5),
+                x + xr * (Math.random() - 0.5),
+                y + yr * (Math.random() - 0.5),
+                z + zr * (Math.random() - 0.5),
                 0, 0, 0,
                 speed,
                 count
@@ -629,6 +639,7 @@ public class Titan {
         public double extraArmor;
         public double extraDamage;
         public int attackSpeed;
+        public boolean hasArmor;
 
         public TitanStats() {}
 
@@ -640,6 +651,7 @@ public class Titan {
             stats.extraArmor = GsonHelper.getAsDouble(json, "extra_armor", 0);
             stats.extraDamage = GsonHelper.getAsDouble(json, "extra_attack_damage", 0);
             stats.attackSpeed = GsonHelper.getAsInt(json, "attack_speed", 20);
+            stats.hasArmor = GsonHelper.getAsBoolean(json, "has_armor", false);
             return stats;
         }
 
@@ -651,6 +663,7 @@ public class Titan {
             stats.extraArmor = buf.readDouble();
             stats.extraDamage = buf.readDouble();
             stats.attackSpeed = buf.readInt();
+            stats.hasArmor = buf.readBoolean();
             return stats;
         }
         public static void toNetwork(TitanStats stats, FriendlyByteBuf buf) {
@@ -660,6 +673,7 @@ public class Titan {
             buf.writeDouble(stats.extraArmor);
             buf.writeDouble(stats.extraDamage);
             buf.writeInt(stats.attackSpeed);
+            buf.writeBoolean(stats.hasArmor);
         }
     }
 

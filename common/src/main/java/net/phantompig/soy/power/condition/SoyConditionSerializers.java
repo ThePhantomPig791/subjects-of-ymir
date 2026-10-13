@@ -26,4 +26,8 @@ public class SoyConditionSerializers {
     public static final RegistrySupplier<ConditionSerializer> IS_GRABBING_SOMETHING = CONDITION_SERIALIZERS.register("is_grabbing_something", IsGrabbingSomethingCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> IS_LEFT_HANDED = CONDITION_SERIALIZERS.register("is_left_handed", IsLeftHandedCondition.Serializer::new);
     public static final RegistrySupplier<ConditionSerializer> CAN_BITE_HAND = CONDITION_SERIALIZERS.register("can_bite_hand", CanBiteHandCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> HAS_UPPER_ARMOR = CONDITION_SERIALIZERS.register("has_upper_armor", HasUpperArmorCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> HAS_LOWER_ARMOR = CONDITION_SERIALIZERS.register("has_lower_armor", HasLowerArmorCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> HAS_NAPE_ARMOR = CONDITION_SERIALIZERS.register("has_nape_armor", HasNapeArmorCondition.Serializer::new);
+    public static final RegistrySupplier<ConditionSerializer> IS_SPRINT_CHARGING = CONDITION_SERIALIZERS.register("is_sprint_charging", IsSprintChargingCondition.Serializer::new);
 }
