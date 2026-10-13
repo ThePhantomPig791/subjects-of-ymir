@@ -5,6 +5,7 @@ import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +24,7 @@ import net.phantompig.soy.client.screen.CompressionScreen;
 import net.phantompig.soy.client.screen.overlay.SoyOverlays;
 import net.phantompig.soy.client.texture.variable.*;
 import net.phantompig.soy.entity.SoyEntities;
+import net.phantompig.soy.fluid.SoyFluids;
 import net.phantompig.soy.item.*;
 import net.phantompig.soy.menu.SoyMenus;
 import net.phantompig.soy.odm.component.OdmComponentItem;
@@ -31,10 +33,7 @@ import net.phantompig.soy.particle.*;
 import net.threetag.palladium.client.renderer.renderlayer.PackRenderLayerManager;
 import net.threetag.palladium.event.PalladiumClientEvents;
 import net.threetag.palladium.util.SplashTextUtil;
-import net.threetag.palladiumcore.registry.client.ColorHandlerRegistry;
-import net.threetag.palladiumcore.registry.client.EntityRendererRegistry;
-import net.threetag.palladiumcore.registry.client.OverlayRegistry;
-import net.threetag.palladiumcore.registry.client.ParticleProviderRegistry;
+import net.threetag.palladiumcore.registry.client.*;
 
 public class SubjectsOfYmirClient {
     public static void init() {
@@ -108,6 +107,8 @@ public class SubjectsOfYmirClient {
         ItemProperties.register(OdmComponents.ODM_ITEMS.get("blade_sheath_with_canister").get(), SubjectsOfYmir.rsrc("odm_blades"), SubjectsOfYmirClient::getBladesForComponentItem);
 
         MenuScreens.register(SoyMenus.COMPRESSION.get(), CompressionScreen::new);
+
+        RenderTypeRegistry.registerFluid(RenderType.translucent(), SoyFluids.SPINAL_FLUID.get(), SoyFluids.FLOWING_SPINAL_FLUID.get());
 
         SubjectsOfYmir.LOGGER.info("Subjects of Ymir client setup complete");
     }

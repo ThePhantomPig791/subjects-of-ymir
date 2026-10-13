@@ -2,6 +2,7 @@ package net.phantompig.soy.forge;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.phantompig.soy.client.SubjectsOfYmirClient;
 import net.phantompig.soy.forge.compat.curios.SoyCuriosEvents;
 import net.phantompig.soy.forge.compat.curios.SoyCuriosUtil;
+import net.phantompig.soy.forge.fluid.SoyFluidTypesForge;
 import net.phantompig.soy.player.SoyPlayerExtension;
 import net.phantompig.soy.compat.curiostrinkets.SoyCuriosTrinketsUtil;
 import net.phantompig.soy.util.ChatUtil;
@@ -26,8 +28,11 @@ public class SubjectsOfYmirForge {
     @SuppressWarnings("removal")
     public SubjectsOfYmirForge() {
         // Submit our event bus to let PalladiumCore register our content on the right time
-        PalladiumCoreForge.registerModEventBus(SubjectsOfYmir.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        PalladiumCoreForge.registerModEventBus(SubjectsOfYmir.MOD_ID, bus);
+
         SubjectsOfYmir.init();
+        SoyFluidTypesForge.init(bus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SoyConfig.Server.generateConfig());
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SoyConfig.Client.generateConfig());

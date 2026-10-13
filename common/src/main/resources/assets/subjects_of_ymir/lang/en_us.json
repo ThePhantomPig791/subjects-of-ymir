@@ -155,13 +155,14 @@
 
   "block.subjects_of_ymir.iceburst_ore": "Iceburst Ore",
   "block.subjects_of_ymir.deepslate_iceburst_ore": "Deepslate Iceburst Ore",
-
   "block.subjects_of_ymir.iron_bamboo": "Iron-Weave Bamboo",
   "block.subjects_of_ymir.packed_iron_bamboo": "Packed Iron-Weave Bamboo",
-
   "block.subjects_of_ymir.compression_table": "Compression Table",
-
   "block.subjects_of_ymir.hardening_block": "Hardening Block",
+  "block.subjects_of_ymir.spinal_fluid": "Spinal Fluid",
+
+
+  "fluid.subjects_of_ymir.spinal_fluid": "Spinal Fluid",
 
 
   "container.subjects_of_ymir.compression": "Compression Table",

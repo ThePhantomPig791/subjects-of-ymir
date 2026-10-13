@@ -1,0 +1,7 @@
+{
+    "replace": false,
+    "values": [
+        "subjects_of_ymir:spinal_fluid",
+        "subjects_of_ymir:flowing_spinal_fluid"
+    ]
+}

@@ -2,11 +2,15 @@ package net.phantompig.soy.block;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.phantompig.soy.SubjectsOfYmir;
+import net.phantompig.soy.fluid.SoyFluids;
 import net.threetag.palladiumcore.registry.DeferredRegister;
 import net.threetag.palladiumcore.registry.RegistrySupplier;
 
@@ -22,6 +26,8 @@ public class SoyBlocks {
     public static final RegistrySupplier<Block> COMPRESSION_TABLE = BLOCKS.register("compression_table", () -> new CompressionTableBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOD).strength(2f, 1f)));
 
     public static final RegistrySupplier<Block> HARDENING_BLOCK = BLOCKS.register("hardening_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).sound(SoundType.AMETHYST).strength(40, 24).requiresCorrectToolForDrops()));
+
+    public static final RegistrySupplier<Block> SPINAL_FLUID = BLOCKS.register("spinal_fluid", () -> new LiquidBlock((FlowingFluid) SoyFluids.SPINAL_FLUID.get(), BlockBehaviour.Properties.copy(Blocks.WATER)));
 
     public static void init() {
         BLOCKS.register();

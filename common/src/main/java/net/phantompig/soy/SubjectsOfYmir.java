@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.phantompig.soy.block.SoyBlockTags;
 import net.phantompig.soy.block.SoyBlocks;
 import net.phantompig.soy.command.TitanCommand;
 import net.phantompig.soy.compat.SoyCompatLayers;
@@ -14,6 +13,7 @@ import net.phantompig.soy.entity.SoyDamageTypeTags;
 import net.phantompig.soy.entity.SoyEntities;
 import net.phantompig.soy.entity.SoyPaintingVariants;
 import net.phantompig.soy.feature.SoyFeatures;
+import net.phantompig.soy.fluid.SoyFluids;
 import net.phantompig.soy.item.OdmAttachableAddonArmorItem;
 import net.phantompig.soy.item.SoyItems;
 import net.phantompig.soy.menu.SoyMenus;
@@ -56,10 +56,10 @@ public class SubjectsOfYmir {
         SoyProperties.init();
 
         SoySounds.init();
+        SoyFluids.init();
         SoyBlocks.init();
         SoyItems.init();
         SoyEntities.init();
-        SoyBlockTags.init();
         SoyParticles.init();
         SoyMenus.init();
         SoyRecipeTypes.init();
