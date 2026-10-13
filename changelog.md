@@ -1,5 +1,5 @@
 # SOY Changelog
-Alpha
+Beta
 
 0.1.13 -> 0.1.14
 
@@ -7,6 +7,7 @@ Alpha
 - Added compatibility layers system
 - Added compat for Alien Evolution and Dampened
 - Added regain_stamina_chance field for Titans that determines the chance to regain one stamina each tick (in Titan form. In human form, the chance is equal to chance/4 + maxStamina/4000). Attack Titan has a chance of 0.5, Armored Titan has a chance of 0.4
+- Titan ears / "special" model layer
 - Stamina system rebalance
 - Armor system overhaul
 - Made force-ejecting a Titan also require damage to the nape
@@ -21,3 +22,14 @@ TODO:
 - Make spinal fluid store titan it came from
 - Investigate why blade handles stop swinging randomly
 - Investigate music disc maybe stopping after a minute
+
+- Convert Gas and Spinal Fluid into proper Fluids
+
+- Advanced uniform
+- APG gear
+- Thunderspears
+- Colossal titan
+- Grisha variant
+
+- Minecart with Iceburst Engine
+- Elytra with Iceburst Engine
