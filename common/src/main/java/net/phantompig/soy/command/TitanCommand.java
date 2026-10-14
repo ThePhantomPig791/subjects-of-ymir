@@ -204,7 +204,7 @@ public class TitanCommand {
                                             var entity = EntityArgument.getPlayer(context, "entity");
 
                                             if (entity instanceof SoyPlayerExtension playerExt) {
-                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.get", entity.getDisplayName(), playerExt.soy$getTitanInstance().getStamina(), playerExt.soy$getTitanInstance().getMaxStamina(), ((int) ((1 - playerExt.soy$getTitanInstance().limitingStaminaPercentage) * 1000)) / 10), true);
+                                                source.sendSuccess(() -> Component.translatable("commands.titan.success.stamina.get", entity.getDisplayName(), playerExt.soy$getTitanInstance().getStamina(), playerExt.soy$getTitanInstance().getMaxStamina(), ((int) ((1 - playerExt.soy$getTitanInstance().limitingStaminaPercentage) * 1000)) / 10 + "%"), true);
                                                 return playerExt.soy$getTitanInstance().getStamina();
                                             } else {
                                                 source.sendFailure(Component.translatable("commands.titan.error.notPlayer"));
