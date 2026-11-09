@@ -299,29 +299,86 @@
             "rolls": 1,
             "entries": [
                 {
-                    "type": "minecraft:item",
-                    "name": "minecraft:map",
-                    "weight": 1,
-                    "functions": [
+                    "type": "minecraft:alternatives",
+                    "children": [
                         {
-                            "function": "minecraft:exploration_map",
-                            "destination": "subjects_of_ymir:on_founding_tree_explorer_maps",
-                            "decoration": "target_point",
-                            "zoom": 3,
-                            "search_radius": 80,
-                            "skip_existing_chunks": false
+                            "type": "minecraft:item",
+                            "name": "minecraft:map",
+                            "weight": 1,
+                            "functions": [
+                                {
+                                    "function": "minecraft:exploration_map",
+                                    "destination": "subjects_of_ymir:on_founding_tree_explorer_maps",
+                                    "decoration": "target_point",
+                                    "zoom": 3,
+                                    "search_radius": 30,
+                                    "skip_existing_chunks": true
+                                },
+                                {
+                                    "function": "minecraft:set_name",
+                                    "name": {
+                                        "translate": "filled_map.founding_tree"
+                                    }
+                                }
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:entity_properties",
+                                    "entity": "this",
+                                    "predicate": {
+                                        "effects": {
+                                            "minecraft:luck": {}
+                                        }
+                                    }
+                                }
+                            ]
                         },
                         {
-                            "function": "minecraft:set_name",
-                            "name": {
-                                "translate": "filled_map.founding_tree"
-                            }
-                        }
-                    ],
-                    "conditions": [
-                        {
-                            "condition": "minecraft:random_chance",
-                            "chance": 0.15
+                            "type": "minecraft:group",
+                            "children": [
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "minecraft:map",
+                                    "weight": 1,
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:exploration_map",
+                                            "destination": "subjects_of_ymir:on_founding_tree_explorer_maps",
+                                            "decoration": "target_point",
+                                            "zoom": 3,
+                                            "search_radius": 50,
+                                            "skip_existing_chunks": true
+                                        },
+                                        {
+                                            "function": "minecraft:set_name",
+                                            "name": {
+                                                "translate": "filled_map.founding_tree"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "minecraft:map",
+                                    "weight": 5,
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:exploration_map",
+                                            "destination": "subjects_of_ymir:on_eldian_village_explorer_maps",
+                                            "decoration": "target_x",
+                                            "zoom": 3,
+                                            "search_radius": 40,
+                                            "skip_existing_chunks": true
+                                        },
+                                        {
+                                            "function": "minecraft:set_name",
+                                            "name": {
+                                                "translate": "filled_map.eldian_village"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }

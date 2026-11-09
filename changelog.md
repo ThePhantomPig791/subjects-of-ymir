@@ -8,6 +8,7 @@ Beta
 - Added compat for Alien Evolution and Dampened
 - Added regain_stamina_chance field for Titans that determines the chance to regain one stamina each tick (in Titan form. In human form, the chance is equal to chance/4 + maxStamina/4000). Attack Titan has a chance of 0.5, Armored Titan has a chance of 0.4
 - Titan ears / "special" model layer
+- Added another Eldian Explorer Map in basement chests that leads to other Eldian Villages
 - Stamina system rebalance
 - Armor system overhaul
 - Made force-ejecting a Titan also require damage to the nape
