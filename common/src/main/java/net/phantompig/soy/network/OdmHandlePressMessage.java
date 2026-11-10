@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import net.phantompig.soy.item.OdmHandleItem;
+import net.phantompig.soy.player.SoyServerPlayerExtension;
 import net.threetag.palladiumcore.network.MessageC2S;
 import net.threetag.palladiumcore.network.MessageContext;
 import net.threetag.palladiumcore.network.MessageType;
@@ -34,10 +35,12 @@ public class OdmHandlePressMessage extends MessageC2S {
     @Override
     public void handle(MessageContext context) {
         ServerPlayer player = context.getPlayer();
+        if (!(player instanceof SoyServerPlayerExtension ext) || ext.soy$getCombatSystem().odmPressCooldown != 0) return;
         boolean mainhand = player.getMainArm() == HumanoidArm.RIGHT == right;
         ItemStack stack = mainhand ? player.getMainHandItem() : player.getOffhandItem();
         if (stack.getItem() instanceof OdmHandleItem odm) {
             odm.handlePress(player, stack, right);
+            ext.soy$getCombatSystem().odmPressCooldown = 2;
         }
     }
 }

@@ -54,6 +54,8 @@ public class ServerCombatSystem {
     public int attackStage = 1; // not zero based!!! (because of how sugar04 named the animations, i'm too lazy to change it)
     public AttackType attackType = AttackType.PUNCH;
 
+    public int odmPressCooldown = 0;
+
     public ServerCombatSystem(ServerPlayer player) {
         this.player = player;
         if (player instanceof SoyPlayerExtension ext) {
@@ -215,6 +217,7 @@ public class ServerCombatSystem {
 
     public void tick() {
         tickOdmHoldAttack();
+        if (odmPressCooldown > 0) odmPressCooldown--;
 
         if (extension.soy$getTitanInstance().titan == null) return;
         if (extension.soy$getTitanInstance().getProgress() == 0) {

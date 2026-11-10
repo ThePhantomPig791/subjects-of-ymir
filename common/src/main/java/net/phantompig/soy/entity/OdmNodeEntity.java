@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -55,6 +56,9 @@ public class OdmNodeEntity extends AbstractHurtingProjectile {
     @Override
     public void tick() {
         super.tick();
+        if (this.level() instanceof ServerLevel level) {
+            level.getChunkSource().addRegionTicket(TicketType.UNKNOWN, this.chunkPosition(), 3, this.chunkPosition());
+        }
         if (this.getStuck()) {
             // pull player
             Entity owner = this.getOwner();
